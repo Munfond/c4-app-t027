@@ -1,194 +1,81 @@
-# AI20K Agent Template
+# VINFAST ADAS BEV/4D OCCUPANCY BENCHMARKING LAB
 
-Template chính thức cho học viên VinUni AI20K Build Phase: cấu trúc dự án, code
-mẫu và hướng dẫn kỹ thuật để xây dựng một AI Agent hoàn chỉnh — từ kiến trúc,
-code, test cho đến deploy và nộp bài Demo Day.
+> Tóm tắt 1 câu: Xây dựng môi trường thực nghiệm và đánh giá trực quan (Benchmarking & Visualization Lab) cho mô hình nhận thức BEV và lưới chiếm dụng 4D đa cảm biến (Camera, LiDAR, Radar) dành cho kỹ sư ADAS VinFast.
 
-Technical Guidebook: <https://phoenix.note.transformerlabs.ai/technical-book>
+## Vấn đề (Problem)
 
-## Template có sẵn những gì
+Mô tả pain point cụ thể với data/số liệu:
+- Ai đang gặp vấn đề? Đội ngũ kỹ sư phát triển ADAS (Perception & Motion Planning) của VinFast.
+- Tại sao các giải pháp hiện tại chưa đủ? Phương pháp nhận diện Hộp bao 3D (3D Bounding Box) đơn lẻ thường xuyên gặp hiện tượng bỏ sót vật thể dị hình, thiếu thông tin về không gian trống/chiếm dụng và dễ bị ảnh hưởng khi cảm biến đơn lẻ suy giảm chất lượng (mưa, sương mù, ngược sáng). Khó khăn trong việc ra quyết định lựa chọn cấu hình cảm biến (Camera vs LiDAR vs Radar) tối ưu chi phí và độ an toàn.
 
-- **Cấu trúc thư mục tách lớp** — `agents/`, `api/`, `services/`, `models/` đã
-  chia sẵn, không phải bàn lại từ đầu.
-- **Code mẫu chạy được** — LangGraph agent (state, node, tool), FastAPI routes,
-  Pydantic settings, schema.
-- **Docker và CI** — Dockerfile multi-stage, `docker-compose.yml`, workflow
-  GitHub Actions chạy `ruff` + `pytest` khi push lên `main`/`develop` và khi mở
-  pull request vào `main`.
-- **Technical Guidebook 10 chương** trong `docs/guide/`, đồng thời đọc được
-  online.
-- **Checklist 10 deliverables** của Demo Day.
-- **AI usage logging** — hook cài sẵn cho 6 công cụ AI, log tự động gửi lên
-  grading server mỗi lần `git push`.
+## Giải pháp (Solution)
 
-## Yêu cầu
+Sản phẩm giải quyết vấn đề bằng cách cung cấp một công cụ Lab trực quan:
+- Xử lý Dữ liệu Thực tế: Parse và đồng bộ (timestamp sync) luồng dữ liệu đa cảm biến từ bộ `nuScenes-mini`.
+- Trực quan hóa 3D WebGL: Render lưới 3D Voxel (Occupancy Grid), vector dòng chảy 4D (Occupancy Flow) và Point cloud trên nền tảng Web 3D (Next.js + Three.js).
+- Benchmark Cấu hình Cảm biến: So sánh đối chiếu trực tiếp hiệu quả của mô hình AI khi sử dụng các cụm cảm biến khác nhau, hiển thị các metric mAP, IoU, ADE/FDE và độ trễ.
+- Ẩn danh Dữ liệu (Anonymization): Tự động phát hiện và làm mờ khuôn mặt, biển số xe trên các luồng video trước khi đẩy lên trình duyệt.
 
-- Python 3.11 (phiên bản CI đang dùng)
-- Git
-- Docker — tuỳ chọn, chỉ cần nếu chạy `docker compose`
+## Tech Stack
 
-## Bắt đầu
-
-### 1. Clone repo của đội
-
-Khi đội được chốt, hệ thống tự sinh repo cho đội từ template này, nằm trong org
-GitHub của khoá bạn đang học và đặt tên theo mã đội. Copy URL ở trang đội trên
-Phoenix rồi clone về:
-
-```bash
-git clone https://github.com/<ORG-CỦA-KHOÁ>/<MÃ-ĐỘI>.git
-cd <MÃ-ĐỘI>
-```
-
-Không cần `rm -rf .git`, `git init` hay `git remote add`: repo sinh từ template
-đã bắt đầu bằng lịch sử riêng của đội và remote trỏ sẵn đúng chỗ. Chưa thấy repo
-của đội thì báo BTC — repo tự tạo nằm ngoài org sẽ không được chấm.
-
-### 2. Cài môi trường
-
-```bash
-python3.11 -m venv .venv
-source .venv/bin/activate      # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
-```
-
-### 3. Cấu hình biến môi trường
-
-```bash
-cp .env.example .env
-```
-
-Mở `.env` và điền `OPENAI_API_KEY`. Riêng `AI_LOG_API_KEY`, mỗi thành viên tự
-tạo key riêng tại [dashboard Phoenix](https://phoenix.note.transformerlabs.ai/api-keys)
-rồi thay vào chỗ `<get-your-api-key-from-dashboard-phoenix>` — giá trị trong
-`.env.example` chỉ là placeholder, để nguyên thì log không vào được hệ thống chấm.
-
-### 4. Cài hook ghi log AI
-
-```bash
-bash scripts/setup_hooks.sh                                      # Linux / macOS / Git Bash
-powershell -ExecutionPolicy Bypass -File scripts\setup_hooks.ps1 # Windows PowerShell
-```
-
-Chạy một lần sau khi clone. Hook ghi lại prompt khi bạn dùng Claude Code, Cursor,
-Codex CLI, Gemini CLI, Antigravity hoặc GitHub Copilot, và cài pre-push hook để
-đẩy log lên server.
-
-### 5. Chạy server
-
-```bash
-uvicorn src.main:app --reload --port 8000
-```
-
-Swagger UI ở <http://localhost:8000/docs>. Hoặc dùng `make run`, `make test`,
-`make lint` — xem `Makefile`.
-
-## Cấu trúc thư mục
-
-```
-src/
-  agents/            LangGraph agent
-    graph.py         State graph (nodes + edges)
-    state.py         State schema (TypedDict)
-    nodes/           Node functions
-    tools/           Agent tools (@tool)
-  api/routes.py      FastAPI endpoints
-  models/schemas.py  Pydantic schemas
-  services/llm.py    LLM client
-  config.py          Pydantic Settings
-  main.py            App entry point
-tests/               pytest suite
-scripts/             Hook ghi log AI + installer
-docs/
-  guide/             Technical Guidebook (nguồn của bản online)
-  architecture_diagram.md
-eval/                Kết quả evaluation
-presentation/        Slide và video Demo Day
-.claude/ .codex/ .cursor/ .gemini/ .agents/ .github/hooks/
-                     Config hook cho từng công cụ
-.github/workflows/   CI
-Dockerfile           Multi-stage build
-docker-compose.yml   Chạy backend bằng Docker
-README_boilerplate.md  Khung README cho dự án của đội
-```
-
-## Technical Guidebook
-
-| Chương | Nội dung | Thời gian |
-|---|---|---|
-| 1 | Lời mở đầu — mục tiêu, cách sử dụng | 15 phút |
-| 2 | Khởi tạo dự án — clone, setup, git workflow | 4 giờ |
-| 3 | Thiết kế kiến trúc — 3-tier, diagram, ADR | 6 giờ |
-| 4 | LangGraph Agent — state, node, edge, tool, RAG | 8 giờ |
-| 5 | FastAPI — routes, validation, error handling, streaming | 6 giờ |
-| 6 | Giao diện — Next.js và Streamlit | 6 giờ |
-| 7 | DevOps — Docker, CI/CD, deploy, logging | 6 giờ |
-| 8 | Kiểm thử — unit test, integration test, RAGAS | 4 giờ |
-| 9 | Demo Day — 10 deliverables, checklist | 2 giờ |
-| 10 | Tài nguyên — khoá học, tài liệu, BMAD method | tham khảo |
-
-Đọc online tại <https://phoenix.note.transformerlabs.ai/technical-book>: đăng
-nhập bằng GitHub (đúng account đã được BTC mời vào org của khoá), chọn tab
-**Technical Book** ở sidebar trái. Bản offline nằm trong `docs/guide/`, mở được
-bằng bất kỳ markdown viewer nào.
-
-## 10 deliverables cho Demo Day
-
-| # | Deliverable | Vị trí | Template lo tới đâu |
-|---|---|---|---|
-| 1 | Source code | `src/` | Khung sẵn |
-| 2 | README | copy `README_boilerplate.md` thành `README.md` | Khung sẵn |
-| 3 | Architecture diagram | `docs/architecture_diagram.md` | Khung sẵn |
-| 4 | AI logs | LangSmith (3 biến môi trường) + auto AI usage logging | Cấu hình sẵn |
-| 5 | Live URL | deploy lên Render/Vercel | CI/CD sẵn |
-| 6 | Video demo | `presentation/` | Đội tự làm |
-| 7 | Pitch deck | `presentation/` | Đội tự làm |
-| 8 | Development journal | `JOURNAL.md` | Khung sẵn |
-| 9 | Worklog | `WORKLOG.md` | Khung sẵn |
-| 10 | Evaluation evidence | `eval/` | Đội tự làm |
-
-## Tech stack
-
-| Lớp | Công nghệ |
-|---|---|
-| Agent | LangGraph + LangChain 0.3 |
-| Backend | FastAPI 0.115 + Uvicorn |
-| LLM | OpenAI, mặc định `gpt-4o-mini` (đổi trong `src/config.py`) |
-| Giao diện | Next.js hoặc Streamlit (đội tự chọn, hướng dẫn ở chương 6) |
-| Lint / test | ruff + pytest 8 |
+| Layer | Technology |
+|-------|-----------|
+| AI Agent & Pipeline | LangGraph + PyTorch (BEVFusion / OccNet) |
+| Backend | FastAPI + Python 3.10+ |
+| Frontend | React/Next.js + TypeScript + Three.js (WebGL) |
+| Data Processing | OpenCV, NumPy, Point Cloud Library (PCL) |
 | DevOps | Docker + GitHub Actions |
 
-## AI usage logging
-
-Mọi prompt được ghi vào `.ai-log/session.jsonl` và tự động gửi lên grading server
-ở bước pre-push.
-
-| Công cụ | Cấu hình | Thời điểm ghi |
-|---|---|---|
-| Claude Code | `.claude/settings.json` | mỗi prompt (`UserPromptSubmit`) |
-| Cursor | `.cursor/hooks.json` | mỗi prompt và khi dừng |
-| OpenAI Codex CLI | `.codex/hooks.json` | mỗi prompt và khi dừng |
-| Gemini CLI | `.gemini/settings.json` | mỗi lượt agent chạy |
-| GitHub Copilot | `.github/hooks/hooks.json` | mỗi prompt và cuối session |
-| Antigravity IDE | `.agents/hooks.json` | mỗi prompt, kèm lần quét lại lúc `git push` |
-
-Dùng ChatGPT hay công cụ web khác thì log thủ công:
+## Quick Start
 
 ```bash
-bash scripts/_pyrun.sh scripts/log_manual.py --tool chatgpt --prompt "What you asked"
+# 1. Clone repo
+git clone https://github.com/<ORG-CỦA-KHOÁ>/<MÃ-ĐỘI>.git
+cd <MÃ-ĐỘI>
+
+# 2. Setup environment
+cp .env.example .env
+# Edit .env with your API keys
+
+# 3. Install dependencies
+py -m venv .venv
+.\.venv\Scripts\Activate.ps1 # Hoặc source .venv/bin/activate
+pip install -r requirements.txt
+
+# 4. Setup AI Logs
+powershell -ExecutionPolicy Bypass -File scripts\setup_hooks.ps1
+
+# 5. Run development server
+uvicorn src.main:app --reload
 ```
 
-## Đóng góp
+## Project Structure
 
-Repo này là open source. Đọc [CONTRIBUTING.md](CONTRIBUTING.md) trước khi mở PR.
+```
+├── src/
+│   ├── agents/          # LangGraph agent definitions
+│   ├── api/             # FastAPI routes
+│   ├── models/          # Pydantic schemas
+│   ├── services/        # Business logic (Anonymization, Data Processing)
+│   ├── config.py        # Settings
+│   └── main.py          # App entry point
+├── frontend/            # Next.js & Three.js Web UI
+├── tests/               # Test suite
+├── docs/                # Documentation
+├── eval/                # Evaluation results
+├── Dockerfile           # Multi-stage build
+└── docker-compose.yml   # Full stack
+```
 
-Nội dung trong `docs/guide/` là nguồn của Technical Book và được đồng bộ lên bản
-online, nên mọi thay đổi ở đó cần review của
-[@AI20K-Build-Phase/book-maintainers](https://github.com/orgs/AI20K-Build-Phase/teams/book-maintainers)
-— xem [.github/CODEOWNERS](.github/CODEOWNERS).
+## Team
 
-Báo lỗ hổng bảo mật theo [SECURITY.md](SECURITY.md), đừng mở public issue.
+| Member | Role | Background |
+|--------|------|-----------|
+| Thành viên 1 | Core AI & System Architect | Ngành Robot & Trí tuệ Nhân tạo |
+| Thành viên 2 | Sensor & Geometry Data Engineer | Ngành Cơ điện tử |
+| Thành viên 3 | Vision, System Framework & Hardware (Phase 2) | Ngành Điện tử Viễn thông |
+| Thành viên 4 | Dataset & Data Loader Engineer | Ngành Kỹ thuật máy tính |
 
 ## License
 
-[MIT](LICENSE) — dùng tự do cho mục đích giáo dục.
+MIT
