@@ -1,0 +1,96 @@
+{
+  "phase": "PHASE_12_FINAL_DEMO",
+  "phase10Run": "20260922_141941_risk_a05251ce",
+  "phase11Run": "20260922_143527_ablation_601f2c7e",
+  "reuse": true,
+  "riskMeaning": "uncalibrated risk score",
+  "ablationChecks": "5/5",
+  "engineeringUnchanged": true,
+  "modes": [
+    "product",
+    "engineering",
+    "evaluation"
+  ],
+  "files": [
+    {
+      "name": "product_view",
+      "file": "figures/product_view.png",
+      "sha256": "ee3d8f349040b273c7f4be7ae7be89bac1adec333b7c0d9ce80d2395ff260b6e"
+    },
+    {
+      "name": "engineering_view",
+      "file": "figures/engineering_view.png",
+      "sha256": "1e0f3267f08d4cc6637862a6e3427ab758ce97281dd0c6937e3e1c2c120c9717"
+    },
+    {
+      "name": "evaluation_view",
+      "file": "figures/evaluation_view.png",
+      "sha256": "b61e57988992a67e54917b2c3890171c190423ecd749a4d30cb0d9a22d6e4e08"
+    },
+    {
+      "name": "semantic_view",
+      "file": "figures/semantic_view.png",
+      "sha256": "ae0228b0295dcc36ae1b41986072f4df80534e19b20c8eebcffd0eb22a0e1e09"
+    },
+    {
+      "name": "occupancy3d_view",
+      "file": "figures/occupancy3d_view.png",
+      "sha256": "2f06a877124c409d7ab638a446049982474fe366266bf04d8b5c3bf159fc0585"
+    },
+    {
+      "name": "video_product",
+      "file": "videos/demo_product.mp4",
+      "sha256": "79cd1a45b5041af36cc3f61357fe9dba396e76e5f49d08c7f24d58ebdc754d69"
+    },
+    {
+      "name": "video_engineering",
+      "file": "videos/demo_engineering.mp4",
+      "sha256": "6269d3bdfb1f100c70f4c87d2920c81ca0de0936ffba3e90f8a56b3f3087f980"
+    },
+    {
+      "name": "report_pdf",
+      "file": "report/final_report.pdf",
+      "sha256": "331f3ec3ef7c6f037005c64d2b6f63933900dd1d1a445c6012bfc1ccedadb42d"
+    },
+    {
+      "name": "report_html",
+      "file": "report/final_report.html",
+      "sha256": "3064a1ce8acc3d82610e35cc8d27fd084126711e556a7e1d18d38578b84179f3"
+    },
+    {
+      "name": "report_data",
+      "file": "report/final_report_data.json",
+      "sha256": "ed58ebf1b347cf192791e71368e73c4b231b61792b975e2df1f3a27c8ae3b322"
+    },
+    {
+      "name": "report_page1",
+      "file": "report/final_report_page1.png",
+      "sha256": "7d63f62f493bdd7a9b1f412f8a7412670d5c062d21d9e30c86373f0328a30157"
+    },
+    {
+      "name": "report_page2",
+      "file": "report/final_report_page2.png",
+      "sha256": "427cb0e53e021dce482127c8244f5796353aaa33b9260679be72359179478c74"
+    },
+    {
+      "name": "report_page3",
+      "file": "report/final_report_page3.png",
+      "sha256": "bf1ae2d9e6ec58d617d8bbec7ba8f764e011bd4764a9863222d5a607277e0be6"
+    },
+    {
+      "name": "report_page4",
+      "file": "report/final_report_page4.png",
+      "sha256": "84fbde5a9f6f9fbfec027b30e0b7459564ba27238f3ef481a5eb259cbc66464e"
+    },
+    {
+      "name": "report_page5",
+      "file": "report/final_report_page5.png",
+      "sha256": "836c6f2f0f81c8b61c34232b454fb9ff7278b6832285d781012a286a6b68c47c"
+    },
+    {
+      "name": "report_page6",
+      "file": "report/final_report_page6.png",
+      "sha256": "bc770146418ac4afc47cb4e477a1c16d90b79a4167608216ca6fc30f5364a281"
+    }
+  ]
+}

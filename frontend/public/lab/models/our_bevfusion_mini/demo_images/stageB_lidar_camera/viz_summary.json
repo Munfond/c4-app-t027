@@ -1,0 +1,9 @@
+{
+  "n_samples": 9,
+  "thr": 0.3,
+  "cams_missing": 0,
+  "mean_gt": 52.666666666666664,
+  "mean_pred_lidar": 13.222222222222221,
+  "mean_pred_cam": 37.44444444444444,
+  "mock": false
+}

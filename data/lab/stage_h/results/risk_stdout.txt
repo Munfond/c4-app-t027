@@ -1,0 +1,19 @@
+objects 3993 moving 1058 | oracle high-risk objects 24 | oracle Spearman vs -DCA 0.85
+classical         MAE all 0.018 near30 0.013 moving 0.018 | rho_oracle 0.83 rho_-DCA 0.84 | hiP 0.91 hiR 0.79 | frame-max r 0.46
+learned_occ       MAE all 0.014 near30 0.011 moving 0.015 | rho_oracle 0.89 rho_-DCA 0.85 | hiP 0.90 hiR 0.75 | frame-max r 0.38
+learned_detflow   MAE all 0.012 near30 0.010 moving 0.012 | rho_oracle 0.91 rho_-DCA 0.86 | hiP 0.91 hiR 0.79 | frame-max r 0.39
+learned_zeroflow  MAE all 0.013 near30 0.011 moving 0.015 | rho_oracle 0.90 rho_-DCA 0.85 | hiP 0.95 hiR 0.79 | frame-max r 0.39
+learned_flownet   MAE all 0.022 near30 0.022 moving 0.023 | rho_oracle 0.87 rho_-DCA 0.83 | hiP 0.20 hiR 0.83 | frame-max r 0.39
+flow benefit {'MAE_with_detection_flow': 0.0118, 'MAE_flow_zero': 0.0147, 'relative_reduction': 0.199, 'project_threshold': 0.25}
+wrote D:\Vinuni\endgame\cam_lidar_radar\cam_lidar_radat_real_ws\stage_h\results
+
+objects with oracle score >= 0.1: 1210
+classical         MAE 0.029 [0.0259, 0.0318] | Spearman 0.86 [0.831, 0.895]
+learned_occ       MAE 0.023 [0.0207, 0.0246] | Spearman 0.92 [0.896, 0.937]
+learned_detflow   MAE 0.020 [0.0184, 0.0216] | Spearman 0.94 [0.927, 0.955]
+learned_zeroflow  MAE 0.021 [0.0193, 0.0225] | Spearman 0.93 [0.915, 0.945]
+learned_flownet   MAE 0.044 [0.04, 0.0481] | Spearman 0.74 [0.691, 0.785]
+MAE(learned_detflow) - MAE(learned_zeroflow) {'mean': -0.0009, 'CI95': [-0.0013, -0.0005]}
+MAE(learned_detflow) - MAE(classical) {'mean': -0.0088, 'CI95': [-0.0111, -0.0066]}
+MAE(learned_detflow) - MAE(learned_flownet) {'mean': -0.0243, 'CI95': [-0.0285, -0.02]}
+flow benefit on non-trivial moving objects {'n': 336, 'MAE_det': 0.0247, 'MAE_zero': 0.0278}

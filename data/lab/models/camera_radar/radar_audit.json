@@ -1,0 +1,523 @@
+{
+  "root": "/kaggle/input/datasets/aadimator/nuscenes-mini",
+  "n_samples": 404,
+  "n_scenes": 10,
+  "file_counts": {
+    "RADAR_FRONT": {
+      "samples": 404,
+      "sweeps": 2231
+    },
+    "RADAR_FRONT_LEFT": {
+      "samples": 404,
+      "sweeps": 2282
+    },
+    "RADAR_FRONT_RIGHT": {
+      "samples": 404,
+      "sweeps": 2269
+    },
+    "RADAR_BACK_LEFT": {
+      "samples": 404,
+      "sweeps": 2230
+    },
+    "RADAR_BACK_RIGHT": {
+      "samples": 404,
+      "sweeps": 2231
+    },
+    "LIDAR_TOP": {
+      "samples": 404,
+      "sweeps": 3531
+    },
+    "CAM_FRONT": {
+      "samples": 404,
+      "sweeps": 1938
+    },
+    "CAM_FRONT_LEFT": {
+      "samples": 404,
+      "sweeps": 1940
+    },
+    "CAM_FRONT_RIGHT": {
+      "samples": 404,
+      "sweeps": 1934
+    },
+    "CAM_BACK": {
+      "samples": 404,
+      "sweeps": 1911
+    },
+    "CAM_BACK_LEFT": {
+      "samples": 404,
+      "sweeps": 1923
+    },
+    "CAM_BACK_RIGHT": {
+      "samples": 404,
+      "sweeps": 1938
+    }
+  },
+  "table_vs_files": {
+    "RADAR_FRONT": {
+      "key_total": 404,
+      "sweep_total": 2231,
+      "missing": 0
+    },
+    "RADAR_FRONT_LEFT": {
+      "key_total": 404,
+      "sweep_total": 2282,
+      "missing": 0
+    },
+    "RADAR_FRONT_RIGHT": {
+      "key_total": 404,
+      "sweep_total": 2269,
+      "missing": 0
+    },
+    "RADAR_BACK_LEFT": {
+      "key_total": 404,
+      "sweep_total": 2230,
+      "missing": 0
+    },
+    "RADAR_BACK_RIGHT": {
+      "key_total": 404,
+      "sweep_total": 2231,
+      "missing": 0
+    }
+  },
+  "calibration": {
+    "RADAR_FRONT": {
+      "translation": [
+        3.412,
+        0.0,
+        0.5
+      ],
+      "rotation": [
+        0.9999984769132877,
+        0.0,
+        0.0,
+        0.0017453283658983088
+      ],
+      "intrinsic": [],
+      "sensor_modality": "radar",
+      "n_distinct_extrinsics": 1
+    },
+    "RADAR_FRONT_LEFT": {
+      "translation": [
+        2.422,
+        0.8,
+        0.78
+      ],
+      "rotation": [
+        0.7171539204983457,
+        0.0,
+        0.0,
+        0.6969148113750004
+      ],
+      "intrinsic": [],
+      "sensor_modality": "radar",
+      "n_distinct_extrinsics": 1
+    },
+    "RADAR_FRONT_RIGHT": {
+      "translation": [
+        2.422,
+        -0.8,
+        0.77
+      ],
+      "rotation": [
+        0.7010337393110511,
+        0.0,
+        0.0,
+        -0.7131281065471795
+      ],
+      "intrinsic": [],
+      "sensor_modality": "radar",
+      "n_distinct_extrinsics": 1
+    },
+    "RADAR_BACK_LEFT": {
+      "translation": [
+        -0.562,
+        0.628,
+        0.53
+      ],
+      "rotation": [
+        0.04876260733128922,
+        0.0,
+        0.0,
+        0.9988103964848657
+      ],
+      "intrinsic": [],
+      "sensor_modality": "radar",
+      "n_distinct_extrinsics": 1
+    },
+    "RADAR_BACK_RIGHT": {
+      "translation": [
+        -0.562,
+        -0.618,
+        0.53
+      ],
+      "rotation": [
+        0.0339401344459428,
+        0.0,
+        0.0,
+        -0.9994238676726663
+      ],
+      "intrinsic": [],
+      "sensor_modality": "radar",
+      "n_distinct_extrinsics": 1
+    }
+  },
+  "keyframe_dt_ms_vs_lidar": {
+    "RADAR_FRONT": {
+      "n": 404,
+      "mean": -0.4818663366336634,
+      "std": 21.06552892836159,
+      "min": -37.017,
+      "max": 36.946,
+      "abs_p95": 34.87785
+    },
+    "RADAR_FRONT_LEFT": {
+      "n": 404,
+      "mean": 0.7820074257425743,
+      "std": 20.619681544521235,
+      "min": -37.056,
+      "max": 37.361,
+      "abs_p95": 34.40729999999999
+    },
+    "RADAR_FRONT_RIGHT": {
+      "n": 404,
+      "mean": -1.2622153465346535,
+      "std": 22.14956522114608,
+      "min": -37.305,
+      "max": 37.31,
+      "abs_p95": 34.88889999999999
+    },
+    "RADAR_BACK_LEFT": {
+      "n": 404,
+      "mean": 0.4788465346534655,
+      "std": 20.87752219413375,
+      "min": -37.477,
+      "max": 36.729,
+      "abs_p95": 34.5781
+    },
+    "RADAR_BACK_RIGHT": {
+      "n": 404,
+      "mean": 0.22339603960396043,
+      "std": 21.404837069616203,
+      "min": -37.423,
+      "max": 37.215,
+      "abs_p95": 34.64465
+    },
+    "CAM_FRONT": {
+      "n": 404,
+      "mean": -35.72415594059406,
+      "std": 1.165130330082678,
+      "min": -40.744,
+      "max": -33.759,
+      "abs_p95": 37.95135
+    },
+    "CAM_FRONT_LEFT": {
+      "n": 404,
+      "mean": -43.325653465346534,
+      "std": 1.1704920344393683,
+      "min": -48.349,
+      "max": -40.362,
+      "abs_p95": 45.5657
+    },
+    "CAM_FRONT_RIGHT": {
+      "n": 404,
+      "mean": -27.755398514851485,
+      "std": 1.1336056105607557,
+      "min": -32.666,
+      "max": -25.77,
+      "abs_p95": 30.059049999999996
+    },
+    "CAM_BACK": {
+      "n": 404,
+      "mean": -10.613606435643565,
+      "std": 1.158828503725936,
+      "min": -15.59,
+      "max": -8.413,
+      "abs_p95": 12.876449999999997
+    },
+    "CAM_BACK_LEFT": {
+      "n": 404,
+      "mean": -0.7452846534653466,
+      "std": 1.157923835822747,
+      "min": -5.743,
+      "max": 1.204,
+      "abs_p95": 2.982649999999997
+    },
+    "CAM_BACK_RIGHT": {
+      "n": 404,
+      "mean": -20.178202970297033,
+      "std": 1.1287403534629794,
+      "min": -25.035,
+      "max": -18.139,
+      "abs_p95": 22.4393
+    }
+  },
+  "radar_rate": {
+    "RADAR_FRONT": {
+      "median_gap_ms": 75.016,
+      "hz": 13.330489495574277
+    },
+    "RADAR_FRONT_LEFT": {
+      "median_gap_ms": 74.7485,
+      "hz": 13.378194880164818
+    },
+    "RADAR_FRONT_RIGHT": {
+      "median_gap_ms": 74.808,
+      "hz": 13.367554272270343
+    },
+    "RADAR_BACK_LEFT": {
+      "median_gap_ms": 74.982,
+      "hz": 13.336534101517698
+    },
+    "RADAR_BACK_RIGHT": {
+      "median_gap_ms": 74.568,
+      "hz": 13.41057826413475
+    }
+  },
+  "pcd_header": {
+    "fields": [
+      "x",
+      "y",
+      "z",
+      "dyn_prop",
+      "id",
+      "rcs",
+      "vx",
+      "vy",
+      "vx_comp",
+      "vy_comp",
+      "is_quality_valid",
+      "ambig_state",
+      "x_rms",
+      "y_rms",
+      "invalid_state",
+      "pdh0",
+      "vx_rms",
+      "vy_rms"
+    ],
+    "types": [
+      "F",
+      "F",
+      "F",
+      "I",
+      "I",
+      "F",
+      "F",
+      "F",
+      "F",
+      "F",
+      "I",
+      "I",
+      "I",
+      "I",
+      "I",
+      "I",
+      "I",
+      "I"
+    ],
+    "sizes": [
+      "4",
+      "4",
+      "4",
+      "1",
+      "2",
+      "4",
+      "4",
+      "4",
+      "4",
+      "4",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "data": [
+      "binary"
+    ],
+    "version": [
+      "0.7"
+    ]
+  },
+  "points_per_keyframe": {
+    "RADAR_FRONT": {
+      "n_frames": 404,
+      "mean": 120.4430693069307,
+      "min": 52,
+      "max": 125,
+      "zero_frames": 0
+    },
+    "RADAR_FRONT_LEFT": {
+      "n_frames": 404,
+      "mean": 32.351485148514854,
+      "min": 1,
+      "max": 125,
+      "zero_frames": 0
+    },
+    "RADAR_FRONT_RIGHT": {
+      "n_frames": 404,
+      "mean": 53.48514851485149,
+      "min": 5,
+      "max": 125,
+      "zero_frames": 0
+    },
+    "RADAR_BACK_LEFT": {
+      "n_frames": 404,
+      "mean": 106.33910891089108,
+      "min": 30,
+      "max": 125,
+      "zero_frames": 0
+    },
+    "RADAR_BACK_RIGHT": {
+      "n_frames": 404,
+      "mean": 108.82178217821782,
+      "min": 31,
+      "max": 125,
+      "zero_frames": 0
+    }
+  },
+  "field_stats": {
+    "x": {
+      "min": 0.800000011920929,
+      "max": 257.6000061035156,
+      "mean": 47.606366211227716,
+      "n_unique": ">63"
+    },
+    "y": {
+      "min": -102.30000305175781,
+      "max": 102.30000305175781,
+      "mean": -1.2871328442746723,
+      "n_unique": ">63"
+    },
+    "z": {
+      "min": 0.0,
+      "max": 0.0,
+      "mean": 0.0,
+      "n_unique": 1
+    },
+    "dyn_prop": {
+      "min": 0.0,
+      "max": 7.0,
+      "mean": 1.9702573430342225,
+      "n_unique": 8
+    },
+    "id": {
+      "min": 0.0,
+      "max": 124.0,
+      "mean": 55.924885475613046,
+      "n_unique": ">63"
+    },
+    "rcs": {
+      "min": -5.0,
+      "max": 52.0,
+      "mean": 5.76347345728914,
+      "n_unique": ">63"
+    },
+    "vx": {
+      "min": -92.0,
+      "max": 37.75,
+      "mean": 1.2841552142279709,
+      "n_unique": ">63"
+    },
+    "vy": {
+      "min": -41.0,
+      "max": 16.5,
+      "mean": -2.1052613850714095,
+      "n_unique": ">63"
+    },
+    "vx_comp": {
+      "min": -90.23114776611328,
+      "max": 27.77654457092285,
+      "mean": 0.08294224233156981,
+      "n_unique": ">63"
+    },
+    "vy_comp": {
+      "min": -42.39741134643555,
+      "max": 15.320053100585938,
+      "mean": -0.011498586066894852,
+      "n_unique": ">63"
+    },
+    "is_quality_valid": {
+      "min": 1.0,
+      "max": 1.0,
+      "mean": 1.0,
+      "n_unique": 1
+    },
+    "ambig_state": {
+      "min": 0.0,
+      "max": 3.0,
+      "mean": 2.633454594448936,
+      "n_unique": 4
+    },
+    "x_rms": {
+      "min": 0.0,
+      "max": 24.0,
+      "mean": 18.517784963621665,
+      "n_unique": 7
+    },
+    "y_rms": {
+      "min": 0.0,
+      "max": 29.0,
+      "mean": 18.870587442737808,
+      "n_unique": 12
+    },
+    "invalid_state": {
+      "min": 0.0,
+      "max": 16.0,
+      "mean": 4.271692266235516,
+      "n_unique": 13
+    },
+    "pdh0": {
+      "min": 1.0,
+      "max": 6.0,
+      "mean": 1.99137698733495,
+      "n_unique": 3
+    },
+    "vx_rms": {
+      "min": 0.0,
+      "max": 21.0,
+      "mean": 15.384431420102398,
+      "n_unique": 7
+    },
+    "vy_rms": {
+      "min": 0.0,
+      "max": 3.0,
+      "mean": 2.8274050121261114,
+      "n_unique": 2
+    }
+  },
+  "invalid_state_hist": {
+    "0": 15717,
+    "3": 179,
+    "4": 3510,
+    "6": 50,
+    "7": 1688,
+    "8": 41,
+    "9": 2358,
+    "10": 234,
+    "11": 3519,
+    "12": 41,
+    "14": 2,
+    "15": 578,
+    "16": 1771
+  },
+  "dyn_prop_hist": {
+    "0": 2559,
+    "1": 13669,
+    "2": 1700,
+    "3": 8548,
+    "4": 1708,
+    "5": 253,
+    "6": 1074,
+    "7": 177
+  },
+  "ambig_state_hist": {
+    "0": 1931,
+    "1": 2186,
+    "2": 717,
+    "3": 24854
+  },
+  "verdict": "RADAR DATASET AUDIT PASS"
+}

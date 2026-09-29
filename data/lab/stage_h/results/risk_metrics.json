@@ -1,0 +1,179 @@
+{
+  "n_objects": 3993,
+  "n_moving": 1058,
+  "oracle_high_risk_objects": 24,
+  "oracle_mean_score": 0.0709,
+  "systems": {
+    "classical": {
+      "MAE_vs_oracle[all objects]": 0.0175,
+      "MAE_vs_oracle[objects within 30 m]": 0.0126,
+      "MAE_vs_oracle[moving objects (>=0.3 m/s)]": 0.0178,
+      "Spearman_vs_oracle": 0.827,
+      "Spearman_vs_minus_DCA": 0.845,
+      "high_risk_precision": 0.905,
+      "high_risk_recall": 0.792,
+      "per_frame_max_risk_pearson_vs_oracle": 0.46,
+      "min_TTC_frames_oracle_finite": 14,
+      "min_TTC_frames_system_finite_too": 13,
+      "min_TTC_MAE_s(where both finite)": 0.25
+    },
+    "learned_occ": {
+      "MAE_vs_oracle[all objects]": 0.0139,
+      "MAE_vs_oracle[objects within 30 m]": 0.011,
+      "MAE_vs_oracle[moving objects (>=0.3 m/s)]": 0.0149,
+      "Spearman_vs_oracle": 0.892,
+      "Spearman_vs_minus_DCA": 0.853,
+      "high_risk_precision": 0.9,
+      "high_risk_recall": 0.75,
+      "per_frame_max_risk_pearson_vs_oracle": 0.383,
+      "min_TTC_frames_oracle_finite": 14,
+      "min_TTC_frames_system_finite_too": 13,
+      "min_TTC_MAE_s(where both finite)": 0.173
+    },
+    "learned_detflow": {
+      "MAE_vs_oracle[all objects]": 0.0122,
+      "MAE_vs_oracle[objects within 30 m]": 0.01,
+      "MAE_vs_oracle[moving objects (>=0.3 m/s)]": 0.0118,
+      "Spearman_vs_oracle": 0.909,
+      "Spearman_vs_minus_DCA": 0.865,
+      "high_risk_precision": 0.905,
+      "high_risk_recall": 0.792,
+      "per_frame_max_risk_pearson_vs_oracle": 0.39,
+      "min_TTC_frames_oracle_finite": 14,
+      "min_TTC_frames_system_finite_too": 13,
+      "min_TTC_MAE_s(where both finite)": 0.173
+    },
+    "learned_zeroflow": {
+      "MAE_vs_oracle[all objects]": 0.013,
+      "MAE_vs_oracle[objects within 30 m]": 0.0106,
+      "MAE_vs_oracle[moving objects (>=0.3 m/s)]": 0.0147,
+      "Spearman_vs_oracle": 0.901,
+      "Spearman_vs_minus_DCA": 0.852,
+      "high_risk_precision": 0.95,
+      "high_risk_recall": 0.792,
+      "per_frame_max_risk_pearson_vs_oracle": 0.39,
+      "min_TTC_frames_oracle_finite": 14,
+      "min_TTC_frames_system_finite_too": 13,
+      "min_TTC_MAE_s(where both finite)": 0.173
+    },
+    "learned_flownet": {
+      "MAE_vs_oracle[all objects]": 0.0217,
+      "MAE_vs_oracle[objects within 30 m]": 0.0217,
+      "MAE_vs_oracle[moving objects (>=0.3 m/s)]": 0.0226,
+      "Spearman_vs_oracle": 0.87,
+      "Spearman_vs_minus_DCA": 0.828,
+      "high_risk_precision": 0.2,
+      "high_risk_recall": 0.833,
+      "per_frame_max_risk_pearson_vs_oracle": 0.386,
+      "min_TTC_frames_oracle_finite": 14,
+      "min_TTC_frames_system_finite_too": 14,
+      "min_TTC_MAE_s(where both finite)": 1.054
+    }
+  },
+  "oracle_spearman_vs_minus_DCA": 0.85,
+  "flow_benefit_moving_objects": {
+    "MAE_with_detection_flow": 0.0118,
+    "MAE_flow_zero": 0.0147,
+    "relative_reduction": 0.199,
+    "project_threshold": 0.25
+  },
+  "ego": {
+    "median_speed_mps": 4.76,
+    "note": "ego moves at ~5 m/s in most frames: closing speed and overlap are dominated by ego motion"
+  },
+  "non_trivial_objects_oracle_ge_0.1": {
+    "classical": {
+      "n_objects": 1210,
+      "MAE": 0.0289,
+      "MAE_CI95": [
+        0.0259,
+        0.0318
+      ],
+      "Spearman": 0.864,
+      "Spearman_CI95": [
+        0.831,
+        0.895
+      ]
+    },
+    "learned_occ": {
+      "n_objects": 1210,
+      "MAE": 0.0227,
+      "MAE_CI95": [
+        0.0207,
+        0.0246
+      ],
+      "Spearman": 0.918,
+      "Spearman_CI95": [
+        0.896,
+        0.937
+      ]
+    },
+    "learned_detflow": {
+      "n_objects": 1210,
+      "MAE": 0.02,
+      "MAE_CI95": [
+        0.0184,
+        0.0216
+      ],
+      "Spearman": 0.943,
+      "Spearman_CI95": [
+        0.927,
+        0.955
+      ]
+    },
+    "learned_zeroflow": {
+      "n_objects": 1210,
+      "MAE": 0.0209,
+      "MAE_CI95": [
+        0.0193,
+        0.0225
+      ],
+      "Spearman": 0.931,
+      "Spearman_CI95": [
+        0.915,
+        0.945
+      ]
+    },
+    "learned_flownet": {
+      "n_objects": 1210,
+      "MAE": 0.0442,
+      "MAE_CI95": [
+        0.04,
+        0.0481
+      ],
+      "Spearman": 0.741,
+      "Spearman_CI95": [
+        0.691,
+        0.785
+      ]
+    }
+  },
+  "paired_bootstrap_MAE_difference": {
+    "MAE(learned_detflow) - MAE(learned_zeroflow)": {
+      "mean": -0.0009,
+      "CI95": [
+        -0.0013,
+        -0.0005
+      ]
+    },
+    "MAE(learned_detflow) - MAE(classical)": {
+      "mean": -0.0088,
+      "CI95": [
+        -0.0111,
+        -0.0066
+      ]
+    },
+    "MAE(learned_detflow) - MAE(learned_flownet)": {
+      "mean": -0.0243,
+      "CI95": [
+        -0.0285,
+        -0.02
+      ]
+    }
+  },
+  "flow_benefit_non_trivial_moving": {
+    "n": 336,
+    "MAE_det": 0.0247,
+    "MAE_zero": 0.0278
+  }
+}
