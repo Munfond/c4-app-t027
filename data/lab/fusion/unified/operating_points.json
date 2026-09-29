@@ -1,0 +1,137 @@
+{
+  "CL_official": {
+    "0.3": {
+      "per_sample": 36.3,
+      "precision": 0.938,
+      "recall": 0.621
+    },
+    "0.4": {
+      "per_sample": 31.7,
+      "precision": 0.966,
+      "recall": 0.558
+    },
+    "0.5": {
+      "per_sample": 26.3,
+      "precision": 0.984,
+      "recall": 0.472
+    },
+    "0.6": {
+      "per_sample": 20.0,
+      "precision": 0.993,
+      "recall": 0.363
+    },
+    "0.7": {
+      "per_sample": 12.2,
+      "precision": 0.998,
+      "recall": 0.223
+    }
+  },
+  "CR_crn": {
+    "0.3": {
+      "per_sample": 79.9,
+      "precision": 0.46,
+      "recall": 0.671
+    },
+    "0.4": {
+      "per_sample": 53.6,
+      "precision": 0.611,
+      "recall": 0.597
+    },
+    "0.5": {
+      "per_sample": 37.4,
+      "precision": 0.748,
+      "recall": 0.511
+    },
+    "0.6": {
+      "per_sample": 24.4,
+      "precision": 0.862,
+      "recall": 0.384
+    },
+    "0.7": {
+      "per_sample": 13.1,
+      "precision": 0.96,
+      "recall": 0.23
+    }
+  },
+  "FUSED_pretrained": {
+    "0.3": {
+      "per_sample": 59.8,
+      "precision": 0.675,
+      "recall": 0.735
+    },
+    "0.4": {
+      "per_sample": 47.1,
+      "precision": 0.804,
+      "recall": 0.691
+    },
+    "0.5": {
+      "per_sample": 39.9,
+      "precision": 0.885,
+      "recall": 0.645
+    },
+    "0.6": {
+      "per_sample": 35.0,
+      "precision": 0.928,
+      "recall": 0.592
+    },
+    "0.7": {
+      "per_sample": 29.5,
+      "precision": 0.96,
+      "recall": 0.517
+    }
+  },
+  "CL_ours": {
+    "0.3": {
+      "per_sample": 13.6,
+      "precision": 0.964,
+      "recall": 0.239
+    },
+    "0.4": {
+      "per_sample": 9.1,
+      "precision": 0.984,
+      "recall": 0.163
+    },
+    "0.5": {
+      "per_sample": 5.7,
+      "precision": 0.998,
+      "recall": 0.104
+    },
+    "0.6": {
+      "per_sample": 2.5,
+      "precision": 1.0,
+      "recall": 0.046
+    },
+    "0.7": {
+      "per_sample": 0.6,
+      "precision": 1.0,
+      "recall": 0.012
+    }
+  },
+  "FUSED_ours": {
+    "0.3": {
+      "per_sample": 46.8,
+      "precision": 0.695,
+      "recall": 0.593
+    },
+    "0.4": {
+      "per_sample": 32.0,
+      "precision": 0.833,
+      "recall": 0.486
+    },
+    "0.5": {
+      "per_sample": 25.1,
+      "precision": 0.915,
+      "recall": 0.42
+    },
+    "0.6": {
+      "per_sample": 21.4,
+      "precision": 0.947,
+      "recall": 0.37
+    },
+    "0.7": {
+      "per_sample": 16.4,
+      "precision": 0.971,
+      "recall": 0.291
+    }
+  }
+}

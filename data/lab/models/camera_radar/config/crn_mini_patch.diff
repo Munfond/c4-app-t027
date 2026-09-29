@@ -1,0 +1,14 @@
+diff --git a/exps/base_exp.py b/exps/base_exp.py
+index 5b6b2a0..efa61a1 100644
+--- a/exps/base_exp.py
++++ b/exps/base_exp.py
+@@ -193,7 +193,8 @@ class BEVDepthLightningModel(LightningModule):
+         mmcv.mkdir_or_exist(default_root_dir)
+         self.default_root_dir = default_root_dir
+         self.evaluator = DetNuscEvaluator(class_names=self.class_names,
+-                                          output_dir=self.default_root_dir)
++                                          output_dir=self.default_root_dir,
++                                          version='v1.0-mini')
+         self.model = BaseBEVDepth(self.backbone_img_conf,
+                                   self.head_conf)
+         self.mode = 'valid'

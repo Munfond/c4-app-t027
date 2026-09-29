@@ -1,0 +1,67 @@
+{
+  "learned": {
+    "Learned T1": {
+      "EPE_moving_all": 4.318,
+      "angle_median_deg": 91.3,
+      "static_object_false_flow_mean": 1.354,
+      "mIoU": 0.5524,
+      "IoU_occupied": 0.4291
+    },
+    "Learned T2": {
+      "EPE_moving_all": 3.638,
+      "angle_median_deg": 61.8,
+      "static_object_false_flow_mean": 1.397,
+      "mIoU": 0.5675,
+      "IoU_occupied": 0.4625
+    },
+    "Learned T4": {
+      "EPE_moving_all": 3.518,
+      "angle_median_deg": 49.7,
+      "static_object_false_flow_mean": 1.696,
+      "mIoU": 0.5687,
+      "IoU_occupied": 0.4654
+    },
+    "Learned T4_nowarp": {
+      "EPE_moving_all": 3.789,
+      "angle_median_deg": 72.1,
+      "static_object_false_flow_mean": 1.391,
+      "mIoU": 0.5326,
+      "IoU_occupied": 0.4176
+    }
+  },
+  "reference": {
+    "Detection-derived flow: official Camera+LiDAR (score>=0.5, contaminated)": {
+      "EPE_moving_all": 1.739,
+      "EPE_moving_where_covered": 0.824,
+      "moving_cell_coverage": 0.625,
+      "angle_median_deg": 4.8,
+      "static_object_false_flow_mean": 0.004
+    },
+    "Detection-derived flow: fused CL+CRN (score>=0.5, contaminated)": {
+      "EPE_moving_all": 1.26,
+      "EPE_moving_where_covered": 0.708,
+      "moving_cell_coverage": 0.74,
+      "angle_median_deg": 3.7,
+      "static_object_false_flow_mean": 0.006
+    },
+    "Detection-derived flow: our Camera+LiDAR (Stage B, mini-trained, score>=0.3)": {
+      "EPE_moving_all": 3.753,
+      "EPE_moving_where_covered": 4.015,
+      "moving_cell_coverage": 0.245,
+      "angle_median_deg": 33.8,
+      "static_object_false_flow_mean": 0.044
+    },
+    "Zero flow (predict no motion)": {
+      "EPE_moving_all": 3.792,
+      "EPE_moving_where_covered": null,
+      "moving_cell_coverage": 1.0,
+      "angle_median_deg": null,
+      "static_object_false_flow_mean": 0.0
+    }
+  },
+  "gt": {
+    "moving_cells": 11147,
+    "static_object_cells": 76524,
+    "median_moving_speed": 3.33
+  }
+}

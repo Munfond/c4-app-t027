@@ -1,0 +1,229 @@
+{
+  "note": "nuScenes-mini VAL only (81 samples, 2 scenes). NOT a full nuScenes benchmark. Official checkpoints were trained on nuScenes trainval, which contains the mini scenes -> their mini-VAL numbers are contaminated (optimistic) and not comparable to ours.",
+  "rows": [
+    {
+      "model": "Official pretrained LiDAR",
+      "training": "official (trainval) - CONTAMINATED on mini VAL",
+      "mAP": 0.5431496439080831,
+      "NDS": 0.5625808309394464,
+      "mATE": 0.4092609401343926,
+      "mASE": 0.4420088688348723,
+      "mAOE": 0.4663268149644691,
+      "mAVE": 0.4488128063611898,
+      "per_class_AP_2m": {
+        "car": 0.9048022717643074,
+        "truck": 0.7854486466783477,
+        "bus": 0.9961419753086423,
+        "trailer": 0.0,
+        "construction_vehicle": 0.0,
+        "pedestrian": 0.9229816916946536,
+        "motorcycle": 0.6183897558978705,
+        "bicycle": 0.49071181864881985,
+        "traffic_cone": 0.7130202790881892,
+        "barrier": 0.0
+      },
+      "rerun_in_frozen_env": {
+        "mAP": 0.5450151997601677,
+        "NDS": 0.5657304166844277
+      }
+    },
+    {
+      "model": "Official pretrained LiDAR+Camera",
+      "training": "official (trainval) - CONTAMINATED on mini VAL",
+      "mAP": 0.5702214005656601,
+      "NDS": 0.5755269346010203,
+      "mATE": 0.41117958080127226,
+      "mASE": 0.44706233012038776,
+      "mAOE": 0.4971880398091783,
+      "mAVE": 0.42119775502549794,
+      "per_class_AP_2m": {
+        "car": 0.9221028862997122,
+        "truck": 0.8022763921638227,
+        "bus": 0.9953412532028887,
+        "trailer": 0.0,
+        "construction_vehicle": 0.0,
+        "pedestrian": 0.9222659179827514,
+        "motorcycle": 0.6791650557624855,
+        "bicycle": 0.5792678778698295,
+        "traffic_cone": 0.8017946223751106,
+        "barrier": 0.0
+      },
+      "rerun_in_frozen_env": {
+        "mAP": 0.5719656719186048,
+        "NDS": 0.5760511593150466
+      }
+    },
+    {
+      "model": "Our trained LiDAR (last epoch, 15)",
+      "training": "ours: mini TRAIN only, from scratch",
+      "mAP": 0.21042810347136554,
+      "NDS": 0.23183918106245374,
+      "mATE": 0.6120782174519435,
+      "mASE": 0.6357788250715057,
+      "mAOE": 1.1569166615947888,
+      "mAVE": 0.8816472552614713,
+      "per_class_AP_2m": {
+        "car": 0.5964324415148237,
+        "truck": 0.307500608242921,
+        "bus": 0.3986980767928261,
+        "trailer": 0.0,
+        "construction_vehicle": 0.0,
+        "pedestrian": 0.7356586157528675,
+        "motorcycle": 0.06599129241021726,
+        "bicycle": 0.0,
+        "traffic_cone": 0.0,
+        "barrier": 0.0
+      },
+      "rerun_in_frozen_env": null
+    },
+    {
+      "model": "Our trained LiDAR+Camera (last epoch, 7)",
+      "training": "ours: LiDAR init from our LiDAR, Swin-T ImageNet init",
+      "mAP": 0.1921239898402975,
+      "NDS": 0.206923624523382,
+      "mATE": 0.622375405934012,
+      "mASE": 0.6060367350411495,
+      "mAOE": 1.1362064125607476,
+      "mAVE": 0.987278513743786,
+      "per_class_AP_2m": {
+        "car": 0.6203731430809409,
+        "truck": 0.18319090498593,
+        "bus": 0.36096797739420483,
+        "trailer": 0.0,
+        "construction_vehicle": 0.0,
+        "pedestrian": 0.736470641958175,
+        "motorcycle": 0.020237230983724146,
+        "bicycle": 0.0,
+        "traffic_cone": 0.0,
+        "barrier": 0.0
+      },
+      "rerun_in_frozen_env": null
+    },
+    {
+      "model": "Our LiDAR (best-by-val epoch, selected on VAL -> optimistic)",
+      "training": "ours",
+      "mAP": 0.21403794819922015,
+      "NDS": 0.23823861805036356,
+      "mATE": 0.6083775849773074,
+      "mASE": 0.6162085937397195,
+      "mAOE": 1.1421121218502626,
+      "mAVE": 0.8671323996888811,
+      "per_class_AP_2m": {
+        "car": 0.5993652382326753,
+        "truck": 0.3122553127515936,
+        "bus": 0.4285609604472169,
+        "trailer": 0.0,
+        "construction_vehicle": 0.0,
+        "pedestrian": 0.7333300906124824,
+        "motorcycle": 0.06686787994823312,
+        "bicycle": 0.0,
+        "traffic_cone": 0.0,
+        "barrier": 0.0
+      },
+      "rerun_in_frozen_env": null
+    },
+    {
+      "model": "Our LiDAR+Camera (best-by-val epoch, selected on VAL -> optimistic)",
+      "training": "ours",
+      "mAP": 0.1997107503136239,
+      "NDS": 0.21313195664420861,
+      "mATE": 0.6222197277171226,
+      "mASE": 0.603175975837043,
+      "mAOE": 1.0855880081275893,
+      "mAVE": 0.976086969938498,
+      "per_class_AP_2m": {
+        "car": 0.6193463447903463,
+        "truck": 0.23346736472843482,
+        "bus": 0.3754911184399081,
+        "trailer": 0.0,
+        "construction_vehicle": 0.0,
+        "pedestrian": 0.7491113595070799,
+        "motorcycle": 0.019691315670470028,
+        "bicycle": 0.0,
+        "traffic_cone": 0.0,
+        "barrier": 0.0
+      },
+      "rerun_in_frozen_env": null
+    }
+  ],
+  "stageA": {
+    "epochs": 15,
+    "train_secs": 11060.37569475174,
+    "iters_per_epoch": 1630,
+    "params": {
+      "amp": true,
+      "lr": 3e-05,
+      "accum": 4,
+      "extra": {}
+    },
+    "per_epoch_val": [
+      {
+        "epoch": 2,
+        "mAP": 0.04212317656135307,
+        "NDS": 0.09191610013352812
+      },
+      {
+        "epoch": 4,
+        "mAP": 0.06907559421149909,
+        "NDS": 0.09567805107669922
+      },
+      {
+        "epoch": 6,
+        "mAP": 0.13608271913575093,
+        "NDS": 0.19358342237538756
+      },
+      {
+        "epoch": 8,
+        "mAP": 0.16033168387655533,
+        "NDS": 0.20258063681092078
+      },
+      {
+        "epoch": 10,
+        "mAP": 0.18237462050282804,
+        "NDS": 0.22631020256276338
+      },
+      {
+        "epoch": 12,
+        "mAP": 0.1962355199116423,
+        "NDS": 0.21802167320497046
+      },
+      {
+        "epoch": 14,
+        "mAP": 0.21264554638610766,
+        "NDS": 0.2389840629400876
+      }
+    ],
+    "initial_train_loss": 35.353096894037606,
+    "final_train_loss": 1.483473970467108
+  },
+  "stageB": {
+    "epochs": 7,
+    "train_secs": 9899.399657011032,
+    "iters_per_epoch": 1630,
+    "params": {
+      "amp": true,
+      "lr": 3e-05,
+      "accum": 4,
+      "extra": {}
+    },
+    "per_epoch_val": [
+      {
+        "epoch": 2,
+        "mAP": 0.1753375150494876,
+        "NDS": 0.20392349421420333
+      },
+      {
+        "epoch": 4,
+        "mAP": 0.19933528943084097,
+        "NDS": 0.2089518603692538
+      },
+      {
+        "epoch": 6,
+        "mAP": 0.19958443109879584,
+        "NDS": 0.21357914869708888
+      }
+    ],
+    "initial_train_loss": 1.8739195652337783,
+    "final_train_loss": 1.1074521303557336
+  }
+}

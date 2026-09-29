@@ -1,0 +1,7 @@
+model,training,mAP,NDS,mATE,mASE,mAOE,mAVE,AP@2m_car,AP@2m_truck,AP@2m_bus,AP@2m_pedestrian,AP@2m_motorcycle,AP@2m_bicycle,AP@2m_traffic_cone,AP@2m_trailer,AP@2m_construction_vehicle,AP@2m_barrier
+Official pretrained LiDAR,official (trainval) - CONTAMINATED on mini VAL,0.5431,0.5626,0.4093,0.442,0.4663,0.4488,0.905,0.785,0.996,0.923,0.618,0.491,0.713,0.0,0.0,0.0
+Official pretrained LiDAR+Camera,official (trainval) - CONTAMINATED on mini VAL,0.5702,0.5755,0.4112,0.4471,0.4972,0.4212,0.922,0.802,0.995,0.922,0.679,0.579,0.802,0.0,0.0,0.0
+"Our trained LiDAR (last epoch, 15)","ours: mini TRAIN only, from scratch",0.2104,0.2318,0.6121,0.6358,1.1569,0.8816,0.596,0.308,0.399,0.736,0.066,0.0,0.0,0.0,0.0,0.0
+"Our trained LiDAR+Camera (last epoch, 7)","ours: LiDAR init from our LiDAR, Swin-T ImageNet init",0.1921,0.2069,0.6224,0.606,1.1362,0.9873,0.62,0.183,0.361,0.736,0.02,0.0,0.0,0.0,0.0,0.0
+"Our LiDAR (best-by-val epoch, selected on VAL -> optimistic)",ours,0.214,0.2382,0.6084,0.6162,1.1421,0.8671,0.599,0.312,0.429,0.733,0.067,0.0,0.0,0.0,0.0,0.0
+"Our LiDAR+Camera (best-by-val epoch, selected on VAL -> optimistic)",ours,0.1997,0.2131,0.6222,0.6032,1.0856,0.9761,0.619,0.233,0.375,0.749,0.02,0.0,0.0,0.0,0.0,0.0

@@ -1,0 +1,539 @@
+{
+  "setup": {
+    "gt_evaluated": 2376,
+    "gt_all": 4441,
+    "n_samples": 81
+  },
+  "detection": {
+    "Classical: project LiDAR pipeline (Level 1 code)": {
+      "tp": 1183,
+      "fp": 1592,
+      "ignored": 102,
+      "precision": 0.426,
+      "recall": 0.498,
+      "f1": 0.459,
+      "centre_err_m": 0.89,
+      "n_pred": 2877,
+      "per_image": 35.5,
+      "recall_by_group": {
+        "vehicle": 0.632,
+        "pedestrian": 0.179,
+        "static_small": 0.0
+      },
+      "recall_by_range": {
+        "0-20": 0.45,
+        "20-35": 0.567,
+        "35-50": 0.516
+      }
+    },
+    "Learned: official LiDAR-only (L3C)": {
+      "tp": 1741,
+      "fp": 13,
+      "ignored": 153,
+      "precision": 0.993,
+      "recall": 0.733,
+      "f1": 0.843,
+      "centre_err_m": 0.154,
+      "n_pred": 1907,
+      "per_image": 23.5,
+      "recall_by_group": {
+        "vehicle": 0.743,
+        "pedestrian": 0.71,
+        "static_small": 0.667
+      },
+      "recall_by_range": {
+        "0-20": 0.81,
+        "20-35": 0.682,
+        "35-50": 0.289
+      }
+    },
+    "Learned: official LiDAR-only (L3C) @score>=0.3": {
+      "tp": 2133,
+      "fp": 114,
+      "ignored": 519,
+      "precision": 0.949,
+      "recall": 0.898,
+      "f1": 0.923,
+      "centre_err_m": 0.168,
+      "n_pred": 2766,
+      "per_image": 34.1,
+      "recall_by_group": {
+        "vehicle": 0.901,
+        "pedestrian": 0.889,
+        "static_small": 0.917
+      },
+      "recall_by_range": {
+        "0-20": 0.922,
+        "20-35": 0.894,
+        "35-50": 0.664
+      }
+    },
+    "Learned: official LiDAR-only (L3C) @score>=0.7": {
+      "tp": 827,
+      "fp": 1,
+      "ignored": 11,
+      "precision": 0.999,
+      "recall": 0.348,
+      "f1": 0.516,
+      "centre_err_m": 0.132,
+      "n_pred": 839,
+      "per_image": 10.4,
+      "recall_by_group": {
+        "vehicle": 0.349,
+        "pedestrian": 0.351,
+        "static_small": 0.0
+      },
+      "recall_by_range": {
+        "0-20": 0.483,
+        "20-35": 0.191,
+        "35-50": 0.047
+      }
+    },
+    "Learned: official Camera+LiDAR (L3D)": {
+      "tp": 1872,
+      "fp": 26,
+      "ignored": 230,
+      "precision": 0.986,
+      "recall": 0.788,
+      "f1": 0.876,
+      "centre_err_m": 0.157,
+      "n_pred": 2128,
+      "per_image": 26.3,
+      "recall_by_group": {
+        "vehicle": 0.794,
+        "pedestrian": 0.776,
+        "static_small": 0.667
+      },
+      "recall_by_range": {
+        "0-20": 0.854,
+        "20-35": 0.75,
+        "35-50": 0.367
+      }
+    },
+    "Learned: official Camera+LiDAR (L3D) @score>=0.3": {
+      "tp": 2192,
+      "fp": 154,
+      "ignored": 595,
+      "precision": 0.934,
+      "recall": 0.923,
+      "f1": 0.928,
+      "centre_err_m": 0.17,
+      "n_pred": 2941,
+      "per_image": 36.3,
+      "recall_by_group": {
+        "vehicle": 0.927,
+        "pedestrian": 0.913,
+        "static_small": 0.917
+      },
+      "recall_by_range": {
+        "0-20": 0.935,
+        "20-35": 0.937,
+        "35-50": 0.688
+      }
+    },
+    "Learned: official Camera+LiDAR (L3D) @score>=0.7": {
+      "tp": 961,
+      "fp": 2,
+      "ignored": 28,
+      "precision": 0.998,
+      "recall": 0.404,
+      "f1": 0.576,
+      "centre_err_m": 0.133,
+      "n_pred": 991,
+      "per_image": 12.2,
+      "recall_by_group": {
+        "vehicle": 0.387,
+        "pedestrian": 0.452,
+        "static_small": 0.083
+      },
+      "recall_by_range": {
+        "0-20": 0.556,
+        "20-35": 0.231,
+        "35-50": 0.055
+      }
+    },
+    "Learned: Camera+Radar CRN (pretrained)": {
+      "tp": 1863,
+      "fp": 654,
+      "ignored": 516,
+      "precision": 0.74,
+      "recall": 0.784,
+      "f1": 0.761,
+      "centre_err_m": 0.342,
+      "n_pred": 3033,
+      "per_image": 37.4,
+      "recall_by_group": {
+        "vehicle": 0.751,
+        "pedestrian": 0.862,
+        "static_small": 0.917
+      },
+      "recall_by_range": {
+        "0-20": 0.888,
+        "20-35": 0.685,
+        "35-50": 0.398
+      }
+    },
+    "Learned: Camera+Radar CRN (pretrained) @score>=0.3": {
+      "tp": 2169,
+      "fp": 3382,
+      "ignored": 918,
+      "precision": 0.391,
+      "recall": 0.913,
+      "f1": 0.547,
+      "centre_err_m": 0.362,
+      "n_pred": 6469,
+      "per_image": 79.9,
+      "recall_by_group": {
+        "vehicle": 0.892,
+        "pedestrian": 0.964,
+        "static_small": 0.917
+      },
+      "recall_by_range": {
+        "0-20": 0.966,
+        "20-35": 0.876,
+        "35-50": 0.617
+      }
+    },
+    "Learned: Camera+Radar CRN (pretrained) @score>=0.7": {
+      "tp": 972,
+      "fp": 13,
+      "ignored": 78,
+      "precision": 0.987,
+      "recall": 0.409,
+      "f1": 0.578,
+      "centre_err_m": 0.283,
+      "n_pred": 1063,
+      "per_image": 13.1,
+      "recall_by_group": {
+        "vehicle": 0.411,
+        "pedestrian": 0.399,
+        "static_small": 0.667
+      },
+      "recall_by_range": {
+        "0-20": 0.547,
+        "20-35": 0.251,
+        "35-50": 0.094
+      }
+    },
+    "Learned: fused CL+CR (official CL + CRN)": {
+      "tp": 2219,
+      "fp": 335,
+      "ignored": 681,
+      "precision": 0.869,
+      "recall": 0.934,
+      "f1": 0.9,
+      "centre_err_m": 0.187,
+      "n_pred": 3235,
+      "per_image": 39.9,
+      "recall_by_group": {
+        "vehicle": 0.92,
+        "pedestrian": 0.968,
+        "static_small": 0.917
+      },
+      "recall_by_range": {
+        "0-20": 0.962,
+        "20-35": 0.93,
+        "35-50": 0.672
+      }
+    },
+    "Learned: fused CL+CR (official CL + CRN) @score>=0.3": {
+      "tp": 2315,
+      "fp": 1522,
+      "ignored": 1004,
+      "precision": 0.603,
+      "recall": 0.974,
+      "f1": 0.745,
+      "centre_err_m": 0.196,
+      "n_pred": 4841,
+      "per_image": 59.8,
+      "recall_by_group": {
+        "vehicle": 0.968,
+        "pedestrian": 0.988,
+        "static_small": 1.0
+      },
+      "recall_by_range": {
+        "0-20": 0.985,
+        "20-35": 0.982,
+        "35-50": 0.805
+      }
+    },
+    "Learned: fused CL+CR (official CL + CRN) @score>=0.7": {
+      "tp": 1986,
+      "fp": 65,
+      "ignored": 340,
+      "precision": 0.968,
+      "recall": 0.836,
+      "f1": 0.897,
+      "centre_err_m": 0.187,
+      "n_pred": 2391,
+      "per_image": 29.5,
+      "recall_by_group": {
+        "vehicle": 0.82,
+        "pedestrian": 0.875,
+        "static_small": 0.833
+      },
+      "recall_by_range": {
+        "0-20": 0.905,
+        "20-35": 0.782,
+        "35-50": 0.492
+      }
+    },
+    "Ours: LiDAR-only (Stage A, mini-trained)": {
+      "tp": 352,
+      "fp": 0,
+      "ignored": 3,
+      "precision": 1.0,
+      "recall": 0.148,
+      "f1": 0.258,
+      "centre_err_m": 0.227,
+      "n_pred": 355,
+      "per_image": 4.4,
+      "recall_by_group": {
+        "vehicle": 0.188,
+        "pedestrian": 0.054,
+        "static_small": 0.0
+      },
+      "recall_by_range": {
+        "0-20": 0.22,
+        "20-35": 0.063,
+        "35-50": 0.0
+      }
+    },
+    "Ours: LiDAR-only (Stage A, mini-trained) @score>=0.3": {
+      "tp": 1030,
+      "fp": 33,
+      "ignored": 86,
+      "precision": 0.969,
+      "recall": 0.434,
+      "f1": 0.599,
+      "centre_err_m": 0.281,
+      "n_pred": 1149,
+      "per_image": 14.2,
+      "recall_by_group": {
+        "vehicle": 0.433,
+        "pedestrian": 0.443,
+        "static_small": 0.0
+      },
+      "recall_by_range": {
+        "0-20": 0.578,
+        "20-35": 0.275,
+        "35-50": 0.047
+      }
+    },
+    "Ours: LiDAR-only (Stage A, mini-trained) @score>=0.7": {
+      "tp": 21,
+      "fp": 0,
+      "ignored": 0,
+      "precision": 1.0,
+      "recall": 0.009,
+      "f1": 0.018,
+      "centre_err_m": 0.164,
+      "n_pred": 21,
+      "per_image": 0.3,
+      "recall_by_group": {
+        "vehicle": 0.013,
+        "pedestrian": 0.0,
+        "static_small": 0.0
+      },
+      "recall_by_range": {
+        "0-20": 0.016,
+        "20-35": 0.0,
+        "35-50": 0.0
+      }
+    },
+    "Ours: Camera+LiDAR (Stage B, mini-trained)": {
+      "tp": 455,
+      "fp": 0,
+      "ignored": 7,
+      "precision": 1.0,
+      "recall": 0.191,
+      "f1": 0.321,
+      "centre_err_m": 0.216,
+      "n_pred": 462,
+      "per_image": 5.7,
+      "recall_by_group": {
+        "vehicle": 0.245,
+        "pedestrian": 0.064,
+        "static_small": 0.0
+      },
+      "recall_by_range": {
+        "0-20": 0.27,
+        "20-35": 0.099,
+        "35-50": 0.023
+      }
+    },
+    "Ours: Camera+LiDAR (Stage B, mini-trained) @score>=0.3": {
+      "tp": 1009,
+      "fp": 19,
+      "ignored": 73,
+      "precision": 0.982,
+      "recall": 0.425,
+      "f1": 0.593,
+      "centre_err_m": 0.275,
+      "n_pred": 1101,
+      "per_image": 13.6,
+      "recall_by_group": {
+        "vehicle": 0.456,
+        "pedestrian": 0.356,
+        "static_small": 0.0
+      },
+      "recall_by_range": {
+        "0-20": 0.525,
+        "20-35": 0.326,
+        "35-50": 0.078
+      }
+    },
+    "Ours: Camera+LiDAR (Stage B, mini-trained) @score>=0.7": {
+      "tp": 52,
+      "fp": 0,
+      "ignored": 0,
+      "precision": 1.0,
+      "recall": 0.022,
+      "f1": 0.043,
+      "centre_err_m": 0.18,
+      "n_pred": 52,
+      "per_image": 0.6,
+      "recall_by_group": {
+        "vehicle": 0.031,
+        "pedestrian": 0.0,
+        "static_small": 0.0
+      },
+      "recall_by_range": {
+        "0-20": 0.037,
+        "20-35": 0.002,
+        "35-50": 0.0
+      }
+    }
+  },
+  "occupancy": {
+    "Classical LiDAR occupancy (project buildBevOccupancy)": {
+      "object_cell_recall": 0.518,
+      "explained_by_labelled_objects": 0.245,
+      "occupied_cells_per_frame": 991.0,
+      "occupied_area_m2_per_frame": 248.0
+    },
+    "Classical Radar hits (project rasterizeRadarBev, 5 radars)": {
+      "object_cell_recall": 0.311,
+      "explained_by_labelled_objects": 0.281,
+      "occupied_cells_per_frame": 789.0,
+      "occupied_area_m2_per_frame": 197.0
+    },
+    "Classical LiDAR U Radar (plain union)": {
+      "object_cell_recall": 0.599,
+      "explained_by_labelled_objects": 0.245,
+      "occupied_cells_per_frame": 1607.0,
+      "occupied_area_m2_per_frame": 402.0
+    },
+    "Learned: official LiDAR-only (L3C) (box footprints, score>=0.5)": {
+      "object_cell_recall": 0.769,
+      "explained_by_labelled_objects": 0.995,
+      "occupied_cells_per_frame": 575.0,
+      "occupied_area_m2_per_frame": 144.0
+    },
+    "Learned: official Camera+LiDAR (L3D) (box footprints, score>=0.5)": {
+      "object_cell_recall": 0.815,
+      "explained_by_labelled_objects": 0.994,
+      "occupied_cells_per_frame": 605.0,
+      "occupied_area_m2_per_frame": 151.0
+    },
+    "Learned: Camera+Radar CRN (pretrained) (box footprints, score>=0.5)": {
+      "object_cell_recall": 0.761,
+      "explained_by_labelled_objects": 0.947,
+      "occupied_cells_per_frame": 682.0,
+      "occupied_area_m2_per_frame": 171.0
+    },
+    "Learned: fused CL+CR (official CL + CRN) (box footprints, score>=0.5)": {
+      "object_cell_recall": 0.937,
+      "explained_by_labelled_objects": 0.952,
+      "occupied_cells_per_frame": 839.0,
+      "occupied_area_m2_per_frame": 210.0
+    },
+    "Ours: LiDAR-only (Stage A, mini-trained) (box footprints, score>=0.5)": {
+      "object_cell_recall": 0.182,
+      "explained_by_labelled_objects": 0.948,
+      "occupied_cells_per_frame": 150.0,
+      "occupied_area_m2_per_frame": 38.0
+    },
+    "Ours: Camera+LiDAR (Stage B, mini-trained) (box footprints, score>=0.5)": {
+      "object_cell_recall": 0.235,
+      "explained_by_labelled_objects": 0.954,
+      "occupied_cells_per_frame": 178.0,
+      "occupied_area_m2_per_frame": 45.0
+    }
+  },
+  "robustness": {
+    "full": {
+      "detection": {
+        "precision": 0.426,
+        "recall": 0.498,
+        "f1": 0.459,
+        "per_image": 35.5
+      },
+      "occupancy": {
+        "object_cell_recall": 0.518,
+        "explained_by_labelled_objects": 0.245,
+        "occupied_cells_per_frame": 991.0,
+        "occupied_area_m2_per_frame": 248.0
+      },
+      "lidar_path_s": 0.189
+    },
+    "keep50": {
+      "detection": {
+        "precision": 0.434,
+        "recall": 0.381,
+        "f1": 0.406,
+        "per_image": 26.5
+      },
+      "occupancy": {
+        "object_cell_recall": 0.403,
+        "explained_by_labelled_objects": 0.26,
+        "occupied_cells_per_frame": 631.0,
+        "occupied_area_m2_per_frame": 158.0
+      },
+      "lidar_path_s": 0.084
+    },
+    "keep25": {
+      "detection": {
+        "precision": 0.439,
+        "recall": 0.296,
+        "f1": 0.354,
+        "per_image": 20.2
+      },
+      "occupancy": {
+        "object_cell_recall": 0.285,
+        "explained_by_labelled_objects": 0.283,
+        "occupied_cells_per_frame": 360.0,
+        "occupied_area_m2_per_frame": 90.0
+      },
+      "lidar_path_s": 0.1
+    },
+    "range30": {
+      "detection": {
+        "precision": 0.498,
+        "recall": 0.451,
+        "f1": 0.473,
+        "per_image": 27.5
+      },
+      "occupancy": {
+        "object_cell_recall": 0.474,
+        "explained_by_labelled_objects": 0.284,
+        "occupied_cells_per_frame": 797.0,
+        "occupied_area_m2_per_frame": 199.0
+      },
+      "lidar_path_s": 0.09
+    }
+  },
+  "latency": {
+    "classical_lidar_pipeline_s_per_frame_matlab_cpu": 0.189,
+    "classical_radar_rasterise_s_per_frame_matlab_cpu": 0.057,
+    "learned_official_lidar_only_s_per_frame_T4": [
+      0.303,
+      2
+    ],
+    "learned_official_camera_lidar_s_per_frame_T4": [
+      0.52,
+      2
+    ],
+    "note": "different hardware (local CPU MATLAB with interpreted shims vs Kaggle T4 incl. data loading); indicative only. CRN latency not measured here."
+  }
+}

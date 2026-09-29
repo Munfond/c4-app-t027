@@ -1,0 +1,182 @@
+{
+  "binary_occupancy": [
+    {
+      "system": "Classical LiDAR occupancy (project buildBevOccupancy, single sweep)",
+      "IoU_occupied": 0.2908,
+      "precision": 0.7249,
+      "recall": 0.3269,
+      "precision_tol1": 0.8899,
+      "recall_tol1": 0.5801,
+      "object_cells_covered": 0.1559,
+      "object_cells_covered_tol1": 0.3605,
+      "occupied_cells_per_frame": 975.0
+    },
+    {
+      "system": "Classical radar hits (project rasterizeRadarBev)",
+      "IoU_occupied": 0.0992,
+      "precision": 0.3378,
+      "recall": 0.1232,
+      "precision_tol1": 0.6771,
+      "recall_tol1": 0.243,
+      "object_cells_covered": 0.121,
+      "object_cells_covered_tol1": 0.2449,
+      "occupied_cells_per_frame": 789.0
+    },
+    {
+      "system": "Classical LiDAR U radar (union)",
+      "IoU_occupied": 0.2855,
+      "precision": 0.5238,
+      "recall": 0.3855,
+      "precision_tol1": 0.7768,
+      "recall_tol1": 0.637,
+      "object_cells_covered": 0.2295,
+      "object_cells_covered_tol1": 0.4468,
+      "occupied_cells_per_frame": 1592.0
+    },
+    {
+      "system": "Rule: any obstacle-height LiDAR point (single sweep)",
+      "IoU_occupied": 0.3841,
+      "precision": 0.7508,
+      "recall": 0.4402,
+      "precision_tol1": 0.924,
+      "recall_tol1": 0.6852,
+      "object_cells_covered": 0.2108,
+      "object_cells_covered_tol1": 0.4643,
+      "occupied_cells_per_frame": 1268.0
+    },
+    {
+      "system": "Learned U-Net: LiDAR + radar (our_occupancy.pth)",
+      "IoU_occupied": 0.423,
+      "precision": 0.6861,
+      "recall": 0.5244,
+      "precision_tol1": 0.9094,
+      "recall_tol1": 0.7114,
+      "object_cells_covered": 0.3174,
+      "object_cells_covered_tol1": 0.5197,
+      "occupied_cells_per_frame": 1653.0
+    },
+    {
+      "system": "Learned U-Net: LiDAR only",
+      "IoU_occupied": 0.4099,
+      "precision": 0.6792,
+      "recall": 0.5083,
+      "precision_tol1": 0.9073,
+      "recall_tol1": 0.7004,
+      "object_cells_covered": 0.2845,
+      "object_cells_covered_tol1": 0.4983,
+      "occupied_cells_per_frame": 1618.0
+    },
+    {
+      "system": "Learned U-Net: radar only",
+      "IoU_occupied": 0.0981,
+      "precision": 0.2405,
+      "recall": 0.1421,
+      "precision_tol1": 0.4971,
+      "recall_tol1": 0.2427,
+      "object_cells_covered": 0.1527,
+      "object_cells_covered_tol1": 0.2556,
+      "occupied_cells_per_frame": 1278.0
+    }
+  ],
+  "object_channel": [
+    {
+      "system": "Detection footprints: official Camera+LiDAR (score>=0.5, contaminated)",
+      "object_IoU": 0.4753,
+      "precision": 0.8993,
+      "recall": 0.502
+    },
+    {
+      "system": "Detection footprints: fused CL+CRN (score>=0.5, contaminated)",
+      "object_IoU": 0.5865,
+      "precision": 0.8476,
+      "recall": 0.6557
+    },
+    {
+      "system": "Learned U-Net: LiDAR + radar (our_occupancy.pth) (object class)",
+      "object_IoU": 0.1959,
+      "precision": 0.6192,
+      "recall": 0.2227
+    },
+    {
+      "system": "Learned U-Net: LiDAR only (object class)",
+      "object_IoU": 0.1599,
+      "precision": 0.5686,
+      "recall": 0.182
+    },
+    {
+      "system": "Learned U-Net: radar only (object class)",
+      "object_IoU": 0.06,
+      "precision": 0.2713,
+      "recall": 0.0716
+    }
+  ],
+  "learned_per_class": {
+    "lidar_radar": {
+      "IoU_free": 0.9602,
+      "IoU_static": 0.4898,
+      "IoU_object": 0.1959,
+      "mIoU": 0.5486,
+      "mIoU_occupied_classes": 0.3428,
+      "IoU_occupied(static+object)": 0.423,
+      "occupied_precision": 0.6861,
+      "occupied_recall": 0.5244,
+      "occupied_precision_tol1": 0.9094,
+      "occupied_recall_tol1": 0.7114,
+      "object_precision": 0.6192,
+      "object_recall": 0.2227,
+      "params_M": 1.93,
+      "train_secs": 328,
+      "reload_identical": true,
+      "latency_ms_T4": 3.75,
+      "final_train_loss": 0.2793,
+      "peak_mem_MB": 1088
+    },
+    "lidar": {
+      "IoU_free": 0.9593,
+      "IoU_static": 0.4833,
+      "IoU_object": 0.1599,
+      "mIoU": 0.5342,
+      "mIoU_occupied_classes": 0.3216,
+      "IoU_occupied(static+object)": 0.4099,
+      "occupied_precision": 0.6792,
+      "occupied_recall": 0.5083,
+      "occupied_precision_tol1": 0.9073,
+      "occupied_recall_tol1": 0.7004,
+      "object_precision": 0.5686,
+      "object_recall": 0.182,
+      "params_M": 1.93,
+      "train_secs": 331,
+      "reload_identical": true,
+      "latency_ms_T4": 3.75,
+      "final_train_loss": 0.2761,
+      "peak_mem_MB": 1103
+    },
+    "radar": {
+      "IoU_free": 0.9288,
+      "IoU_static": 0.0655,
+      "IoU_object": 0.06,
+      "mIoU": 0.3515,
+      "mIoU_occupied_classes": 0.0628,
+      "IoU_occupied(static+object)": 0.0981,
+      "occupied_precision": 0.2405,
+      "occupied_recall": 0.1421,
+      "occupied_precision_tol1": 0.4971,
+      "occupied_recall_tol1": 0.2427,
+      "object_precision": 0.2713,
+      "object_recall": 0.0716,
+      "params_M": 1.93,
+      "train_secs": 325,
+      "reload_identical": true,
+      "latency_ms_T4": 3.67,
+      "final_train_loss": 0.6447,
+      "peak_mem_MB": 1103
+    }
+  },
+  "rule_baseline": {
+    "IoU_occupied(static+object)": 0.3841,
+    "occupied_precision": 0.7508,
+    "occupied_recall": 0.4402,
+    "occupied_precision_tol1": 0.924,
+    "occupied_recall_tol1": 0.6852
+  }
+}

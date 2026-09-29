@@ -1,0 +1,86 @@
+{
+  "name": "our_bevfusion_mini",
+  "note": "mini VAL (81 samples, 2 scenes); NOT a full nuScenes benchmark",
+  "epochs": 7,
+  "train_secs": 9899.399657011032,
+  "iters_per_epoch": 1630,
+  "params": {
+    "amp": true,
+    "lr": 3e-05,
+    "accum": 4,
+    "extra": {}
+  },
+  "final_last_epoch": {
+    "tag": "final_last",
+    "ckpt": "our_bevfusion_mini.pth",
+    "rc": 0,
+    "load_mismatch": false,
+    "mAP": 0.1921239898402975,
+    "NDS": 0.206923624523382,
+    "mATE": 0.622375405934012,
+    "mASE": 0.6060367350411495,
+    "mAOE": 1.1362064125607476,
+    "mAVE": 0.987278513743786,
+    "mAAE": 0.6756930492487203,
+    "per_class_AP_2m": {
+      "car": 0.6203731430809409,
+      "truck": 0.18319090498593,
+      "bus": 0.36096797739420483,
+      "trailer": 0.0,
+      "construction_vehicle": 0.0,
+      "pedestrian": 0.736470641958175,
+      "motorcycle": 0.020237230983724146,
+      "bicycle": 0.0,
+      "traffic_cone": 0.0,
+      "barrier": 0.0
+    },
+    "results_json": "/tmp/l3/exports/final_last/pred_instances_3d/results_nusc.json",
+    "ok": true
+  },
+  "best_by_val": {
+    "tag": "final_best",
+    "ckpt": "our_bevfusion_mini_best_by_val_NDS.pth",
+    "rc": 0,
+    "load_mismatch": false,
+    "mAP": 0.1997107503136239,
+    "NDS": 0.21313195664420861,
+    "mATE": 0.6222197277171226,
+    "mASE": 0.603175975837043,
+    "mAOE": 1.0855880081275893,
+    "mAVE": 0.976086969938498,
+    "mAAE": 0.6657515116333698,
+    "per_class_AP_2m": {
+      "car": 0.6193463447903463,
+      "truck": 0.23346736472843482,
+      "bus": 0.3754911184399081,
+      "trailer": 0.0,
+      "construction_vehicle": 0.0,
+      "pedestrian": 0.7491113595070799,
+      "motorcycle": 0.019691315670470028,
+      "bicycle": 0.0,
+      "traffic_cone": 0.0,
+      "barrier": 0.0
+    },
+    "results_json": "/tmp/l3/exports/final_best/pred_instances_3d/results_nusc.json",
+    "ok": true
+  },
+  "per_epoch_val": [
+    {
+      "epoch": 2,
+      "mAP": 0.1753375150494876,
+      "NDS": 0.20392349421420333
+    },
+    {
+      "epoch": 4,
+      "mAP": 0.19933528943084097,
+      "NDS": 0.2089518603692538
+    },
+    {
+      "epoch": 6,
+      "mAP": 0.19958443109879584,
+      "NDS": 0.21357914869708888
+    }
+  ],
+  "final_train_loss": 1.1074521303557336,
+  "initial_train_loss": 1.8739195652337783
+}

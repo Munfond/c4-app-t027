@@ -1,0 +1,24 @@
+GT boxes: all 4441 | evaluated (in BEV, >=5 LiDAR pts): 2376
+system                                                           P     R    F1  n/img  veh R  ped R  cerr
+Classical: project LiDAR pipeline (Level 1 code)              0.43  0.50  0.46   35.5   0.63   0.18  0.89
+Learned: official LiDAR-only (L3C)                            0.99  0.73  0.84   23.5   0.74   0.71  0.15
+Learned: official Camera+LiDAR (L3D)                          0.99  0.79  0.88   26.3   0.79   0.78  0.16
+Learned: Camera+Radar CRN (pretrained)                        0.74  0.78  0.76   37.4   0.75   0.86  0.34
+Learned: fused CL+CR (official CL + CRN)                      0.87  0.93  0.90   39.9   0.92   0.97  0.19
+Ours: LiDAR-only (Stage A, mini-trained)                      1.00  0.15  0.26    4.4   0.19   0.05  0.23
+Ours: Camera+LiDAR (Stage B, mini-trained)                    1.00  0.19  0.32    5.7   0.24   0.06  0.22
+Classical LiDAR occupancy (project buildBevOccupancy)                    recall 0.52 explained 0.24 cells/frame 991
+Classical Radar hits (project rasterizeRadarBev, 5 radars)               recall 0.31 explained 0.28 cells/frame 789
+Classical LiDAR U Radar (plain union)                                    recall 0.60 explained 0.24 cells/frame 1607
+Learned: official LiDAR-only (L3C) (box footprints, score>=0.5)          recall 0.77 explained 0.99 cells/frame 575
+Learned: official Camera+LiDAR (L3D) (box footprints, score>=0.5)        recall 0.81 explained 0.99 cells/frame 605
+Learned: Camera+Radar CRN (pretrained) (box footprints, score>=0.5)      recall 0.76 explained 0.95 cells/frame 682
+Learned: fused CL+CR (official CL + CRN) (box footprints, score>=0.5)    recall 0.94 explained 0.95 cells/frame 839
+Ours: LiDAR-only (Stage A, mini-trained) (box footprints, score>=0.5)    recall 0.18 explained 0.95 cells/frame 150
+Ours: Camera+LiDAR (Stage B, mini-trained) (box footprints, score>=0.5)  recall 0.23 explained 0.95 cells/frame 178
+full {'precision': 0.426, 'recall': 0.498, 'f1': 0.459, 'per_image': 35.5} 0.518
+keep50 {'precision': 0.434, 'recall': 0.381, 'f1': 0.406, 'per_image': 26.5} 0.403
+keep25 {'precision': 0.439, 'recall': 0.296, 'f1': 0.354, 'per_image': 20.2} 0.285
+range30 {'precision': 0.498, 'recall': 0.451, 'f1': 0.473, 'per_image': 27.5} 0.474
+{'classical_lidar_pipeline_s_per_frame_matlab_cpu': 0.189, 'classical_radar_rasterise_s_per_frame_matlab_cpu': 0.057, 'learned_official_lidar_only_s_per_frame_T4': (0.303, 2), 'learned_official_camera_lidar_s_per_frame_T4': (0.52, 2), 'note': 'different hardware (local CPU MATLAB with interpreted shims vs Kaggle T4 incl. data loading); indicative only. CRN latency not measured here.'}
+wrote D:\Vinuni\endgame\cam_lidar_radar\cam_lidar_radat_real_ws\stage_e\results
