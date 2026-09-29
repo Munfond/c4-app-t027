@@ -1,0 +1,23 @@
+{
+  "phase10Run": "20260922_141941_risk_a05251ce",
+  "phase11Run": "20260922_143527_ablation_601f2c7e",
+  "occupancyIoU_CLR": 0.96041271846704568,
+  "occupancyMIoU_CLR": 0.96176705788567485,
+  "flowEpe_mps": 0.29844706279965638,
+  "flowAngleMedian_deg": 4.2596358744793346,
+  "riskObjectMae": 0.016274844918995213,
+  "riskDirectionFraction": 0.864406779661017,
+  "riskFlowBenefit": 0.42465333821438622,
+  "latencyMean_ms_CLR": 357.72731803278685,
+  "realTimeFactor_CLR": 0.279542531305464,
+  "phasePassCount": 14,
+  "phaseCount": 14,
+  "ablationRows": 7,
+  "findings": [
+    "Occupancy IoU cao nhất ở CL (0.966), thấp nhất ở C (0.154).",
+    "Bỏ camera khỏi CLR (→ LR): IoU 0.96 → 0.96 (không đổi đáng kể); mIoU 0.962 → 0.217 (kém đi khi bỏ); flow EPE 0.298 → 0.312 (kém đi khi bỏ); risk MAE 0.0217 → 0.0225 (không đổi đáng kể).",
+    "Bỏ LiDAR khỏi CLR (→ CR): IoU 0.96 → 0.323 (kém đi khi bỏ); mIoU 0.962 → 0.478 (kém đi khi bỏ); flow EPE 0.298 → 0.288 (tốt hơn khi bỏ); risk MAE 0.0217 → 0.0291 (kém đi khi bỏ).",
+    "Bỏ radar khỏi CLR (→ CL): IoU 0.96 → 0.966 (tốt hơn khi bỏ); mIoU 0.962 → 0.975 (tốt hơn khi bỏ); flow EPE 0.298 → 0.203 (tốt hơn khi bỏ); risk MAE 0.0217 → 0.0186 (tốt hơn khi bỏ)."
+  ],
+  "riskMeaning": "uncalibrated risk score"
+}
