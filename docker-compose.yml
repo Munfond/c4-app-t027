@@ -1,19 +1,15 @@
-version: "3.8"
-
 services:
   backend:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    build: .
     ports:
-      - "8000:8000"
-    env_file:
-      - .env
+      - "127.0.0.1:8000:8000"
+    environment:
+      APP_ENV: development
+      NUSC_ROOT: /app/data/nuscenes
+      LAB_DATA_ROOT: /app/data/lab
+      SIM_DATA_ROOT: /app/data/sim
+      ANONYMIZER_ENABLED: "false"
+      LANGCHAIN_TRACING_V2: "false"
     volumes:
-      - ./data:/app/data
+      - ./data:/app/data:ro
     restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
-      interval: 30s
-      timeout: 10s
-      retries: 3

@@ -2,11 +2,13 @@
 import csv, json, os
 import pandas as pd
 
-WS = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SIM_RUNS = r'D:\Vinuni\endgame\cam_lidar_radar\cam_lidar_radar_ws\outputs\main\outputs\runs'
-SIM_FINAL = os.path.join(SIM_RUNS, '20260922_141936_finaldemo_647ad68c')
-SIM_RISK = os.path.join(SIM_RUNS, '20260922_141941_risk_a05251ce')
-SIM_ABL = os.path.join(SIM_RUNS, '20260922_143527_ablation_601f2c7e')
+REPO = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..'))
+WS = os.environ.get('LAB_DATA_ROOT', os.path.join(REPO, 'data', 'lab'))
+SIM_DATA = os.environ.get('SIM_DATA_ROOT', os.path.join(REPO, 'data', 'sim'))
+SIM_ASSETS = os.environ.get('SIM_ASSET_ROOT', os.path.join(REPO, 'frontend', 'public', 'sim'))
+SIM_FINAL = os.path.join(SIM_ASSETS, 'final')
+SIM_RISK = os.path.join(SIM_ASSETS, 'risk')
+SIM_ABL = os.path.join(SIM_ASSETS, 'ablation')
 
 
 def _j(rel):
@@ -63,7 +65,7 @@ def operating_points():
 
 
 def sim_ablation():
-    p = os.path.join(SIM_ABL, 'tables', 'ablation_summary.csv')
+    p = os.path.join(SIM_DATA, 'ablation', 'tables', 'ablation_summary.csv')
     if not os.path.exists(p):
         return None
     df = pd.read_csv(p)

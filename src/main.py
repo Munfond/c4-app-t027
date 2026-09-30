@@ -3,6 +3,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from src.api.lab import router as lab_router
 from src.api.routes import router
 from src.config import get_settings
 
@@ -16,8 +17,8 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(
-    title="AI20K Agent",
-    description="AI Agent built with LangGraph",
+    title="P-027 Perception Lab",
+    description="Read-only nuScenes-mini lab API",
     version="1.0.0",
     lifespan=lifespan,
 )
@@ -32,6 +33,7 @@ app.add_middleware(
 )
 
 app.include_router(router, prefix="/api/v1")
+app.include_router(lab_router, prefix="/api/v1")
 
 
 @app.get("/health")

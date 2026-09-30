@@ -1,110 +1,26 @@
-# Architecture Document
+# P-027 Lab architecture
 
-## System Overview
-
-[Tóm tắt 2-3 câu về kiến trúc hệ thống]
-
-## Architecture Diagram
+Current implementation: 30/09/2026. Frontend UI remains a Next.js scaffold; the read-only lab API and deployment foundation are implemented.
 
 ```mermaid
-graph TB
-    subgraph Frontend
-        UI[React/Next.js UI]
-    end
-
-    subgraph Backend[FastAPI Backend]
-        API[API Routes]
-        Agent[LangGraph Agent]
-        LLM[LLM Service]
-        Tools[Agent Tools]
-    end
-
-    subgraph Data[Data Layer]
-        DB[(Database)]
-        Vector[Vector Store]
-    end
-
-    UI -->|HTTP/REST| API
-    API --> Agent
-    Agent --> LLM
-    Agent --> Tools
-    Agent --> Vector
-    Tools --> DB
-    API --> DB
+flowchart LR
+    J[Judge browser] --> G[Caddy: HTTPS + demo login]
+    G --> F[Next.js standalone]
+    G --> A[FastAPI /api/v1]
+    A --> L[CSV and JSON lab artifacts]
+    A --> N[nuScenes-mini metadata and camera files]
+    N --> X[Optional anonymizer]
+    X --> A
 ```
 
-## Components
+Data is mounted read-only outside Docker images. Backend does not mount raw data as a static website. Camera endpoints return processed JPEGs only and return 503 when processing is disabled/unavailable. Models load lazily; GPU packages are not required by the web environment.
 
-### 1. Frontend (React/Next.js)
-- **Purpose:** [mô tả]
-- **Key Features:** [danh sách]
-- **State Management:** [approach]
+Implemented API: capabilities, detector registry, mini-val scenes and frames, score-filtered detections, benchmark source data and guarded cameras. Models for frame/detection responses are defined in src/models/lab.py; docs/lab-openapi.json is the generated contract.
 
-### 2. Backend (FastAPI)
-- **Purpose:** [mô tả]
-- **API Design:** RESTful
-- **Authentication:** [JWT/None]
+Coordinates: ego x forward, y left, z up; meters; yaw radians counterclockwise. sample_token is the API identity; sample_idx is only the mapping into stored CSV. All precomputed detection exports cover mini-val (81 frames, 2 scenes).
 
-### 3. AI Agent (LangGraph)
-- **Agent Type:** [ReAct / Plan-and-Execute / Custom]
-- **State:** [mô tả state schema]
-- **Nodes:** [danh sách nodes]
-- **Tools:** [danh sách tools]
-- **Flow:**
+Optional research code remains in legacy/streamlit_lab. Its data paths use NUSC_ROOT/LAB_DATA_ROOT; MATLAB_PROJECT_ROOT is required for a separately installed Level 1 project. This code is not automatically executed by public requests.
 
-```mermaid
-graph LR
-    START --> A[Node A]
-    A --> B{Decision}
-    B -->|Yes| C[Node C]
-    B -->|No| D[Node D]
-    C --> E[END]
-    D --> E
-```
+Not implemented yet: lab UI, point-cloud/GT/occupancy/flow/risk tensor endpoints, batch camera cache, public deployment and live GPU inference. Follow docs/UI_UX_TEAM_PLAN.vi.md for the three-person implementation plan.
 
-### 4. Database
-- **Type:** [PostgreSQL / SQLite]
-- **Tables:** [danh sách]
-- **Migrations:** Alembic
-
-### 5. Vector Store
-- **Type:** [ChromaDB / FAISS / Pinecone]
-- **Embeddings:** [model]
-- **Purpose:** [RAG / similarity search]
-
-## Data Flow
-
-1. User gửi request từ Frontend
-2. API route nhận và validate input
-3. Agent xử lý qua LangGraph pipeline
-4. LLM generate response
-5. Tools thực thi actions (nếu cần)
-6. Response trả về Frontend
-
-## Deployment Architecture
-
-```mermaid
-graph LR
-    subgraph Docker
-        FE[Frontend Container]
-        BE[Backend Container]
-        DB_C[Database Container]
-    end
-    FE --> BE --> DB_C
-```
-
-## Security
-
-- API keys stored in `.env` (never commit)
-- Input validation via Pydantic
-- Rate limiting on API endpoints
-- CORS configured for frontend domain
-
-## Design Decisions
-
-| Decision | Choice | Reason |
-|----------|--------|--------|
-| Framework | FastAPI | Async, auto-docs, type-safe |
-| Agent | LangGraph | Flexible state management |
-| Database | [choice] | [reason] |
-| Frontend | Next.js | [reason] |
+CI tests backend and builds frontend. CI_RUNNER_LABELS selects a runner via GitHub labels; deployment is initially manual on a separate server. See docs/DEPLOYMENT.vi.md.

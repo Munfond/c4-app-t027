@@ -10,6 +10,10 @@ build/
 # Virtual environments
 venv/
 .venv/
+.venv-lab/
+.venv-inference/
+weights/
+*.pt
 env/
 
 # Environment variables

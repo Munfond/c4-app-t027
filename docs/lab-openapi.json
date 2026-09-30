@@ -1,0 +1,739 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "P-027 Perception Lab",
+    "description": "Read-only nuScenes-mini lab API",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/v1/anonymize": {
+      "post": {
+        "summary": "Anonymize Image",
+        "operationId": "anonymize_image_api_v1_anonymize_post",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_anonymize_image_api_v1_anonymize_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/chat": {
+      "post": {
+        "summary": "Chat",
+        "operationId": "chat_api_v1_chat_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChatRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChatResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/status": {
+      "get": {
+        "summary": "Agent Status",
+        "operationId": "agent_status_api_v1_status_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/lab/capabilities": {
+      "get": {
+        "tags": [
+          "lab"
+        ],
+        "summary": "Capabilities",
+        "operationId": "capabilities_api_v1_lab_capabilities_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/lab/models": {
+      "get": {
+        "tags": [
+          "lab"
+        ],
+        "summary": "Models",
+        "operationId": "models_api_v1_lab_models_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModelList"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/lab/scenes": {
+      "get": {
+        "tags": [
+          "lab"
+        ],
+        "summary": "Scenes",
+        "operationId": "scenes_api_v1_lab_scenes_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SceneList"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/lab/scenes/{scene_id}/frames": {
+      "get": {
+        "tags": [
+          "lab"
+        ],
+        "summary": "Scene Frames",
+        "operationId": "scene_frames_api_v1_lab_scenes__scene_id__frames_get",
+        "parameters": [
+          {
+            "name": "scene_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Scene Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FrameList"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/lab/frames/{token}/detections": {
+      "get": {
+        "tags": [
+          "lab"
+        ],
+        "summary": "Detections",
+        "operationId": "detections_api_v1_lab_frames__token__detections_get",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Token"
+            }
+          },
+          {
+            "name": "model",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "our_lidar",
+              "title": "Model"
+            }
+          },
+          {
+            "name": "threshold",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "maximum": 1,
+              "minimum": 0,
+              "default": 0.3,
+              "title": "Threshold"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DetectionFrame"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/lab/frames/{token}/cameras/{channel}": {
+      "get": {
+        "tags": [
+          "lab"
+        ],
+        "summary": "Camera",
+        "operationId": "camera_api_v1_lab_frames__token__cameras__channel__get",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Token"
+            }
+          },
+          {
+            "name": "channel",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Channel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/lab/benchmarks": {
+      "get": {
+        "tags": [
+          "lab"
+        ],
+        "summary": "Benchmarks",
+        "operationId": "benchmarks_api_v1_lab_benchmarks_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "summary": "Health",
+        "operationId": "health_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Body_anonymize_image_api_v1_anonymize_post": {
+        "properties": {
+          "file": {
+            "type": "string",
+            "contentMediaType": "application/octet-stream",
+            "title": "File"
+          }
+        },
+        "type": "object",
+        "required": [
+          "file"
+        ],
+        "title": "Body_anonymize_image_api_v1_anonymize_post"
+      },
+      "ChatRequest": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "maxLength": 5000,
+            "minLength": 1,
+            "title": "Message",
+            "description": "Tin nh\u1eafn t\u1eeb user"
+          }
+        },
+        "type": "object",
+        "required": [
+          "message"
+        ],
+        "title": "ChatRequest"
+      },
+      "ChatResponse": {
+        "properties": {
+          "response": {
+            "type": "string",
+            "title": "Response",
+            "description": "Ph\u1ea3n h\u1ed3i t\u1eeb agent"
+          },
+          "analysis": {
+            "type": "string",
+            "title": "Analysis",
+            "description": "Ph\u00e2n t\u00edch n\u1ed9i b\u1ed9",
+            "default": ""
+          }
+        },
+        "type": "object",
+        "required": [
+          "response"
+        ],
+        "title": "ChatResponse"
+      },
+      "DetectionBox": {
+        "properties": {
+          "class_name": {
+            "type": "string",
+            "title": "Class Name"
+          },
+          "x": {
+            "type": "number",
+            "title": "X"
+          },
+          "y": {
+            "type": "number",
+            "title": "Y"
+          },
+          "z": {
+            "type": "number",
+            "title": "Z"
+          },
+          "w": {
+            "type": "number",
+            "title": "W"
+          },
+          "l": {
+            "type": "number",
+            "title": "L"
+          },
+          "h": {
+            "type": "number",
+            "title": "H"
+          },
+          "yaw": {
+            "type": "number",
+            "title": "Yaw"
+          },
+          "vx": {
+            "type": "number",
+            "title": "Vx"
+          },
+          "vy": {
+            "type": "number",
+            "title": "Vy"
+          },
+          "score": {
+            "type": "number",
+            "title": "Score"
+          }
+        },
+        "type": "object",
+        "required": [
+          "class_name",
+          "x",
+          "y",
+          "z",
+          "w",
+          "l",
+          "h",
+          "yaw",
+          "vx",
+          "vy",
+          "score"
+        ],
+        "title": "DetectionBox"
+      },
+      "DetectionFrame": {
+        "properties": {
+          "frame": {
+            "$ref": "#/components/schemas/Frame"
+          },
+          "model": {
+            "type": "string",
+            "title": "Model"
+          },
+          "mode": {
+            "type": "string",
+            "const": "precomputed",
+            "title": "Mode"
+          },
+          "coordinates": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Coordinates"
+          },
+          "boxes": {
+            "items": {
+              "$ref": "#/components/schemas/DetectionBox"
+            },
+            "type": "array",
+            "title": "Boxes"
+          }
+        },
+        "type": "object",
+        "required": [
+          "frame",
+          "model",
+          "mode",
+          "coordinates",
+          "boxes"
+        ],
+        "title": "DetectionFrame"
+      },
+      "Frame": {
+        "properties": {
+          "sample_token": {
+            "type": "string",
+            "title": "Sample Token"
+          },
+          "sample_idx": {
+            "type": "integer",
+            "title": "Sample Idx"
+          },
+          "scene": {
+            "type": "string",
+            "title": "Scene"
+          },
+          "timestamp_s": {
+            "type": "number",
+            "title": "Timestamp S"
+          },
+          "split": {
+            "type": "string",
+            "const": "mini_val",
+            "title": "Split"
+          }
+        },
+        "type": "object",
+        "required": [
+          "sample_token",
+          "sample_idx",
+          "scene",
+          "timestamp_s",
+          "split"
+        ],
+        "title": "Frame"
+      },
+      "FrameList": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/Frame"
+            },
+            "type": "array",
+            "title": "Items"
+          }
+        },
+        "type": "object",
+        "required": [
+          "items"
+        ],
+        "title": "FrameList"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "ModelInfo": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "sensors": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Sensors"
+          },
+          "origin": {
+            "type": "string",
+            "enum": [
+              "official",
+              "own",
+              "mixed"
+            ],
+            "title": "Origin"
+          },
+          "mode": {
+            "type": "string",
+            "const": "precomputed",
+            "title": "Mode"
+          },
+          "available": {
+            "type": "boolean",
+            "title": "Available"
+          },
+          "split": {
+            "type": "string",
+            "const": "mini_val",
+            "title": "Split"
+          },
+          "contaminated": {
+            "type": "boolean",
+            "title": "Contaminated"
+          },
+          "fusion_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fusion Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "sensors",
+          "origin",
+          "mode",
+          "available",
+          "split",
+          "contaminated",
+          "fusion_type"
+        ],
+        "title": "ModelInfo"
+      },
+      "ModelList": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ModelInfo"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "limitations": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Limitations"
+          }
+        },
+        "type": "object",
+        "required": [
+          "items",
+          "limitations"
+        ],
+        "title": "ModelList"
+      },
+      "Scene": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "split": {
+            "type": "string",
+            "const": "mini_val",
+            "title": "Split"
+          },
+          "frame_count": {
+            "type": "integer",
+            "title": "Frame Count"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "split",
+          "frame_count"
+        ],
+        "title": "Scene"
+      },
+      "SceneList": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/Scene"
+            },
+            "type": "array",
+            "title": "Items"
+          }
+        },
+        "type": "object",
+        "required": [
+          "items"
+        ],
+        "title": "SceneList"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}

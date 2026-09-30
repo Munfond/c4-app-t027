@@ -2,6 +2,14 @@
 .gitignore
 .env
 .venv
+.venv-lab
+.venv-inference
+frontend/
+data/
+weights/
+*.pt
+legacy/
+.ai-log/
 __pycache__
 *.pyc
 .pytest_cache

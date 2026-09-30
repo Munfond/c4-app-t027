@@ -8,8 +8,9 @@ import json, os
 import numpy as np
 from scipy.ndimage import binary_dilation
 
-WS = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
-DATA = os.environ.get('NUSC_ROOT', os.path.join(WS, 'data'))
+REPO = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..', '..'))
+WS = os.environ.get('LAB_DATA_ROOT', os.path.join(REPO, 'data', 'lab'))
+DATA = os.environ.get('NUSC_ROOT', os.path.join(REPO, 'data', 'nuscenes'))
 MINI_TRAIN = ['scene-0061', 'scene-0553', 'scene-0655', 'scene-0757', 'scene-0796', 'scene-1077', 'scene-1094', 'scene-1100']
 MINI_VAL = ['scene-0103', 'scene-0916']
 NC, RES, EXT = 200, 0.5, 50.0

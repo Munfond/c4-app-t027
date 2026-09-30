@@ -79,3 +79,11 @@ uvicorn src.main:app --reload
 ## License
 
 MIT
+
+## Lab foundation (30/09/2026)
+
+- [Local setup and implemented API](docs/LAB_SETUP.vi.md)
+- [UI/UX work split for three teammates](docs/UI_UX_TEAM_PLAN.vi.md)
+- [Server deployment and Phoenix runner](docs/DEPLOYMENT.vi.md)
+
+The frontend remains a scaffold. Read-only lab API now exposes real mini-val scenes, frames, detections and benchmark artifacts. GPU inference is optional; camera images fail closed until the anonymizer is enabled and available.

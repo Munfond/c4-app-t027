@@ -1,0 +1,3 @@
+# Optional provider SDKs for src/services/llm.py; the lab does not require an API key.
+langchain>=0.3,<2
+langchain-openai>=0.3,<2
