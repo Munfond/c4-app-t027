@@ -22,3 +22,7 @@
 ## Lưu ý khi port
 - Đường dẫn cứng trong code cũ: `tables.py` (SIM_RUNS), `matlab_bridge.py` (PROJ). Code cũ chưa chạy được nguyên trạng trong P-027; `NUSC_ROOT` env trỏ tới `data/nuscenes` cho `nuscenes_local.py`.
 - `data/` nằm trong .gitignore và checkpoint cần đưa lên server bằng cách khác (volume/artifact storage) khi làm vấn đề 2.
+
+
+## Cập nhật tích hợp P-027 (30/09/2026)
+191 artifact dưới data/lab và data/sim đã được Git track trên main dù data/ nằm trong .gitignore. Raw nuScenes tại data/nuscenes vẫn ignored. Đường dẫn legacy đã chuyển về layout P-027; MATLAB_PROJECT_ROOT phải được cấu hình riêng. Xem docs/LAB_SETUP.vi.md cho API mới; các lệnh trong guide cũ là bằng chứng lịch sử, không phải cấu hình triển khai hiện tại.

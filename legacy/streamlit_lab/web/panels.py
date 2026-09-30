@@ -8,8 +8,10 @@ from matplotlib.colors import ListedColormap
 from PIL import Image
 
 WEB = os.path.dirname(os.path.abspath(__file__))
-WS = os.path.dirname(WEB)
-sys.path.insert(0, os.path.join(WS, 'tools', 'local'))
+LEGACY_ROOT = os.path.dirname(WEB)
+REPO = os.path.dirname(os.path.dirname(LEGACY_ROOT))
+WS = os.environ.get('LAB_DATA_ROOT', os.path.join(REPO, 'data', 'lab'))
+sys.path.insert(0, os.path.join(LEGACY_ROOT, 'tools', 'local'))
 from nuscenes_local import NuScenesMini, CAMS, xs, qR          # noqa: E402
 from models import load_occupancy, load_flow, warp_history      # noqa: E402
 

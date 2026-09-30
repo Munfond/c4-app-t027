@@ -3,7 +3,8 @@
 import hashlib, os, sys
 import torch
 
-WS = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+REPO = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..', '..'))
+WS = os.environ.get('LAB_DATA_ROOT', os.path.join(REPO, 'data', 'lab'))
 man = {}
 for line in open(os.path.join(WS, 'models', 'CHECKPOINTS.sha256')):
     h, p = line.split(None, 1); man[os.path.normpath(p.strip().lstrip('*'))] = h

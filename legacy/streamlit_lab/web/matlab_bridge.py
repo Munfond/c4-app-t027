@@ -4,7 +4,7 @@ import os, threading
 import numpy as np
 
 WS = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PROJ = r'D:\Vinuni\endgame\cam_lidar_radar\cam_lidar_radar_ws'
+PROJ = os.environ.get('MATLAB_PROJECT_ROOT', '')
 _lock = threading.Lock()
 _eng = None
 
@@ -21,6 +21,8 @@ def engine():
     global _eng
     with _lock:
         if _eng is None:
+            if not is_available():
+                raise RuntimeError('Set MATLAB_PROJECT_ROOT and install MATLAB Engine')
             import matlab.engine
             _eng = matlab.engine.start_matlab()
             _eng.addpath(_eng.genpath(os.path.join(PROJ, 'src')), nargout=0); _eng.addpath(os.path.join(PROJ, 'config'), nargout=0)

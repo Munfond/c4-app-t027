@@ -1,0 +1,42 @@
+# Run from repo root: docker compose --env-file deploy/.env -f deploy/compose.yml up -d --build
+name: p027
+services:
+  backend:
+    build:
+      context: ..
+    environment:
+      APP_ENV: production
+      NUSC_ROOT: /app/data/nuscenes
+      LAB_DATA_ROOT: /app/data/lab
+      SIM_DATA_ROOT: /app/data/sim
+      ANONYMIZER_ENABLED: "false"
+      LANGCHAIN_TRACING_V2: "false"
+    volumes:
+      - ${LAB_VOLUME:?Set LAB_VOLUME to the server data directory}:/app/data:ro
+    restart: unless-stopped
+  frontend:
+    build:
+      context: ../frontend
+    restart: unless-stopped
+    depends_on:
+      backend:
+        condition: service_healthy
+  gateway:
+    image: caddy:2-alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      LAB_DOMAIN: ${LAB_DOMAIN:?Set a domain pointing at the server}
+      JUDGE_USER: ${JUDGE_USER:-judge}
+      JUDGE_PASSWORD_HASH: ${JUDGE_PASSWORD_HASH:?Set a Caddy password hash}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - frontend
+    restart: unless-stopped
+volumes:
+  caddy_data:
+  caddy_config:

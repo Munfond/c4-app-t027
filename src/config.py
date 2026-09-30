@@ -1,24 +1,34 @@
 from functools import lru_cache
+from pathlib import Path
 from typing import Literal
 
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
-        env_file=".env",
+        env_file=PROJECT_ROOT / ".env",
         env_file_encoding="utf-8",
         extra="ignore",
     )
 
     # App
-    app_name: str = "AI20K Agent"
+    app_name: str = "P-027 Perception Lab"
     app_env: Literal["development", "production", "test"] = "development"
     app_port: int = Field(default=8000, ge=1, le=65535)
     app_host: str = "0.0.0.0"
     log_level: Literal["DEBUG", "INFO", "WARNING", "ERROR"] = "INFO"
     cors_origins: str = "http://localhost:3000"
+    nusc_root: Path = PROJECT_ROOT / "data/nuscenes"
+    lab_data_root: Path = PROJECT_ROOT / "data/lab"
+    sim_data_root: Path = PROJECT_ROOT / "data/sim"
+    plate_weights: Path = PROJECT_ROOT / "weights/plate_yolov8.pt"
+    anonymizer_enabled: bool = False
+    max_upload_bytes: int = Field(default=10 * 1024 * 1024, ge=1)
+    max_image_pixels: int = Field(default=12_000_000, ge=1)
 
     # LLM
     openai_api_key: str = ""

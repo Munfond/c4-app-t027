@@ -1,0 +1,22 @@
+{$LAB_DOMAIN} {
+    basic_auth {
+        {$JUDGE_USER} {$JUDGE_PASSWORD_HASH}
+    }
+    request_body {
+        max_size 12MB
+    }
+    # Legacy camera composites have no anonymization audit yet.
+    @unreviewed path /lab/*
+    handle @unreviewed {
+        respond "Use processed lab API; legacy media pending privacy review" 404
+    }
+    handle /api/* {
+        reverse_proxy backend:8000
+    }
+    handle /health {
+        reverse_proxy backend:8000
+    }
+    handle {
+        reverse_proxy frontend:3000
+    }
+}

@@ -1,0 +1,12 @@
+# Optional CPU/GPU inference; install separately from the web environment.
+# facenet-pytorch 2.6 requires torch <2.3 and Pillow <10.3.
+-r requirements-web.txt
+numpy>=1.24,<2
+scipy>=1.11,<2
+matplotlib>=3.8,<4
+torch==2.2.2
+torchvision==0.17.2
+facenet-pytorch==2.6.0
+Pillow==10.2.0
+opencv-python==4.10.0.84
+ultralytics>=8.2,<9
