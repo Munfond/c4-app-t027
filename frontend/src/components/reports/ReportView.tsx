@@ -55,7 +55,7 @@ export function ReportView({ className = "" }: { className?: string }) {
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<"all" | "detection" | "occupancy" | "flow" | "risk">("all");
 
-  const fetchReport = async () => {
+  const fetchReport = React.useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
@@ -70,10 +70,35 @@ export function ReportView({ className = "" }: { className?: string }) {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
-    fetchReport();
+    let ignore = false;
+    const loadInitial = async () => {
+      try {
+        const res = await fetch("/api/v1/lab/benchmarks");
+        if (!res.ok) {
+          throw new Error(`HTTP ${res.status}: Không thể tải báo cáo số liệu`);
+        }
+        const data: BenchmarkReportData = await res.json();
+        if (!ignore) {
+          setReport(data);
+        }
+      } catch (err: unknown) {
+        if (!ignore) {
+          setError(err instanceof Error ? err.message : "Đã có lỗi xảy ra");
+        }
+      } finally {
+        if (!ignore) {
+          setLoading(false);
+        }
+      }
+    };
+
+    loadInitial();
+    return () => {
+      ignore = true;
+    };
   }, []);
 
   // Format flow items
