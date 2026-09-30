@@ -20,13 +20,16 @@ def available(call, *args):
 def capabilities():
     settings = get_settings()
     raw = (settings.nusc_root / "v1.0-mini/sample_data.json").is_file()
+    cache_dir = settings.resolved_camera_cache_dir
+    cache_present = cache_dir.is_dir() and any(cache_dir.glob("*.jpg"))
     return {
         "schema_version": "1.0",
         "frame_catalog": (settings.lab_data_root / "exports/L3E/samples.csv").is_file(),
         "raw_metadata_present": raw,
         "anonymizer_enabled": settings.anonymizer_enabled,
         "plate_weights_present": settings.plate_weights.is_file(),
-        "camera_policy": "processed-only; returns 503 if anonymizer unavailable",
+        "camera_cache_present": cache_present,
+        "camera_policy": "processed-only; returns 503 if anonymizer unavailable and not cached",
         "live_inference": False,
         "matlab_live": False,
         "models": lab.models(),
@@ -81,18 +84,42 @@ def camera(token: str, channel: str):
         raise HTTPException(422, "Unknown camera channel")
     if available(lab.frame, token) is None:
         raise HTTPException(404, "Frame not found")
+
+    # 1. Return pre-processed cached image if available
+    cached = lab.get_cached_camera(token, channel)
+    if cached is not None:
+        return Response(
+            cached,
+            media_type="image/jpeg",
+            headers={
+                "Cache-Control": "public, max-age=86400",
+                "X-Camera-Cache": "HIT",
+                "X-Anonymized": "true",
+            },
+        )
+
+    # 2. Cache miss: require anonymizer to process raw camera file
     try:
         path = available(lab.camera_path, token, channel)
         if path.stat().st_size > get_settings().max_upload_bytes:
             raise HTTPException(413, "Camera image exceeds size limit")
         result = anonymize_bytes(path.read_bytes())
+        lab.save_cached_camera(token, channel, result)
     except FileNotFoundError as exc:
         raise HTTPException(503, "Camera file missing") from exc
     except KeyError as exc:
         raise HTTPException(404, "Camera frame not found") from exc
     except (InvalidImageError, UnavailableAnonymizerError, ValueError) as exc:
         raise HTTPException(503, "Processed camera image unavailable") from exc
-    return Response(result, media_type="image/jpeg", headers={"Cache-Control": "no-store"})
+    return Response(
+        result,
+        media_type="image/jpeg",
+        headers={
+            "Cache-Control": "public, max-age=86400",
+            "X-Camera-Cache": "MISS",
+            "X-Anonymized": "true",
+        },
+    )
 
 
 @router.get("/benchmarks")
