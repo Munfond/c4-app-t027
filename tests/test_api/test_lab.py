@@ -79,3 +79,21 @@ async def test_camera_never_returns_raw_when_disabled(client, lab_settings):
     assert response.status_code == 503
     assert response.content != image.read_bytes()
     assert (await client.get("/api/v1/lab/frames/token-a/cameras/INVALID")).status_code == 422
+
+
+@pytest.mark.asyncio
+async def test_camera_cache_hit_and_headers(client, lab_settings):
+    cache_dir = lab_settings.resolved_camera_cache_dir
+    cache_dir.mkdir(parents=True, exist_ok=True)
+    cached_bytes = b"\xff\xd8\xff\xe0\x00\x10JFIFfake-anonymized-image"
+    (cache_dir / "token-a_CAM_FRONT.jpg").write_bytes(cached_bytes)
+
+    response = await client.get("/api/v1/lab/frames/token-a/cameras/CAM_FRONT")
+    assert response.status_code == 200
+    assert response.content == cached_bytes
+    assert response.headers["x-camera-cache"] == "HIT"
+    assert response.headers["x-anonymized"] == "true"
+
+    cap_res = await client.get("/api/v1/lab/capabilities")
+    assert cap_res.status_code == 200
+    assert cap_res.json()["camera_cache_present"] is True
