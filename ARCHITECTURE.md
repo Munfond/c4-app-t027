@@ -23,4 +23,4 @@ Optional research code remains in legacy/streamlit_lab. Its data paths use NUSC_
 
 Not implemented yet: lab UI, point-cloud/GT/occupancy/flow/risk tensor endpoints, batch camera cache, public deployment and live GPU inference. Follow docs/UI_UX_TEAM_PLAN.vi.md for the three-person implementation plan.
 
-CI tests backend and builds frontend. CI_RUNNER_LABELS selects a runner via GitHub labels; deployment is initially manual on a separate server. See docs/DEPLOYMENT.vi.md.
+CI tests backend and builds frontend. Both jobs target the Phoenix Windows runner using self-hosted, Windows, X64, team-27 labels; deployment is initially manual on a separate server. See docs/DEPLOYMENT.vi.md.

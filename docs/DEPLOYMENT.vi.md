@@ -49,15 +49,14 @@ Raw mini khoảng 5.06 GiB; chừa chỗ Docker images, build cache, media và r
 ## Dùng runner Phoenix
 - Đội trưởng lấy token trên trang Phoenix; chọn đúng OS/architecture và làm theo lệnh Phoenix hiển thị. Không paste token vào repo/chat/log.
 - Đăng ký runner CI trên máy riêng hoặc VM, cài dưới dạng service nếu chạy 24/7.
-- Nhãn ví dụ p027-ci chỉ là đề xuất; dùng đúng nhãn thực tế Phoenix hiển thị.
-- Workflow hiện hỗ trợ repository variable CI_RUNNER_LABELS, ví dụ JSON:
-  ["self-hosted", "linux", "x64", "p027-ci"]
-- Nếu chưa cấu hình variable, workflow dùng ubuntu-latest. Đây là fallback khai báo sẵn, không xác nhận Phoenix pool của đội dùng nhãn đó; nếu pool dùng nhãn riêng thì đặt variable theo pool.
-- GitHub chọn máy khớp tất cả nhãn, không tự fallback sang pool khác khi runner riêng offline.
-- Nếu không có quyền sửa repository variable, người quản lý repo cấu hình hoặc đổi runs-on trong PR.
+- Runner đã đăng ký: team-27-Munfond; labels: self-hosted, Windows, X64, team-27.
+- Workflow hiện dùng trực tiếp runs-on: [self-hosted, Windows, X64, team-27] cho backend và frontend; không cần tạo repository variable.
+- Dùng shell powershell có sẵn trên Windows, không yêu cầu PowerShell 7/pwsh. setup-python/setup-node chuẩn bị runtime cho job.
+- GitHub chọn máy khớp tất cả nhãn; runner offline thì job chờ, không tự fallback về pool chung.
+- Với một runner, hai job có thể chạy lần lượt. Giữ run.cmd hoạt động và máy không sleep, hoặc cấu hình service theo hướng dẫn web Lab.
 - Giữ runner chạy PR tách khỏi production data/secrets. Repo private vẫn có thể chạy code do collaborator sửa.
 - Người 1 deploy ban đầu thủ công trên máy demo với tunnel; nếu chọn VPS thì dùng hướng dẫn trên. Khi URL hoạt động, thêm workflow_dispatch cho deploy từ main, dùng tài khoản SSH giới hạn hoặc runner deploy riêng. Không tự deploy mọi PR lên server giám khảo.
-- Chưa thêm workflow deploy tự động vì chưa có server, SSH account, domain hay nhãn runner thực tế.
+- Chưa thêm workflow deploy tự động vì chưa có server, SSH account, domain và quyền deploy thực tế.
 
 ## Checklist bàn giao cho giám khảo
 - URL HTTPS có thể truy cập từ Internet; tài khoản riêng, không phải tài khoản admin.

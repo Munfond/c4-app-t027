@@ -9,10 +9,14 @@ on:
 permissions:
   contents: read
 
+defaults:
+  run:
+    shell: powershell
+
 jobs:
   backend:
-    # Set CI_RUNNER_LABELS repo variable to a JSON label array to opt into Phoenix runner.
-    runs-on: ${{ fromJSON(vars.CI_RUNNER_LABELS || '["ubuntu-latest"]') }}
+    # Phoenix team runner: team-27-Munfond (Windows x64).
+    runs-on: [self-hosted, Windows, X64, team-27]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -26,7 +30,7 @@ jobs:
           APP_ENV: test
           LANGCHAIN_TRACING_V2: "false"
   frontend:
-    runs-on: ${{ fromJSON(vars.CI_RUNNER_LABELS || '["ubuntu-latest"]') }}
+    runs-on: [self-hosted, Windows, X64, team-27]
     defaults:
       run:
         working-directory: frontend
