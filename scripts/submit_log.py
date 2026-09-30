@@ -25,6 +25,18 @@ try:
 except ImportError:
     pass
 
+# Direct .env fallback if python-dotenv is not installed in the executing python
+_env_file = Path(__file__).resolve().parents[1] / ".env"
+if _env_file.is_file():
+    for line in _env_file.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        k, v = line.split("=", 1)
+        k, v = k.strip(), v.strip().strip("'").strip('"')
+        if k.startswith("AI_LOG_"):
+            os.environ[k] = v
+
 SERVER_URL = os.environ.get("AI_LOG_SERVER", "")
 API_KEY = os.environ.get("AI_LOG_API_KEY", "")
 LOG_DIR = Path(os.environ.get("AI_LOG_DIR", ".ai-log"))
