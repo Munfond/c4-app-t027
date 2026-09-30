@@ -134,9 +134,12 @@ def get_cached_camera(token: str, channel: str) -> bytes | None:
 
 
 def save_cached_camera(token: str, channel: str, data: bytes) -> None:
-    path = camera_cache_path(token, channel)
-    path.parent.mkdir(parents=True, exist_ok=True)
-    temp_path = path.with_suffix(f".tmp.{path.suffix}")
-    temp_path.write_bytes(data)
-    temp_path.replace(path)
+    try:
+        path = camera_cache_path(token, channel)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        temp_path = path.with_suffix(f".tmp.{path.suffix}")
+        temp_path.write_bytes(data)
+        temp_path.replace(path)
+    except OSError:
+        pass
 
