@@ -97,3 +97,30 @@ async def test_camera_cache_hit_and_headers(client, lab_settings):
     cap_res = await client.get("/api/v1/lab/capabilities")
     assert cap_res.status_code == 200
     assert cap_res.json()["camera_cache_present"] is True
+
+
+@pytest.mark.asyncio
+async def test_benchmarks_provenance_and_limitations(client, lab_settings):
+    # 1. When benchmark files are absent, available is False and data is None (fail-safe, no 500)
+    response = await client.get("/api/v1/lab/benchmarks")
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["split"] == "mini_val"
+    assert payload["frame_count"] == 81
+    assert "limitations" in payload
+    assert len(payload["limitations"]) == 4
+    assert payload["sections"]["detection"]["available"] is False
+    assert payload["sections"]["detection"]["data"] is None
+
+    # 2. When benchmark file is present, available is True and data is loaded correctly
+    det_path = lab_settings.lab_data_root / "models/our_bevfusion_mini/metrics.json"
+    det_path.parent.mkdir(parents=True, exist_ok=True)
+    det_path.write_text(json.dumps({"rows": [{"model": "our_bevfusion", "mAP": 0.54}]}))
+
+    response = await client.get("/api/v1/lab/benchmarks")
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["sections"]["detection"]["available"] is True
+    assert payload["sections"]["detection"]["source"] == "models/our_bevfusion_mini/metrics.json"
+    assert payload["sections"]["detection"]["data"]["rows"][0]["model"] == "our_bevfusion"
+    assert payload["sections"]["detection"]["data"]["rows"][0]["mAP"] == 0.54
