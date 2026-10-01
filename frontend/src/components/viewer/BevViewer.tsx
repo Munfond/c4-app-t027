@@ -151,11 +151,17 @@ export function BevViewer({
 
   const handleResetView = () => {
     const renderer = rendererRef.current;
-    const currentViewState = viewState ?? renderer?.getViewState();
-    if (
-      currentViewState &&
-      areBevViewStatesEquivalent(currentViewState, DEFAULT_BEV_VIEW_STATE)
-    ) {
+    const rendererViewState = renderer?.getViewState();
+    const controlledViewIsDefault =
+      !viewState ||
+      areBevViewStatesEquivalent(viewState, DEFAULT_BEV_VIEW_STATE);
+    const rendererViewIsDefault =
+      !rendererViewState ||
+      areBevViewStatesEquivalent(rendererViewState, DEFAULT_BEV_VIEW_STATE);
+    if (controlledViewIsDefault && rendererViewIsDefault) {
+      if (renderer) {
+        setViewportMetrics(renderer.getViewportMetrics());
+      }
       return;
     }
 
@@ -164,6 +170,9 @@ export function BevViewer({
       visibleHeightMeters: DEFAULT_BEV_VIEW_STATE.visibleHeightMeters,
     };
     renderer?.setViewState(defaultViewState);
+    if (renderer) {
+      setViewportMetrics(renderer.getViewportMetrics());
+    }
     onViewStateChange?.(defaultViewState);
   };
 

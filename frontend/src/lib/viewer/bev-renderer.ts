@@ -62,16 +62,28 @@ function disposeObject(root: THREE.Object3D): void {
   });
 }
 
-function createTextSprite(text: string, color: string): THREE.Sprite | null {
-  const canvas = document.createElement("canvas");
-  canvas.width = 512;
-  canvas.height = 96;
+interface TextSprite {
+  canvas: HTMLCanvasElement;
+  context: CanvasRenderingContext2D;
+  sprite: THREE.Sprite;
+  texture: THREE.CanvasTexture;
+  text: string;
+  color: string;
+}
 
-  const context = canvas.getContext("2d");
-  if (!context) {
-    return null;
-  }
+interface DetectionVisual {
+  box: THREE.Group;
+  fillMaterial: THREE.MeshBasicMaterial;
+  edgeMaterial: THREE.LineBasicMaterial;
+  confidence: TextSprite | null;
+}
 
+function drawTextSprite(
+  canvas: HTMLCanvasElement,
+  context: CanvasRenderingContext2D,
+  text: string,
+  color: string,
+): void {
   context.clearRect(0, 0, canvas.width, canvas.height);
   context.fillStyle = "rgba(9, 9, 11, 0.88)";
   context.beginPath();
@@ -85,21 +97,56 @@ function createTextSprite(text: string, color: string): THREE.Sprite | null {
   context.textAlign = "center";
   context.textBaseline = "middle";
   context.fillText(text, canvas.width / 2, canvas.height / 2, canvas.width - 28);
+}
+
+function createTextSprite(text: string, color: string): TextSprite | null {
+  const canvas = document.createElement("canvas");
+  canvas.width = 512;
+  canvas.height = 96;
+
+  const context = canvas.getContext("2d");
+  if (!context) {
+    return null;
+  }
+
+  drawTextSprite(canvas, context, text, color);
 
   const texture = new THREE.CanvasTexture(canvas);
   texture.colorSpace = THREE.SRGBColorSpace;
   texture.needsUpdate = true;
 
-  const material = new THREE.SpriteMaterial({
-    map: texture,
-    depthTest: false,
-    depthWrite: false,
-    transparent: true,
-  });
-  const sprite = new THREE.Sprite(material);
-  sprite.scale.set(12, 2.25, 1);
-  sprite.renderOrder = 20;
-  return sprite;
+  let material: THREE.SpriteMaterial | null = null;
+  try {
+    material = new THREE.SpriteMaterial({
+      map: texture,
+      depthTest: false,
+      depthWrite: false,
+      transparent: true,
+    });
+    const sprite = new THREE.Sprite(material);
+    sprite.scale.set(12, 2.25, 1);
+    sprite.renderOrder = 20;
+    return { canvas, context, sprite, texture, text, color };
+  } catch (cause) {
+    material?.dispose();
+    texture.dispose();
+    throw cause;
+  }
+}
+
+function updateTextSprite(
+  textSprite: TextSprite,
+  text: string,
+  color: string,
+): void {
+  if (textSprite.text === text && textSprite.color === color) {
+    return;
+  }
+
+  drawTextSprite(textSprite.canvas, textSprite.context, text, color);
+  textSprite.texture.needsUpdate = true;
+  textSprite.text = text;
+  textSprite.color = color;
 }
 
 function createEgoMarker(): THREE.Group {
@@ -135,26 +182,48 @@ function createEgoMarker(): THREE.Group {
   return group;
 }
 
-function createDetectionObjects(
+function updateDetectionVisual(
+  visual: DetectionVisual,
   detection: ViewerDetection,
   classColors?: ClassColorMap,
-): { box: THREE.Group; confidence: THREE.Sprite | null } {
+): void {
   const transform = detectionToBevBoxTransform(detection);
   const color = getClassColor(detection.className, classColors);
-  const group = new THREE.Group();
-  group.name = `detection:${detection.id}`;
-  group.position.set(
+  visual.box.name = `detection:${detection.id}`;
+  visual.box.position.set(
     transform.position.x,
     transform.position.y,
     transform.position.z,
   );
-  group.rotation.y = transform.rotationYRadians;
+  visual.box.rotation.y = transform.rotationYRadians;
+  visual.box.scale.set(transform.size.x, transform.size.y, transform.size.z);
+  visual.box.visible = true;
+  visual.fillMaterial.color.set(color);
+  visual.edgeMaterial.color.set(color);
 
-  const boxGeometry = new THREE.BoxGeometry(
-    transform.size.x,
-    transform.size.y,
-    transform.size.z,
-  );
+  if (visual.confidence) {
+    updateTextSprite(
+      visual.confidence,
+      `${detection.className} ${(detection.confidence * 100).toFixed(0)}%`,
+      color,
+    );
+    visual.confidence.sprite.position.set(
+      transform.position.x,
+      transform.position.y + transform.size.y / 2 + 1.5,
+      transform.position.z,
+    );
+    visual.confidence.sprite.visible = true;
+  }
+}
+
+function createDetectionVisual(
+  detection: ViewerDetection,
+  classColors?: ClassColorMap,
+): DetectionVisual {
+  const color = getClassColor(detection.className, classColors);
+  const group = new THREE.Group();
+
+  const boxGeometry = new THREE.BoxGeometry(1, 1, 1);
   const fillMaterial = new THREE.MeshBasicMaterial({
     color,
     depthWrite: false,
@@ -171,19 +240,27 @@ function createDetectionObjects(
   edges.renderOrder = 3;
   group.add(edges);
 
-  const confidence = createTextSprite(
-    `${detection.className} ${(detection.confidence * 100).toFixed(0)}%`,
-    color,
-  );
-  if (confidence) {
-    confidence.position.set(
-      transform.position.x,
-      transform.position.y + transform.size.y / 2 + 1.5,
-      transform.position.z,
+  let confidence: TextSprite | null = null;
+  try {
+    confidence = createTextSprite(
+      `${detection.className} ${(detection.confidence * 100).toFixed(0)}%`,
+      color,
     );
+    const visual: DetectionVisual = {
+      box: group,
+      fillMaterial,
+      edgeMaterial,
+      confidence,
+    };
+    updateDetectionVisual(visual, detection, classColors);
+    return visual;
+  } catch (cause) {
+    if (confidence) {
+      disposeObject(confidence.sprite);
+    }
+    disposeObject(group);
+    throw cause;
   }
-
-  return { box: group, confidence };
 }
 
 export class BevRenderer {
@@ -196,6 +273,7 @@ export class BevRenderer {
   private readonly resizeObserver: ResizeObserver;
   private readonly detectionsGroup = new THREE.Group();
   private readonly confidenceGroup = new THREE.Group();
+  private readonly detectionPool: DetectionVisual[] = [];
   private animationFrame: number | null = null;
   private viewportAspect = 1;
   private applyingViewState = false;
@@ -266,16 +344,31 @@ export class BevRenderer {
     detections: readonly ViewerDetection[],
     classColors?: ClassColorMap,
   ): void {
-    this.clearGroup(this.detectionsGroup);
-    this.clearGroup(this.confidenceGroup);
-
-    detections.forEach((detection) => {
-      const objects = createDetectionObjects(detection, classColors);
-      this.detectionsGroup.add(objects.box);
-      if (objects.confidence) {
-        this.confidenceGroup.add(objects.confidence);
+    detections.forEach((detection, index) => {
+      let visual = this.detectionPool[index];
+      if (!visual) {
+        visual = createDetectionVisual(detection, classColors);
+        this.detectionPool.push(visual);
+        this.detectionsGroup.add(visual.box);
+        if (visual.confidence) {
+          this.confidenceGroup.add(visual.confidence.sprite);
+        }
+      } else {
+        updateDetectionVisual(visual, detection, classColors);
       }
     });
+
+    for (
+      let index = detections.length;
+      index < this.detectionPool.length;
+      index += 1
+    ) {
+      const visual = this.detectionPool[index];
+      visual.box.visible = false;
+      if (visual.confidence) {
+        visual.confidence.sprite.visible = false;
+      }
+    }
 
     this.scheduleRender();
   }
@@ -348,6 +441,7 @@ export class BevRenderer {
 
     disposeObject(this.scene);
     this.scene.clear();
+    this.detectionPool.length = 0;
     this.renderer.dispose();
     this.renderer.forceContextLoss();
     this.renderer.domElement.remove();
@@ -401,12 +495,5 @@ export class BevRenderer {
         this.renderer.render(this.scene, this.camera);
       }
     });
-  }
-
-  private clearGroup(group: THREE.Group): void {
-    for (const child of [...group.children]) {
-      group.remove(child);
-      disposeObject(child);
-    }
   }
 }
