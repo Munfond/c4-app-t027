@@ -26,8 +26,10 @@ export interface BevViewerProps {
   viewState?: BevViewState;
   onViewStateChange?: (viewState: BevViewState) => void;
   classColors?: ClassColorMap;
+  legendClassNames?: readonly string[];
   showLegend?: boolean;
   showLayerControls?: boolean;
+  showMetadata?: boolean;
   showViewControls?: boolean;
   className?: string;
   ariaLabel?: string;
@@ -42,8 +44,10 @@ export function BevViewer({
   viewState,
   onViewStateChange,
   classColors,
+  legendClassNames,
   showLegend = true,
   showLayerControls = true,
+  showMetadata = true,
   showViewControls = true,
   className = "",
   ariaLabel = "Bird's-eye-view detection viewer",
@@ -133,12 +137,13 @@ export function BevViewer({
     }
   }, [viewState]);
 
-  const classNames = useMemo(
+  const detectedClassNames = useMemo(
     () =>
       [...new Set(frame?.detections.map((detection) => detection.className) ?? [])]
         .sort((first, second) => first.localeCompare(second)),
     [frame],
   );
+  const classNames = legendClassNames ?? detectedClassNames;
 
   const statusMessage = rendererError ?? error;
   const isEmpty = !isLoading && !statusMessage && frame?.detections.length === 0;
@@ -178,7 +183,7 @@ export function BevViewer({
     >
       <div ref={containerRef} className="absolute inset-0" />
 
-      {frame && (
+      {showMetadata && frame && (
         <div className="pointer-events-none absolute left-3 top-3 rounded-lg border border-zinc-700/80 bg-zinc-950/85 px-3 py-2 text-xs shadow-lg backdrop-blur">
           <p className="font-medium text-zinc-100">{frame.modelId}</p>
           <p className="mt-0.5 text-zinc-400">
