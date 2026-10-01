@@ -40,8 +40,6 @@ export interface BevModelCompareProps {
   className?: string;
 }
 
-type PaneId = "modelA" | "modelB";
-
 function copyDefaultViewState(): BevViewState {
   return {
     center: { ...DEFAULT_BEV_VIEW_STATE.center },
@@ -182,15 +180,13 @@ export function BevModelCompare({
     [uncontrolledViewState, viewState],
   );
   const effectiveViewStateRef = useRef(effectiveViewState);
-  const latestViewSourceRef = useRef<PaneId | null>(null);
 
   useEffect(() => {
     effectiveViewStateRef.current = effectiveViewState;
-    latestViewSourceRef.current = null;
   }, [effectiveViewState]);
 
   const syncViewState = useCallback(
-    (source: PaneId, nextViewState: BevViewState) => {
+    (nextViewState: BevViewState) => {
       const constrainedViewState = constrainBevViewState(nextViewState);
       if (
         areBevViewStatesEquivalent(
@@ -198,30 +194,19 @@ export function BevModelCompare({
           constrainedViewState,
         )
       ) {
-        if (latestViewSourceRef.current !== source) {
-          latestViewSourceRef.current = null;
-        }
         return;
       }
 
-      latestViewSourceRef.current = source;
       effectiveViewStateRef.current = constrainedViewState;
 
+      // BevRenderer suppresses callbacks while applying this value to the
+      // sibling pane, so only user-driven changes reach this callback.
       if (viewState === undefined) {
         setUncontrolledViewState(constrainedViewState);
       }
       onViewStateChange?.(constrainedViewState);
     },
     [onViewStateChange, viewState],
-  );
-
-  const handleModelAViewChange = useCallback(
-    (nextViewState: BevViewState) => syncViewState("modelA", nextViewState),
-    [syncViewState],
-  );
-  const handleModelBViewChange = useCallback(
-    (nextViewState: BevViewState) => syncViewState("modelB", nextViewState),
-    [syncViewState],
   );
 
   const modelADataError = getPaneDataError(modelA, sampleToken);
@@ -256,7 +241,7 @@ export function BevModelCompare({
           layers={layers}
           legendClassNames={legendClassNames}
           onLayersChange={onLayersChange}
-          onViewStateChange={handleModelAViewChange}
+          onViewStateChange={syncViewState}
           pane={modelA}
           showLayerControls={false}
           viewState={effectiveViewState}
@@ -269,7 +254,7 @@ export function BevModelCompare({
           layers={layers}
           legendClassNames={legendClassNames}
           onLayersChange={onLayersChange}
-          onViewStateChange={handleModelBViewChange}
+          onViewStateChange={syncViewState}
           pane={modelB}
           showLayerControls
           viewState={effectiveViewState}
