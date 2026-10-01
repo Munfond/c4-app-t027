@@ -25,10 +25,15 @@ class Settings(BaseSettings):
     nusc_root: Path = PROJECT_ROOT / "data/nuscenes"
     lab_data_root: Path = PROJECT_ROOT / "data/lab"
     sim_data_root: Path = PROJECT_ROOT / "data/sim"
+    camera_cache_dir: Path | None = None
     plate_weights: Path = PROJECT_ROOT / "weights/plate_yolov8.pt"
     anonymizer_enabled: bool = False
     max_upload_bytes: int = Field(default=10 * 1024 * 1024, ge=1)
     max_image_pixels: int = Field(default=12_000_000, ge=1)
+
+    @property
+    def resolved_camera_cache_dir(self) -> Path:
+        return self.camera_cache_dir or (self.lab_data_root / "cache/cameras")
 
     # LLM
     openai_api_key: str = ""

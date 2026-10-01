@@ -119,3 +119,27 @@ def camera_path(token: str, channel: str):
     if not path.is_relative_to(root):
         raise ValueError("Unsafe dataset path")
     return path
+
+
+def camera_cache_path(token: str, channel: str) -> Path:
+    cache_root = get_settings().resolved_camera_cache_dir.resolve()
+    return cache_root / f"{token}_{channel}.jpg"
+
+
+def get_cached_camera(token: str, channel: str) -> bytes | None:
+    path = camera_cache_path(token, channel)
+    if path.is_file():
+        return path.read_bytes()
+    return None
+
+
+def save_cached_camera(token: str, channel: str, data: bytes) -> None:
+    try:
+        path = camera_cache_path(token, channel)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        temp_path = path.with_suffix(f".tmp.{path.suffix}")
+        temp_path.write_bytes(data)
+        temp_path.replace(path)
+    except OSError:
+        pass
+

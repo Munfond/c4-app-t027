@@ -4,14 +4,17 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "ADAS Perception Lab",
+    default: "P-027 Perception Lab",
     template: "%s · ADAS Perception Lab",
   },
-  description:
-    "Không gian trực quan hóa và so sánh kết quả mô hình nhận thức ADAS.",
+  description: "VinFast ADAS BEV/4D Occupancy Benchmarking Lab",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
     <html lang="vi" className="h-full antialiased">
       <body className="min-h-full">

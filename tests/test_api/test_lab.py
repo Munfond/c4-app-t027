@@ -79,3 +79,70 @@ async def test_camera_never_returns_raw_when_disabled(client, lab_settings):
     assert response.status_code == 503
     assert response.content != image.read_bytes()
     assert (await client.get("/api/v1/lab/frames/token-a/cameras/INVALID")).status_code == 422
+
+
+@pytest.mark.asyncio
+async def test_camera_cache_hit_and_headers(client, lab_settings):
+    cache_dir = lab_settings.resolved_camera_cache_dir
+    cache_dir.mkdir(parents=True, exist_ok=True)
+    cached_bytes = b"\xff\xd8\xff\xe0\x00\x10JFIFfake-anonymized-image"
+    (cache_dir / "token-a_CAM_FRONT.jpg").write_bytes(cached_bytes)
+
+    response = await client.get("/api/v1/lab/frames/token-a/cameras/CAM_FRONT")
+    assert response.status_code == 200
+    assert response.content == cached_bytes
+    assert response.headers["x-camera-cache"] == "HIT"
+    assert response.headers["x-anonymized"] == "true"
+
+    cap_res = await client.get("/api/v1/lab/capabilities")
+    assert cap_res.status_code == 200
+    assert cap_res.json()["camera_cache_present"] is True
+
+
+@pytest.mark.asyncio
+async def test_benchmarks_provenance_and_limitations(client, lab_settings):
+    # 1. When benchmark files are absent, available is False and data is None (fail-safe, no 500)
+    response = await client.get("/api/v1/lab/benchmarks")
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["split"] == "mini_val"
+    assert payload["frame_count"] == 81
+    assert "limitations" in payload
+    assert len(payload["limitations"]) == 4
+    assert payload["sections"]["detection"]["available"] is False
+    assert payload["sections"]["detection"]["data"] is None
+
+    # 2. When benchmark file is present, available is True and data is loaded correctly
+    det_path = lab_settings.lab_data_root / "models/our_bevfusion_mini/metrics.json"
+    det_path.parent.mkdir(parents=True, exist_ok=True)
+    det_path.write_text(json.dumps({"rows": [{"model": "our_bevfusion", "mAP": 0.54}]}))
+
+    response = await client.get("/api/v1/lab/benchmarks")
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["sections"]["detection"]["available"] is True
+    assert payload["sections"]["detection"]["source"] == "models/our_bevfusion_mini/metrics.json"
+    assert payload["sections"]["detection"]["data"]["rows"][0]["model"] == "our_bevfusion"
+    assert payload["sections"]["detection"]["data"]["rows"][0]["mAP"] == 0.54
+
+
+@pytest.mark.asyncio
+async def test_deploy_health_and_readonly_cache(client, lab_settings, monkeypatch):
+    response = await client.get("/health")
+    assert response.status_code == 200
+    assert response.json()["status"] == "ok"
+
+    cap_res = await client.get("/api/v1/lab/capabilities")
+    assert cap_res.status_code == 200
+    caps = cap_res.json()
+    assert caps["schema_version"] == "1.0"
+    assert "processed-only" in caps["camera_policy"]
+
+    from src.services import lab
+
+    def failing_mkdir(*args, **kwargs):
+        raise OSError("Read-only file system")
+
+    monkeypatch.setattr("pathlib.Path.mkdir", failing_mkdir)
+    # save_cached_camera should catch OSError gracefully without crashing
+    lab.save_cached_camera("token-x", "CAM_FRONT", b"test-bytes")
