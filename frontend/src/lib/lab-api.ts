@@ -34,6 +34,24 @@ export type DetectionFrame = {
   boxes: DetectionBox[];
 };
 
+export const MVP_MODEL_LABELS: Record<string, string> = {
+  official_lidar: "PointPillars · LiDAR pretrained",
+  official_cl: "BEVFusion · Camera + LiDAR pretrained",
+  crn: "CRN · Camera + Radar pretrained",
+  fused: "Fusion pretrained · Camera + LiDAR + Radar",
+};
+
+export function mvpModels(items: ModelInfo[]) {
+  return items.filter(
+    (item) => item.available && item.origin === "official" && item.id in MVP_MODEL_LABELS,
+  );
+}
+
+export function modelLabel(model: ModelInfo | string) {
+  const id = typeof model === "string" ? model : model.id;
+  return MVP_MODEL_LABELS[id] ?? id;
+}
+
 export async function apiJson<T>(path: string, signal?: AbortSignal): Promise<T> {
   const response = await fetch(path, { cache: "no-store", signal });
   if (!response.ok) {

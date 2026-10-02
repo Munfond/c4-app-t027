@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { PageHeader } from "@/components/ui/page-header";
 import { Select } from "@/components/ui/select";
 import { BevModelCompare } from "@/components/viewer";
-import { apiJson, detectionUrl, type DetectionFrame, type Frame, type ModelInfo, type Scene } from "@/lib/lab-api";
+import { apiJson, detectionUrl, modelLabel, mvpModels, type DetectionFrame, type Frame, type ModelInfo, type Scene } from "@/lib/lab-api";
 import { adaptDetectionFrame } from "@/lib/viewer";
 
 export function CompareWorkspace() {
@@ -16,7 +16,7 @@ export function CompareWorkspace() {
   const [token, setToken] = useState("");
   const [modelA, setModelA] = useState("");
   const [modelB, setModelB] = useState("");
-  const [threshold, setThreshold] = useState(0.3);
+  const [threshold, setThreshold] = useState(0.5);
   const [results, setResults] = useState<[DetectionFrame | null, DetectionFrame | null]>([null, null]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -26,10 +26,11 @@ export function CompareWorkspace() {
       apiJson<{ items: Scene[] }>("/api/v1/lab/scenes"),
       apiJson<{ items: ModelInfo[] }>("/api/v1/lab/models"),
     ]).then(([sceneData, modelData]) => {
-      const available = modelData.items.filter((item) => item.available);
+      const available = mvpModels(modelData.items);
       setScenes(sceneData.items); setModels(available);
       setScene(sceneData.items[0]?.id ?? "");
-      setModelA(available[0]?.id ?? ""); setModelB(available[1]?.id ?? available[0]?.id ?? "");
+      setModelA(available.find((item) => item.id === "official_cl")?.id ?? available[0]?.id ?? "");
+      setModelB(available.find((item) => item.id === "fused")?.id ?? available[1]?.id ?? available[0]?.id ?? "");
     }).catch((reason: Error) => setError(reason.message)).finally(() => setLoading(false));
   }, []);
 
@@ -68,19 +69,19 @@ export function CompareWorkspace() {
   const frameB = results[1] ? adaptDetectionFrame(results[1]) : null;
 
   return <div className="grid gap-6">
-    <PageHeader title="So sánh mô hình" description="Đối chiếu hai kết quả precomputed trên cùng scene và frame." actions={<Button loading={loading} onClick={compare}>So sánh lại</Button>} />
+    <PageHeader title="So sánh mô hình" description="Đối chiếu các model pretrained ổn định trên cùng scene, frame và ngưỡng điểm." actions={<Button loading={loading} onClick={compare}>So sánh lại</Button>} />
     {error ? <div className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">{error}</div> : null}
     <section className="grid gap-3 rounded-[var(--radius)] border border-[var(--line)] bg-white p-4 shadow-[var(--shadow)] md:grid-cols-2 xl:grid-cols-5">
       <Select label="Scene" value={scene} onChange={(e) => setScene(e.target.value)}>{scenes.map((x) => <option key={x.id} value={x.id}>{x.id}</option>)}</Select>
       <Select label="Frame" value={token} onChange={(e) => setToken(e.target.value)}>{frames.map((x) => <option key={x.sample_token} value={x.sample_token}>#{x.sample_idx} · {x.timestamp_s.toFixed(2)}s</option>)}</Select>
-      <Select label="Mô hình A" value={modelA} onChange={(e) => setModelA(e.target.value)}>{models.map((x) => <option key={x.id} value={x.id}>{x.id}</option>)}</Select>
-      <Select label="Mô hình B" value={modelB} onChange={(e) => setModelB(e.target.value)}>{models.map((x) => <option key={x.id} value={x.id}>{x.id}</option>)}</Select>
+      <Select label="Mô hình A" value={modelA} onChange={(e) => setModelA(e.target.value)}>{models.map((x) => <option key={x.id} value={x.id}>{modelLabel(x)}</option>)}</Select>
+      <Select label="Mô hình B" value={modelB} onChange={(e) => setModelB(e.target.value)}>{models.map((x) => <option key={x.id} value={x.id}>{modelLabel(x)}</option>)}</Select>
       <Select label="Ngưỡng điểm" value={threshold} onChange={(e) => setThreshold(Number(e.target.value))}>{[0.3,0.5,0.7].map((x) => <option key={x} value={x}>{x.toFixed(2)}</option>)}</Select>
     </section>
     <BevModelCompare
       className="shadow-[var(--shadow)]"
-      modelA={{ modelId: modelA, modelLabel: modelA, frame: frameA, isLoading: loading, error: error || null }}
-      modelB={{ modelId: modelB, modelLabel: modelB, frame: frameB, isLoading: loading, error: error || null }}
+      modelA={{ modelId: modelA, modelLabel: modelLabel(modelA), frame: frameA, isLoading: loading, error: error || null }}
+      modelB={{ modelId: modelB, modelLabel: modelLabel(modelB), frame: frameB, isLoading: loading, error: error || null }}
       sampleToken={token}
       threshold={threshold}
     />
