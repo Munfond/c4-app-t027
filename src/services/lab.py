@@ -1,9 +1,12 @@
 """Read-only adapters for the versioned lab exports. No CUDA or MATLAB imports."""
 
 import csv
+import io
 import json
 from functools import lru_cache
 from pathlib import Path
+
+from PIL import Image, ImageDraw
 
 from src.config import get_settings
 
@@ -26,6 +29,7 @@ COORDINATES = {
     "yaw_direction": "CCW",
 }
 CAMERAS = ("CAM_FRONT", "CAM_FRONT_LEFT", "CAM_FRONT_RIGHT", "CAM_BACK", "CAM_BACK_LEFT", "CAM_BACK_RIGHT")
+RISK_SYSTEMS = ("classical", "oracle")
 
 
 @lru_cache(maxsize=32)
@@ -142,4 +146,45 @@ def save_cached_camera(token: str, channel: str, data: bytes) -> None:
         temp_path.replace(path)
     except OSError:
         pass
+
+
+@lru_cache(maxsize=2)
+def read_risk_mat(path: Path, modified: int):
+    import scipy.io as sio
+
+    return sio.loadmat(path)
+
+
+def risk_heatmap_png(token: str, system: str, vmax: float = 0.3) -> bytes:
+    """Render a precomputed Stage-H grid without MATLAB or live inference."""
+    import numpy as np
+
+    item = frame(token)
+    if item is None:
+        raise KeyError(token)
+    if system not in RISK_SYSTEMS:
+        raise ValueError("Unknown risk system")
+
+    path = get_settings().lab_data_root / "stage_h/risk_out.mat"
+    payload = read_risk_mat(path, path.stat().st_mtime_ns)
+    key = f"risk_{system}"
+    if key not in payload:
+        raise FileNotFoundError(key)
+    maps = np.asarray(payload[key])
+    if maps.ndim != 3 or item["sample_idx"] >= maps.shape[0]:
+        raise ValueError("Invalid Stage-H risk artifact")
+
+    values = np.nan_to_num(maps[item["sample_idx"]], nan=0.0, posinf=vmax, neginf=0.0)
+    scaled = np.clip(values / vmax, 0.0, 1.0)
+    red = np.clip(3.0 * scaled, 0.0, 1.0)
+    green = np.clip(3.0 * scaled - 1.0, 0.0, 1.0)
+    blue = np.clip(3.0 * scaled - 2.0, 0.0, 1.0)
+    rgb = (np.stack((red, green, blue), axis=-1) * 255).astype(np.uint8)
+    image = Image.fromarray(np.flipud(rgb), mode="RGB").resize((600, 600), Image.Resampling.NEAREST)
+    draw = ImageDraw.Draw(image)
+    draw.polygon(((300, 285), (289, 311), (311, 311)), fill=(40, 220, 120), outline=(255, 255, 255))
+    draw.text((12, 12), f"{system} · frame {item['sample_idx']} · max scale {vmax:.1f}", fill=(255, 255, 255))
+    output = io.BytesIO()
+    image.save(output, format="PNG", optimize=True)
+    return output.getvalue()
 

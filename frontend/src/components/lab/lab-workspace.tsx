@@ -8,6 +8,7 @@ import { Select } from "@/components/ui/select";
 import { BevViewer } from "@/components/viewer";
 import { apiJson, detectionUrl, modelLabel, mvpModels, type DetectionFrame, type Frame, type ModelInfo, type Scene } from "@/lib/lab-api";
 import { adaptDetectionFrame } from "@/lib/viewer";
+import { RiskHeatmap } from "./risk-heatmap";
 
 export function LabWorkspace() {
   const [scenes, setScenes] = useState<Scene[]>([]);
@@ -80,6 +81,7 @@ export function LabWorkspace() {
       <div className="flex justify-between border-b border-white/10 bg-[#0b2028] px-4 py-3 text-xs text-[#b4cdd2]"><b className="text-white">Bird&apos;s-eye view</b><span>{activeFrame ? `${activeFrame.scene} · #${activeFrame.sample_idx}` : "Chưa có frame"}</span></div>
       <div className="h-[520px]"><BevViewer error={error || null} frame={viewerFrame} isLoading={loading} /></div>
     </section>
+    {token ? <RiskHeatmap sampleToken={token} /> : null}
     {token ? <CameraPanel sampleToken={token} /> : null}
   </div>;
 }
