@@ -100,6 +100,18 @@ async def test_camera_cache_hit_and_headers(client, lab_settings):
 
 
 @pytest.mark.asyncio
+async def test_precomputed_risk_heatmap(client, lab_settings, monkeypatch):
+    monkeypatch.setattr("src.services.lab.risk_heatmap_png", lambda token, system, vmax: b"\x89PNG\r\n\x1a\nmock")
+    response = await client.get("/api/v1/lab/frames/token-a/risk?system=classical&vmax=0.3")
+    assert response.status_code == 200
+    assert response.headers["content-type"] == "image/png"
+    assert response.headers["x-risk-system"] == "classical"
+    assert response.headers["x-risk-uncalibrated"] == "true"
+    assert (await client.get("/api/v1/lab/frames/token-a/risk?system=unknown")).status_code == 422
+    assert (await client.get("/api/v1/lab/frames/missing/risk")).status_code == 404
+
+
+@pytest.mark.asyncio
 async def test_benchmarks_provenance_and_limitations(client, lab_settings):
     # 1. When benchmark files are absent, available is False and data is None (fail-safe, no 500)
     response = await client.get("/api/v1/lab/benchmarks")

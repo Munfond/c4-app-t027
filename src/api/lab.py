@@ -122,6 +122,27 @@ def camera(token: str, channel: str):
     )
 
 
+@router.get("/frames/{token}/risk")
+def risk_heatmap(token: str, system: str = "classical", vmax: float = Query(0.3, ge=0.1, le=0.6)):
+    if system not in lab.RISK_SYSTEMS:
+        raise HTTPException(422, "Unknown risk system")
+    if available(lab.frame, token) is None:
+        raise HTTPException(404, "Frame not found")
+    try:
+        result = available(lab.risk_heatmap_png, token, system, vmax)
+    except (ImportError, ValueError) as exc:
+        raise HTTPException(503, "Precomputed risk heatmap unavailable") from exc
+    return Response(
+        result,
+        media_type="image/png",
+        headers={
+            "Cache-Control": "public, max-age=86400",
+            "X-Risk-System": system,
+            "X-Risk-Uncalibrated": "true",
+        },
+    )
+
+
 @router.get("/benchmarks")
 def benchmarks():
     root = get_settings().lab_data_root
