@@ -1,10 +1,10 @@
-export type Scene = { id: string; split: string; frame_count: number };
+export type Scene = { id: string; split: "mini_val"; frame_count: number };
 export type Frame = {
   sample_token: string;
   sample_idx: number;
   scene: string;
   timestamp_s: number;
-  split: string;
+  split: "mini_val";
 };
 export type ModelInfo = {
   id: string;
@@ -29,7 +29,7 @@ export type DetectionBox = {
 export type DetectionFrame = {
   frame: Frame;
   model: string;
-  mode: string;
+  mode: "precomputed";
   coordinates: Record<string, string>;
   boxes: DetectionBox[];
 };
