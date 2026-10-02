@@ -9,13 +9,13 @@ import {
   type BevLayerVisibility,
   type BevViewportMetrics,
   type BevViewState,
-  type ClassColorMap,
   type ViewerDetectionFrame,
 } from "@/lib/viewer";
 import { BevRenderer } from "@/lib/viewer/bev-renderer";
 
 import { BevLayerControls } from "./BevLayerControls";
 import { BevLegend } from "./BevLegend";
+import { centreDistance } from "@/lib/viewer/proximity";
 
 export interface BevViewerProps {
   frame: ViewerDetectionFrame | null;
@@ -25,8 +25,6 @@ export interface BevViewerProps {
   onLayersChange?: (layers: BevLayerVisibility) => void;
   viewState?: BevViewState;
   onViewStateChange?: (viewState: BevViewState) => void;
-  classColors?: ClassColorMap;
-  legendClassNames?: readonly string[];
   showLegend?: boolean;
   showLayerControls?: boolean;
   showMetadata?: boolean;
@@ -39,12 +37,10 @@ export function BevViewer({
   frame,
   isLoading = false,
   error = null,
-  layers = DEFAULT_BEV_LAYERS,
+  layers: controlledLayers,
   onLayersChange,
   viewState,
   onViewStateChange,
-  classColors,
-  legendClassNames,
   showLegend = true,
   showLayerControls = true,
   showMetadata = true,
@@ -52,6 +48,15 @@ export function BevViewer({
   className = "",
   ariaLabel = "Bird's-eye-view detection viewer",
 }: BevViewerProps) {
+  const [localLayers, setLocalLayers] = useState<BevLayerVisibility>(DEFAULT_BEV_LAYERS);
+  const layers = controlledLayers ?? localLayers;
+  const changeLayers = onLayersChange ?? setLocalLayers;
+  const [environmentStatus, setEnvironmentStatus] = useState<{token: string; message: string} | null>(null);
+  const sampleToken = frame?.frame.sampleToken;
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const nearest = useMemo(() => [...(frame?.detections ?? [])].sort((a, b) => centreDistance(a) - centreDistance(b)), [frame]);
+  const selected = nearest.find(item => item.id === selectedId) ?? nearest[0];
+  const detailRef = useRef<HTMLDetailsElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const rendererRef = useRef<BevRenderer | null>(null);
   const initialViewStateRef = useRef(viewState);
@@ -75,6 +80,7 @@ export function BevViewer({
     try {
       const renderer = new BevRenderer(container, {
         ariaLabel: initialAriaLabelRef.current,
+        onSelectDetection: id => { setSelectedId(id); if (detailRef.current) detailRef.current.open = true; },
         initialViewState: initialViewStateRef.current,
         onViewStateChange: (nextViewState) => {
           onViewStateChangeRef.current?.(nextViewState);
@@ -124,8 +130,12 @@ export function BevViewer({
   }, [ariaLabel]);
 
   useEffect(() => {
-    rendererRef.current?.setDetections(frame?.detections ?? [], classColors);
-  }, [classColors, frame]);
+    rendererRef.current?.setDetections(frame?.detections ?? []);
+  }, [frame]);
+
+  useEffect(() => {
+    rendererRef.current?.setSelectedDetection(selected?.id ?? null);
+  }, [selected, frame]);
 
   useEffect(() => {
     rendererRef.current?.setLayers(layers);
@@ -137,13 +147,23 @@ export function BevViewer({
     }
   }, [viewState]);
 
-  const detectedClassNames = useMemo(
-    () =>
-      [...new Set(frame?.detections.map((detection) => detection.className) ?? [])]
-        .sort((first, second) => first.localeCompare(second)),
-    [frame],
-  );
-  const classNames = legendClassNames ?? detectedClassNames;
+  useEffect(() => {
+    const controller = new AbortController();
+    rendererRef.current?.setEnvironment([]);
+    if (!sampleToken) return;
+    void fetch(`/api/v1/lab/frames/${encodeURIComponent(sampleToken)}/environment`, { signal: controller.signal })
+      .then(async response => {
+        if (!response.ok) throw new Error("Chưa có nền LiDAR cho frame này");
+        return response.json() as Promise<{ points: number[][] }>;
+      }).then(data => {
+        if (controller.signal.aborted) return;
+        rendererRef.current?.setEnvironment(data.points);
+        setEnvironmentStatus({ token: sampleToken, message: `${data.points.length.toLocaleString()} điểm LiDAR · bán kính 65 m` });
+      }).catch(reason => {
+        if (!controller.signal.aborted) setEnvironmentStatus({ token: sampleToken, message: reason.message });
+      });
+    return () => controller.abort();
+  }, [sampleToken]);
 
   const statusMessage = rendererError ?? error;
   const isEmpty = !isLoading && !statusMessage && frame?.detections.length === 0;
@@ -183,17 +203,18 @@ export function BevViewer({
     >
       <div ref={containerRef} className="absolute inset-0" />
 
-      {showMetadata && frame && (
-        <div className="pointer-events-none absolute left-3 top-3 rounded-lg border border-zinc-700/80 bg-zinc-950/85 px-3 py-2 text-xs shadow-lg backdrop-blur">
-          <p className="font-medium text-zinc-100">{frame.modelId}</p>
+      {frame && (
+        <div className="pointer-events-none absolute left-3 top-3 max-w-[46%] rounded-lg border border-zinc-700/80 bg-zinc-950/85 px-3 py-2 text-xs shadow-lg backdrop-blur">
+          {showMetadata && <p className="font-medium text-zinc-100">{frame.modelId}</p>}
           <p className="mt-0.5 text-zinc-400">
-            {frame.detections.length} boxes · Tính sẵn
+            {frame.detections.length} vật cản · Tính sẵn
           </p>
+          <p className="mt-1 max-w-52 text-[10px] text-teal-200">{environmentStatus && environmentStatus.token === sampleToken ? environmentStatus.message : "Đang tải nền LiDAR…"}</p>
         </div>
       )}
 
       {showViewControls && (
-        <div className="absolute right-3 top-3 flex max-w-[55%] flex-col items-end gap-2">
+        <div className="absolute right-3 top-3 flex max-w-[46%] flex-col items-end gap-2">
           <p className="rounded-md border border-zinc-800 bg-zinc-950/80 px-2 py-1 text-right text-[11px] text-zinc-400 backdrop-blur">
             {viewportMetrics
               ? `Ngang ${Math.round(viewportMetrics.visibleWidthMeters)} m · Dọc ${Math.round(viewportMetrics.visibleHeightMeters)} m · Lưới ${viewportMetrics.gridSpacingMeters} m`
@@ -216,16 +237,30 @@ export function BevViewer({
       )}
 
       {showLegend && frame && !isLoading && !statusMessage && (
-        <BevLegend classNames={classNames} classColors={classColors} />
+        <BevLegend />
       )}
 
-      {showLayerControls && onLayersChange && !isLoading && !statusMessage && (
-        <BevLayerControls value={layers} onChange={onLayersChange} />
+      {showLayerControls && (!controlledLayers || onLayersChange) && !isLoading && !statusMessage && (
+        <BevLayerControls value={layers} onChange={changeLayers} />
+      )}
+
+      {selected && !isLoading && !statusMessage && showMetadata && (
+        <details ref={detailRef} className="absolute left-3 top-28 max-w-[46%] rounded-lg border border-white/10 bg-[#0b2028]/95 p-2.5 text-[11px] text-slate-200 shadow-lg">
+          <summary className="cursor-pointer text-teal-200">Vật cản đang chọn · {centreDistance(selected).toFixed(1)} m</summary>
+          <label className="mt-2 block text-teal-200" htmlFor={`obstacle-${frame?.modelId}`}>Vật cản · viền trắng khi chọn</label>
+          <select id={`obstacle-${frame?.modelId}`} value={selected.id} onChange={e => setSelectedId(e.target.value)} className="my-1 w-full rounded bg-[#183b45] p-1 text-xs">
+            {nearest.map((item, index) => <option key={item.id} value={item.id}>#{index + 1} · {centreDistance(item).toFixed(1)} m</option>)}
+          </select>
+          <p>Dài × rộng × cao</p>
+          <p className="font-mono text-white">{selected.size.length.toFixed(1)} × {selected.size.width.toFixed(1)} × {selected.size.height.toFixed(1)} m</p>
+          <p className="mt-1">{selected.center.forward >= 0 ? "Trước" : "Sau"} {Math.abs(selected.center.forward).toFixed(1)} m · {selected.center.left >= 0 ? "Trái" : "Phải"} {Math.abs(selected.center.left).toFixed(1)} m</p>
+          <p className="mt-1 max-w-44 text-[10px] text-slate-400">Khoảng cách đến tâm hộp, không phải khoảng hở an toàn.</p>
+        </details>
       )}
 
       {isLoading && (
         <div className="absolute inset-0 grid place-items-center bg-zinc-950/70 text-sm text-zinc-300 backdrop-blur-sm">
-          Đang tải detection…
+          Đang tải vật cản…
         </div>
       )}
 
@@ -240,7 +275,7 @@ export function BevViewer({
 
       {isEmpty && (
         <div className="pointer-events-none absolute inset-0 grid place-items-center p-6 text-center text-sm text-zinc-400">
-          Frame hợp lệ, không có detection vượt ngưỡng đã chọn.
+          Không có hộp vật cản vượt ngưỡng; nền LiDAR vẫn là quan sát thực.
         </div>
       )}
     </section>

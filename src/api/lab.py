@@ -5,6 +5,7 @@ from src.config import get_settings
 from src.models.lab import DetectionFrame, FrameList, ModelList, SceneList
 from src.services import lab
 from src.services.anonymizer import InvalidImageError, UnavailableAnonymizerError, anonymize_bytes
+from src.services.environment import environment
 
 router = APIRouter(prefix="/lab", tags=["lab"])
 
@@ -76,6 +77,16 @@ def detections(token: str, model: str = "our_lidar", threshold: float = Query(0.
         return available(lab.detections, token, model, threshold)
     except KeyError as exc:
         raise HTTPException(404, "Frame not found") from exc
+
+
+@router.get("/frames/{token}/environment")
+def frame_environment(token: str):
+    try:
+        return available(environment, token)
+    except KeyError as exc:
+        raise HTTPException(404, "Frame not found") from exc
+    except (ValueError, StopIteration, OSError) as exc:
+        raise HTTPException(503, "LiDAR environment unavailable") from exc
 
 
 @router.get("/frames/{token}/cameras/{channel}")

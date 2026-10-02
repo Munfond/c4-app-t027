@@ -1,38 +1,10 @@
-import { getClassColor, type ClassColorMap } from "@/lib/viewer";
-
-export interface BevLegendProps {
-  classNames: readonly string[];
-  classColors?: ClassColorMap;
-}
-
-export function BevLegend({ classNames, classColors }: BevLegendProps) {
-  if (classNames.length === 0) {
-    return null;
-  }
-
-  return (
-    <div
-      aria-label="Chú giải lớp detection"
-      className="pointer-events-none absolute bottom-3 left-3 max-w-[calc(100%-1.5rem)] rounded-lg border border-zinc-700/80 bg-zinc-950/85 px-3 py-2 shadow-lg backdrop-blur"
-    >
-      <p className="mb-1.5 text-[10px] font-semibold uppercase tracking-wider text-zinc-400">
-        Detection classes
-      </p>
-      <ul className="flex flex-wrap gap-x-3 gap-y-1.5">
-        {classNames.map((className) => (
-          <li
-            key={className}
-            className="flex items-center gap-1.5 text-xs text-zinc-200"
-          >
-            <span
-              aria-hidden="true"
-              className="h-2.5 w-2.5 rounded-sm"
-              style={{ backgroundColor: getClassColor(className, classColors) }}
-            />
-            <span>{className}</span>
-          </li>
-        ))}
-      </ul>
+export function BevLegend() {
+  return <div className="pointer-events-none absolute bottom-3 left-3 max-w-[50%] rounded-lg border border-white/10 bg-[#0b2028]/95 px-3 py-2 text-[10px] text-slate-300 shadow-lg">
+    <p className="mb-1 font-semibold text-slate-100">Khoảng cách đến tâm vật cản</p>
+    <div className="flex flex-wrap gap-2">
+      {[['#fb7185', '< 10 m'], ['#fbbf24', '10–25 m'], ['#2dd4bf', '≥ 25 m']].map(([color, label]) => <span key={label} className="flex items-center gap-1"><i className="h-2 w-2 rounded-sm" style={{backgroundColor:color}} />{label}</span>)}
     </div>
-  );
+    <p className="mt-1">Nền sáng: bề mặt cao · nền tối: sát mặt đất</p>
+    <p>Vòng: 10 / 25 / 50 m · vùng trống chưa chắc thông thoáng</p>
+  </div>;
 }

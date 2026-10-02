@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 
 export interface CameraCardProps {
   sampleToken: string;
@@ -10,139 +10,44 @@ export interface CameraCardProps {
   onFocus?: () => void;
 }
 
-export function CameraCard({
-  sampleToken,
-  channel,
-  label,
-  isFocused = false,
-  onFocus,
-}: CameraCardProps) {
-  const [loading, setLoading] = useState(true);
-  const [errorStatus, setErrorStatus] = useState<number | null>(null);
-  const [retryKey, setRetryKey] = useState(0);
+export function CameraCard({ sampleToken, channel, label, isFocused = false, onFocus }: CameraCardProps) {
+  const [retry, setRetry] = useState(0);
+  const [result, setResult] = useState<{key: string; url?: string; error?: number} | null>(null);
+  const key = `${sampleToken}:${channel}:${retry}`;
+  const current = result?.key === key ? result : null;
+  useEffect(() => {
+    const controller = new AbortController();
+    let objectUrl: string | undefined;
+    if (!sampleToken) return;
+    void fetch(`/api/v1/lab/frames/${encodeURIComponent(sampleToken)}/cameras/${channel}?retry=${retry}`, {signal: controller.signal})
+      .then(async response => {
+        if (!response.ok) {
+          if (!controller.signal.aborted) setResult({key, error: response.status});
+          return;
+        }
+        if (response.headers.get("x-anonymized") !== "true") throw new Error("Unprocessed image");
+        const blob = await response.blob();
+        if (controller.signal.aborted) return;
+        objectUrl = URL.createObjectURL(blob);
+        setResult({key, url: objectUrl});
+      }).catch(() => { if (!controller.signal.aborted) setResult({key, error: 503}); });
+    return () => { controller.abort(); if (objectUrl) URL.revokeObjectURL(objectUrl); };
+  }, [sampleToken, channel, retry, key]);
 
-  const imageUrl = sampleToken
-    ? `/api/v1/lab/frames/${sampleToken}/cameras/${channel}?retry=${retryKey}`
-    : "";
-
-  const handleRetry = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setLoading(true);
-    setErrorStatus(null);
-    setRetryKey((k) => k + 1);
-  };
-
-  return (
-    <div
-      onClick={onFocus}
-      className={`group relative flex flex-col overflow-hidden rounded-xl border transition-all duration-200 cursor-pointer ${
-        isFocused
-          ? "border-blue-500 bg-zinc-900/90 shadow-lg shadow-blue-500/10 ring-2 ring-blue-500/30"
-          : "border-zinc-800 bg-zinc-950/60 hover:border-zinc-700 hover:bg-zinc-900/40"
-      }`}
-    >
-      {/* Header bar */}
-      <div className="flex items-center justify-between border-b border-zinc-800/80 bg-zinc-900/80 px-3 py-2 text-xs backdrop-blur-sm">
-        <div className="flex items-center gap-2">
-          <span className="h-2 w-2 rounded-full bg-emerald-500/80 animate-pulse" />
-          <span className="font-semibold text-zinc-200">{label}</span>
-          <span className="font-mono text-[10px] text-zinc-500">{channel}</span>
-        </div>
-        <div className="flex items-center gap-1.5">
-          {errorStatus === 503 ? (
-            <span className="rounded bg-amber-500/10 px-1.5 py-0.5 text-[10px] font-medium text-amber-400 border border-amber-500/20">
-              Fail-Closed
-            </span>
-          ) : (
-            <span className="rounded bg-emerald-500/10 px-1.5 py-0.5 text-[10px] font-medium text-emerald-400 border border-emerald-500/20">
-              Anonymized
-            </span>
-          )}
-        </div>
-      </div>
-
-      {/* Media area */}
-      <div className="relative aspect-[16/9] w-full overflow-hidden bg-zinc-900/90 flex items-center justify-center">
-        {loading && !errorStatus && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-zinc-900">
-            <div className="h-6 w-6 animate-spin rounded-full border-2 border-blue-500 border-t-transparent" />
-            <span className="text-[11px] text-zinc-400">Đang tải & xác thực ảnh...</span>
-          </div>
-        )}
-
-        {errorStatus ? (
-          <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center bg-zinc-950/90">
-            {errorStatus === 503 ? (
-              <>
-                <svg
-                  className="h-8 w-8 text-amber-400 mb-2"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1.5}
-                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-                  />
-                </svg>
-                <div className="text-xs font-medium text-zinc-200 mb-1">
-                  Bảo vệ Fail-Closed (503)
-                </div>
-                <p className="text-[11px] text-zinc-400 max-w-[220px] mb-3">
-                  Ảnh chưa qua bộ lọc làm mờ khuôn mặt / biển số xe. Hệ thống chặn trả ảnh thô để bảo mật.
-                </p>
-              </>
-            ) : (
-              <>
-                <svg
-                  className="h-8 w-8 text-rose-400 mb-2"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1.5}
-                    d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"
-                  />
-                </svg>
-                <div className="text-xs font-medium text-zinc-200 mb-1">
-                  Không thể nạp camera ({errorStatus})
-                </div>
-              </>
-            )}
-            <button
-              onClick={handleRetry}
-              className="rounded-md bg-zinc-800 hover:bg-zinc-700 px-2.5 py-1 text-[11px] font-medium text-zinc-200 transition-colors border border-zinc-700"
-            >
-              Thử lại
-            </button>
-          </div>
-        ) : (
-          sampleToken && (
-            /* eslint-disable-next-line @next/next/no-img-element */
-            <img
-              src={imageUrl}
-              alt={`${label} (${channel})`}
-              className={`h-full w-full object-cover transition-opacity duration-300 ${
-                loading ? "opacity-0" : "opacity-100"
-              }`}
-              onLoad={() => setLoading(false)}
-              onError={(e) => {
-                setLoading(false);
-                const target = e.currentTarget;
-                // If failed, probe status via fetch
-                fetch(target.src)
-                  .then((res) => setErrorStatus(res.status))
-                  .catch(() => setErrorStatus(500));
-              }}
-            />
-          )
-        )}
-      </div>
+  return <article className={`overflow-hidden rounded-xl border bg-white ${isFocused ? "border-[var(--accent)] ring-2 ring-[var(--accent-soft)]" : "border-[var(--line)]"}`}>
+    <button type="button" onClick={onFocus} className="flex w-full items-center justify-between gap-2 bg-[var(--surface-subtle)] px-3 py-2 text-left text-xs" aria-pressed={isFocused}>
+      <span className="font-semibold text-[var(--foreground)]">{label}</span>
+      <span className={current?.error ? "text-amber-800" : "text-[var(--accent-strong)]"}>{current?.url ? "Đã qua bộ lọc" : current?.error ? "Chưa sẵn sàng" : "Đang tải…"}</span>
+    </button>
+    <div className="relative flex aspect-video items-center justify-center bg-[#0b2028] text-slate-300">
+      {current?.url ? <>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={current.url} alt={`${label} · ảnh đã qua bộ lọc khuôn mặt và biển số`} className="h-full w-full object-contain" onError={() => setResult({key, error: 503})} />
+      </> : current?.error ? <div role="status" className="max-w-72 p-4 text-center text-xs">
+        <p className="font-semibold text-amber-200">Chưa có ảnh đã xử lý</p>
+        <p className="my-2 text-slate-300">Camera của frame này chưa sẵn sàng. Chọn frame khác hoặc thử lại sau.</p>
+        <button type="button" onClick={() => setRetry(value => value + 1)} className="rounded-lg border border-slate-500 px-3 py-1.5 text-white">Thử lại</button>
+      </div> : <div role="status" className="flex items-center gap-2 text-xs"><span className="h-4 w-4 animate-spin rounded-full border-2 border-teal-300 border-t-transparent" />Đang tải camera…</div>}
     </div>
-  );
+  </article>;
 }

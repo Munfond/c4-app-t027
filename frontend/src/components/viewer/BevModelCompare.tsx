@@ -9,7 +9,6 @@ import {
   DEFAULT_BEV_VIEW_STATE,
   type BevLayerVisibility,
   type BevViewState,
-  type ClassColorMap,
   type ViewerDetectionFrame,
 } from "@/lib/viewer";
 
@@ -36,7 +35,6 @@ export interface BevModelCompareProps {
   onLayersChange?: (layers: BevLayerVisibility) => void;
   viewState?: BevViewState;
   onViewStateChange?: (viewState: BevViewState) => void;
-  classColors?: ClassColorMap;
   className?: string;
 }
 
@@ -80,19 +78,7 @@ function getPaneStatus(
     return "Chưa có dữ liệu";
   }
 
-  return `${pane.frame.detections.length} boxes · Tính sẵn`;
-}
-
-function getCombinedClassNames(
-  frames: readonly (ViewerDetectionFrame | null)[],
-): readonly string[] {
-  return [
-    ...new Set(
-      frames.flatMap(
-        (frame) => frame?.detections.map((detection) => detection.className) ?? [],
-      ),
-    ),
-  ].sort((first, second) => first.localeCompare(second));
+  return `${pane.frame.detections.length} vật cản · Tính sẵn`;
 }
 
 interface ComparePaneViewProps {
@@ -105,8 +91,6 @@ interface ComparePaneViewProps {
   onLayersChange?: (layers: BevLayerVisibility) => void;
   viewState: BevViewState;
   onViewStateChange: (viewState: BevViewState) => void;
-  classColors?: ClassColorMap;
-  legendClassNames: readonly string[];
 }
 
 function ComparePaneView({
@@ -119,8 +103,6 @@ function ComparePaneView({
   onLayersChange,
   viewState,
   onViewStateChange,
-  classColors,
-  legendClassNames,
 }: ComparePaneViewProps) {
   return (
     <article className="flex min-h-[440px] min-w-0 flex-col overflow-hidden rounded-xl border border-zinc-800 bg-zinc-950">
@@ -144,12 +126,10 @@ function ComparePaneView({
       <div className="min-h-0 flex-1">
         <BevViewer
           ariaLabel={`${heading}: ${pane.modelLabel ?? pane.modelId}`}
-          classColors={classColors}
           error={dataError ?? pane.error}
           frame={frame}
           isLoading={pane.isLoading}
           layers={layers}
-          legendClassNames={legendClassNames}
           onLayersChange={onLayersChange}
           onViewStateChange={onViewStateChange}
           showLayerControls={showLayerControls}
@@ -170,7 +150,6 @@ export function BevModelCompare({
   onLayersChange,
   viewState,
   onViewStateChange,
-  classColors,
   className = "",
 }: BevModelCompareProps) {
   const [uncontrolledViewState, setUncontrolledViewState] =
@@ -213,10 +192,7 @@ export function BevModelCompare({
   const modelBDataError = getPaneDataError(modelB, sampleToken);
   const modelAFrame = modelADataError ? null : modelA.frame;
   const modelBFrame = modelBDataError ? null : modelB.frame;
-  const legendClassNames = useMemo(
-    () => getCombinedClassNames([modelAFrame, modelBFrame]),
-    [modelAFrame, modelBFrame],
-  );
+
 
   return (
     <section
@@ -234,12 +210,10 @@ export function BevModelCompare({
 
       <div className="grid min-h-0 flex-1 grid-cols-1 gap-3 lg:grid-cols-2">
         <ComparePaneView
-          classColors={classColors}
           dataError={modelADataError}
           frame={modelAFrame}
           heading="Mô hình A"
           layers={layers}
-          legendClassNames={legendClassNames}
           onLayersChange={onLayersChange}
           onViewStateChange={syncViewState}
           pane={modelA}
@@ -247,12 +221,10 @@ export function BevModelCompare({
           viewState={effectiveViewState}
         />
         <ComparePaneView
-          classColors={classColors}
           dataError={modelBDataError}
           frame={modelBFrame}
           heading="Mô hình B"
           layers={layers}
-          legendClassNames={legendClassNames}
           onLayersChange={onLayersChange}
           onViewStateChange={syncViewState}
           pane={modelB}

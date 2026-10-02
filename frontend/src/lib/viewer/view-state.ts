@@ -2,10 +2,10 @@ import type { BevLayerVisibility, BevViewState } from "./types";
 
 export const DEFAULT_BEV_VIEW_STATE = {
   center: {
-    forward: 20,
+    forward: 10,
     left: 0,
   },
-  visibleHeightMeters: 100,
+  visibleHeightMeters: 70,
 } as const satisfies BevViewState;
 
 export const BEV_VIEW_BOUNDS = {
@@ -16,7 +16,7 @@ export const BEV_VIEW_BOUNDS = {
 
 export const DEFAULT_BEV_LAYERS = {
   detections: true,
-  confidence: true,
+  confidence: false,
   grid: true,
   egoMarker: true,
 } as const satisfies BevLayerVisibility;
