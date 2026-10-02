@@ -2,11 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { CameraPanel } from "@/components/camera";
-import { DetectionSummary } from "./detection-summary";
 import { Button } from "@/components/ui/button";
 import { PageHeader } from "@/components/ui/page-header";
 import { Select } from "@/components/ui/select";
+import { BevViewer } from "@/components/viewer";
 import { apiJson, detectionUrl, type DetectionFrame, type Frame, type ModelInfo, type Scene } from "@/lib/lab-api";
+import { adaptDetectionFrame } from "@/lib/viewer";
 
 export function LabWorkspace() {
   const [scenes, setScenes] = useState<Scene[]>([]);
@@ -63,6 +64,7 @@ export function LabWorkspace() {
   }, [token, model, threshold]);
 
   const activeFrame = frames.find((item) => item.sample_token === token);
+  const viewerFrame = detections ? adaptDetectionFrame(detections) : null;
   return <div className="grid gap-6">
     <PageHeader title="Perception Lab" description="Khám phá dữ liệu nuScenes mini, detection và camera đã ẩn danh từ API." actions={<Button loading={loading} onClick={loadDetections}>Tải lại kết quả</Button>} />
     {error ? <div className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">{error}</div> : null}
@@ -72,9 +74,9 @@ export function LabWorkspace() {
       <Select label="Mô hình" value={model} onChange={(e) => setModel(e.target.value)} disabled={!models.length}>{models.map((x) => <option key={x.id} value={x.id}>{x.id} · {x.sensors.join("+")}</option>)}</Select>
       <Select label="Ngưỡng điểm" value={threshold} onChange={(e) => setThreshold(Number(e.target.value))}>{[0.3,0.5,0.7].map((x) => <option key={x} value={x}>{x.toFixed(2)}</option>)}</Select>
     </section>
-    <section className="viewer-grid relative min-h-[430px] overflow-hidden rounded-[var(--radius)] border border-[#173941] shadow-[var(--shadow)]">
-      <div className="absolute inset-x-0 top-0 z-10 flex justify-between border-b border-white/10 bg-[#0b2028cc] px-4 py-3 text-xs text-[#b4cdd2]"><b className="text-white">Detection frame</b><span>{activeFrame ? `${activeFrame.scene} · #${activeFrame.sample_idx}` : "Chưa có frame"}</span></div>
-      <DetectionSummary data={detections} />
+    <section className="min-h-[560px] overflow-hidden rounded-[var(--radius)] border border-[#173941] bg-zinc-950 shadow-[var(--shadow)]">
+      <div className="flex justify-between border-b border-white/10 bg-[#0b2028] px-4 py-3 text-xs text-[#b4cdd2]"><b className="text-white">Bird&apos;s-eye view</b><span>{activeFrame ? `${activeFrame.scene} · #${activeFrame.sample_idx}` : "Chưa có frame"}</span></div>
+      <div className="h-[520px]"><BevViewer error={error || null} frame={viewerFrame} isLoading={loading} /></div>
     </section>
     {token ? <CameraPanel sampleToken={token} /> : null}
   </div>;
