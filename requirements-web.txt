@@ -8,3 +8,5 @@ Pillow>=10.2,<13
 numpy>=1.26,<3
 scipy>=1.11,<2
 langgraph>=0.2,<2
+sqlalchemy>=2.0,<3
+psycopg2-binary>=2.9,<3

@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: p027-backend
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    region: singapore
+    healthCheckPath: /health
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: PORT
+        value: "8000"
+      - key: DATABASE_URL
+        sync: false
+      - key: CORS_ORIGINS
+        value: "https://*.vercel.app,http://localhost:3000"
+      - key: ANONYMIZER_ENABLED
+        value: "false"
+      - key: LANGCHAIN_TRACING_V2
+        value: "false"

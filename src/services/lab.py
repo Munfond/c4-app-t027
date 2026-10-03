@@ -9,6 +9,8 @@ from pathlib import Path
 from PIL import Image, ImageDraw
 
 from src.config import get_settings
+from src.database import SessionLocal
+from src.models.db_models import DetectionDB, FrameDB
 
 DETECTORS = {
     "official_lidar": ("exports/L3E/pred_lidar_only_ego.csv", ["lidar"], "official"),
@@ -53,7 +55,28 @@ def json_data(path: Path):
 
 
 def frames():
-    rows = csv_rows(get_settings().lab_data_root / "exports/L3E/samples.csv")
+    try:
+        with SessionLocal() as session:
+            db_records = session.query(FrameDB).order_by(FrameDB.sample_idx).all()
+            if db_records:
+                return [
+                    {
+                        "sample_token": r.sample_token,
+                        "sample_idx": r.sample_idx,
+                        "scene": r.scene,
+                        "timestamp_s": r.timestamp_s,
+                        "split": r.split,
+                    }
+                    for r in db_records
+                ]
+    except Exception:
+        pass
+
+    # Fallback to CSV
+    csv_path = get_settings().lab_data_root / "exports/L3E/samples.csv"
+    if not csv_path.is_file():
+        return []
+    rows = csv_rows(csv_path)
     return [
         {
             "sample_token": r["sample_token"],
@@ -70,15 +93,28 @@ def frame(token: str):
     return next((item for item in frames() if item["sample_token"] == token), None)
 
 
-def models():
+def is_model_available(name: str) -> bool:
     root = get_settings().lab_data_root
+    rel = DETECTORS[name][0]
+    if (root / rel).is_file():
+        return True
+    try:
+        with SessionLocal() as session:
+            if session.query(DetectionDB).filter(DetectionDB.model_id == name).first():
+                return True
+    except Exception:
+        pass
+    return False
+
+
+def models():
     return [
         {
             "id": name,
             "sensors": sensors,
             "origin": origin,
             "mode": "precomputed",
-            "available": (root / rel).is_file(),
+            "available": is_model_available(name),
             "split": "mini_val",
             "contaminated": origin in {"official", "mixed"},
             "fusion_type": "object_level_late_fusion" if name.startswith("fused") else None,
@@ -91,8 +127,53 @@ def detections(token: str, model: str, threshold: float):
     item = frame(token)
     if item is None:
         raise KeyError(token)
+
     rel = DETECTORS[model][0]
-    rows = csv_rows(get_settings().lab_data_root / rel)
+
+    # Try DB first if available
+    try:
+        with SessionLocal() as session:
+            has_db_frame = session.query(FrameDB).filter(FrameDB.sample_token == token).first()
+            if has_db_frame:
+                has_model = session.query(DetectionDB).filter(DetectionDB.model_id == model).first()
+                if not has_model and not (get_settings().lab_data_root / rel).is_file():
+                    raise FileNotFoundError(rel)
+                db_boxes = (
+                    session.query(DetectionDB)
+                    .filter(
+                        DetectionDB.sample_token == token,
+                        DetectionDB.model_id == model,
+                        DetectionDB.score >= threshold,
+                    )
+                    .all()
+                )
+                boxes = [
+                    {
+                        "class_name": b.class_name,
+                        "x": b.x,
+                        "y": b.y,
+                        "z": b.z,
+                        "w": b.w,
+                        "l": b.l,
+                        "h": b.h,
+                        "yaw": b.yaw,
+                        "vx": b.vx,
+                        "vy": b.vy,
+                        "score": b.score,
+                    }
+                    for b in db_boxes
+                ]
+                return {"frame": item, "model": model, "mode": "precomputed", "coordinates": COORDINATES, "boxes": boxes}
+    except FileNotFoundError:
+        raise
+    except Exception:
+        pass
+
+    # Fallback to CSV
+    csv_file = get_settings().lab_data_root / rel
+    if not csv_file.is_file():
+        raise FileNotFoundError(rel)
+    rows = csv_rows(csv_file)
     boxes = []
     for row in rows:
         if int(row["sample_idx"]) != item["sample_idx"] or float(row["score"]) < threshold:
