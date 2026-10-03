@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
-const backendUrl = (process.env.API_INTERNAL_URL || "http://127.0.0.1:8000").replace(/\/+$/, "");
+const rawUrl = (process.env.API_INTERNAL_URL || "http://127.0.0.1:8000").trim();
+const backendUrl = rawUrl.replace(/\/+$/, "").replace(/\/api$/, "");
 
 const nextConfig: NextConfig = {
   output: "standalone",
