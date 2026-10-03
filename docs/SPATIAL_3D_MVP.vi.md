@@ -2,6 +2,8 @@
 
 Lab có chế độ **Bản đồ 3D** cho từng frame của nuScenes mini. API `/api/v1/lab/frames/{token}/environment` trả về tối đa 24.000 điểm LiDAR keyframe trong hệ tọa độ xe (`x` tiến, `y` trái, `z` lên), voxel hóa 0,25 m trong bán kính 65 m. Trình xem biến mỗi điểm thành một khối nhỏ, cho phép xoay, thu phóng và xem từ trên/cạnh. Các hộp vật cản của model pretrained đang chọn được vẽ trong cùng hệ tọa độ.
 
+Lab có timeline để phát các keyframe của **một scene** theo timestamp gốc ở tốc độ 0,5× / 1× / 2×, tua, tạm dừng và tùy chọn lặp. BEV/3D, risk và camera dùng cùng sample token; khi đổi scene, model, ngưỡng hoặc tua thủ công thì playback dừng. Chế độ 3D chờ LiDAR và detection của frame mới cùng sẵn sàng trước khi chạy tiếp; frame kế tiếp được tải trước. Đây là phát kết quả precomputed theo keyframe, không phải video liên tục hay live inference, và không nội suy hình học giữa hai keyframe.
+
 Màu **mặt thấp** lấy ngưỡng chiều cao từ phân vị 15% của các điểm trong bán kính 25 m. Màu **khối cao** là những điểm còn lại. Màu **trong hộp vật cản** lấy theo hình học của hộp 3D đã dự đoán. Đây là phân nhóm hình học của **các bề mặt LiDAR đã quan sát**, chưa phải semantic segmentation được đánh giá bằng nhãn 3D và cũng không dự đoán vùng bị che khuất. Kích thước khối vẽ chỉ để nhìn rõ bề mặt; nó không chứng minh một thể tích thật đã được lấp đầy.
 
 ## Đường nâng cấp model

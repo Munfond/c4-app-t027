@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
@@ -188,45 +188,91 @@ class SpatialRenderer {
   }
 }
 
-export function SpatialViewer({ frame }: { frame: ViewerDetectionFrame | null }) {
-  const token = frame?.frame.sampleToken;
+type SpatialViewerProps = {
+  frame: ViewerDetectionFrame | null;
+  sampleToken: string | null;
+  nextToken?: string;
+  requestError?: string | null;
+  onFrameReady?: (token: string) => void;
+  onFrameError?: () => void;
+};
+
+export function SpatialViewer({ frame, sampleToken: token, nextToken, requestError, onFrameReady, onFrameError }: SpatialViewerProps) {
   const host = useRef<HTMLDivElement>(null);
   const spatial = useRef<SpatialRenderer | null>(null);
+  const environmentCache = useRef(new Map<string, Environment>());
   const [environment, setEnvironment] = useState<{ token: string; value: Environment } | null>(null);
   const [error, setError] = useState("");
   const [rendererError, setRendererError] = useState("");
   const [view, setView] = useState<View>("perspective");
   const [counts, setCounts] = useState<Record<Surface, number> | null>(null);
+  const [renderedToken, setRenderedToken] = useState<string | null>(null);
+
+  const rememberEnvironment = useCallback((key: string, value: Environment) => {
+    const cache = environmentCache.current;
+    cache.set(key, value);
+    while (cache.size > 6) cache.delete(cache.keys().next().value!);
+  }, []);
 
   useEffect(() => {
     if (!host.current) return;
     try { spatial.current = new SpatialRenderer(host.current); }
-    catch (cause) { queueMicrotask(() => setRendererError(cause instanceof Error ? cause.message : "Không mở được bản đồ 3D")); }
+    catch (cause) {
+      queueMicrotask(() => setRendererError(cause instanceof Error ? cause.message : "Không mở được bản đồ 3D"));
+      onFrameError?.();
+    }
     return () => { spatial.current?.dispose(); spatial.current = null; };
-  }, []);
+  }, [onFrameError]);
 
   useEffect(() => {
     const controller = new AbortController();
-    spatial.current?.setData([], []);
-    queueMicrotask(() => { setCounts(null); setError(""); });
+    const cached = token ? environmentCache.current.get(token) : null;
+    if (!cached) {
+      spatial.current?.setData([], []);
+      queueMicrotask(() => { if (!controller.signal.aborted) { setCounts(null); setError(""); } });
+    }
     if (!token) return;
+    if (cached) {
+      queueMicrotask(() => { if (!controller.signal.aborted) { setEnvironment({ token, value: cached }); setError(""); } });
+      return () => controller.abort();
+    }
     void fetch(`/api/v1/lab/frames/${encodeURIComponent(token)}/environment`, { signal: controller.signal })
       .then(async response => {
         if (!response.ok) throw new Error(`LiDAR chưa sẵn sàng (HTTP ${response.status})`);
         return response.json() as Promise<Environment>;
       })
-      .then(value => { if (!controller.signal.aborted) { setEnvironment({ token, value }); setError(""); } })
-      .catch(cause => { if (!controller.signal.aborted) setError(cause instanceof Error ? cause.message : "Lỗi tải LiDAR"); });
+      .then(value => {
+        if (controller.signal.aborted) return;
+        rememberEnvironment(token, value);
+        setEnvironment({ token, value });
+        setError("");
+      })
+      .catch(cause => {
+        if (controller.signal.aborted) return;
+        setError(cause instanceof Error ? cause.message : "Lỗi tải LiDAR");
+        onFrameError?.();
+      });
     return () => controller.abort();
-  }, [token]);
+  }, [token, rememberEnvironment, onFrameError]);
 
   useEffect(() => {
-    if (!token || environment?.token !== token || !spatial.current) return;
-    const result = spatial.current.setData(environment.value.points, frame?.detections ?? []);
-    queueMicrotask(() => setCounts(result));
-  }, [environment, frame, token]);
+    if (!nextToken || nextToken === token || environmentCache.current.has(nextToken)) return;
+    const controller = new AbortController();
+    void fetch(`/api/v1/lab/frames/${encodeURIComponent(nextToken)}/environment`, { signal: controller.signal })
+      .then(response => response.ok ? response.json() as Promise<Environment> : null)
+      .then(value => { if (!controller.signal.aborted && value) rememberEnvironment(nextToken, value); })
+      .catch(() => { /* Prefetch failure is retried when the frame becomes current. */ });
+    return () => controller.abort();
+  }, [nextToken, token, rememberEnvironment]);
 
-  return <section className="relative h-full min-h-[520px] overflow-hidden bg-[#071720] text-white">
+  useEffect(() => {
+    if (!token || environment?.token !== token || frame?.frame.sampleToken !== token || !spatial.current) return;
+    const result = spatial.current.setData(environment.value.points, frame?.detections ?? []);
+    queueMicrotask(() => { setCounts(result); setRenderedToken(token); onFrameReady?.(token); });
+  }, [environment, frame, token, onFrameReady]);
+
+  const visibleError = rendererError || error || requestError;
+  return <section aria-busy={renderedToken !== token && !visibleError} className="relative h-full min-h-[520px] overflow-hidden bg-[#071720] text-white">
     <div ref={host} className="absolute inset-0" />
     <div className="pointer-events-none absolute left-4 top-4 max-w-[calc(100%-2rem)] rounded-xl border border-white/15 bg-[#071720]/85 px-4 py-3 shadow-xl backdrop-blur sm:max-w-[55%]">
       <p className="text-sm font-semibold text-white">Bản đồ 3D quanh xe</p>
@@ -244,6 +290,7 @@ export function SpatialViewer({ frame }: { frame: ViewerDetectionFrame | null })
         <p className="mt-1 flex items-center gap-2" key={key}><span className="h-2.5 w-2.5 rounded-sm" style={{ backgroundColor: COLORS[key] }} />{label}{counts ? ` · ${counts[key].toLocaleString()}` : ""}</p>)}
       <p className="mt-2 text-[10px] text-slate-400">Kéo để xoay · cuộn để zoom · nhấp phải để dịch chuyển</p>
     </div>
-    {(rendererError || error) && <div role="alert" className="absolute inset-0 grid place-items-center bg-[#071720]/90 p-6 text-center text-sm text-rose-300">{rendererError || error}</div>}
+    {visibleError ? <div role="alert" className="absolute inset-0 grid place-items-center bg-[#071720]/90 p-6 text-center text-sm text-rose-300">{visibleError}</div>
+      : renderedToken !== token ? <div role="status" className="absolute inset-0 grid place-items-center bg-[#071720]/95 p-6 text-center text-sm text-slate-200">Đang đồng bộ LiDAR và vật cản của frame…</div> : null}
   </section>;
 }
