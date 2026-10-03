@@ -5,7 +5,11 @@
 .venv-lab
 .venv-inference
 frontend/
-data/
+data/*
+!data/lab/
+data/lab/models/**/*.pth
+*.db
+*.sqlite3
 weights/
 *.pt
 legacy/

@@ -8,7 +8,7 @@ from pathlib import Path
 
 from PIL import Image, ImageDraw
 
-from src.config import get_settings
+from src.config import PROJECT_ROOT, get_settings
 from src.database import SessionLocal
 from src.models.db_models import DetectionDB, FrameDB
 
@@ -55,6 +55,20 @@ def json_data(path: Path):
 
 
 def frames():
+    settings = get_settings()
+    if settings.lab_data_root != PROJECT_ROOT / "data/lab" and (settings.lab_data_root / "exports/L3E/samples.csv").is_file():
+        rows = csv_rows(settings.lab_data_root / "exports/L3E/samples.csv")
+        return [
+            {
+                "sample_token": r["sample_token"],
+                "sample_idx": int(r["sample_idx"]),
+                "scene": r["scene"],
+                "timestamp_s": float(r["timestamp_s"]),
+                "split": "mini_val",
+            }
+            for r in rows
+        ]
+
     try:
         with SessionLocal() as session:
             db_records = session.query(FrameDB).order_by(FrameDB.sample_idx).all()
@@ -94,16 +108,18 @@ def frame(token: str):
 
 
 def is_model_available(name: str) -> bool:
-    root = get_settings().lab_data_root
+    settings = get_settings()
+    root = settings.lab_data_root
     rel = DETECTORS[name][0]
     if (root / rel).is_file():
         return True
-    try:
-        with SessionLocal() as session:
-            if session.query(DetectionDB).filter(DetectionDB.model_id == name).first():
-                return True
-    except Exception:
-        pass
+    if settings.lab_data_root == PROJECT_ROOT / "data/lab":
+        try:
+            with SessionLocal() as session:
+                if session.query(DetectionDB).filter(DetectionDB.model_id == name).first():
+                    return True
+        except Exception:
+            pass
     return False
 
 
