@@ -10,7 +10,7 @@ from PIL import Image, ImageDraw
 
 from src.config import PROJECT_ROOT, get_settings
 from src.database import SessionLocal
-from src.models.db_models import DetectionDB, FrameDB
+from src.models.db_models import CameraImageDB, DetectionDB, FrameDB
 
 DETECTORS = {
     "official_lidar": ("exports/L3E/pred_lidar_only_ego.csv", ["lidar"], "official"),
@@ -228,6 +228,20 @@ def camera_cache_path(token: str, channel: str) -> Path:
 
 
 def get_cached_camera(token: str, channel: str) -> bytes | None:
+    # 1. Try DB first
+    try:
+        with SessionLocal() as session:
+            record = (
+                session.query(CameraImageDB)
+                .filter(CameraImageDB.sample_token == token, CameraImageDB.channel == channel)
+                .first()
+            )
+            if record and record.image_data:
+                return bytes(record.image_data)
+    except Exception:
+        pass
+
+    # 2. Fallback to local file cache
     path = camera_cache_path(token, channel)
     if path.is_file():
         return path.read_bytes()

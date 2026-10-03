@@ -7,7 +7,9 @@
 frontend/
 data/*
 !data/lab/
-data/lab/models/**/*.pth
+!data/lab/stage_h/
+data/lab/cache/
+data/lab/models/
 *.db
 *.sqlite3
 weights/

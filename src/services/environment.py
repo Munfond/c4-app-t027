@@ -11,6 +11,21 @@ from src.services import lab
 def environment(token: str) -> dict:
     if lab.frame(token) is None:
         raise KeyError(token)
+
+    # 1. Try DB first
+    try:
+        import json
+        from src.database import SessionLocal
+        from src.models.db_models import EnvironmentDB
+
+        with SessionLocal() as session:
+            record = session.query(EnvironmentDB).filter(EnvironmentDB.sample_token == token).first()
+            if record and record.payload_json:
+                return json.loads(record.payload_json)
+    except Exception:
+        pass
+
+    # 2. Try file cache
     settings = lab.get_settings()
     cached = settings.lab_data_root / "cache/environment" / f"{token}.json"
     if cached.is_file():
