@@ -46,7 +46,9 @@ def is_db_available() -> bool:
     """Check whether database connection can be established."""
     try:
         with engine.connect() as conn:
-            conn.execute(Base.metadata.tables and next(iter(Base.metadata.tables.values())).select().limit(1) or "SELECT 1")
+            conn.execute(
+                Base.metadata.tables and next(iter(Base.metadata.tables.values())).select().limit(1) or "SELECT 1"
+            )
         return True
     except Exception:
         return False

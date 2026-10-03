@@ -56,7 +56,10 @@ def json_data(path: Path):
 
 def frames():
     settings = get_settings()
-    if settings.lab_data_root != PROJECT_ROOT / "data/lab" and (settings.lab_data_root / "exports/L3E/samples.csv").is_file():
+    if (
+        settings.lab_data_root != PROJECT_ROOT / "data/lab"
+        and (settings.lab_data_root / "exports/L3E/samples.csv").is_file()
+    ):
         rows = csv_rows(settings.lab_data_root / "exports/L3E/samples.csv")
         return [
             {
@@ -179,7 +182,13 @@ def detections(token: str, model: str, threshold: float):
                     }
                     for b in db_boxes
                 ]
-                return {"frame": item, "model": model, "mode": "precomputed", "coordinates": COORDINATES, "boxes": boxes}
+                return {
+                    "frame": item,
+                    "model": model,
+                    "mode": "precomputed",
+                    "coordinates": COORDINATES,
+                    "boxes": boxes,
+                }
     except FileNotFoundError:
         raise
     except Exception:
@@ -298,4 +307,3 @@ def risk_heatmap_png(token: str, system: str, vmax: float = 0.3) -> bytes:
     output = io.BytesIO()
     image.save(output, format="PNG", optimize=True)
     return output.getvalue()
-

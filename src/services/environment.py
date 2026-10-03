@@ -3,8 +3,12 @@
 These points are observations, not a complete map or a free-space prediction.
 """
 
+import json
+
 import numpy as np
 
+from src.database import SessionLocal
+from src.models.db_models import EnvironmentDB
 from src.services import lab
 
 
@@ -14,10 +18,6 @@ def environment(token: str) -> dict:
 
     # 1. Try DB first
     try:
-        import json
-        from src.database import SessionLocal
-        from src.models.db_models import EnvironmentDB
-
         with SessionLocal() as session:
             record = session.query(EnvironmentDB).filter(EnvironmentDB.sample_token == token).first()
             if record and record.payload_json:
