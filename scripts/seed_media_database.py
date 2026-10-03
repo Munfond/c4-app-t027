@@ -39,20 +39,18 @@ def main():
 
         # 2. Seed Camera Images (486 images)
         cam_files = [f for f in cam_dir.glob("*.jpg") if f.name != "token-a_CAM_FRONT.jpg"]
-        print(f"Found {len(cam_files)} camera images to seed...")
+        print(f"Clearing any old camera rows and seeding {len(cam_files)} cameras...")
+        session.query(CameraImageDB).delete()
+        session.commit()
+
         for idx, f in enumerate(cam_files, 1):
-            name_parts = f.stem.rsplit("_", 1)
-            if len(name_parts) != 2:
-                # E.g. token_CAM_FRONT
+            stem = f.stem
+            if len(stem) < 34 or stem[32] != "_":
                 continue
-            token, channel = name_parts
-            existing = session.query(CameraImageDB).filter(
-                CameraImageDB.sample_token == token,
-                CameraImageDB.channel == channel
-            ).first()
-            if not existing:
-                img_bytes = f.read_bytes()
-                session.add(CameraImageDB(sample_token=token, channel=channel, image_data=img_bytes))
+            token = stem[:32]
+            channel = stem[33:]
+            img_bytes = f.read_bytes()
+            session.add(CameraImageDB(sample_token=token, channel=channel, image_data=img_bytes))
             if idx % 50 == 0 or idx == len(cam_files):
                 session.commit()
                 print(f"  [Cameras] Seeded {idx}/{len(cam_files)}")
