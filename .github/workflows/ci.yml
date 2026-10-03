@@ -45,15 +45,3 @@ jobs:
       - run: npm run lint
       - run: npm run build
 
-  sync-deploy:
-    name: Sync to Deployment Mirror
-    needs: [backend, frontend]
-    if: (github.ref == 'refs/heads/main' && github.event_name == 'push') || github.event_name == 'workflow_dispatch'
-    runs-on: [self-hosted, Windows, X64, team-27]
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Push to Munfond/p027-deploy
-        run: |
-          git push https://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@github.com/Munfond/p027-deploy.git main:main --force
