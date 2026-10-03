@@ -62,4 +62,3 @@ class EnvironmentDB(Base):
 
     sample_token = Column(String(64), primary_key=True, index=True)
     payload_json = Column(Text, nullable=False)
-
