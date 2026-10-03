@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { PageHeader } from "@/components/ui/page-header";
 import { Select } from "@/components/ui/select";
 import { BevViewer } from "@/components/viewer";
+import { SpatialViewer } from "@/components/viewer/SpatialViewer";
 import { apiJson, detectionUrl, modelLabel, mvpModels, type DetectionFrame, type Frame, type ModelInfo, type Scene } from "@/lib/lab-api";
 import { adaptDetectionFrame } from "@/lib/viewer";
 import { RiskHeatmap } from "./risk-heatmap";
@@ -23,6 +24,7 @@ export function LabWorkspace() {
   const [loadedKey, setLoadedKey] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [spatialMode, setSpatialMode] = useState<"bev" | "3d">("bev");
 
   useEffect(() => {
     const controller = new AbortController();
@@ -75,8 +77,13 @@ export function LabWorkspace() {
       <Select label="Ngưỡng điểm" value={threshold} onChange={(e) => setThreshold(Number(e.target.value))}>{[0.3,0.5,0.7].map((x) => <option key={x} value={x}>{x.toFixed(2)}</option>)}</Select>
     </section>
     <section className="min-h-[560px] overflow-hidden rounded-[var(--radius)] border border-[#173941] bg-zinc-950 shadow-[var(--shadow)]">
-      <div className="flex justify-between border-b border-white/10 bg-[#0b2028] px-4 py-3 text-xs text-[#b4cdd2]"><b className="text-white">Không gian quanh xe · BEV</b><span>{activeFrame?.scene === scene ? `${activeFrame.scene} · #${activeFrame.sample_idx}` : "Chưa có frame"}</span></div>
-      <div className="h-[520px]"><BevViewer error={error || null} frame={viewerFrame} isLoading={loading || (!ready && !error)} /></div>
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 bg-[#0b2028] px-4 py-3 text-xs text-[#b4cdd2]">
+        <div className="flex items-center gap-3"><b className="text-white">Không gian quanh xe</b><div className="flex rounded-lg border border-white/10 bg-black/20 p-0.5" role="group" aria-label="Chế độ bản đồ">
+          <button type="button" aria-pressed={spatialMode === "bev"} onClick={() => setSpatialMode("bev")} className={`rounded-md px-3 py-1.5 ${spatialMode === "bev" ? "bg-teal-400 font-semibold text-[#08252a]" : "text-slate-300 hover:bg-white/10"}`}>BEV 2D</button>
+          <button type="button" aria-pressed={spatialMode === "3d"} onClick={() => setSpatialMode("3d")} className={`rounded-md px-3 py-1.5 ${spatialMode === "3d" ? "bg-teal-400 font-semibold text-[#08252a]" : "text-slate-300 hover:bg-white/10"}`}>Bản đồ 3D</button>
+        </div></div><span>{activeFrame?.scene === scene ? `${activeFrame.scene} · #${activeFrame.sample_idx}` : "Chưa có frame"}</span>
+      </div>
+      <div className="h-[520px]">{spatialMode === "3d" ? <SpatialViewer frame={viewerFrame} /> : <BevViewer error={error || null} frame={viewerFrame} isLoading={loading || (!ready && !error)} />}</div>
     </section>
     {token && activeFrame?.scene === scene ? <RiskHeatmap sampleToken={token} /> : null}
     {token && activeFrame?.scene === scene ? <CameraPanel sampleToken={token} /> : null}
