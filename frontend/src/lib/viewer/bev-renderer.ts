@@ -1,3 +1,4 @@
+import { centreDistance, proximityColor } from "./proximity";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
@@ -12,7 +13,6 @@ import {
   worldTargetToBevCenter,
 } from "@/lib/geometry";
 
-import { getClassColor, type ClassColorMap } from "./class-colors";
 import type {
   BevLayerVisibility,
   BevViewportMetrics,
@@ -35,6 +35,7 @@ export interface BevRendererOptions {
   ariaLabel: string;
   initialViewState?: BevViewState;
   onViewStateChange?: (viewState: BevViewState) => void;
+  onSelectDetection?: (id: string) => void;
   onViewportMetricsChange?: (metrics: BevViewportMetrics) => void;
 }
 
@@ -124,7 +125,7 @@ function createTextSprite(text: string, color: string): TextSprite | null {
       transparent: true,
     });
     const sprite = new THREE.Sprite(material);
-    sprite.scale.set(12, 2.25, 1);
+    sprite.scale.set(4.5, 1.1, 1);
     sprite.renderOrder = 20;
     return { canvas, context, sprite, texture, text, color };
   } catch (cause) {
@@ -185,11 +186,11 @@ function createEgoMarker(): THREE.Group {
 function updateDetectionVisual(
   visual: DetectionVisual,
   detection: ViewerDetection,
-  classColors?: ClassColorMap,
 ): void {
   const transform = detectionToBevBoxTransform(detection);
-  const color = getClassColor(detection.className, classColors);
+  const color = proximityColor(detection);
   visual.box.name = `detection:${detection.id}`;
+  visual.box.userData.detectionId = detection.id;
   visual.box.position.set(
     transform.position.x,
     transform.position.y,
@@ -204,7 +205,7 @@ function updateDetectionVisual(
   if (visual.confidence) {
     updateTextSprite(
       visual.confidence,
-      `${detection.className} ${(detection.confidence * 100).toFixed(0)}%`,
+      `${centreDistance(detection).toFixed(1)} m`,
       color,
     );
     visual.confidence.sprite.position.set(
@@ -218,16 +219,15 @@ function updateDetectionVisual(
 
 function createDetectionVisual(
   detection: ViewerDetection,
-  classColors?: ClassColorMap,
 ): DetectionVisual {
-  const color = getClassColor(detection.className, classColors);
+  const color = proximityColor(detection);
   const group = new THREE.Group();
 
   const boxGeometry = new THREE.BoxGeometry(1, 1, 1);
   const fillMaterial = new THREE.MeshBasicMaterial({
     color,
     depthWrite: false,
-    opacity: 0.16,
+    opacity: 0.42,
     transparent: true,
   });
   const fill = new THREE.Mesh(boxGeometry, fillMaterial);
@@ -243,7 +243,7 @@ function createDetectionVisual(
   let confidence: TextSprite | null = null;
   try {
     confidence = createTextSprite(
-      `${detection.className} ${(detection.confidence * 100).toFixed(0)}%`,
+      `${centreDistance(detection).toFixed(1)} m`,
       color,
     );
     const visual: DetectionVisual = {
@@ -252,7 +252,7 @@ function createDetectionVisual(
       edgeMaterial,
       confidence,
     };
-    updateDetectionVisual(visual, detection, classColors);
+    updateDetectionVisual(visual, detection);
     return visual;
   } catch (cause) {
     if (confidence) {
@@ -273,7 +273,9 @@ export class BevRenderer {
   private readonly resizeObserver: ResizeObserver;
   private readonly detectionsGroup = new THREE.Group();
   private readonly confidenceGroup = new THREE.Group();
+  private environmentPoints: THREE.Points | null = null;
   private readonly detectionPool: DetectionVisual[] = [];
+  private pointerStart: {x: number; y: number} | null = null;
   private animationFrame: number | null = null;
   private viewportAspect = 1;
   private applyingViewState = false;
@@ -293,7 +295,7 @@ export class BevRenderer {
       antialias: true,
       powerPreference: "high-performance",
     });
-    this.renderer.setClearColor(0x09090b, 1);
+    this.renderer.setClearColor(0x0b2028, 1);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
     this.renderer.domElement.setAttribute("aria-label", options.ariaLabel);
@@ -302,6 +304,8 @@ export class BevRenderer {
     this.renderer.domElement.style.height = "100%";
     this.renderer.domElement.style.width = "100%";
     this.container.appendChild(this.renderer.domElement);
+    this.renderer.domElement.addEventListener("pointerdown", this.handlePointerDown);
+    this.renderer.domElement.addEventListener("pointerup", this.handlePointerUp);
 
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
     this.controls.enableDamping = false;
@@ -322,8 +326,8 @@ export class BevRenderer {
     this.grid = new THREE.GridHelper(
       GRID_SIZE_METERS,
       GRID_DIVISIONS,
-      "#52525b",
-      "#27272a",
+      "#26444c",
+      "#17323b",
     );
     this.grid.position.y = -0.05;
     this.grid.name = "metric-grid-10m";
@@ -331,6 +335,15 @@ export class BevRenderer {
 
     this.egoMarker = createEgoMarker();
     this.scene.add(this.egoMarker);
+    for (const radius of [10, 25, 50]) {
+      const points = Array.from({ length: 129 }, (_, i) => {
+        const angle = i / 128 * Math.PI * 2;
+        return new THREE.Vector3(Math.cos(angle) * radius, 0.02, Math.sin(angle) * radius);
+      });
+      const ring = new THREE.Line(new THREE.BufferGeometry().setFromPoints(points),
+        new THREE.LineBasicMaterial({ color: "#4c7a82", transparent: true, opacity: 0.5 }));
+      this.scene.add(ring);
+    }
     this.scene.add(this.detectionsGroup, this.confidenceGroup);
 
     this.setViewState(options.initialViewState ?? DEFAULT_BEV_VIEW_STATE);
@@ -340,21 +353,18 @@ export class BevRenderer {
     this.resize();
   }
 
-  setDetections(
-    detections: readonly ViewerDetection[],
-    classColors?: ClassColorMap,
-  ): void {
+  setDetections(detections: readonly ViewerDetection[]): void {
     detections.forEach((detection, index) => {
       let visual = this.detectionPool[index];
       if (!visual) {
-        visual = createDetectionVisual(detection, classColors);
+        visual = createDetectionVisual(detection);
         this.detectionPool.push(visual);
         this.detectionsGroup.add(visual.box);
         if (visual.confidence) {
           this.confidenceGroup.add(visual.confidence.sprite);
         }
       } else {
-        updateDetectionVisual(visual, detection, classColors);
+        updateDetectionVisual(visual, detection);
       }
     });
 
@@ -370,6 +380,36 @@ export class BevRenderer {
       }
     }
 
+    this.scheduleRender();
+  }
+
+  setSelectedDetection(id: string | null): void {
+    for (const visual of this.detectionPool) {
+      visual.edgeMaterial.color.copy(visual.fillMaterial.color);
+      if (visual.box.name === `detection:${id}`) visual.edgeMaterial.color.set("#ffffff");
+    }
+    this.scheduleRender();
+  }
+
+  setEnvironment(points: readonly number[][]): void {
+    if (this.environmentPoints) {
+      this.scene.remove(this.environmentPoints);
+      disposeObject(this.environmentPoints);
+    }
+    const positions: number[] = [];
+    const colors: number[] = [];
+    for (const [forward, left, up] of points) {
+      positions.push(-left, -0.02, -forward);
+      const color = new THREE.Color(up > 0.4 ? "#91b9c2" : "#31515b");
+      colors.push(color.r, color.g, color.b);
+    }
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
+    geometry.setAttribute("color", new THREE.Float32BufferAttribute(colors, 3));
+    this.environmentPoints = new THREE.Points(geometry, new THREE.PointsMaterial({
+      size: 2, sizeAttenuation: false, vertexColors: true, depthWrite: false,
+    }));
+    this.scene.add(this.environmentPoints);
     this.scheduleRender();
   }
 
@@ -434,6 +474,8 @@ export class BevRenderer {
     this.resizeObserver.disconnect();
     this.controls.removeEventListener("change", this.handleControlsChange);
     this.controls.dispose();
+    this.renderer.domElement.removeEventListener("pointerdown", this.handlePointerDown);
+    this.renderer.domElement.removeEventListener("pointerup", this.handlePointerUp);
     if (this.animationFrame !== null) {
       cancelAnimationFrame(this.animationFrame);
       this.animationFrame = null;
@@ -446,6 +488,24 @@ export class BevRenderer {
     this.renderer.forceContextLoss();
     this.renderer.domElement.remove();
   }
+
+  private readonly handlePointerDown = (event: PointerEvent): void => {
+    this.pointerStart = { x: event.clientX, y: event.clientY };
+  };
+
+  private readonly handlePointerUp = (event: PointerEvent): void => {
+    if (!this.pointerStart || Math.hypot(event.clientX - this.pointerStart.x, event.clientY - this.pointerStart.y) > 5) return;
+    this.pointerStart = null;
+    if (!this.detectionsGroup.visible) return;
+    const bounds = this.renderer.domElement.getBoundingClientRect();
+    const pointer = new THREE.Vector2((event.clientX-bounds.left)/bounds.width*2-1, 1-(event.clientY-bounds.top)/bounds.height*2);
+    const raycaster = new THREE.Raycaster();
+    raycaster.setFromCamera(pointer, this.camera);
+    const boxes = this.detectionsGroup.children.filter(box => box.visible);
+    const hit = raycaster.intersectObjects(boxes, true)[0];
+    const id = hit?.object.parent?.userData.detectionId;
+    if (typeof id === "string") this.options.onSelectDetection?.(id);
+  };
 
   private readonly handleControlsChange = (): void => {
     this.scheduleRender();

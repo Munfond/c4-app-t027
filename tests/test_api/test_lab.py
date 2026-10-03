@@ -1,11 +1,58 @@
 import io
 import json
 
+import numpy as np
 import pytest
 from PIL import Image
 
 from src.config import Settings, get_settings
 from src.main import app
+
+
+@pytest.mark.asyncio
+async def test_environment_rotates_lidar_into_ego_and_filters(client, lab_settings):
+    root = lab_settings.nusc_root
+    (root / "v1.0-mini").mkdir(parents=True)
+    (root / "samples/LIDAR_TOP").mkdir(parents=True)
+    # Sensor +x becomes ego +y after 90deg rotation; translated +10m forward.
+    np.array([[2, 0, 1, 0, 0], [200, 0, 0, 0, 0], [float("nan"), 0, 0, 0, 0]], dtype="<f4").tofile(
+        root / "samples/LIDAR_TOP/a.bin"
+    )
+    (root / "v1.0-mini/sample_data.json").write_text(
+        json.dumps(
+            [
+                {
+                    "sample_token": "token-a",
+                    "is_key_frame": True,
+                    "filename": "samples/LIDAR_TOP/a.bin",
+                    "calibrated_sensor_token": "lidar",
+                },
+            ]
+        )
+    )
+    (root / "v1.0-mini/calibrated_sensor.json").write_text(
+        json.dumps(
+            [
+                {"token": "lidar", "rotation": [2**-0.5, 0, 0, 2**-0.5], "translation": [10, 0, 1]},
+            ]
+        )
+    )
+    response = await client.get("/api/v1/lab/frames/token-a/environment")
+    assert response.status_code == 200
+    assert response.json()["points"] == [[10.0, 2.0, 2.0]]
+    assert response.json()["coordinates"]["frame"] == "ego"
+    assert (await client.get("/api/v1/lab/frames/token-b/environment")).status_code == 503
+    assert (await client.get("/api/v1/lab/frames/unknown/environment")).status_code == 404
+
+
+@pytest.mark.asyncio
+async def test_environment_cache_works_without_raw_dataset(client, lab_settings):
+    cache = lab_settings.lab_data_root / "cache/environment"
+    cache.mkdir(parents=True)
+    payload = {"sample_token": "token-a", "points": [[1, 2, 3]]}
+    (cache / "token-a.json").write_text(json.dumps(payload))
+    assert (await client.get("/api/v1/lab/frames/token-a/environment")).json() == payload
+    assert (await client.get("/api/v1/lab/frames/token-b/environment")).status_code == 503
 
 
 @pytest.fixture

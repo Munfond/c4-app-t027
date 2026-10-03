@@ -2,7 +2,7 @@ export {
   BevLayerControls,
   type BevLayerControlsProps,
 } from "./BevLayerControls";
-export { BevLegend, type BevLegendProps } from "./BevLegend";
+export { BevLegend } from "./BevLegend";
 export {
   BevModelCompare,
   type BevComparePane,
