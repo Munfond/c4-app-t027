@@ -1,6 +1,6 @@
 """SQLAlchemy ORM models for ADAS perception lab."""
 
-from sqlalchemy import Column, Float, Integer, String, Text
+from sqlalchemy import Column, Float, Integer, LargeBinary, String, Text
 
 from src.database import Base
 
@@ -46,3 +46,20 @@ class BenchmarkDB(Base):
     nds_score = Column(Float, nullable=True)
     latency_ms = Column(Float, nullable=True)
     details_json = Column(Text, nullable=True)
+
+
+class CameraImageDB(Base):
+    __tablename__ = "camera_images"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    sample_token = Column(String(64), index=True, nullable=False)
+    channel = Column(String(32), index=True, nullable=False)
+    image_data = Column(LargeBinary, nullable=False)
+
+
+class EnvironmentDB(Base):
+    __tablename__ = "environments"
+
+    sample_token = Column(String(64), primary_key=True, index=True)
+    payload_json = Column(Text, nullable=False)
+
