@@ -24,9 +24,11 @@ app = FastAPI(
 )
 
 settings = get_settings()
+origins = [o.strip() for o in settings.cors_origins.split(",") if o.strip()]
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.cors_origins.split(","),
+    allow_origins=origins,
+    allow_origin_regex=r"https://.*\.vercel\.app",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -34,6 +36,23 @@ app.add_middleware(
 
 app.include_router(router, prefix="/api/v1")
 app.include_router(lab_router, prefix="/api/v1")
+app.include_router(lab_router, prefix="/api")  # alias for /api/lab/...
+
+
+@app.get("/")
+async def root():
+    return {
+        "status": "online",
+        "service": "P-027 Perception Lab API",
+        "docs": "/docs",
+        "health": "/health",
+        "endpoints": {
+            "scenes": "/api/v1/lab/scenes",
+            "models": "/api/v1/lab/models",
+            "benchmarks": "/api/v1/lab/benchmarks",
+            "capabilities": "/api/v1/lab/capabilities",
+        },
+    }
 
 
 @app.get("/health")

@@ -173,24 +173,10 @@ def risk_heatmap(token: str, system: str = "classical", vmax: float = Query(0.3,
 
 @router.get("/benchmarks")
 def benchmarks():
-    root = get_settings().lab_data_root
-    sources = {
-        "detection": "models/our_bevfusion_mini/metrics.json",
-        "occupancy": "models/occupancy/metrics.json",
-        "flow": "models/temporal_flow/metrics.json",
-        "risk": "stage_h/results/risk_metrics.json",
-    }
     return {
         "split": "mini_val",
         "frame_count": 81,
-        "sections": {
-            name: {
-                "available": (root / rel).is_file(),
-                "source": rel,
-                "data": lab.json_data(root / rel) if (root / rel).is_file() else None,
-            }
-            for name, rel in sources.items()
-        },
+        "sections": lab.benchmark_sections(),
         "limitations": [
             "Static occupancy uses pseudo-GT",
             "Learned flow quality insufficient",

@@ -8,7 +8,9 @@ from pathlib import Path
 
 from PIL import Image, ImageDraw
 
-from src.config import get_settings
+from src.config import PROJECT_ROOT, get_settings
+from src.database import SessionLocal
+from src.models.db_models import BenchmarkReportDB, CameraImageDB, DetectionDB, FrameDB
 
 DETECTORS = {
     "official_lidar": ("exports/L3E/pred_lidar_only_ego.csv", ["lidar"], "official"),
@@ -53,7 +55,45 @@ def json_data(path: Path):
 
 
 def frames():
-    rows = csv_rows(get_settings().lab_data_root / "exports/L3E/samples.csv")
+    settings = get_settings()
+    if (
+        settings.lab_data_root != PROJECT_ROOT / "data/lab"
+        and (settings.lab_data_root / "exports/L3E/samples.csv").is_file()
+    ):
+        rows = csv_rows(settings.lab_data_root / "exports/L3E/samples.csv")
+        return [
+            {
+                "sample_token": r["sample_token"],
+                "sample_idx": int(r["sample_idx"]),
+                "scene": r["scene"],
+                "timestamp_s": float(r["timestamp_s"]),
+                "split": "mini_val",
+            }
+            for r in rows
+        ]
+
+    try:
+        with SessionLocal() as session:
+            db_records = session.query(FrameDB).order_by(FrameDB.sample_idx).all()
+            if db_records:
+                return [
+                    {
+                        "sample_token": r.sample_token,
+                        "sample_idx": r.sample_idx,
+                        "scene": r.scene,
+                        "timestamp_s": r.timestamp_s,
+                        "split": r.split,
+                    }
+                    for r in db_records
+                ]
+    except Exception:
+        pass
+
+    # Fallback to CSV
+    csv_path = get_settings().lab_data_root / "exports/L3E/samples.csv"
+    if not csv_path.is_file():
+        return []
+    rows = csv_rows(csv_path)
     return [
         {
             "sample_token": r["sample_token"],
@@ -70,15 +110,30 @@ def frame(token: str):
     return next((item for item in frames() if item["sample_token"] == token), None)
 
 
+def is_model_available(name: str) -> bool:
+    settings = get_settings()
+    root = settings.lab_data_root
+    rel = DETECTORS[name][0]
+    if (root / rel).is_file():
+        return True
+    if settings.lab_data_root == PROJECT_ROOT / "data/lab":
+        try:
+            with SessionLocal() as session:
+                if session.query(DetectionDB).filter(DetectionDB.model_id == name).first():
+                    return True
+        except Exception:
+            pass
+    return False
+
+
 def models():
-    root = get_settings().lab_data_root
     return [
         {
             "id": name,
             "sensors": sensors,
             "origin": origin,
             "mode": "precomputed",
-            "available": (root / rel).is_file(),
+            "available": is_model_available(name),
             "split": "mini_val",
             "contaminated": origin in {"official", "mixed"},
             "fusion_type": "object_level_late_fusion" if name.startswith("fused") else None,
@@ -91,8 +146,59 @@ def detections(token: str, model: str, threshold: float):
     item = frame(token)
     if item is None:
         raise KeyError(token)
+
     rel = DETECTORS[model][0]
-    rows = csv_rows(get_settings().lab_data_root / rel)
+
+    # Try DB first if available
+    try:
+        with SessionLocal() as session:
+            has_db_frame = session.query(FrameDB).filter(FrameDB.sample_token == token).first()
+            if has_db_frame:
+                has_model = session.query(DetectionDB).filter(DetectionDB.model_id == model).first()
+                if not has_model and not (get_settings().lab_data_root / rel).is_file():
+                    raise FileNotFoundError(rel)
+                db_boxes = (
+                    session.query(DetectionDB)
+                    .filter(
+                        DetectionDB.sample_token == token,
+                        DetectionDB.model_id == model,
+                        DetectionDB.score >= threshold,
+                    )
+                    .all()
+                )
+                boxes = [
+                    {
+                        "class_name": b.class_name,
+                        "x": b.x,
+                        "y": b.y,
+                        "z": b.z,
+                        "w": b.w,
+                        "l": b.l,
+                        "h": b.h,
+                        "yaw": b.yaw,
+                        "vx": b.vx,
+                        "vy": b.vy,
+                        "score": b.score,
+                    }
+                    for b in db_boxes
+                ]
+                return {
+                    "frame": item,
+                    "model": model,
+                    "mode": "precomputed",
+                    "coordinates": COORDINATES,
+                    "boxes": boxes,
+                }
+    except FileNotFoundError:
+        raise
+    except Exception:
+        pass
+
+    # Fallback to CSV
+    csv_file = get_settings().lab_data_root / rel
+    if not csv_file.is_file():
+        raise FileNotFoundError(rel)
+    rows = csv_rows(csv_file)
     boxes = []
     for row in rows:
         if int(row["sample_idx"]) != item["sample_idx"] or float(row["score"]) < threshold:
@@ -131,6 +237,20 @@ def camera_cache_path(token: str, channel: str) -> Path:
 
 
 def get_cached_camera(token: str, channel: str) -> bytes | None:
+    # 1. Try DB first
+    try:
+        with SessionLocal() as session:
+            record = (
+                session.query(CameraImageDB)
+                .filter(CameraImageDB.sample_token == token, CameraImageDB.channel == channel)
+                .first()
+            )
+            if record and record.image_data:
+                return bytes(record.image_data)
+    except Exception:
+        pass
+
+    # 2. Fallback to local file cache
     path = camera_cache_path(token, channel)
     if path.is_file():
         return path.read_bytes()
@@ -187,4 +307,43 @@ def risk_heatmap_png(token: str, system: str, vmax: float = 0.3) -> bytes:
     output = io.BytesIO()
     image.save(output, format="PNG", optimize=True)
     return output.getvalue()
+
+
+def benchmark_sections() -> dict[str, dict]:
+    settings = get_settings()
+    root = settings.lab_data_root
+    sources = {
+        "detection": "models/our_bevfusion_mini/metrics.json",
+        "occupancy": "models/occupancy/metrics.json",
+        "flow": "models/temporal_flow/metrics.json",
+        "risk": "stage_h/results/risk_metrics.json",
+    }
+
+    db_data: dict[str, dict] = {}
+    if settings.lab_data_root == PROJECT_ROOT / "data/lab":
+        try:
+            with SessionLocal() as session:
+                records = session.query(BenchmarkReportDB).all()
+                for r in records:
+                    db_data[r.section] = {
+                        "available": True,
+                        "source": r.source,
+                        "data": json.loads(r.data_json),
+                    }
+        except Exception:
+            pass
+
+    sections: dict[str, dict] = {}
+    for name, rel in sources.items():
+        if name in db_data:
+            sections[name] = db_data[name]
+        else:
+            path = root / rel
+            is_file = path.is_file()
+            sections[name] = {
+                "available": is_file,
+                "source": rel,
+                "data": json_data(path) if is_file else None,
+            }
+    return sections
 
