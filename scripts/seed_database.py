@@ -13,7 +13,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from src.config import get_settings
 from src.database import Base, SessionLocal, engine
-from src.models.db_models import BenchmarkDB, DetectionDB, FrameDB
+from src.models.db_models import BenchmarkDB, BenchmarkReportDB, DetectionDB, FrameDB
 from src.services.lab import DETECTORS
 
 
@@ -133,6 +133,32 @@ def seed_benchmarks(db, lab_root: Path):
         print(f"[seed] Seeded {len(records)} benchmark rows.")
 
 
+def seed_benchmark_reports(db, lab_root: Path):
+    sources = {
+        "detection": "models/our_bevfusion_mini/metrics.json",
+        "occupancy": "models/occupancy/metrics.json",
+        "flow": "models/temporal_flow/metrics.json",
+        "risk": "stage_h/results/risk_metrics.json",
+    }
+    for name, rel in sources.items():
+        file_path = lab_root / rel
+        if not file_path.is_file():
+            print(f"[seed] Warning: {file_path} not found, skipping section {name}.")
+            continue
+        with open(file_path, encoding="utf-8-sig") as f:
+            content = f.read()
+
+        record = db.query(BenchmarkReportDB).filter(BenchmarkReportDB.section == name).first()
+        if record:
+            record.source = rel
+            record.data_json = content
+            print(f"[seed] Updated benchmark report section: {name}")
+        else:
+            db.add(BenchmarkReportDB(section=name, source=rel, data_json=content))
+            print(f"[seed] Inserted benchmark report section: {name}")
+    db.commit()
+
+
 def main():
     print(f"[seed] Initializing database tables on: {engine.url.render_as_string(hide_password=True)}")
     Base.metadata.create_all(bind=engine)
@@ -145,6 +171,7 @@ def main():
         seed_frames(db, lab_root)
         seed_detections(db, lab_root)
         seed_benchmarks(db, lab_root)
+        seed_benchmark_reports(db, lab_root)
         print("[seed] Database seeding completed successfully!")
     finally:
         db.close()
@@ -152,3 +179,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

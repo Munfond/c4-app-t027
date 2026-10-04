@@ -10,7 +10,7 @@ from PIL import Image, ImageDraw
 
 from src.config import PROJECT_ROOT, get_settings
 from src.database import SessionLocal
-from src.models.db_models import CameraImageDB, DetectionDB, FrameDB
+from src.models.db_models import BenchmarkReportDB, CameraImageDB, DetectionDB, FrameDB
 
 DETECTORS = {
     "official_lidar": ("exports/L3E/pred_lidar_only_ego.csv", ["lidar"], "official"),
@@ -307,3 +307,43 @@ def risk_heatmap_png(token: str, system: str, vmax: float = 0.3) -> bytes:
     output = io.BytesIO()
     image.save(output, format="PNG", optimize=True)
     return output.getvalue()
+
+
+def benchmark_sections() -> dict[str, dict]:
+    settings = get_settings()
+    root = settings.lab_data_root
+    sources = {
+        "detection": "models/our_bevfusion_mini/metrics.json",
+        "occupancy": "models/occupancy/metrics.json",
+        "flow": "models/temporal_flow/metrics.json",
+        "risk": "stage_h/results/risk_metrics.json",
+    }
+
+    db_data: dict[str, dict] = {}
+    if settings.lab_data_root == PROJECT_ROOT / "data/lab":
+        try:
+            with SessionLocal() as session:
+                records = session.query(BenchmarkReportDB).all()
+                for r in records:
+                    db_data[r.section] = {
+                        "available": True,
+                        "source": r.source,
+                        "data": json.loads(r.data_json),
+                    }
+        except Exception:
+            pass
+
+    sections: dict[str, dict] = {}
+    for name, rel in sources.items():
+        if name in db_data:
+            sections[name] = db_data[name]
+        else:
+            path = root / rel
+            is_file = path.is_file()
+            sections[name] = {
+                "available": is_file,
+                "source": rel,
+                "data": json_data(path) if is_file else None,
+            }
+    return sections
+

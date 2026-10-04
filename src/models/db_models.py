@@ -48,6 +48,14 @@ class BenchmarkDB(Base):
     details_json = Column(Text, nullable=True)
 
 
+class BenchmarkReportDB(Base):
+    __tablename__ = "benchmark_reports"
+
+    section = Column(String(32), primary_key=True)
+    source = Column(String(128), nullable=False)
+    data_json = Column(Text, nullable=False)
+
+
 class CameraImageDB(Base):
     __tablename__ = "camera_images"
 
