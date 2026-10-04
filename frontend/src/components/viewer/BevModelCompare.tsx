@@ -105,20 +105,20 @@ function ComparePaneView({
   onViewStateChange,
 }: ComparePaneViewProps) {
   return (
-    <article className="flex min-h-[440px] min-w-0 flex-col overflow-hidden rounded-xl border border-zinc-800 bg-zinc-950">
-      <header className="flex min-h-14 items-center justify-between gap-3 border-b border-zinc-800 px-3 py-2">
+    <article className="flex min-h-[440px] min-w-0 flex-col overflow-hidden rounded-[var(--radius)] bg-[#08171b]">
+      <header className="flex min-h-16 items-center justify-between gap-3 border-b border-white/10 bg-[#10262e] px-4 py-2">
         <div className="min-w-0">
-          <p className="text-[10px] font-semibold uppercase tracking-wider text-zinc-500">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-[#89aab0]">
             {heading}
           </p>
           <p
-            className="truncate text-sm font-semibold text-zinc-100"
+            className="mt-0.5 truncate text-sm font-semibold text-white"
             title={pane.modelLabel ?? pane.modelId}
           >
             {pane.modelLabel || pane.modelId || "—"}
           </p>
         </div>
-        <p className="shrink-0 text-right text-xs text-zinc-400">
+        <p className="shrink-0 text-right text-xs text-[#b0c9ce]">
           {getPaneStatus(pane, dataError)}
         </p>
       </header>
@@ -199,12 +199,12 @@ export function BevModelCompare({
       aria-label="So sánh BEV giữa hai mô hình"
       className={`flex h-full min-h-0 w-full flex-col gap-3 ${className}`}
     >
-      <div className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-2 text-xs text-zinc-400">
+      <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-[var(--muted)]">
         <p className="min-w-0 truncate" title={sampleToken}>
-          Cùng frame: <span className="text-zinc-200">{sampleToken || "—"}</span>
+          <span className="mr-3 font-mono text-[var(--accent-strong)]">02</span> Hai bản đồ đồng bộ <span className="mx-2 text-[var(--line)]">/</span> Frame <span className="font-mono text-[var(--foreground)]">{sampleToken ? sampleToken.slice(0, 8) : "—"}</span>
         </p>
         <p>
-          Ngưỡng API: <span className="text-zinc-200">{threshold}</span>
+          Ngưỡng điểm <span className="font-mono text-[var(--foreground)]">{threshold.toFixed(2)}</span>
         </p>
       </div>
 

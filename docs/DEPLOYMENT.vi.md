@@ -1,73 +1,103 @@
-# Triển khai demo và Runner của đội
+# Deploy và cập nhật server
 
-## Phân công và phương án ưu tiên
-Người 1 phụ trách CI, tích hợp Docker/Compose, gateway, tunnel, URL HTTPS, tài khoản demo và rollback. Người 3 phụ trách backend, dependency, Dockerfile backend, data paths, healthcheck và hỗ trợ lỗi API. Benchmark/report và camera panel thuộc người 3; người 1 chỉ tích hợp vào routing. Người 2 phụ trách viewer/compare và kiểm tra hiệu năng.
+MVP phục vụ artifact tính sẵn; không cần GPU nếu camera/perception/environment cache đầy đủ. Cấu hình dưới đây là hướng dẫn vận hành; [evidence 04/10/2026](../eval/results/report.md) chỉ kiểm thử **local**, không xác nhận VPS/domain/HTTPS hoạt động.
 
-Ưu tiên demo tiết kiệm bằng máy đội chạy Docker + Cloudflare Tunnel. Chưa cần thuê VPS. Người 1 cần bổ sung cấu hình gateway local/tunnel; compose hiện có bên dưới vẫn là phương án VPS/domain, không chạy nguyên trạng như cấu hình tunnel. Không bỏ đăng nhập hoặc mở đường static tới camera gốc khi đổi gateway. Máy demo phải bật, không sleep và có mạng; kiểm tra URL bằng máy ngoài mạng. Quick Tunnel có URL tạm thời; cần URL cố định thì chuẩn bị tên miền/tunnel phù hợp. Chưa triển khai tunnel hoặc mở ứng dụng ra Internet trong lần cập nhật tài liệu này.
+## Windows VPS · native processes
 
-## Runner có dùng cho việc này không?
-Có, ở khâu CI/CD. Runner nhận job GitHub Actions để test, build và chạy lệnh deploy. Nó không tự tạo website, IP công khai, tên miền hay HTTPS. Laptop tắt thì runner offline; nếu ứng dụng demo cũng chạy trên laptop đó thì website cũng ngừng truy cập. Website trên VPS độc lập không phụ thuộc laptop.
+Dùng Python 3.12, Node 22.x và Caddy; backend/frontend setup theo [README](../README.md). Data đặt ngoài checkout, ví dụ `C:/apps/lab`, `C:/apps/nuscenes`. Root `.env` override roots; frontend `.env.local` dùng `API_INTERNAL_URL=http://127.0.0.1:8000` trước khi build.
 
-Luồng đề xuất:
-Developer -> PR -> CI trên runner/pool -> merge main -> deploy bản đã kiểm thử -> máy đội chạy Docker + gateway + Cloudflare Tunnel -> giám khảo. VPS là phương án thay thế nếu cần hoạt động liên tục.
+Caddy native cần **literal domain và loopback upstream**. `deploy/Caddyfile` trong repo dùng Compose env/service names; đừng chạy nguyên trạng nếu chưa chuyển cấu hình. Giữ native file riêng, ví dụ `C:/caddy/Caddyfile`, để pull không ghi đè local config:
 
-Thông tin Phoenix về token/quyền đội trưởng dựa trên mô tả người dùng cung cấp; chưa truy cập hay đăng ký runner trong Phoenix.
+```caddyfile
+c4-app-t027.duckdns.org {
+    # Nếu dùng judge auth: đặt basic_auth và user/hash BÊN TRONG site block này.
+    request_body {
+        max_size 12MB
+    }
+    handle /lab/* {
+        respond "Legacy media unavailable" 404
+    }
+    handle /api/* {
+        reverse_proxy 127.0.0.1:8000
+    }
+    handle /health {
+        reverse_proxy 127.0.0.1:8000
+    }
+    handle {
+        reverse_proxy 127.0.0.1:3000
+    }
+}
+```
 
-## VPS dự phòng nếu cần hoạt động liên tục
-Điểm bắt đầu để thử tải: Linux x86_64, 4 vCPU, RAM 8 GB, SSD 40–60 GB, IP công khai; không cần GPU cho detection/benchmark tính sẵn. Đây là ước lượng kỹ thuật, chưa phải cấu hình đã benchmark. Nếu chỉ dùng artifact demo nhỏ có thể giảm sau đo tải. Build Next và xử lý ảnh có thể cần RAM nhiều hơn phục vụ bình thường.
+`/lab` là route trang; `/lab/*` chặn media legacy chưa review. Judge auth dùng hash tạo bằng `caddy hash-password`, giữ ngoài Git; `basic_auth` không đặt trong global options. DNS phải trỏ IP public VPS; mở TCP 80/443 ở firewall/provider. Backend/frontend bind loopback.
 
-Raw mini khoảng 5.06 GiB; chừa chỗ Docker images, build cache, media và rollback. Không thuê GPU chỉ để hiển thị CSV. Suy luận BEVFusion/CRN ở Kaggle hoặc GPU worker riêng; occupancy/flow CPU là tính năng bổ sung sau khi đo hiệu năng.
+```powershell
+& 'C:/caddy/caddy.exe' validate --config 'C:/caddy/Caddyfile'
+& 'C:/caddy/caddy.exe' run --config 'C:/caddy/Caddyfile'
+```
 
-## Cấu hình đã chuẩn bị
-- Dockerfile backend dùng Python 3.12, chạy non-root, không phụ thuộc /root/.local.
-- frontend/Dockerfile dùng standalone Next.js.
-- deploy/compose.yml: backend + frontend ở mạng nội bộ; chỉ Caddy mở 80/443.
-- Caddy tự cấp HTTPS cho domain trỏ đúng server; toàn site có Basic Auth cho giám khảo.
-- Data bind mount read-only ngoài image tại LAB_VOLUME.
-- Anonymizer mặc định tắt: camera API trả 503 thay vì ảnh gốc. Image inference dependencies/weights chưa có trong image web.
-- /lab/* static legacy bị chặn ở gateway vì ảnh composite camera chưa có audit anonymization. Runtime image frontend hiện không copy public/lab, tránh cả đường Next image optimizer. Chỉ copy simulation media và SVG skeleton; UI team bổ sung asset đã duyệt vào Dockerfile khi cần.
-- UI hiện skeleton. Deploy cấu hình này chưa biến skeleton thành lab hoàn chỉnh.
+### Mỗi lần merge / cập nhật
 
-## Cài đặt lần đầu trên VPS
-1. Cài Docker Engine + Compose plugin theo tài liệu chính thức cho hệ điều hành của VPS.
-2. Clone repo bằng tài khoản/deploy key được cấp quyền. Checkout commit đã CI xanh.
-3. Đặt data/lab, data/sim và nuScenes cần dùng dưới /srv/p027/data. Không đưa raw dataset vào Docker image hay Git.
-4. Copy deploy/.env.example thành deploy/.env (không commit), điền LAB_DOMAIN và LAB_VOLUME.
-5. Tạo hash mật khẩu bằng lệnh tương tác, không lưu plaintext vào workflow:
-   docker run --rm -it caddy:2-alpine caddy hash-password
-   Dán hash vào JUDGE_PASSWORD_HASH trong dấu nháy đơn.
-6. Trỏ DNS domain về IP VPS; mở TCP 80/443. Hạn chế SSH theo tài khoản quản trị.
-7. Từ repo root:
-   docker compose --env-file deploy/.env -f deploy/compose.yml config --quiet
-   docker compose --env-file deploy/.env -f deploy/compose.yml up -d --build
-   docker compose --env-file deploy/.env -f deploy/compose.yml ps
-8. Kiểm tra bằng trình duyệt ngoài mạng local: HTTPS, đăng nhập, /health, /api/v1/lab/capabilities và thao tác UI.
-9. Ghi commit SHA đang chạy; giữ checkout/release trước. Rollback bằng checkout release đã kiểm thử rồi build/up lại; không xóa data volume.
+1. Chỉ cập nhật sau merge và kiểm tra CI của commit đích. Nếu `git status` có file sửa, bảo toàn cấu hình và thay đổi đó trước; không reset sạch bừa.
+2. Dừng **đúng tiến trình frontend/backend đang phục vụ** bằng terminal/service quản lý. Giữ Caddy và runner CI chạy. Không kill mọi node/python vì có thể dừng runner hoặc công việc khác.
+3. Repo root:
 
-Đây là hướng dẫn và cấu hình chuẩn bị, chưa chạy production do chưa có server/domain. Đã build cả hai image Linux và smoke-test non-root: backend đọc 81 frame qua data mount chỉ đọc; frontend trả HTTP 200. Compose config và Caddy validate đều pass. Chưa kiểm tra DNS/cấp certificate thật hoặc tải nhiều người dùng trên VPS.
+```powershell
+Set-Location 'C:/apps/P-027'
+git status --short --branch
+git fetch origin
+git switch main
+git pull --ff-only origin main
+git rev-parse HEAD
+.\.venv-lab\Scripts\python.exe -m pip install -r requirements.txt
+Set-Location frontend
+npm ci
+npm run build -- --webpack
+```
 
-## Dùng runner Phoenix
-- Đội trưởng lấy token trên trang Phoenix; chọn đúng OS/architecture và làm theo lệnh Phoenix hiển thị. Không paste token vào repo/chat/log.
-- Đăng ký runner CI trên máy riêng hoặc VM, cài dưới dạng service nếu chạy 24/7.
-- Runner đã đăng ký: team-27-Munfond; labels: self-hosted, Windows, X64, team-27.
-- Workflow hiện dùng trực tiếp runs-on: [self-hosted, Windows, X64, team-27] cho backend và frontend; không cần tạo repository variable.
-- Dùng shell powershell có sẵn trên Windows, không yêu cầu PowerShell 7/pwsh. setup-python/setup-node chuẩn bị runtime cho job.
-- GitHub chọn máy khớp tất cả nhãn; runner offline thì job chờ, không tự fallback về pool chung.
-- Với một runner, hai job có thể chạy lần lượt. Giữ run.cmd hoạt động và máy không sleep, hoặc cấu hình service theo hướng dẫn web Lab.
-- Giữ runner chạy PR tách khỏi production data/secrets. Repo private vẫn có thể chạy code do collaborator sửa.
-- Người 1 deploy ban đầu thủ công trên máy demo với tunnel; nếu chọn VPS thì dùng hướng dẫn trên. Khi URL hoạt động, thêm workflow_dispatch cho deploy từ main, dùng tài khoản SSH giới hạn hoặc runner deploy riêng. Không tự deploy mọi PR lên server giám khảo.
-- Chưa thêm workflow deploy tự động vì chưa có server, SSH account, domain và quyền deploy thực tế.
+4. Backend, terminal/service riêng:
 
-## Checklist bàn giao cho giám khảo
-- URL HTTPS có thể truy cập từ Internet; tài khoản riêng, không phải tài khoản admin.
-- Dữ liệu demo và model rõ nguồn, không lẫn train/val; chức năng thiếu dữ liệu báo rõ.
-- Camera đã qua anonymization và kiểm tra chất lượng, không có đường static bypass.
-- Healthcheck/restart hoạt động; thử restart máy demo hoặc VPS, thử rollback; nếu dùng tunnel thì kiểm tra lại URL sau restart.
-- Kiểm thử concurrent users theo số giám khảo dự kiến; ghi p95 API/FPS/memory thực đo.
-- Có video demo dự phòng và hướng dẫn sử dụng 1 trang.
+```powershell
+Set-Location 'C:/apps/P-027'
+.\.venv-lab\Scripts\python.exe -m uvicorn src.main:app --host 127.0.0.1 --port 8000
+```
 
-Tham khảo chính thức:
-- https://docs.github.com/en/actions/how-tos/manage-runners/self-hosted-runners/use-in-a-workflow
-- https://docs.github.com/en/actions/how-tos/manage-runners/self-hosted-runners/add-runners
-- https://caddyserver.com/docs/automatic-https
-- https://caddyserver.com/docs/caddyfile/directives/basic_auth
+5. Frontend, terminal/service riêng:
+
+```powershell
+Set-Location 'C:/apps/P-027/frontend'
+npm run start -- --hostname 127.0.0.1 --port 3000
+```
+
+6. Kiểm tra local trước domain:
+
+```powershell
+Invoke-WebRequest 'http://127.0.0.1:3000/lab' -UseBasicParsing | Select-Object StatusCode
+Invoke-RestMethod 'http://127.0.0.1:8000/health'
+Invoke-RestMethod 'http://127.0.0.1:3000/api/v1/lab/perception/tasks'
+Get-NetTCPConnection -State Listen -LocalPort 80,443,3000,8000 -ErrorAction SilentlyContinue | Select-Object LocalAddress,LocalPort,OwningProcess
+```
+
+Kiểm tra HTTPS từ máy ngoài mạng, đăng nhập nếu đã cấu hình judge auth, rồi chạy lại manual cases. Nếu 3000/8000 trả 200 nhưng không có listener 80/443, kiểm tra Caddy trước. Nếu listener có nhưng domain lỗi, kiểm tra DNS/firewall/certificate log. Cập nhật artifact riêng khi code yêu cầu output mới; Git pull không mang dataset/cache lớn.
+
+## Linux/Docker Compose · phương án khác
+
+`deploy/compose.yml`: backend Python 3.12 + frontend standalone + Caddy; chỉ gateway expose 80/443, data bind mount read-only. `LAB_VOLUME` chứa `lab/`, `nuscenes/`, `sim/`.
+
+```powershell
+# Repo root, tạo file một lần và điền cấu hình trước khi chạy
+if (-not (Test-Path -LiteralPath 'deploy/.env')) { Copy-Item 'deploy/.env.example' 'deploy/.env' }
+docker run --rm -it caddy:2-alpine caddy hash-password
+# Điền LAB_DOMAIN, LAB_VOLUME, JUDGE_USER, JUDGE_PASSWORD_HASH vào deploy/.env
+docker compose --env-file deploy/.env -f deploy/compose.yml config --quiet
+docker compose --env-file deploy/.env -f deploy/compose.yml up -d --build
+docker compose --env-file deploy/.env -f deploy/compose.yml ps
+```
+
+Cache phải chuẩn bị trước vì data mount read-only và anonymizer web mặc định tắt. Caddy được Compose cấp env; không nhầm `deploy/.env` với root `.env` hoặc frontend `.env.local`. Lưu SHA/release trước để rollback bằng checkout/build lại; không xóa data volume.
+
+## CI runner và bàn giao
+
+Workflow `.github/workflows/ci.yml` dùng labels `self-hosted, Windows, X64, team-27`, backend lint/pytest và frontend lint/build. Một runner có thể chạy hai job lần lượt. Runner không tự tạo domain hay deploy; hiện chưa có workflow tự cập nhật server. Không dùng runner PR chung với production data/secrets.
+
+Trước bàn giao: review processed cameras, kiểm tra cache/task coverage và thao tác UI, thử restart/rollback, kiểm tra URL từ bên ngoài, lưu release SHA và video dự phòng. Chưa đo concurrent users, p95/FPS hay uptime production trong đợt evidence local này.

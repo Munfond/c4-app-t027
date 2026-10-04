@@ -1,89 +1,189 @@
-# VINFAST ADAS BEV/4D OCCUPANCY BENCHMARKING LAB
+# Perception Lab · Team 27
 
-> Tóm tắt 1 câu: Xây dựng môi trường thực nghiệm và đánh giá trực quan (Benchmarking & Visualization Lab) cho mô hình nhận thức BEV và lưới chiếm dụng 4D đa cảm biến (Camera, LiDAR, Radar) dành cho kỹ sư ADAS VinFast.
+Lab trực quan hóa ADAS trên nuScenes mini: quan sát Camera/LiDAR/Radar, đối chiếu Detection, BEV Occupancy và Flow theo cùng một frame, rồi xem Risk và nguồn số liệu đánh giá. Đây là công cụ phân tích dữ liệu, không điều khiển xe.
 
-## Vấn đề (Problem)
+**MVP phục vụ kết quả tính sẵn (precomputed)** qua Next.js + FastAPI. Web không chạy checkpoint mỗi lần đổi frame; máy phục vụ không cần GPU nếu đã chuẩn bị đủ artifact.
 
-Mô tả pain point cụ thể với data/số liệu:
-- Ai đang gặp vấn đề? Đội ngũ kỹ sư phát triển ADAS (Perception & Motion Planning) của VinFast.
-- Tại sao các giải pháp hiện tại chưa đủ? Phương pháp nhận diện Hộp bao 3D (3D Bounding Box) đơn lẻ thường xuyên gặp hiện tượng bỏ sót vật thể dị hình, thiếu thông tin về không gian trống/chiếm dụng và dễ bị ảnh hưởng khi cảm biến đơn lẻ suy giảm chất lượng (mưa, sương mù, ngược sáng). Khó khăn trong việc ra quyết định lựa chọn cấu hình cảm biến (Camera vs LiDAR vs Radar) tối ưu chi phí và độ an toàn.
+- [Architecture: components và data flow](ARCHITECTURE.md)
+- [Request sequence và hợp đồng dữ liệu](docs/architecture_diagram.md)
+- [Manual evaluation: bước thực hiện, output và ảnh thật](eval/results/report.md)
+- [Chuẩn bị dữ liệu/cache offline](docs/LAB_SETUP.vi.md)
+- [Deploy và cập nhật VPS](docs/DEPLOYMENT.vi.md)
 
-## Giải pháp (Solution)
+## User flow và trạng thái MVP
 
-Sản phẩm giải quyết vấn đề bằng cách cung cấp một công cụ Lab trực quan:
-- Xử lý Dữ liệu Thực tế: Parse và đồng bộ (timestamp sync) luồng dữ liệu đa cảm biến từ bộ `nuScenes-mini`.
-- Trực quan hóa 3D WebGL: Render lưới 3D Voxel (Occupancy Grid), vector dòng chảy 4D (Occupancy Flow) và Point cloud trên nền tảng Web 3D (Next.js + Three.js).
-- Benchmark Cấu hình Cảm biến: So sánh đối chiếu trực tiếp hiệu quả của mô hình AI khi sử dụng các cụm cảm biến khác nhau, hiển thị các metric mAP, IoU, ADE/FDE và độ trễ.
-- Ẩn danh Dữ liệu (Anonymization): Tự động phát hiện và làm mờ khuôn mặt, biển số xe trên các luồng video trước khi đẩy lên trình duyệt.
+| Trang | Luồng sử dụng |
+|---|---|
+| `/lab` | Chọn scene/frame → Cảm biến (6 camera hoặc LiDAR/Radar) → Kết quả mô hình (Detection/Seg3D/Occupancy/Flow) → Risk. Timeline dùng chung trong Lab. |
+| `/compare` | Cùng scene, frame và ngưỡng điểm; so sánh hai mô hình Detection trong BEV. |
+| `/benchmarks` | Bốn nhóm số liệu, nguồn artifact và giới hạn thực nghiệm. |
 
-## Tech Stack
+LiDAR tham chiếu hiển thị độc lập với đầu vào mô hình. **CRN sử dụng Camera + Radar**, không có LiDAR. Tick ẩn cảm biến chỉ đổi hình hiển thị, không thực hiện ablation. Timeline phát keyframe dataset, không phải video/inference thời gian thực.
 
-| Layer | Technology |
-|-------|-----------|
-| AI Agent & Pipeline | LangGraph + PyTorch (BEVFusion / OccNet) |
-| Backend | FastAPI + Python 3.10+ |
-| Frontend | React/Next.js + TypeScript + Three.js (WebGL) |
-| Data Processing | OpenCV, NumPy, Point Cloud Library (PCL) |
-| DevOps | Docker + GitHub Actions |
+Kiểm chứng local 04/10/2026: 81 frame thuộc 2 scene; Occupancy, Flow và Radar có 81/81 artifact; **Seg3D có 0/81**. Seg3D có UI/API contract, chưa có dữ liệu. Xe/người 3D là hình đại diện theo detection box; mặt nền/mặt dựng nội suy từ LiDAR, không phải semantic segmentation hoặc bản đồ 3D đầy đủ.
 
-## Quick Start
+## Yêu cầu và dữ liệu
 
-```bash
-# 1. Clone repo
-git clone https://github.com/<ORG-CỦA-KHOÁ>/<MÃ-ĐỘI>.git
-cd <MÃ-ĐỘI>
+- Python **3.12**, Node.js **22.x** (theo `frontend/package.json`), npm, Git.
+- Trình duyệt hỗ trợ WebGL cho Three.js viewer.
+- Bộ artifact của đội; nuScenes mini khi đọc cảm biến gốc hoặc chuẩn bị cache. **Clone repo không tự tải dữ liệu.** Raw, checkpoint, cache lớn và `.env` giữ ngoài Git.
 
-# 2. Setup environment
-cp .env.example .env
-# Edit .env with your API keys
+Cấu trúc phục vụ đầy đủ MVP, tính từ `LAB_DATA_ROOT`:
 
-# 3. Install dependencies
-py -m venv .venv
-.\.venv\Scripts\Activate.ps1 # Hoặc source .venv/bin/activate
-pip install -r requirements.txt
-
-# 4. Setup AI Logs
-powershell -ExecutionPolicy Bypass -File scripts\setup_hooks.ps1
-
-# 5. Run development server
-uvicorn src.main:app --reload
+```text
+lab/
+├── exports/L3E/
+│   ├── samples.csv
+│   ├── pred_lidar_only_ego.csv
+│   ├── pred_lidar_camera_ego.csv
+│   └── pred_camera_radar_ego.csv
+├── fusion/unified/unified_pretrained_ego.csv
+├── models/{our_bevfusion_mini,occupancy,temporal_flow}/metrics.json
+├── stage_h/risk_out.mat
+├── stage_h/results/risk_metrics.json
+└── cache/
+    ├── cameras/<sample_token>_<CAM_CHANNEL>.jpg
+    ├── environment/<sample_token>.json
+    └── perception/{radar,occupancy,flow}/<sample_token>.json
 ```
 
-## Project Structure
+Own-model CSV bổ sung: `pred_our_lidar_ego.csv`, `pred_our_bevfusion_ego.csv`, `fusion/unified/unified_ours_ego.csv`. Thiếu CSV thì model đó không available. NuScenes root có `v1.0-mini/`, `samples/`, `sweeps/`, `maps/`. Xin bộ artifact từ đội, giữ token/split đồng nhất. Đủ environment/radar/perception/camera cache thì web đọc cache; raw cần cho kiểm tra nguồn, fallback LiDAR và chuẩn bị media. Thiếu artifact cần thiết trả **503**, không tạo kết quả giả.
 
-```
-├── src/
-│   ├── agents/          # LangGraph agent definitions
-│   ├── api/             # FastAPI routes
-│   ├── models/          # Pydantic schemas
-│   ├── services/        # Business logic (Anonymization, Data Processing)
-│   ├── config.py        # Settings
-│   └── main.py          # App entry point
-├── frontend/            # Next.js & Three.js Web UI
-├── tests/               # Test suite
-├── docs/                # Documentation
-├── eval/                # Evaluation results
-├── Dockerfile           # Multi-stage build
-└── docker-compose.yml   # Full stack
+## Setup local · Windows PowerShell
+
+### Backend
+
+```powershell
+git clone https://github.com/AI20K-Build-Phase-Cohort-4/P-027.git
+Set-Location P-027
+py -3.12 -m venv .venv-lab
+.\.venv-lab\Scripts\python.exe -m pip install -r requirements.txt
+if (-not (Test-Path -LiteralPath '.env')) { Copy-Item '.env.example' '.env' }
 ```
 
-## Team
+Sửa root `.env` theo máy, ví dụ dữ liệu bên ngoài checkout:
 
-| Member | Role | Background |
-|--------|------|-----------|
-| Thành viên 1 | Core AI & System Architect | Ngành Robot & Trí tuệ Nhân tạo |
-| Thành viên 2 | Sensor & Geometry Data Engineer | Ngành Cơ điện tử |
-| Thành viên 3 | Vision, System Framework & Hardware (Phase 2) | Ngành Điện tử Viễn thông |
-| Thành viên 4 | Dataset & Data Loader Engineer | Ngành Kỹ thuật máy tính |
+```dotenv
+APP_ENV=development
+NUSC_ROOT=C:/apps/nuscenes
+LAB_DATA_ROOT=C:/apps/lab
+SIM_DATA_ROOT=C:/apps/sim
+ANONYMIZER_ENABLED=false
+CORS_ORIGINS=http://localhost:3000,http://127.0.0.1:3000
+```
 
-## License
+`ANONYMIZER_ENABLED=false` phù hợp khi processed camera cache đầy đủ. Cache miss khi đó trả 503. **Không cần OpenAI key, PostgreSQL, ChromaDB, CUDA hoặc MATLAB** để xem MVP.
 
-MIT
+```powershell
+.\.venv-lab\Scripts\python.exe -m uvicorn src.main:app --host 127.0.0.1 --port 8000
+```
 
-## Lab foundation (30/09/2026)
+Giữ terminal chạy. Health: `http://127.0.0.1:8000/health`; Swagger: `http://127.0.0.1:8000/docs`. Cổng/bind thực tế do tham số **uvicorn** quyết định; `APP_PORT` không tự đổi cổng lệnh này.
 
-- [Local setup and implemented API](docs/LAB_SETUP.vi.md)
-- [UI/UX work split for three teammates](docs/UI_UX_TEAM_PLAN.vi.md)
-- [Server deployment and Phoenix runner](docs/DEPLOYMENT.vi.md)
+### Frontend · terminal khác
 
-The frontend remains a scaffold. Read-only lab API now exposes real mini-val scenes, frames, detections and benchmark artifacts. GPU inference is optional; camera images fail closed until the anonymizer is enabled and available.
+```powershell
+Set-Location 'C:/duong-dan/P-027/frontend' # thay bằng checkout của bạn
+node --version                        # 22.x
+npm ci
+if (-not (Test-Path -LiteralPath '.env.local')) { Copy-Item '.env.example' '.env.local' }
+npm run dev -- --hostname 127.0.0.1 --port 3000
+```
+
+Mở `http://127.0.0.1:3000/lab`. Frontend `.env.local` dùng `API_INTERNAL_URL=http://127.0.0.1:8000`. Trình duyệt gọi `/api/...` cùng origin; Next rewrite tới backend. Đổi địa chỉ backend cần restart dev hoặc build/restart production.
+
+Production build, thay cho dev:
+
+```powershell
+npm run build -- --webpack
+npm run start -- --hostname 127.0.0.1 --port 3000
+```
+
+Linux/macOS: `python3.12 -m venv .venv-lab`, dùng `.venv-lab/bin/python` thay cho đường dẫn Windows; npm tương tự. Webpack tránh vấn đề Turbopack nếu `node_modules` symlink từ worktree khác.
+
+## Environment variables
+
+| Biến / nơi đặt | Mặc định hoặc ý nghĩa |
+|---|---|
+| `APP_ENV` · root `.env` | `development`; chọn `production` khi deploy. |
+| `NUSC_ROOT` | `<repo>/data/nuscenes`; root nuScenes mini. |
+| `LAB_DATA_ROOT` | `<repo>/data/lab`; CSV, JSON, MAT, checkpoints/cache. |
+| `SIM_DATA_ROOT` | `<repo>/data/sim`; simulation artifacts tùy chọn, không phải thời tiết live. |
+| `CAMERA_CACHE_DIR` | `<LAB_DATA_ROOT>/cache/cameras`; chỉ ảnh đã xử lý. |
+| `ANONYMIZER_ENABLED` | `false`; `true` cần inference dependencies và weights. |
+| `PLATE_WEIGHTS` | `<repo>/weights/plate_yolov8.pt`; YOLO biển số khi tạo cache. |
+| `MAX_UPLOAD_BYTES` / `MAX_IMAGE_PIXELS` | `10485760` / `12000000`. |
+| `CORS_ORIGINS` | Origin phân cách dấu phẩy; same-origin rewrite không cần browser gọi backend trực tiếp. |
+| `LOG_LEVEL` | `INFO`. |
+| `API_INTERNAL_URL` · frontend `.env.local` | `http://127.0.0.1:8000`; server rewrite, không phải `NEXT_PUBLIC_*`. |
+| `LAB_DOMAIN`, `LAB_VOLUME`, `JUDGE_USER`, `JUDGE_PASSWORD_HASH` · deploy `.env` | Compose/Caddy; hash mật khẩu không commit. |
+
+LLM/database/vector-store/LangSmith là scaffold tùy chọn, không nằm trên luồng Lab. AI-log có cấu hình riêng trong `.env.example`; không đặt secret trong evidence.
+
+## Sample queries · PowerShell
+
+Sau khi app chạy và artifact đã cài:
+
+```powershell
+$labUrl = 'http://127.0.0.1:3000'
+Invoke-RestMethod 'http://127.0.0.1:8000/health'
+Invoke-RestMethod "$labUrl/api/v1/lab/models"
+Invoke-RestMethod "$labUrl/api/v1/lab/scenes"
+$labFrames = Invoke-RestMethod "$labUrl/api/v1/lab/scenes/scene-0103/frames"
+$sampleToken = $labFrames.items[0].sample_token
+$frameUrl = "$labUrl/api/v1/lab/frames/$sampleToken"
+$detections = Invoke-RestMethod "$frameUrl/detections?model=official_lidar&threshold=0.3"
+$detections.boxes.Count
+Invoke-RestMethod "$frameUrl/perception/occupancy" | Select-Object task,model,shape,resolution_m
+Invoke-RestMethod "$frameUrl/perception/flow" | Select-Object task,model,sample_token
+Invoke-RestMethod "$labUrl/api/v1/lab/perception/tasks"
+Invoke-RestMethod "$labUrl/api/v1/lab/benchmarks" | Select-Object split,frame_count,limitations
+Invoke-WebRequest "$frameUrl/cameras/CAM_FRONT" -UseBasicParsing -OutFile "$env:TEMP/lab-camera.jpg"
+Invoke-WebRequest "$frameUrl/risk?system=classical&vmax=0.3" -UseBasicParsing -OutFile "$env:TEMP/lab-risk.png"
+```
+
+Output thực tế 04/10/2026: scene-0103 có 40 frame; token đầu `3e8750f331d7499e9b5123e9eb70f2e2`, frame index 41; PointPillars threshold 0.3 trả **9** box, threshold 0.7 trả **2**. Risk PNG 600×600, `X-Risk-Uncalibrated: true`. [HTTP evidence có timestamp/hash](eval/evidence/2026-10-04/api-probes.json).
+
+| HTTP | Xử lý |
+|---|---|
+| 404 | Scene/frame không tồn tại; chọn từ catalog. |
+| 422 | Model/task/channel/threshold không hợp lệ. |
+| 503 | Artifact thiếu/incompatible hoặc camera không xử lý được; kiểm tra roots/cache. |
+| 502 qua Caddy | Upstream chưa chạy/sai cổng; kiểm tra frontend 3000, backend 8000, Caddy 80/443. |
+
+## Checks và thu evidence
+
+```powershell
+# Từ repo root, thay đường dẫn dữ liệu theo máy
+.\.venv-lab\Scripts\python.exe scripts/check_lab_data.py --nusc-root 'C:/apps/nuscenes' --lab-root 'C:/apps/lab'
+.\.venv-lab\Scripts\python.exe -m ruff check src/ tests/
+.\.venv-lab\Scripts\python.exe -m pytest tests/ -q
+Set-Location frontend
+npm run lint
+npm run build -- --webpack
+```
+
+`requirements.txt` = web + dev; dùng venv riêng với `requirements-inference.txt` cho PyTorch/anonymizer. Chuẩn bị offline trước khi phục vụ. Thu lại HTTP output (không thay thế thao tác manual trong report):
+
+```powershell
+# Repo root; đặt cổng theo máy
+.\.venv-lab\Scripts\python.exe scripts/capture_eval_evidence.py --base-url http://127.0.0.1:3000 --backend-url http://127.0.0.1:8000 --output eval/evidence/new-run/api-probes.json
+```
+
+## Code structure và giới hạn
+
+```text
+frontend/src/app/             Next routes: lab, compare, benchmarks
+frontend/src/components/      Shell, timeline, cameras, Three.js/BEV viewers, reports
+frontend/src/lib/             API clients, bounded caches, render helpers
+src/api/                     FastAPI routes / HTTP validation
+src/services/                Artifact adapters, camera filter, perception/risk
+scripts/                     Offline exports, data/evidence checks
+legacy/streamlit_lab/         Research reference, không phải frontend public
+deploy/                      Compose + Caddy
+eval/                        Manual report và evidence nhỏ được version control
+```
+
+81 frame mini_val không phải full benchmark. Official pretraining trùng mini scenes; fusion là object-level late fusion. Occupancy là **BEV 2D**, static dùng pseudo-GT, free chứa vùng chưa quan sát. Learned Flow còn yếu. Risk chưa hiệu chuẩn, không phải xác suất va chạm. Runtime artifacts có thể dùng phần cứng khác nhau. Manual cases chứng minh chức năng và xử lý lỗi, không chứng minh cải thiện độ chính xác ML.
+
+CI chạy backend lint/tests và frontend lint/build trên runner Windows của đội. **CI xanh không tự deploy VPS**; merge rồi pull/build/restart riêng. Evidence local không xác nhận domain public đang hoạt động.

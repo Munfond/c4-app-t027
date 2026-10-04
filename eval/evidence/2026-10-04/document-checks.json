@@ -1,0 +1,15 @@
+{
+  "captured_at_utc": "2026-10-04T10:57:27.108772+00:00",
+  "local_document_links": "PASS",
+  "checked_documents": [
+    "README.md",
+    "ARCHITECTURE.md",
+    "docs/architecture_diagram.md",
+    "docs/LAB_SETUP.vi.md",
+    "docs/DEPLOYMENT.vi.md",
+    "eval/results/report.md",
+    "eval/evidence/2026-10-04/README.md"
+  ],
+  "openapi_path_count": 15,
+  "missing_links": []
+}

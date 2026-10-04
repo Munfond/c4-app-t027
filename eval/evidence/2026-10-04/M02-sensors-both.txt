@@ -1,0 +1,154 @@
+Captured at UTC: 2026-10-04T10:39:25.960Z
+URL: http://127.0.0.1:3111/lab
+
+- link "Đi tới nội dung chính":
+  - /url: "#main-content"
+- banner:
+  - link "Perception Lab — trang Lab":
+    - /url: /lab
+    - generic: perception / lab
+  - navigation "Điều hướng chính":
+    - link "01 Lab":
+      - /url: /lab
+      - generic: "01"
+      - text: Lab
+    - link "02 Compare":
+      - /url: /compare
+      - generic: "02"
+      - text: Compare
+    - link "03 Benchmarks":
+      - /url: /benchmarks
+      - generic: "03"
+      - text: Benchmarks
+  - generic: ADAS RESEARCH
+  - generic: T/27
+- main:
+  - paragraph: PERCEPTION LAB / T27
+  - heading "Từ quan sát đến hiểu không gian." [level=1]
+  - paragraph:
+    - text: Một scene, một dòng thời gian.
+    - text: Đối chiếu tín hiệu, dự đoán và rủi ro.
+  - tablist "Các bước khám phá Lab":
+    - tab "01 Cảm biến Quan sát đầu vào" [selected]:
+      - generic: "01"
+      - strong: Cảm biến
+      - generic: Quan sát đầu vào
+      - generic: ↗
+    - tab "02 Kết quả mô hình Hiểu không gian":
+      - generic: "02"
+      - strong: Kết quả mô hình
+      - generic: Hiểu không gian
+      - generic: ↗
+    - tab "03 Risk Ước lượng rủi ro":
+      - generic: "03"
+      - strong: Risk
+      - generic: Ước lượng rủi ro
+      - generic: ↗
+  - tabpanel "01 Cảm biến Quan sát đầu vào":
+    - complementary "Thiết lập dữ liệu":
+      - heading "Thiết lập quan sát" [level=2]
+      - generic: FRAME / SYNC
+      - generic: Scene
+      - combobox "Scene":
+        - option "scene-0103 / 40 frames" [selected]
+        - option "scene-0916 / 41 frames"
+      - generic: Frame · chung cho mọi góc nhìn
+      - combobox "Frame · chung cho mọi góc nhìn":
+        - option "#41 / +0.0s" [selected]
+        - option "#42 / +0.5s"
+        - option "#43 / +1.0s"
+        - option "#44 / +1.5s"
+        - option "#45 / +2.0s"
+        - option "#46 / +2.5s"
+        - option "#47 / +3.0s"
+        - option "#48 / +3.5s"
+        - option "#49 / +4.0s"
+        - option "#50 / +4.5s"
+        - option "#51 / +5.0s"
+        - option "#52 / +5.5s"
+        - option "#53 / +6.0s"
+        - option "#54 / +6.4s"
+        - option "#55 / +6.9s"
+        - option "#56 / +7.4s"
+        - option "#57 / +7.9s"
+        - option "#58 / +8.3s"
+        - option "#59 / +8.8s"
+        - option "#60 / +9.3s"
+        - option "#61 / +9.9s"
+        - option "#62 / +10.4s"
+        - option "#63 / +10.9s"
+        - option "#64 / +11.4s"
+        - option "#65 / +11.9s"
+        - option "#66 / +12.4s"
+        - option "#67 / +12.9s"
+        - option "#68 / +13.4s"
+        - option "#69 / +13.8s"
+        - option "#70 / +14.4s"
+        - option "#71 / +14.9s"
+        - option "#72 / +15.4s"
+        - option "#73 / +15.9s"
+        - option "#74 / +16.4s"
+        - option "#75 / +16.9s"
+        - option "#76 / +17.5s"
+        - option "#77 / +17.9s"
+        - option "#78 / +18.4s"
+        - option "#79 / +18.9s"
+        - option "#80 / +19.4s"
+      - group "Lớp điểm hiển thị":
+        - generic: Lớp điểm hiển thị
+        - checkbox "LiDAR" [checked]
+        - text: LiDAR
+        - checkbox "Radar" [checked]
+        - text: Radar
+        - paragraph: Ẩn lớp chỉ thay đổi hiển thị, không chạy lại mô hình với cảm biến khác.
+      - strong: DỮ LIỆU QUAN SÁT
+      - text: LiDAR và Radar là các điểm đo, cùng hệ tọa độ xe. Khoảng trống chưa có điểm không đồng nghĩa với đường thông thoáng.
+      - paragraph: CAMERA THAM CHIẾU / CÙNG FRAME
+      - article:
+        - button "Xem camera Phía trước":
+          - generic: Phía trước
+          - generic: Đã qua bộ lọc
+        - img "Phía trước · ảnh đã qua bộ lọc khuôn mặt và biển số"
+      - button "Tải lại dữ liệu":
+        - generic: Tải lại dữ liệu
+        - generic: ↻
+    - region "Quan sát và kết quả đồng bộ":
+      - strong: scene-0103
+      - generic: /
+      - generic: FRAME 041
+      - group "Dữ liệu cảm biến":
+        - button "LiDAR + Radar" [active] [pressed]
+        - button "Camera 360°"
+      - button "Mở rộng bản đồ":
+        - generic: Tập trung
+      - generic "Đám mây điểm 3D. Kéo để xoay, cuộn để phóng to."
+      - group "Góc nhìn đám mây điểm":
+        - button "3D"
+        - button "BEV"
+      - generic: LiDAR · 6,763
+      - generic: Radar · 226
+      - generic: Kéo để xoay · cuộn để phóng to · xe tham chiếu màu vàng
+      - generic: ĐIỂM ĐO / KHÔNG PHẢI DỰ ĐOÁN
+      - region "Dòng thời gian của scene":
+        - button "Frame trước" [disabled]:
+        - button "Phát":
+        - button "Frame sau":
+        - slider "Tua đến frame": "0"
+        - generic: 0:00.0
+        - generic: 0:19.4
+        - combobox "Tốc độ phát":
+          - option "0,5×" [selected]
+          - option "1×"
+          - option "2×"
+        - checkbox "Lặp"
+        - text: Lặp
+        - generic: FRAME 01 / 40 · KEYFRAME NUSCENES
+        - status: Đã tạm dừng
+  - strong: Giới hạn dữ liệu.
+  - text: Mini scenes có mặt trong tập train official; kết quả dành cho trực quan hóa, không phải benchmark công bằng.
+  - link "So sánh hai mô hình ↗":
+    - /url: /compare
+- contentinfo:
+  - generic: PERCEPTION LAB / TEAM 27 · MUNFOND
+  - generic: nuScenes mini · Kết quả tính sẵn
+- alert: Lab · ADAS Perception Lab

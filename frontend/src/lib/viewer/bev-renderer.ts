@@ -396,16 +396,24 @@ export class BevRenderer {
       this.scene.remove(this.environmentPoints);
       disposeObject(this.environmentPoints);
     }
-    const positions: number[] = [];
-    const colors: number[] = [];
-    for (const [forward, left, up] of points) {
-      positions.push(-left, -0.02, -forward);
-      const color = new THREE.Color(up > 0.4 ? "#91b9c2" : "#31515b");
-      colors.push(color.r, color.g, color.b);
+    const positions = new Float32Array(points.length * 3);
+    const colors = new Float32Array(points.length * 3);
+    const raisedColor = new THREE.Color("#91b9c2");
+    const groundColor = new THREE.Color("#31515b");
+    for (let index = 0; index < points.length; index++) {
+      const [forward, left, up] = points[index];
+      const offset = index * 3;
+      positions[offset] = -left;
+      positions[offset + 1] = -0.02;
+      positions[offset + 2] = -forward;
+      const color = up > 0.4 ? raisedColor : groundColor;
+      colors[offset] = color.r;
+      colors[offset + 1] = color.g;
+      colors[offset + 2] = color.b;
     }
     const geometry = new THREE.BufferGeometry();
-    geometry.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
-    geometry.setAttribute("color", new THREE.Float32BufferAttribute(colors, 3));
+    geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+    geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
     this.environmentPoints = new THREE.Points(geometry, new THREE.PointsMaterial({
       size: 2, sizeAttenuation: false, vertexColors: true, depthWrite: false,
     }));

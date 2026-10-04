@@ -1,6 +1,9 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { PageHeader } from "@/components/ui/page-header";
+import { Select } from "@/components/ui/select";
 import {
   DetectionBenchmarkTable,
   OccupancyBenchmarkTable,
@@ -48,6 +51,13 @@ export interface BenchmarkReportData {
   };
   limitations: string[];
 }
+
+const limitationLabels: Record<string, string> = {
+  "Static occupancy uses pseudo-GT": "Occupancy tĩnh được đối chiếu với nhãn pseudo-GT.",
+  "Learned flow quality insufficient": "Chất lượng flow học máy chưa đủ tin cậy để suy luận chuyển động.",
+  "Risk is an uncalibrated score, not collision probability": "Risk là điểm chưa hiệu chuẩn, không phải xác suất va chạm.",
+  "Runtime measurements use different hardware": "Số đo thời gian chạy đến từ các phần cứng khác nhau.",
+};
 
 export function ReportView({ className = "" }: { className?: string }) {
   const [report, setReport] = useState<BenchmarkReportData | null>(null);
@@ -128,180 +138,76 @@ export function ReportView({ className = "" }: { className?: string }) {
 
   if (loading) {
     return (
-      <div className="flex flex-col gap-4 p-6 rounded-2xl border border-[var(--line)] bg-[var(--surface)]">
-        <div className="flex items-center gap-3">
-          <div className="h-6 w-6 animate-spin rounded-full border-2 border-blue-500 border-t-transparent" />
-          <span className="text-sm text-[var(--muted)]">Đang nạp bảng chỉ số Benchmark và Provenance...</span>
-        </div>
-        <div className="space-y-3">
-          <div className="h-20 w-full animate-pulse rounded-xl bg-[var(--surface-subtle)]" />
-          <div className="h-40 w-full animate-pulse rounded-xl bg-[var(--surface-subtle)]" />
-        </div>
+      <div className="grid gap-7" role="status" aria-label="Đang tải báo cáo đánh giá">
+        <PageHeader eyebrow="03 / EVALUATION" title="Kết quả & giới hạn." description="Một mô hình tốt cần nhiều hơn một con số. Đọc kết quả thực nghiệm cùng phạm vi dữ liệu và giới hạn của từng phép đo." />
+        <div className="grid gap-3" aria-hidden="true"><div className="skeleton h-28 rounded-lg" /><div className="skeleton h-12 rounded-lg" /><div className="skeleton h-64 rounded-lg" /></div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="flex flex-col items-center justify-center p-8 rounded-2xl border border-[var(--line)] bg-[var(--surface)] text-center">
-        <svg className="h-10 w-10 text-rose-400 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-        </svg>
-        <div className="text-sm font-semibold text-[var(--foreground)] mb-1">{error}</div>
-        <p className="text-xs text-[var(--muted)] max-w-md mb-4">
-          Không thể kết nối tới API `/api/v1/lab/benchmarks`. Vui lòng kiểm tra lại dịch vụ Backend.
-        </p>
-        <button
-          onClick={fetchReport}
-          className="rounded-lg bg-[var(--surface-subtle)] hover:bg-zinc-700 px-3.5 py-1.5 text-xs font-medium text-[var(--foreground)] transition-colors border border-[var(--line)]"
-        >
-          Tải lại dữ liệu
-        </button>
+      <div className="grid gap-7">
+        <PageHeader eyebrow="03 / EVALUATION" title="Kết quả & giới hạn." description="Một mô hình tốt cần nhiều hơn một con số. Đọc kết quả thực nghiệm cùng phạm vi dữ liệu và giới hạn của từng phép đo." />
+        <div role="alert" className="border-l-2 border-red-600 bg-red-50 px-5 py-4 text-sm text-red-800">
+          <p className="font-semibold">Chưa tải được báo cáo</p><p className="mt-1">{error}</p>
+          <Button variant="secondary" className="mt-4" onClick={fetchReport}>Thử lại</Button>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className={`flex flex-col gap-6 text-[var(--foreground)] ${className}`}>
-      {/* Overview Banner */}
-      <div className="rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-6 flex flex-col gap-4">
-        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[var(--line)] pb-4">
-          <div>
-            <div className="flex items-center gap-2 mb-1">
-              <span className="rounded bg-[var(--accent-soft)] px-2 py-0.5 text-xs font-medium text-[var(--accent-strong)] border border-[var(--line)]">
-                Evaluation Split: {report?.split || "mini_val"}
-              </span>
-              <span className="rounded bg-[var(--surface-subtle)] px-2 py-0.5 text-xs font-mono text-[var(--foreground)]">
-                {report?.frame_count || 81} Frames (2 Scenes)
-              </span>
-            </div>
-            <h1 className="text-lg font-bold text-[var(--foreground)] tracking-tight">
-              Báo cáo Thực nghiệm & Đánh giá Đa mô hình ADAS
-            </h1>
-            <p className="text-xs text-[var(--muted)] mt-0.5">
-              So sánh hiệu năng giữa các cụm cảm biến Camera, LiDAR, Radar và mô hình lưới chiếm dụng không gian.
-            </p>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <button
-              onClick={fetchReport}
-              className="flex items-center gap-1.5 rounded-lg border border-[var(--line)] bg-[var(--surface-subtle)] px-3 py-1.5 text-xs font-medium text-[var(--foreground)] hover:bg-[var(--surface-subtle)] hover:text-[var(--foreground)] transition-colors"
-            >
-              <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-              </svg>
-              Làm mới số liệu
-            </button>
-          </div>
+    <div className={`flex flex-col gap-7 text-[var(--foreground)] ${className}`}>
+      <PageHeader
+        eyebrow="03 / EVALUATION"
+        title="Kết quả & giới hạn."
+        description="Một mô hình tốt cần nhiều hơn một con số. Đọc kết quả thực nghiệm cùng phạm vi dữ liệu và giới hạn của từng phép đo."
+        actions={<Button variant="secondary" onClick={fetchReport}>Làm mới số liệu ↗</Button>}
+      />
+      <section aria-label="Phạm vi đánh giá" className="report-scope">
+        <div className="report-count"><b>{report?.frame_count ?? "—"}</b><span>FRAMES / {report?.split ?? "—"}</span></div>
+        <div className="report-limits">
+          <h2>Đọc trước khi so sánh</h2>
+          <ul>{report?.limitations.map((lim, idx) => <li key={idx}>{limitationLabels[lim] ?? lim}</li>)}</ul>
         </div>
-
-        {/* Limitations & Provenance Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {/* Limitations Box */}
-          <div className="rounded-xl border border-amber-200 bg-amber-50 p-4">
-            <div className="flex items-center gap-2 text-xs font-semibold text-amber-800 mb-2">
-              <svg className="h-4 w-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-              </svg>
-              <span>Giới hạn Khoa học & Cảnh báo Bắt buộc</span>
-            </div>
-            <ul className="list-disc list-inside space-y-1 text-[11px] text-[var(--muted)]">
-              {report?.limitations.map((lim, idx) => (
-                <li key={idx} className="leading-relaxed">
-                  {lim}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Provenance Box */}
-          <div className="rounded-xl border border-[var(--line)] bg-[var(--surface-subtle)] p-4">
-            <div className="flex items-center gap-2 text-xs font-semibold text-[var(--foreground)] mb-2">
-              <svg className="h-4 w-4 text-[var(--accent-strong)] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-              </svg>
-              <span>Nguồn Dữ liệu Xác thực (Artifact Provenance)</span>
-            </div>
-            <div className="space-y-1.5 text-[11px]">
-              {report?.sections &&
-                Object.entries(report.sections).map(([key, sec]) => (
-                  <div key={key} className="flex items-center justify-between text-[var(--muted)]">
-                    <span className="capitalize font-medium text-[var(--foreground)]">{key}:</span>
-                    <span className="font-mono text-[10px] text-[var(--muted)] truncate max-w-[240px]" title={sec?.source}>
-                      {sec?.source}
-                    </span>
-                  </div>
-                ))}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Tabs Selector */}
-      <div className="flex flex-wrap gap-2 border-b border-[var(--line)] pb-3">
-        {[
-          { id: "all", label: "Tất cả bảng chỉ số" },
-          { id: "detection", label: "1. Định vị vật cản 3D (Detection)" },
-          { id: "occupancy", label: "2. Lưới chiếm dụng (Occupancy)" },
-          { id: "flow", label: "3. Dòng chảy 4D (Flow)" },
-          { id: "risk", label: "4. Đánh giá rủi ro (Risk)" },
-        ].map((tab) => (
-          <button
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id as typeof activeTab)}
-            className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-all ${
-              activeTab === tab.id
-                ? "bg-[var(--accent-strong)] text-white shadow-md shadow-[var(--shadow)]"
-                : "bg-[var(--surface-subtle)] text-[var(--muted)] hover:bg-[var(--surface-subtle)] hover:text-[var(--foreground)] border border-[var(--line)]"
-            }`}
-          >
-            {tab.label}
-          </button>
-        ))}
-      </div>
-
-      {/* Tables Content */}
-      <div className="flex flex-col gap-6">
-        {(activeTab === "all" || activeTab === "detection") && (
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <h2 className="text-sm font-semibold text-[var(--foreground)]">1. Định vị vật cản 3D (3D Bounding Box Detection)</h2>
-              <span className="text-[11px] text-[var(--muted)]">Tiêu chuẩn đánh giá nuScenes Detection</span>
-            </div>
+      </section>
+      <div className="report-layout">
+        <div className="report-filter"><Select label="Nhóm chỉ số" value={activeTab} onChange={event => setActiveTab(event.target.value as typeof activeTab)}>
+          <option value="all">Toàn bộ kết quả</option><option value="detection">01 / Detection</option><option value="occupancy">02 / Occupancy</option><option value="flow">03 / Flow</option><option value="risk">04 / Risk</option>
+        </Select></div>
+        <nav aria-label="Nhóm chỉ số" className="report-index">
+          {([
+            ["all", "Toàn bộ kết quả", "00"],
+            ["detection", "Detection", "01"],
+            ["occupancy", "Occupancy", "02"],
+            ["flow", "Flow", "03"],
+            ["risk", "Risk", "04"],
+          ] as const).map(([id, label, number]) => <button key={id} type="button" aria-pressed={activeTab === id} onClick={() => setActiveTab(id)}>{label}<span>{number}</span></button>)}
+        </nav>
+        <div className="report-content flex flex-col gap-10">
+          {(activeTab === "all" || activeTab === "detection") && <section className="space-y-4">
+            <div className="flex flex-wrap items-baseline justify-between gap-2"><h2>01 / Định vị vật cản</h2><span className="text-[11px] text-[var(--muted)]">nuScenes · 3D detection</span></div>
             <DetectionBenchmarkTable rows={report?.sections?.detection?.data?.rows || []} />
-          </div>
-        )}
-
-        {(activeTab === "all" || activeTab === "occupancy") && (
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <h2 className="text-sm font-semibold text-[var(--foreground)]">2. Lưới chiếm dụng không gian (BEV Occupancy Grid)</h2>
-              <span className="text-[11px] text-[var(--muted)]">Độ phân giải 200x200 ô (0.5m/ô)</span>
-            </div>
+          </section>}
+          {(activeTab === "all" || activeTab === "occupancy") && <section className="space-y-4">
+            <div className="flex flex-wrap items-baseline justify-between gap-2"><h2>02 / Không gian chiếm dụng</h2><span className="text-[11px] text-[var(--muted)]">BEV · 200 × 200 ô · 0.5 m/ô</span></div>
             <OccupancyBenchmarkTable items={report?.sections?.occupancy?.data?.binary_occupancy || []} />
-          </div>
-        )}
-
-        {(activeTab === "all" || activeTab === "flow") && (
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <h2 className="text-sm font-semibold text-[var(--foreground)]">3. Dòng chảy chuyển động thời gian (Temporal Occupancy Flow)</h2>
-              <span className="text-[11px] text-[var(--muted)]">Sai số điểm cuối EPE (m/s)</span>
-            </div>
+          </section>}
+          {(activeTab === "all" || activeTab === "flow") && <section className="space-y-4">
+            <div className="flex flex-wrap items-baseline justify-between gap-2"><h2>03 / Chuyển động theo thời gian</h2><span className="text-[11px] text-[var(--muted)]">Temporal flow · EPE (m/s)</span></div>
             <FlowBenchmarkTable items={flowItems} />
-          </div>
-        )}
-
-        {(activeTab === "all" || activeTab === "risk") && (
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <h2 className="text-sm font-semibold text-[var(--foreground)]">4. Đánh giá Trường Rủi ro Va chạm (Risk Assessment)</h2>
-              <span className="text-[11px] text-[var(--muted)]">Đối chiếu với điểm chuẩn Oracle</span>
-            </div>
+          </section>}
+          {(activeTab === "all" || activeTab === "risk") && <section className="space-y-4">
+            <div className="flex flex-wrap items-baseline justify-between gap-2"><h2>04 / Trường rủi ro</h2><span className="text-[11px] text-[var(--muted)]">Đối chiếu với Oracle</span></div>
             <RiskBenchmarkTable items={riskItems} />
-          </div>
-        )}
+          </section>}
+          <details className="report-provenance">
+            <summary>Nguồn dữ liệu & artifact</summary>
+            <p className="mt-3 text-xs leading-6">Số liệu được đọc từ các artifact đã lưu. Trang này không chạy inference trong trình duyệt.</p>
+            <dl>{report?.sections && Object.entries(report.sections).map(([key, section]) => <div key={key}><dt className="capitalize">{key}</dt><dd>{section?.source || "Chưa có artifact"}</dd></div>)}</dl>
+          </details>
+        </div>
       </div>
     </div>
   );

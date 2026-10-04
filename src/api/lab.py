@@ -3,7 +3,7 @@ from fastapi.responses import Response
 
 from src.config import get_settings
 from src.models.lab import DetectionFrame, FrameList, ModelList, SceneList
-from src.services import lab
+from src.services import lab, perception
 from src.services.anonymizer import InvalidImageError, UnavailableAnonymizerError, anonymize_bytes
 from src.services.environment import environment
 
@@ -87,6 +87,23 @@ def frame_environment(token: str):
         raise HTTPException(404, "Frame not found") from exc
     except (ValueError, StopIteration, OSError) as exc:
         raise HTTPException(503, "LiDAR environment unavailable") from exc
+
+
+@router.get("/perception/tasks")
+def perception_tasks():
+    return available(perception.task_catalog)
+
+
+@router.get("/frames/{token}/perception/{task}")
+def perception_frame(token: str, task: str):
+    if task not in (*perception.TASKS, "radar"):
+        raise HTTPException(422, "Unknown perception task")
+    try:
+        return available(perception.frame_output, token, task)
+    except KeyError as exc:
+        raise HTTPException(404, "Frame not found") from exc
+    except (ValueError, TypeError) as exc:
+        raise HTTPException(503, "Perception artifact invalid or incompatible") from exc
 
 
 @router.get("/frames/{token}/cameras/{channel}")

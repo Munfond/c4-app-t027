@@ -1,0 +1,129 @@
+Captured at UTC: 2026-10-04T10:49:48.414Z
+URL: http://127.0.0.1:3111/benchmarks
+
+- link "Đi tới nội dung chính":
+  - /url: "#main-content"
+- banner:
+  - link "Perception Lab — trang Lab":
+    - /url: /lab
+    - generic: perception / lab
+  - navigation "Điều hướng chính":
+    - link "01 Lab":
+      - /url: /lab
+      - generic: "01"
+      - text: Lab
+    - link "02 Compare":
+      - /url: /compare
+      - generic: "02"
+      - text: Compare
+    - link "03 Benchmarks":
+      - /url: /benchmarks
+      - generic: "03"
+      - text: Benchmarks
+  - generic: ADAS RESEARCH
+  - generic: T/27
+- main:
+  - paragraph: 03 / EVALUATION
+  - heading "Kết quả & giới hạn." [level=1]
+  - paragraph: Một mô hình tốt cần nhiều hơn một con số. Đọc kết quả thực nghiệm cùng phạm vi dữ liệu và giới hạn của từng phép đo.
+  - button "Làm mới số liệu ↗"
+  - region "Phạm vi đánh giá":
+    - generic: "81"
+    - generic: FRAMES / mini_val
+    - heading "Đọc trước khi so sánh" [level=2]
+    - list:
+      - listitem: Occupancy tĩnh được đối chiếu với nhãn pseudo-GT.
+      - listitem: Chất lượng flow học máy chưa đủ tin cậy để suy luận chuyển động.
+      - listitem: Risk là điểm chưa hiệu chuẩn, không phải xác suất va chạm.
+      - listitem: Số đo thời gian chạy đến từ các phần cứng khác nhau.
+  - navigation "Nhóm chỉ số":
+    - button "Toàn bộ kết quả 00":
+      - text: Toàn bộ kết quả
+      - generic: "00"
+    - button "Detection 01":
+      - text: Detection
+      - generic: "01"
+    - button "Occupancy 02" [active] [pressed]:
+      - text: Occupancy
+      - generic: "02"
+    - button "Flow 03":
+      - text: Flow
+      - generic: "03"
+    - button "Risk 04":
+      - text: Risk
+      - generic: "04"
+  - heading "02 / Không gian chiếm dụng" [level=2]
+  - generic: BEV · 200 × 200 ô · 0.5 m/ô
+  - region "Bảng chỉ số Occupancy":
+    - table:
+      - rowgroup:
+        - row "Phương pháp IoU Chiếm dụng Độ chuẩn xác (Precision) Độ thu hồi (Recall) Precision (±1 cell) Recall (±1 cell)":
+          - columnheader "Phương pháp"
+          - columnheader "IoU Chiếm dụng"
+          - columnheader "Độ chuẩn xác (Precision)"
+          - columnheader "Độ thu hồi (Recall)"
+          - columnheader "Precision (±1 cell)"
+          - columnheader "Recall (±1 cell)"
+      - rowgroup:
+        - row "Classical LiDAR occupancy (project buildBevOccupancy, single sweep) 28.93% 71.41% 32.72% 87.9% 58.0%":
+          - cell "Classical LiDAR occupancy (project buildBevOccupancy, single sweep)":
+            - generic: Classical LiDAR occupancy (project buildBevOccupancy, single sweep)
+          - cell "28.93%"
+          - cell "71.41%"
+          - cell "32.72%"
+          - cell "87.9%"
+          - cell "58.0%"
+        - row "Classical radar hits (project rasterizeRadarBev) 9.92% 33.78% 12.32% 67.7% 24.3%":
+          - cell "Classical radar hits (project rasterizeRadarBev)":
+            - generic: Classical radar hits (project rasterizeRadarBev)
+          - cell "9.92%"
+          - cell "33.78%"
+          - cell "12.32%"
+          - cell "67.7%"
+          - cell "24.3%"
+        - row "Classical LiDAR U radar (union) 28.42% 51.91% 38.58% 77.1% 63.7%":
+          - cell "Classical LiDAR U radar (union)":
+            - generic: Classical LiDAR U radar (union)
+          - cell "28.42%"
+          - cell "51.91%"
+          - cell "38.58%"
+          - cell "77.1%"
+          - cell "63.7%"
+        - 'row "Rule: any obstacle-height LiDAR point (single sweep) 38.41% 75.08% 44.02% 92.4% 68.5%"':
+          - 'cell "Rule: any obstacle-height LiDAR point (single sweep)"':
+            - generic: "Rule: any obstacle-height LiDAR point (single sweep)"
+          - cell "38.41%"
+          - cell "75.08%"
+          - cell "44.02%"
+          - cell "92.4%"
+          - cell "68.5%"
+        - 'row "Mô hình của đội Learned U-Net: LiDAR + radar (our_occupancy.pth) 42.30% 68.61% 52.44% 90.9% 71.1%"':
+          - 'cell "Mô hình của đội Learned U-Net: LiDAR + radar (our_occupancy.pth)"':
+            - generic: Mô hình của đội
+            - generic: "Learned U-Net: LiDAR + radar (our_occupancy.pth)"
+          - cell "42.30%"
+          - cell "68.61%"
+          - cell "52.44%"
+          - cell "90.9%"
+          - cell "71.1%"
+        - 'row "Learned U-Net: LiDAR only 40.99% 67.92% 50.83% 90.7% 70.0%"':
+          - 'cell "Learned U-Net: LiDAR only"':
+            - generic: "Learned U-Net: LiDAR only"
+          - cell "40.99%"
+          - cell "67.92%"
+          - cell "50.83%"
+          - cell "90.7%"
+          - cell "70.0%"
+        - 'row "Learned U-Net: radar only 9.81% 24.05% 14.21% 49.7% 24.3%"':
+          - 'cell "Learned U-Net: radar only"':
+            - generic: "Learned U-Net: radar only"
+          - cell "9.81%"
+          - cell "24.05%"
+          - cell "14.21%"
+          - cell "49.7%"
+          - cell "24.3%"
+  - generic "Nguồn dữ liệu & artifact"
+- contentinfo:
+  - generic: PERCEPTION LAB / TEAM 27 · MUNFOND
+  - generic: nuScenes mini · Kết quả tính sẵn
+- alert: Đánh giá · ADAS Perception Lab
