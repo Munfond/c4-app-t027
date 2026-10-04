@@ -9,6 +9,7 @@ Lab trực quan hóa ADAS trên nuScenes mini: quan sát Camera/LiDAR/Radar, đ�
 - [Manual evaluation: bước thực hiện, output và ảnh thật](eval/results/report.md)
 - [Chuẩn bị dữ liệu/cache offline](docs/LAB_SETUP.vi.md)
 - [Deploy và cập nhật VPS](docs/DEPLOYMENT.vi.md)
+- [Cloud PaaS/database deployment](docs/DEPLOY_PAAS_GUIDE.vi.md)
 
 ## User flow và trạng thái MVP
 
@@ -117,8 +118,11 @@ Linux/macOS: `python3.12 -m venv .venv-lab`, dùng `.venv-lab/bin/python` thay c
 | `LOG_LEVEL` | `INFO`. |
 | `API_INTERNAL_URL` · frontend `.env.local` | `http://127.0.0.1:8000`; server rewrite, không phải `NEXT_PUBLIC_*`. |
 | `LAB_DOMAIN`, `LAB_VOLUME`, `JUDGE_USER`, `JUDGE_PASSWORD_HASH` · deploy `.env` | Compose/Caddy; hash mật khẩu không commit. |
+| `DATABASE_URL` · root `.env` | `sqlite:///./data/app.db`; backend có database adapter (SQLAlchemy), hỗ trợ PostgreSQL cho cloud. File exports/cache vẫn là fallback. |
 
-LLM/database/vector-store/LangSmith là scaffold tùy chọn, không nằm trên luồng Lab. AI-log có cấu hình riêng trong `.env.example`; không đặt secret trong evidence.
+Database adapter trên `main` hỗ trợ frames/detections, processed cameras, environment và benchmark reports. Với dataset tại đường dẫn tùy chỉnh, catalog/benchmark ưu tiên file; chỉ dùng DB của đúng dataset. Perception JSON và risk MAT vẫn cần artifact; seed database không thay thế chúng. LLM/vector-store/LangSmith là scaffold tùy chọn, không nằm trên luồng Lab. AI-log có cấu hình riêng; không đặt secret trong evidence.
+
+Nếu cần database deployment, đặt `DATABASE_URL` cục bộ rồi chạy `python scripts/seed_database.py` trong venv có `requirements.txt`. Lệnh tạo bảng/nạp frames, detections và metrics; review dữ liệu trước khi seed. `seed_media_database.py` nạp processed camera/environment nhưng xóa các camera rows cũ, chỉ chạy khi chủ động thay bộ media. Không cần seed để chạy file-based local.
 
 ## Sample queries · PowerShell
 

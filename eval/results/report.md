@@ -172,4 +172,10 @@ M11 cần backend riêng/cache trống và raw thực; không xóa cache product
 
 Chưa kiểm chứng trong lần này: fresh clone/install, Node 22 server runtime, VPS/public HTTPS, concurrent users/uptime, keyboard/mobile audit toàn bộ, p95/FPS, privacy recall, full nuScenes held-out benchmark, model robustness thời tiết và Seg3D inference. Không dùng 12 PASS để kết luận model an toàn hoặc chất lượng Flow đã được cải thiện.
 
-Evidence hiện nằm trên working branch, chưa commit/push. Khi tạo PR cần đưa docs, script và thư mục evidence nhỏ vào cùng source tương ứng; dataset/video lớn vẫn ngoài Git. [Evidence index](../evidence/2026-10-04/README.md).
+Snapshot trên ghi nhận source chưa commit tại thời điểm chụp. Sau đó bộ evidence được đưa vào Git cùng giao diện/source tương ứng; dataset/video lớn vẫn ngoài Git. [Evidence index](../evidence/2026-10-04/README.md).
+
+## Kiểm tra bổ sung sau tích hợp main
+
+Đã tích hợp main `aa78ba9` với database adapters và cloud configuration, rồi kiểm tra lại bằng Python 3.12/Node **22.23.3**. Backend lint và **20 pytest cases** đạt (gồm benchmark database contract và file fallback); frontend ESLint, TypeScript, webpack production build và **3 geometry tests** đạt. HTTP smoke probe mới có **30 responses / 28 assertions PASS**. Bằng chứng của lần tích hợp được lưu riêng ở [integration evidence](../evidence/2026-10-04-integration/README.md); không sửa timestamp/hash của run manual trước.
+
+Trong browser review bổ sung, chọn lại cùng scene từng làm xóa frames mà không kích hoạt tải lại. Handler nay bỏ qua lựa chọn không đổi, và refresh tải lại danh sách frames. Đây là sửa lỗi chức năng sau run manual gốc; không phải thay đổi model/metrics. Bản build Node 22 mới được kiểm tra riêng, không xác nhận Node 22 runtime của preview cũ hay VPS.

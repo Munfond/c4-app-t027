@@ -75,7 +75,7 @@ export function LabWorkspace() {
       })
       .catch((reason: Error) => { if (reason.name !== "AbortError") setError(reason.message); });
     return () => controller.abort();
-  }, [scene]);
+  }, [scene, refresh]);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -211,7 +211,10 @@ export function LabWorkspace() {
           <span>{settingsExpanded ? "ĐÓNG −" : "THIẾT LẬP +"}</span>
         </button>
         <div className="inspector-fields" id="lab-inspector-fields">
-          <Select label="Scene" value={scene} onChange={event => { setPlaying(false); setFrames([]); setToken(""); setSpatialReadyToken(null); setScene(event.target.value); }} disabled={!scenes.length}>
+          <Select label="Scene" value={scene} onChange={event => {
+            if (event.target.value === scene) return;
+            setPlaying(false); setFrames([]); setToken(""); setSpatialReadyToken(null); setScene(event.target.value);
+          }} disabled={!scenes.length}>
             {scenes.map(item => <option key={item.id} value={item.id}>{item.id} / {item.frame_count} frames</option>)}
           </Select>
           <Select label="Frame · chung cho mọi góc nhìn" value={token} onChange={event => seek(frames.findIndex(item => item.sample_token === event.target.value))} disabled={!frames.length || activeFrame?.scene !== scene}>

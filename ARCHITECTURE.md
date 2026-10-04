@@ -28,6 +28,7 @@ flowchart LR
     JPG[(Processed camera JPEG)]
     MET[(Metrics JSON + risk MAT)]
   end
+  DB[(SQLite / PostgreSQL seeded records)]
   DET --> CSV
   PERC --> JSON
   MEDIA --> JSON
@@ -42,6 +43,11 @@ flowchart LR
   JSON --> API
   JPG --> API
   MET --> API
+  CSV -.->|seed_database.py| DB
+  MET -.->|seed benchmark reports| DB
+  JPG -.->|seed processed media| DB
+  JSON -.->|seed environment only| DB
+  DB -->|Frames / detections / media / benchmark reports| API
   API -->|Local JSON / JPEG / PNG| NEXT
   NEXT --> GATE
   API -->|Deployed API responses| GATE
@@ -62,12 +68,13 @@ Mũi tên về browser là response data flow. Request routing: [sequence diagra
 | `frontend/src/lib/lab-frame-cache.ts` | Bounded browser caches/prefetch; không database. |
 | `src/api/lab.py` | HTTP validation, 404/422/503, camera processed-only, risk PNG. |
 | `src/services/lab.py` | Catalog/model/CSV adapters, mtime cache, metrics, risk MAT → PNG. |
+| `src/database.py`, `src/models/db_models.py` | SQLAlchemy SQLite/PostgreSQL adapters từ main; seeded frames/detections/processed media/benchmark reports và file fallback. |
 | `src/services/environment.py`, `perception.py` | Environment và validation token/task/coordinates/geometry/provenance. |
 | `src/services/anonymizer.py` | MTCNN face + YOLO plate khi được bật; unavailable thì fail-closed. |
 | `scripts/export_perception.py` | Radar alignment, offline occupancy/flow inference và checkpoint provenance. |
 | `deploy/compose.yml`, `Caddyfile` | HTTPS/auth gateway, internal services, read-only data mount. |
 
-`src/agent/` và `/api/v1/chat` là scaffold riêng; LLM/LangGraph/PostgreSQL/ChromaDB không trên critical path Lab. Agent chọn trọng số theo thời tiết và mô phỏng thời tiết chưa là tính năng online hiện tại.
+`src/agent/` và `/api/v1/chat` là scaffold riêng; LLM/LangGraph/ChromaDB không trên critical path Lab. Database là nguồn bổ sung cho cloud; file-based local không cần PostgreSQL server. Perception và risk vẫn dùng file artifacts. Agent chọn trọng số theo thời tiết và mô phỏng thời tiết chưa là tính năng online hiện tại.
 
 ## Đồng bộ và diễn giải output
 

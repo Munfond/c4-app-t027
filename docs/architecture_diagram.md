@@ -67,4 +67,6 @@ flowchart LR
 | Risk | `stage_h/risk_out.mat` | `/frames/{token}/risk` |
 | Metrics | `models/.../metrics.json`, risk metrics | `/benchmarks` |
 
+Sau tích hợp main `aa78ba9`, các adapter còn đọc SQLite/PostgreSQL seeded records cho catalog/detections/processed media/benchmark reports, với file fallback. Sequence phía trên thể hiện file path; database reads thay bước đọc file khi adapter chọn DB. Perception JSON và risk MAT không được seed bởi scripts database hiện tại.
+
 Perception artifacts chứa token/task/model/sensors/source và ego coordinates. [Seg3D contract và UI modes](LAB_PERCEPTION_WORKSPACE.vi.md); [real outputs](../eval/results/report.md).
