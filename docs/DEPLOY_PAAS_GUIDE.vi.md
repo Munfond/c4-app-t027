@@ -1,5 +1,22 @@
 # Hướng dẫn Triển khai Web theo Phương án B (Cloud PaaS: Vercel + Render + Supabase)
 
+Domain demo của đội: <https://c4-app-t027.vercel.app/lab>.
+
+## Cache perception trên cloud
+
+Frontend và database deploy thành công chưa đảm bảo mọi lớp có dữ liệu. Radar,
+Occupancy và Flow đọc `LAB_DATA_ROOT/cache/perception`, không đọc Supabase.
+Dockerfile cài `deploy/artifacts/perception-mini-val.zip` (243 output thật cho
+81 frame) vào `/app/data/lab/cache/perception` và kiểm tra manifest/SHA256 khi build.
+Không cần seed lại Supabase khi cập nhật gói này; backend cần build/deploy commit mới.
+Nếu đặt `LAB_DATA_ROOT` riêng hoặc mount volume, cài gói vào đường dẫn đó theo
+[hướng dẫn bundle](../deploy/artifacts/README.md). Seg3D vẫn là trạng thái chưa có dữ liệu.
+
+Sau deploy, kiểm tra `/api/v1/lab/perception/tasks` trên domain frontend:
+Radar/Occupancy/Flow phải có `frame_count=81`, Seg3D `frame_count=0`.
+Thử một token từ `/api/v1/lab/scenes/scene-0103/frames` với
+`/api/v1/lab/frames/{token}/perception/occupancy`: phải trả JSON 200.
+
 Phương án này sử dụng 100% dịch vụ đám mây miễn phí (Free Tier), không cần mua máy chủ VPS, tự động có chứng chỉ bảo mật HTTPS và dễ dàng gắn tên miền riêng.
 
 ---
