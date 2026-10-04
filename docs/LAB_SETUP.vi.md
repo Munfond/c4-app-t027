@@ -1,61 +1,50 @@
-# Chạy nền lab local
+# Chuẩn bị Lab artifacts offline
 
-## Python
-Môi trường .venv cũ trỏ tới Python 3.10 không còn hoạt động; được giữ nguyên.
-Môi trường mới .venv-lab dùng Python 3.12 và requirements.txt (web + dev).
+Clone, venv, Node, env và chạy web: [README](../README.md). Không giả định dữ liệu hoặc môi trường của một máy cũ đã tồn tại sau clone.
 
-Windows từ repo root:
-    powershell -File scripts/setup_lab.ps1 -Python <duong-dan-python-3.12.exe>
-    .venv-lab/Scripts/python.exe -m uvicorn src.main:app --reload
+## Kiểm tra nguồn
 
-Máy hiện tại đã được cài .venv-lab. Swagger: http://127.0.0.1:8000/docs
-Frontend:
-    cd frontend
-    npm ci
-    npm run dev
-Frontend gọi relative /api/v1/...; rewrite local trỏ http://127.0.0.1:8000.
+```powershell
+# Repo root; dùng Python web venv và đường dẫn thực tế
+.\.venv-lab\Scripts\python.exe scripts/check_lab_data.py --nusc-root 'C:/apps/nuscenes' --lab-root 'C:/apps/lab'
+```
 
-## Data và cấu hình
-Mặc định đường dẫn tính từ repo root, không phụ thuộc working directory:
-- data/nuscenes: raw nuScenes-mini đã copy.
-- data/lab: model, CSV, JSON, MAT từ main.
-- data/sim: số liệu simulation.
-Override: NUSC_ROOT, LAB_DATA_ROOT, SIM_DATA_ROOT, PLATE_WEIGHTS bằng đường dẫn tuyệt đối.
-    .venv-lab/Scripts/python.exe scripts/check_lab_data.py
+`capabilities` chỉ kiểm tra một số file/cache tồn tại, không thay thế kiểm tra raw files. Không load PKL để xem detection; API dùng CSV/JSON. Không mount raw thành public.
 
-Không load .pkl chỉ để xem detection; API dùng CSV và JSON. Không mount data thành public/static.
+## LiDAR environment và processed cameras
 
-## API có thật
-GET /health
-GET /api/v1/lab/capabilities
-GET /api/v1/lab/models
-GET /api/v1/lab/scenes
-GET /api/v1/lab/scenes/{scene_id}/frames
-GET /api/v1/lab/frames/{sample_token}/detections?model=our_lidar&threshold=0.3
-GET /api/v1/lab/frames/{sample_token}/cameras/{channel}
-GET /api/v1/lab/benchmarks
-POST /api/v1/anonymize (multipart JPEG/PNG)
+Root `.env` đặt `NUSC_ROOT`, `LAB_DATA_ROOT`, tùy chọn `CAMERA_CACHE_DIR`. Environment cache không cần Torch:
 
-404: scene/frame không có. 422: model/channel/threshold không hợp lệ.
-503: artifact hoặc bộ xử lý camera chưa sẵn sàng. Không dùng endpoint capabilities như chứng nhận đã kiểm tra toàn bộ raw dataset; chạy check_lab_data.py để kiểm tra đầy đủ.
-Live occupancy/flow, GT, point-cloud và tracking API chưa triển khai trong nền này.
+```powershell
+.\.venv-lab\Scripts\python.exe -m scripts.prepare_demo_media --limit 1
+.\.venv-lab\Scripts\python.exe -m scripts.prepare_demo_media
+```
 
-## Anonymizer và inference tùy chọn
-Web chạy không cần torch, GPU hoặc tải weight. Anonymizer không load khi import app.
-Để thử inference, tạo venv riêng, cài requirements-inference.txt. Bộ này ghim torch/torchvision/facenet/Pillow theo constraint cũ, chưa được kiểm thử lại đầy đủ trong đợt chuẩn bị web.
-Các môi trường mmdet3d/CRN đóng băng không bị sửa.
+Camera cần môi trường riêng và weights của đội:
 
-Set ANONYMIZER_ENABLED=true và PLATE_WEIGHTS tuyệt đối rồi restart API trong môi trường đã cài inference. MTCNN có thể cần tải weight lần đầu: prewarm trên máy chuẩn bị, kiểm tra thành công trước khi triển khai offline.
-Camera và upload dùng chung anonymizer, xử lý trên thread worker, serialize model calls, không trả ảnh gốc khi lỗi.
-Đã có unit test validation/fail-closed; cần kiểm thử chất lượng blur trên bộ ảnh thực trước khi bật cho giám khảo. Giải pháp production nên xử lý trước 81 frame x 6 camera và cache kèm provenance/hash; chưa có batch cache trong nền này.
+```powershell
+py -3.12 -m venv .venv-inference
+.\.venv-inference\Scripts\python.exe -m pip install -r requirements-inference.txt
+$env:ANONYMIZER_ENABLED = 'true'
+$env:PLATE_WEIGHTS = 'C:/apps/weights/plate_yolov8.pt'
+.\.venv-inference\Scripts\python.exe -m scripts.prepare_demo_media --cameras --limit 1
+# Review ảnh thử trước khi xử lý tất cả
+.\.venv-inference\Scripts\python.exe -m scripts.prepare_demo_media --cameras
+```
 
-## Kiểm tra
-    .venv-lab/Scripts/python.exe -m ruff check src/ tests/
-    .venv-lab/Scripts/python.exe -m pytest tests/ -q
-    cd frontend
-    npm run lint
-    npm run build
+MTCNN có thể tải weights lần đầu; prewarm trên máy chuẩn bị. Script xuất `cache/media-manifest.json` với hash/lỗi. Review blur và lỗi trước khi chuyển 81×6 ảnh lên server; không copy raw JPEG vào processed cache. Web có đủ cache dùng `ANONYMIZER_ENABLED=false`.
 
-Các đường dẫn legacy đã chuyển về data/lab và data/nuscenes, MATLAB dùng MATLAB_PROJECT_ROOT; legacy vẫn là công cụ tham chiếu nghiên cứu, không phải web public và chưa được chạy lại toàn bộ.
+## Radar, BEV Occupancy, Flow
 
-OpenAPI đã xuất tại docs/lab-openapi.json; frame/detection/model responses có Pydantic schema để frontend sinh type.
+Exporter cần raw và checkpoints `models/occupancy/our_occupancy.pth`, `models/temporal_flow/our_flow.pth`. Dùng môi trường inference phù hợp; thử một frame trước:
+
+```powershell
+.\.venv-inference\Scripts\python.exe scripts/export_perception.py --nusc-root 'C:/apps/nuscenes' --lab-root 'C:/apps/lab' --tasks radar occupancy flow --limit 1
+.\.venv-inference\Scripts\python.exe scripts/export_perception.py --nusc-root 'C:/apps/nuscenes' --lab-root 'C:/apps/lab' --tasks radar occupancy flow
+```
+
+Xuất `cache/perception/{task}/{token}.json`, checkpoint/source hash và ego coordinates. Radar đồng bộ về frame tham chiếu. Occupancy 200×200 là BEV 2D; Flow dùng temporal model T4.
+
+Seg3D không nằm trong exporter hiện tại. Cần semantic model/ground truth thật và [contract Seg3D](LAB_PERCEPTION_WORKSPACE.vi.md); hiện có 0/81 artifact. Detection proxy không thay thế Seg3D.
+
+Sau khi chuyển cache lên server, kiểm tra `/api/v1/lab/perception/tasks` và chạy lại [manual cases](../eval/results/report.md) trên môi trường đích. Read-only data mount trong Compose yêu cầu chuẩn bị cache trước.

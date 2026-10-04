@@ -44,8 +44,8 @@ export function DetectionBenchmarkTable({ rows }: { rows: DetectionRow[] }) {
   }
 
   return (
-    <div className="overflow-x-auto rounded-xl border border-[var(--line)] bg-[var(--surface)]">
-      <table className="w-full text-left text-xs">
+    <div role="region" aria-label="Bảng chỉ số Detection" tabIndex={0} className="overflow-x-auto rounded-lg border border-[var(--line)] bg-[var(--surface)]">
+      <table className="w-full min-w-[900px] text-left text-[13px]">
         <thead className="border-b border-[var(--line)] bg-[var(--surface-subtle)] text-[var(--muted)]">
           <tr>
             <th className="px-4 py-3 font-semibold">Mô hình</th>
@@ -65,24 +65,24 @@ export function DetectionBenchmarkTable({ rows }: { rows: DetectionRow[] }) {
               <tr
                 key={idx}
                 className={`transition-colors hover:bg-[var(--surface-subtle)] ${
-                  isOurs ? "bg-[var(--accent-soft)]" : ""
+                  isOurs ? "bg-[#f0f7f4]" : ""
                 }`}
               >
                 <td className="px-4 py-3 font-medium text-[var(--foreground)]">
-                  <div className="flex items-center gap-2">
+                  <div className="flex min-w-[190px] flex-col items-start gap-1.5">
                     {isOurs ? (
-                      <span className="rounded bg-[var(--accent-soft)] px-1.5 py-0.5 text-[10px] text-[var(--accent-strong)] border border-[var(--line)]">
-                        Our Model
+                      <span className="text-[10px] font-bold uppercase tracking-[0.08em] text-[var(--accent-strong)]">
+                        Mô hình của đội
                       </span>
                     ) : (
-                      <span className="rounded bg-amber-50 px-1.5 py-0.5 text-[10px] text-amber-800 border border-amber-200">
-                        Official Ref
+                      <span className="text-[10px] font-bold uppercase tracking-[0.08em] text-[#85611e]">
+                        Tham chiếu official
                       </span>
                     )}
                     <span>{row.model}</span>
                   </div>
                 </td>
-                <td className="px-3 py-3 text-[var(--muted)] max-w-[200px] truncate" title={row.training}>
+                <td className="max-w-[200px] px-3 py-3 leading-5 text-[var(--muted)]" title={row.training}>
                   {row.training}
                 </td>
                 <td className="px-3 py-3 text-right font-mono font-semibold text-[var(--accent-strong)]">
@@ -122,8 +122,8 @@ export function OccupancyBenchmarkTable({ items }: { items: OccupancyItem[] }) {
   }
 
   return (
-    <div className="overflow-x-auto rounded-xl border border-[var(--line)] bg-[var(--surface)]">
-      <table className="w-full text-left text-xs">
+    <div role="region" aria-label="Bảng chỉ số Occupancy" tabIndex={0} className="overflow-x-auto rounded-lg border border-[var(--line)] bg-[var(--surface)]">
+      <table className="w-full min-w-[760px] text-left text-[13px]">
         <thead className="border-b border-[var(--line)] bg-[var(--surface-subtle)] text-[var(--muted)]">
           <tr>
             <th className="px-4 py-3 font-semibold">Phương pháp</th>
@@ -141,14 +141,14 @@ export function OccupancyBenchmarkTable({ items }: { items: OccupancyItem[] }) {
               <tr
                 key={idx}
                 className={`transition-colors hover:bg-[var(--surface-subtle)] ${
-                  isBest ? "bg-[var(--accent-soft)] font-medium" : ""
+                  isBest ? "bg-[#f0f7f4] font-medium" : ""
                 }`}
               >
                 <td className="px-4 py-3 text-[var(--foreground)]">
                   <div className="flex items-center gap-2">
                     {isBest && (
-                      <span className="rounded bg-[var(--accent-soft)] px-1.5 py-0.5 text-[10px] text-[var(--accent-strong)] border border-[var(--line)]">
-                        Top Performer
+                      <span className="text-[10px] font-bold uppercase tracking-[0.08em] text-[var(--accent-strong)]">
+                        Mô hình của đội
                       </span>
                     )}
                     <span>{item.system}</span>
@@ -188,8 +188,8 @@ export function FlowBenchmarkTable({ items }: { items: FlowItem[] }) {
   }
 
   return (
-    <div className="overflow-x-auto rounded-xl border border-[var(--line)] bg-[var(--surface)]">
-      <table className="w-full text-left text-xs">
+    <div role="region" aria-label="Bảng chỉ số Flow" tabIndex={0} className="overflow-x-auto rounded-lg border border-[var(--line)] bg-[var(--surface)]">
+      <table className="w-full min-w-[700px] text-left text-[13px]">
         <thead className="border-b border-[var(--line)] bg-[var(--surface-subtle)] text-[var(--muted)]">
           <tr>
             <th className="px-4 py-3 font-semibold">Cấu hình Flow</th>
@@ -231,8 +231,8 @@ export function RiskBenchmarkTable({ items }: { items: RiskItem[] }) {
   }
 
   return (
-    <div className="overflow-x-auto rounded-xl border border-[var(--line)] bg-[var(--surface)]">
-      <table className="w-full text-left text-xs">
+    <div role="region" aria-label="Bảng chỉ số Risk" tabIndex={0} className="overflow-x-auto rounded-lg border border-[var(--line)] bg-[var(--surface)]">
+      <table className="w-full min-w-[760px] text-left text-[13px]">
         <thead className="border-b border-[var(--line)] bg-[var(--surface-subtle)] text-[var(--muted)]">
           <tr>
             <th className="px-4 py-3 font-semibold">Thuật toán</th>

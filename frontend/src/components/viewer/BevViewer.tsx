@@ -11,6 +11,7 @@ import {
   type BevViewState,
   type ViewerDetectionFrame,
 } from "@/lib/viewer";
+import { loadEnvironmentFrame } from "@/lib/lab-frame-cache";
 import { BevRenderer } from "@/lib/viewer/bev-renderer";
 
 import { BevLayerControls } from "./BevLayerControls";
@@ -148,21 +149,17 @@ export function BevViewer({
   }, [viewState]);
 
   useEffect(() => {
-    const controller = new AbortController();
+    let active = true;
     rendererRef.current?.setEnvironment([]);
-    if (!sampleToken) return;
-    void fetch(`/api/v1/lab/frames/${encodeURIComponent(sampleToken)}/environment`, { signal: controller.signal })
-      .then(async response => {
-        if (!response.ok) throw new Error("Chưa có nền LiDAR cho frame này");
-        return response.json() as Promise<{ points: number[][] }>;
-      }).then(data => {
-        if (controller.signal.aborted) return;
+    if (!sampleToken) return () => { active = false; };
+    void loadEnvironmentFrame(sampleToken).then(data => {
+        if (!active) return;
         rendererRef.current?.setEnvironment(data.points);
         setEnvironmentStatus({ token: sampleToken, message: `${data.points.length.toLocaleString()} điểm LiDAR · bán kính 65 m` });
       }).catch(reason => {
-        if (!controller.signal.aborted) setEnvironmentStatus({ token: sampleToken, message: reason.message });
+        if (active) setEnvironmentStatus({ token: sampleToken, message: reason instanceof Error ? reason.message : "Chưa có nền LiDAR cho frame này" });
       });
-    return () => controller.abort();
+    return () => { active = false; };
   }, [sampleToken]);
 
   const statusMessage = rendererError ?? error;
@@ -199,29 +196,29 @@ export function BevViewer({
   return (
     <section
       aria-busy={isLoading}
-      className={`relative h-full w-full min-h-0 overflow-hidden rounded-xl border border-zinc-800 bg-zinc-950 ${className}`}
+      className={`relative h-full w-full min-h-0 overflow-hidden bg-[#08171b] ${className}`}
     >
       <div ref={containerRef} className="absolute inset-0" />
 
       {frame && (
-        <div className="pointer-events-none absolute left-3 top-3 max-w-[46%] rounded-lg border border-zinc-700/80 bg-zinc-950/85 px-3 py-2 text-xs shadow-lg backdrop-blur">
-          {showMetadata && <p className="font-medium text-zinc-100">{frame.modelId}</p>}
-          <p className="mt-0.5 text-zinc-400">
+        <div className="bev-readout">
+          {showMetadata && <p className="bev-readout-title">BEV / MẶT BẰNG</p>}
+          <p className="mt-1 text-xs text-[#d3dfda]">
             {frame.detections.length} vật cản · Tính sẵn
           </p>
-          <p className="mt-1 max-w-52 text-[10px] text-teal-200">{environmentStatus && environmentStatus.token === sampleToken ? environmentStatus.message : "Đang tải nền LiDAR…"}</p>
+          <p className="mt-1 max-w-52 text-[10px] text-[#91a9aa]">{environmentStatus && environmentStatus.token === sampleToken ? environmentStatus.message : "Đang tải nền LiDAR…"}</p>
         </div>
       )}
 
       {showViewControls && (
-        <div className="absolute right-3 top-3 flex max-w-[46%] flex-col items-end gap-2">
-          <p className="rounded-md border border-zinc-800 bg-zinc-950/80 px-2 py-1 text-right text-[11px] text-zinc-400 backdrop-blur">
+        <div className="bev-view-controls">
+          <p className="text-right text-[10px] text-[#91a9aa]">
             {viewportMetrics
               ? `Ngang ${Math.round(viewportMetrics.visibleWidthMeters)} m · Dọc ${Math.round(viewportMetrics.visibleHeightMeters)} m · Lưới ${viewportMetrics.gridSpacingMeters} m`
               : "BEV hệ mét · Lưới 10 m"}
           </p>
           <button
-            className="rounded-md border border-zinc-700 bg-zinc-900/90 px-2.5 py-1.5 text-xs font-medium text-zinc-200 shadow transition-colors hover:border-zinc-500 hover:bg-zinc-800 disabled:cursor-not-allowed disabled:text-zinc-600"
+            className="min-h-9 border-b border-[#d9ee9840] px-1 text-[11px] text-[#d9ee98] transition-colors hover:border-[#d9ee98] disabled:cursor-not-allowed disabled:text-zinc-600"
             disabled={resetDisabled}
             onClick={handleResetView}
             title={
@@ -245,7 +242,7 @@ export function BevViewer({
       )}
 
       {selected && !isLoading && !statusMessage && showMetadata && (
-        <details ref={detailRef} className="absolute left-3 top-28 max-w-[46%] rounded-lg border border-white/10 bg-[#0b2028]/95 p-2.5 text-[11px] text-slate-200 shadow-lg">
+        <details ref={detailRef} className="absolute left-3 top-28 max-w-[46%] rounded-md border border-white/15 bg-[#071720]/95 p-2.5 text-[11px] text-slate-200">
           <summary className="cursor-pointer text-teal-200">Vật cản đang chọn · {centreDistance(selected).toFixed(1)} m</summary>
           <label className="mt-2 block text-teal-200" htmlFor={`obstacle-${frame?.modelId}`}>Vật cản · viền trắng khi chọn</label>
           <select id={`obstacle-${frame?.modelId}`} value={selected.id} onChange={e => setSelectedId(e.target.value)} className="my-1 w-full rounded bg-[#183b45] p-1 text-xs">
@@ -259,7 +256,7 @@ export function BevViewer({
       )}
 
       {isLoading && (
-        <div className="absolute inset-0 grid place-items-center bg-zinc-950/70 text-sm text-zinc-300 backdrop-blur-sm">
+        <div className="absolute inset-0 grid place-items-center bg-[#071720]/85 text-sm text-zinc-300">
           Đang tải vật cản…
         </div>
       )}
@@ -267,7 +264,7 @@ export function BevViewer({
       {statusMessage && !isLoading && (
         <div
           role="alert"
-          className="absolute inset-0 grid place-items-center bg-zinc-950/80 p-6 text-center text-sm text-rose-300 backdrop-blur-sm"
+          className="absolute inset-0 grid place-items-center bg-[#071720]/90 p-6 text-center text-sm text-rose-300"
         >
           {statusMessage}
         </div>

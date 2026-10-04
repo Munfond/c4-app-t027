@@ -1,0 +1,95 @@
+Captured at UTC: 2026-10-04T10:49:48.848Z
+URL: http://127.0.0.1:3111/benchmarks
+
+- link "Đi tới nội dung chính":
+  - /url: "#main-content"
+- banner:
+  - link "Perception Lab — trang Lab":
+    - /url: /lab
+    - generic: perception / lab
+  - navigation "Điều hướng chính":
+    - link "01 Lab":
+      - /url: /lab
+      - generic: "01"
+      - text: Lab
+    - link "02 Compare":
+      - /url: /compare
+      - generic: "02"
+      - text: Compare
+    - link "03 Benchmarks":
+      - /url: /benchmarks
+      - generic: "03"
+      - text: Benchmarks
+  - generic: ADAS RESEARCH
+  - generic: T/27
+- main:
+  - paragraph: 03 / EVALUATION
+  - heading "Kết quả & giới hạn." [level=1]
+  - paragraph: Một mô hình tốt cần nhiều hơn một con số. Đọc kết quả thực nghiệm cùng phạm vi dữ liệu và giới hạn của từng phép đo.
+  - button "Làm mới số liệu ↗"
+  - region "Phạm vi đánh giá":
+    - generic: "81"
+    - generic: FRAMES / mini_val
+    - heading "Đọc trước khi so sánh" [level=2]
+    - list:
+      - listitem: Occupancy tĩnh được đối chiếu với nhãn pseudo-GT.
+      - listitem: Chất lượng flow học máy chưa đủ tin cậy để suy luận chuyển động.
+      - listitem: Risk là điểm chưa hiệu chuẩn, không phải xác suất va chạm.
+      - listitem: Số đo thời gian chạy đến từ các phần cứng khác nhau.
+  - navigation "Nhóm chỉ số":
+    - button "Toàn bộ kết quả 00":
+      - text: Toàn bộ kết quả
+      - generic: "00"
+    - button "Detection 01":
+      - text: Detection
+      - generic: "01"
+    - button "Occupancy 02":
+      - text: Occupancy
+      - generic: "02"
+    - button "Flow 03" [active] [pressed]:
+      - text: Flow
+      - generic: "03"
+    - button "Risk 04":
+      - text: Risk
+      - generic: "04"
+  - heading "03 / Chuyển động theo thời gian" [level=2]
+  - generic: Temporal flow · EPE (m/s)
+  - region "Bảng chỉ số Flow":
+    - table:
+      - rowgroup:
+        - row "Cấu hình Flow Sai số EPE (m/s) ↓ Sai số góc di chuyển (Median) mIoU IoU Occupied":
+          - columnheader "Cấu hình Flow"
+          - columnheader "Sai số EPE (m/s) ↓"
+          - columnheader "Sai số góc di chuyển (Median)"
+          - columnheader "mIoU"
+          - columnheader "IoU Occupied"
+      - rowgroup:
+        - row "Learned T1 4.318 91.3° 55.2% 42.9%":
+          - cell "Learned T1"
+          - cell "4.318"
+          - cell "91.3°"
+          - cell "55.2%"
+          - cell "42.9%"
+        - row "Learned T2 3.638 61.8° 56.8% 46.3%":
+          - cell "Learned T2"
+          - cell "3.638"
+          - cell "61.8°"
+          - cell "56.8%"
+          - cell "46.3%"
+        - row "Learned T4 3.518 49.7° 56.9% 46.5%":
+          - cell "Learned T4"
+          - cell "3.518"
+          - cell "49.7°"
+          - cell "56.9%"
+          - cell "46.5%"
+        - row "Learned T4_nowarp 3.789 72.1° 53.3% 41.8%":
+          - cell "Learned T4_nowarp"
+          - cell "3.789"
+          - cell "72.1°"
+          - cell "53.3%"
+          - cell "41.8%"
+  - generic "Nguồn dữ liệu & artifact"
+- contentinfo:
+  - generic: PERCEPTION LAB / TEAM 27 · MUNFOND
+  - generic: nuScenes mini · Kết quả tính sẵn
+- alert: Đánh giá · ADAS Perception Lab

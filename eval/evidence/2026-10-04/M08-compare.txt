@@ -1,0 +1,138 @@
+Captured at UTC: 2026-10-04T10:48:22.016Z
+URL: http://127.0.0.1:3111/compare
+
+- link "Đi tới nội dung chính":
+  - /url: "#main-content"
+- banner:
+  - link "Perception Lab — trang Lab":
+    - /url: /lab
+    - generic: perception / lab
+  - navigation "Điều hướng chính":
+    - link "01 Lab":
+      - /url: /lab
+      - generic: "01"
+      - text: Lab
+    - link "02 Compare" [active]:
+      - /url: /compare
+      - generic: "02"
+      - text: Compare
+    - link "03 Benchmarks":
+      - /url: /benchmarks
+      - generic: "03"
+      - text: Benchmarks
+  - generic: ADAS RESEARCH
+  - generic: T/27
+- main:
+  - paragraph: 02 / MODEL COMPARISON
+  - heading "Hai mô hình. Một góc nhìn." [level=1]
+  - paragraph: Cùng frame, cùng ngưỡng điểm, cùng hệ tọa độ. Kéo hoặc phóng to một bản đồ để quan sát cả hai mô hình trong cùng một không gian.
+  - button "Tải lại so sánh ↗"
+  - region "Thiết lập so sánh":
+    - paragraph: ĐIỀU KIỆN CHUNG
+    - generic: Scene
+    - combobox "Scene":
+      - option "scene-0103" [selected]
+      - option "scene-0916"
+    - generic: Frame
+    - combobox "Frame":
+      - option "#41 · +0.0s" [selected]
+      - option "#42 · +0.5s"
+      - option "#43 · +1.0s"
+      - option "#44 · +1.5s"
+      - option "#45 · +2.0s"
+      - option "#46 · +2.5s"
+      - option "#47 · +3.0s"
+      - option "#48 · +3.5s"
+      - option "#49 · +4.0s"
+      - option "#50 · +4.5s"
+      - option "#51 · +5.0s"
+      - option "#52 · +5.5s"
+      - option "#53 · +6.0s"
+      - option "#54 · +6.4s"
+      - option "#55 · +6.9s"
+      - option "#56 · +7.4s"
+      - option "#57 · +7.9s"
+      - option "#58 · +8.3s"
+      - option "#59 · +8.8s"
+      - option "#60 · +9.3s"
+      - option "#61 · +9.9s"
+      - option "#62 · +10.4s"
+      - option "#63 · +10.9s"
+      - option "#64 · +11.4s"
+      - option "#65 · +11.9s"
+      - option "#66 · +12.4s"
+      - option "#67 · +12.9s"
+      - option "#68 · +13.4s"
+      - option "#69 · +13.8s"
+      - option "#70 · +14.4s"
+      - option "#71 · +14.9s"
+      - option "#72 · +15.4s"
+      - option "#73 · +15.9s"
+      - option "#74 · +16.4s"
+      - option "#75 · +16.9s"
+      - option "#76 · +17.5s"
+      - option "#77 · +17.9s"
+      - option "#78 · +18.4s"
+      - option "#79 · +18.9s"
+      - option "#80 · +19.4s"
+    - generic: Ngưỡng điểm
+    - combobox "Ngưỡng điểm":
+      - option "0.30" [selected]
+      - option "0.50"
+      - option "0.70"
+    - generic: A
+    - generic: Mô hình A
+    - combobox "Mô hình A":
+      - option "PointPillars" [selected]
+      - option "BEVFusion"
+      - option "CRN"
+      - option "Fusion pretrained"
+    - paragraph: LiDAR pretrained
+    - generic: B
+    - generic: Mô hình B
+    - combobox "Mô hình B":
+      - option "PointPillars"
+      - option "BEVFusion" [selected]
+      - option "CRN"
+      - option "Fusion pretrained"
+    - paragraph: Camera + LiDAR pretrained
+  - region "So sánh BEV giữa hai mô hình":
+    - paragraph: 02 Hai bản đồ đồng bộ / Frame 3e8750f3
+    - paragraph: Ngưỡng điểm 0.30
+    - article:
+      - paragraph: Mô hình A
+      - paragraph: PointPillars · LiDAR pretrained
+      - paragraph: 9 vật cản · Tính sẵn
+      - 'application "Mô hình A: PointPillars · LiDAR pretrained"'
+      - paragraph: 9 vật cản · Tính sẵn
+      - paragraph: 6,763 điểm LiDAR · bán kính 65 m
+      - paragraph: Ngang 101 m · Dọc 70 m · Lưới 10 m
+      - button "Đặt lại góc nhìn"
+      - paragraph: Khoảng cách đến tâm vật cản
+      - generic: < 10 m
+      - generic: 10–25 m
+      - generic: ≥ 25 m
+      - paragraph: "Nền sáng: bề mặt cao · nền tối: sát mặt đất"
+      - paragraph: "Vòng: 10 / 25 / 50 m · vùng trống chưa chắc thông thoáng"
+    - article:
+      - paragraph: Mô hình B
+      - paragraph: BEVFusion · Camera + LiDAR pretrained
+      - paragraph: 16 vật cản · Tính sẵn
+      - 'application "Mô hình B: BEVFusion · Camera + LiDAR pretrained"'
+      - paragraph: 16 vật cản · Tính sẵn
+      - paragraph: 6,763 điểm LiDAR · bán kính 65 m
+      - paragraph: Ngang 101 m · Dọc 70 m · Lưới 10 m
+      - button "Đặt lại góc nhìn"
+      - paragraph: Khoảng cách đến tâm vật cản
+      - generic: < 10 m
+      - generic: 10–25 m
+      - generic: ≥ 25 m
+      - paragraph: "Nền sáng: bề mặt cao · nền tối: sát mặt đất"
+      - paragraph: "Vòng: 10 / 25 / 50 m · vùng trống chưa chắc thông thoáng"
+  - paragraph:
+    - generic: ĐỒNG BỘ GÓC NHÌN
+    - text: Đây là đối chiếu trực quan trên cùng frame. Checkpoint official có thể đã thấy mini-val khi huấn luyện; xem Benchmarks để đọc giới hạn trước khi kết luận mô hình nào tốt hơn.
+- contentinfo:
+  - generic: PERCEPTION LAB / TEAM 27 · MUNFOND
+  - generic: nuScenes mini · Kết quả tính sẵn
+- alert: Hai mô hình. Một góc nhìn.

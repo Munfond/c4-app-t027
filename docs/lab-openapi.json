@@ -263,6 +263,114 @@
         }
       }
     },
+    "/api/v1/lab/frames/{token}/environment": {
+      "get": {
+        "tags": [
+          "lab"
+        ],
+        "summary": "Frame Environment",
+        "operationId": "frame_environment_api_v1_lab_frames__token__environment_get",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Token"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/lab/perception/tasks": {
+      "get": {
+        "tags": [
+          "lab"
+        ],
+        "summary": "Perception Tasks",
+        "operationId": "perception_tasks_api_v1_lab_perception_tasks_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/lab/frames/{token}/perception/{task}": {
+      "get": {
+        "tags": [
+          "lab"
+        ],
+        "summary": "Perception Frame",
+        "operationId": "perception_frame_api_v1_lab_frames__token__perception__task__get",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Token"
+            }
+          },
+          {
+            "name": "task",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Task"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/lab/frames/{token}/cameras/{channel}": {
       "get": {
         "tags": [
@@ -312,6 +420,68 @@
         }
       }
     },
+    "/api/v1/lab/frames/{token}/risk": {
+      "get": {
+        "tags": [
+          "lab"
+        ],
+        "summary": "Risk Heatmap",
+        "operationId": "risk_heatmap_api_v1_lab_frames__token__risk_get",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Token"
+            }
+          },
+          {
+            "name": "system",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "classical",
+              "title": "System"
+            }
+          },
+          {
+            "name": "vmax",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "maximum": 0.6,
+              "minimum": 0.1,
+              "default": 0.3,
+              "title": "Vmax"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/lab/benchmarks": {
       "get": {
         "tags": [
@@ -319,6 +489,427 @@
         ],
         "summary": "Benchmarks",
         "operationId": "benchmarks_api_v1_lab_benchmarks_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/lab/capabilities": {
+      "get": {
+        "tags": [
+          "lab"
+        ],
+        "summary": "Capabilities",
+        "operationId": "capabilities_api_lab_capabilities_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/lab/models": {
+      "get": {
+        "tags": [
+          "lab"
+        ],
+        "summary": "Models",
+        "operationId": "models_api_lab_models_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModelList"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/lab/scenes": {
+      "get": {
+        "tags": [
+          "lab"
+        ],
+        "summary": "Scenes",
+        "operationId": "scenes_api_lab_scenes_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SceneList"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/lab/scenes/{scene_id}/frames": {
+      "get": {
+        "tags": [
+          "lab"
+        ],
+        "summary": "Scene Frames",
+        "operationId": "scene_frames_api_lab_scenes__scene_id__frames_get",
+        "parameters": [
+          {
+            "name": "scene_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Scene Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FrameList"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/lab/frames/{token}/detections": {
+      "get": {
+        "tags": [
+          "lab"
+        ],
+        "summary": "Detections",
+        "operationId": "detections_api_lab_frames__token__detections_get",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Token"
+            }
+          },
+          {
+            "name": "model",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "our_lidar",
+              "title": "Model"
+            }
+          },
+          {
+            "name": "threshold",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "maximum": 1,
+              "minimum": 0,
+              "default": 0.3,
+              "title": "Threshold"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DetectionFrame"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/lab/frames/{token}/environment": {
+      "get": {
+        "tags": [
+          "lab"
+        ],
+        "summary": "Frame Environment",
+        "operationId": "frame_environment_api_lab_frames__token__environment_get",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Token"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/lab/perception/tasks": {
+      "get": {
+        "tags": [
+          "lab"
+        ],
+        "summary": "Perception Tasks",
+        "operationId": "perception_tasks_api_lab_perception_tasks_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/lab/frames/{token}/perception/{task}": {
+      "get": {
+        "tags": [
+          "lab"
+        ],
+        "summary": "Perception Frame",
+        "operationId": "perception_frame_api_lab_frames__token__perception__task__get",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Token"
+            }
+          },
+          {
+            "name": "task",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Task"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/lab/frames/{token}/cameras/{channel}": {
+      "get": {
+        "tags": [
+          "lab"
+        ],
+        "summary": "Camera",
+        "operationId": "camera_api_lab_frames__token__cameras__channel__get",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Token"
+            }
+          },
+          {
+            "name": "channel",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Channel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/lab/frames/{token}/risk": {
+      "get": {
+        "tags": [
+          "lab"
+        ],
+        "summary": "Risk Heatmap",
+        "operationId": "risk_heatmap_api_lab_frames__token__risk_get",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Token"
+            }
+          },
+          {
+            "name": "system",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "classical",
+              "title": "System"
+            }
+          },
+          {
+            "name": "vmax",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "maximum": 0.6,
+              "minimum": 0.1,
+              "default": 0.3,
+              "title": "Vmax"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/lab/benchmarks": {
+      "get": {
+        "tags": [
+          "lab"
+        ],
+        "summary": "Benchmarks",
+        "operationId": "benchmarks_api_lab_benchmarks_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/": {
+      "get": {
+        "summary": "Root",
+        "operationId": "root__get",
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -371,7 +962,7 @@
             "maxLength": 5000,
             "minLength": 1,
             "title": "Message",
-            "description": "Tin nh\u1eafn t\u1eeb user"
+            "description": "Tin nhắn từ user"
           }
         },
         "type": "object",
@@ -385,12 +976,12 @@
           "response": {
             "type": "string",
             "title": "Response",
-            "description": "Ph\u1ea3n h\u1ed3i t\u1eeb agent"
+            "description": "Phản hồi từ agent"
           },
           "analysis": {
             "type": "string",
             "title": "Analysis",
-            "description": "Ph\u00e2n t\u00edch n\u1ed9i b\u1ed9",
+            "description": "Phân tích nội bộ",
             "default": ""
           }
         },

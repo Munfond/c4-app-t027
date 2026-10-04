@@ -1,0 +1,145 @@
+{
+  "generated_at_utc": "2026-10-04T10:57:27.108772+00:00",
+  "files": {
+    "api-probes.json": {
+      "bytes": 77913,
+      "sha256": "fbdab26ddd9d8b09993b3db87b0ed97ab752245fcc908b4347eb8cc804a290c4"
+    },
+    "document-checks.json": {
+      "bytes": 394,
+      "sha256": "38594c997201c5fb0b115afde090afea764899253434d19d5b81a95abb0dcde1"
+    },
+    "M01-camera.png": {
+      "bytes": 201489,
+      "sha256": "2f56b3834b3cace5c839c4508097db33d3f836dd53f7efe792e39d7f898371e3"
+    },
+    "M01-camera.txt": {
+      "bytes": 7079,
+      "sha256": "e817e5269215c084c9e5a1a18baa6ab3b365ae4e0e32a8f4ca684dbcad0934ac"
+    },
+    "M02-radar-hidden.png": {
+      "bytes": 132177,
+      "sha256": "f201309190ecf157a02198005faa274264c264d6dd55c15050121b52c66be27a"
+    },
+    "M02-radar-hidden.txt": {
+      "bytes": 5611,
+      "sha256": "23535e210d405f522cf8e92d7014663bd42c649a1c7c79f8c65c501c2f364634"
+    },
+    "M02-sensors-both.png": {
+      "bytes": 136250,
+      "sha256": "1123ef2e4eb16cf1c9040d160c0131e7054f5878af38f937495ed8d3d117de6b"
+    },
+    "M02-sensors-both.txt": {
+      "bytes": 5621,
+      "sha256": "8f8e9faf34de24a4058e56bdf8673d34a9bbbeef86efa77203778d6c42e76cd1"
+    },
+    "M03-detection-030.png": {
+      "bytes": 153107,
+      "sha256": "1b28073e657d2657a5ec1fb2468a42eb8d6cd0a40584649d10e16e9f39388098"
+    },
+    "M03-detection-030.txt": {
+      "bytes": 6748,
+      "sha256": "5681a9386508858929f5f3ad3147fd23db931e928b213a864efc4f5d4a3ea2e2"
+    },
+    "M03-detection-070.png": {
+      "bytes": 151997,
+      "sha256": "67951b1811e1cecff45083122495be8959518ecf3021df266c0d849e96d545c3"
+    },
+    "M03-detection-070.txt": {
+      "bytes": 6748,
+      "sha256": "06f47a235172c392605a10d1639b0645a1b02f6b61ea6b89ed44bb9664779728"
+    },
+    "M04-occupancy.png": {
+      "bytes": 101647,
+      "sha256": "8efa40ff08a7812db89080c1c6c2a5e57bf9a452f6a95bcb42de55968c459d70"
+    },
+    "M04-occupancy.txt": {
+      "bytes": 5634,
+      "sha256": "72638ff5b6a4b83b963739df3e567724336ee564c5e8aaef20e5eb4c3e97059f"
+    },
+    "M05-flow.png": {
+      "bytes": 94353,
+      "sha256": "d526d1746cbc6b2178d573a2ced6d8f0d750cfd2b4c6fb0d31420ade6d848c3d"
+    },
+    "M05-flow.txt": {
+      "bytes": 5623,
+      "sha256": "f60fb0e8da601c3feac729bd03281ccb9c84d4d36380d36686628756ec3f3a21"
+    },
+    "M06-seg3d-unavailable.png": {
+      "bytes": 99512,
+      "sha256": "f0426a035ca7a93165f905c13d37c6f980e7621a35de34e3eec57e358d53747f"
+    },
+    "M06-seg3d-unavailable.txt": {
+      "bytes": 5544,
+      "sha256": "457be703f10490bf88c4e091c88b870447db42dbb58738c55859cbf4dbaa14d4"
+    },
+    "M07-risk-classical.png": {
+      "bytes": 104136,
+      "sha256": "86222f28efdde95b2f85cc5f1ac026702f6aa7145a2cda979efaed4a91817003"
+    },
+    "M07-risk-classical.txt": {
+      "bytes": 5517,
+      "sha256": "6d99e96defddba8ed6e799372ecb3ab96c4b178310bf4811dfea2019b8e7b146"
+    },
+    "M07-risk-oracle.png": {
+      "bytes": 99630,
+      "sha256": "de2f260b2e16aef78aa3440811cb9ba7aecf6d410bc77a19bf3aee1541e06e7b"
+    },
+    "M07-risk-oracle.txt": {
+      "bytes": 5514,
+      "sha256": "b7bf17f735594e17284cf332fa75ac2708c89bc905e738fd86dc2db9b27b8649"
+    },
+    "M08-compare.png": {
+      "bytes": 129221,
+      "sha256": "40796975dcf84f4627282e7bee6a14c85c4899a9f740a175c2af991f244c8f3e"
+    },
+    "M08-compare.txt": {
+      "bytes": 5089,
+      "sha256": "408abad3d3ec7379ac266b5511dde4506aeaf75ec6b403e763d221d972420cc4"
+    },
+    "M09-benchmarks-flow.png": {
+      "bytes": 67873,
+      "sha256": "04daa269789f3e18dfd72da8a1b1aa0fd756e29f5bd855991ea17b602d2567ee"
+    },
+    "M09-benchmarks-flow.txt": {
+      "bytes": 3357,
+      "sha256": "ceaf23a7b57ebee8c7b92dd9dfe586341309f05fff86eeef681fef0535ae9471"
+    },
+    "M09-benchmarks-occupancy.png": {
+      "bytes": 94475,
+      "sha256": "a5b937778e0a3ac28eadf1a3ea6bdfd8c42324078ffbd6b8a9d40dc74329db3a"
+    },
+    "M09-benchmarks-occupancy.txt": {
+      "bytes": 5278,
+      "sha256": "36b75a002e0372598c12fa52eb7ca4315746115f799a767f08084aa9d0699cf2"
+    },
+    "M10-timeline-before.png": {
+      "bytes": 136119,
+      "sha256": "b933adc994905b98a40bd202728c101682429468f051ce8a0cb04b96c4280a1b"
+    },
+    "M10-timeline-before.txt": {
+      "bytes": 5621,
+      "sha256": "5f8bc0a73e5f6563341984d2d42f9963a8a170f478a05667dbb364979769841e"
+    },
+    "M10-timeline-end.png": {
+      "bytes": 137360,
+      "sha256": "6f041edf1ec9fc1ccd8ecdd07c88cc86af0e07895c7067531217727f539098bf"
+    },
+    "M10-timeline-end.txt": {
+      "bytes": 5622,
+      "sha256": "86d2c85651cc4f8c8d4bafbb4c404c7f3eddb3006e2c5953e1babc7b3a4d3104"
+    },
+    "M11-camera-failclosed.json": {
+      "bytes": 439,
+      "sha256": "1294c7bc919326531247159e5ef43b2487eb2af5eb0f0beb9f82bb666d454be7"
+    },
+    "README.md": {
+      "bytes": 1063,
+      "sha256": "7f585ddeaee59be0060e661c65261747fe40f49a6c459fecb918a369a20520a1"
+    },
+    "source-fingerprints.json": {
+      "bytes": 841,
+      "sha256": "bbb827a28d1248c615a776f9dbc0fde528069024f34f261a30ebe73d62103955"
+    }
+  }
+}

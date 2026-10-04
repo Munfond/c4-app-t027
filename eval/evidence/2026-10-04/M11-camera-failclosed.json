@@ -1,0 +1,11 @@
+{
+  "captured_at_utc": "2026-10-04T10:50:14.5716165Z",
+  "url": "http://127.0.0.1:8012/api/v1/lab/frames/3e8750f331d7499e9b5123e9eb70f2e2/cameras/CAM_FRONT",
+  "environment": "isolated temporary backend, anonymizer disabled, empty camera cache, raw dataset present",
+  "status": 503,
+  "content_type": [
+    "application/json"
+  ],
+  "body": "{\"detail\":\"Processed camera image unavailable\"}",
+  "original_returned": false
+}

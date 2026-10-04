@@ -1,0 +1,2 @@
+# Preserve the exact captured bytes so evidence SHA256 matches on every OS.
+eval/evidence/** -text

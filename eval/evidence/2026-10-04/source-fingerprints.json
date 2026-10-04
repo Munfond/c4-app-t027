@@ -1,0 +1,13 @@
+{
+  "python": "3.12.14",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "files": {
+    "src/api/lab.py": "e4ff42e32ca3d92f1bb4b51b06da582819ed0650d334275577d89173e6e87e3d",
+    "src/services/perception.py": "a6ea312bd3ddf11cdd188de737e77d78fbfbf3c6e10d1b71bb50aea556cdb4cf",
+    "src/services/lab.py": "9850794366d75e7cba67f972873cfc00f1fbdd16eda6319a14a9516659705738",
+    "frontend/package.json": "77a6ced7bfba1bb91c7c4486448d2c4e4478aea5660929de668d95736d67368f",
+    "frontend/src/components/lab/perception-workspace.tsx": "a4e411b2bac139f37bb7e0a03dbb1d42f8d84be217a769f9a982a019fd0fe165",
+    "frontend/src/components/lab/scene-timeline.tsx": "f7f26d938cb0604fc882b11ff8dce73385c9340173a87b91e38ab2ce8e0acb1e",
+    "scripts/capture_eval_evidence.py": "23366a8cad8cd716c8a1f8c598306adcba0430f2785041efbda6618cfb7f1955"
+  }
+}

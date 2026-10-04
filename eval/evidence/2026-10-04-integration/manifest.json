@@ -1,0 +1,21 @@
+{
+  "generated_at_utc": "2026-10-04T11:23:01.038453+00:00",
+  "files": {
+    "api-probes.json": {
+      "bytes": 77909,
+      "sha256": "55c7aa073f2229e2361d6fc4473c1c1e82001b633c75ea7cf8439753bfab4330"
+    },
+    "occupancy-node22.png": {
+      "bytes": 101462,
+      "sha256": "f7612cf45ff682d8b73a0b9f01a963cbd2e464b56223304ef3811a27d86f9b02"
+    },
+    "occupancy-node22.txt": {
+      "bytes": 5615,
+      "sha256": "0ab03e788771673dad66d964baa57f0c9f0506fb3c429d2d09c100cf51fe9b76"
+    },
+    "README.md": {
+      "bytes": 1461,
+      "sha256": "808989932483c3ecdcb3242f03a49ee0574689f74b559e139ffe25796cd8ed3d"
+    }
+  }
+}
