@@ -1,5 +1,8 @@
 # Perception Lab · Team 27
 
+Demo: [c4-app-t027.vercel.app/lab](https://c4-app-t027.vercel.app/lab).
+Frontend Vercel gọi backend qua `/api/...`; deployment được kiểm tra riêng với local evidence.
+
 Lab trực quan hóa ADAS trên nuScenes mini: quan sát Camera/LiDAR/Radar, đối chiếu Detection, BEV Occupancy và Flow theo cùng một frame, rồi xem Risk và nguồn số liệu đánh giá. Đây là công cụ phân tích dữ liệu, không điều khiển xe.
 
 **MVP phục vụ kết quả tính sẵn (precomputed)** qua Next.js + FastAPI. Web không chạy checkpoint mỗi lần đổi frame; máy phục vụ không cần GPU nếu đã chuẩn bị đủ artifact.
@@ -123,6 +126,12 @@ Linux/macOS: `python3.12 -m venv .venv-lab`, dùng `.venv-lab/bin/python` thay c
 Database adapter trên `main` hỗ trợ frames/detections, processed cameras, environment và benchmark reports. Với dataset tại đường dẫn tùy chỉnh, catalog/benchmark ưu tiên file; chỉ dùng DB của đúng dataset. Perception JSON và risk MAT vẫn cần artifact; seed database không thay thế chúng. LLM/vector-store/LangSmith là scaffold tùy chọn, không nằm trên luồng Lab. AI-log có cấu hình riêng; không đặt secret trong evidence.
 
 Nếu cần database deployment, đặt `DATABASE_URL` cục bộ rồi chạy `python scripts/seed_database.py` trong venv có `requirements.txt`. Lệnh tạo bảng/nạp frames, detections và metrics; review dữ liệu trước khi seed. `seed_media_database.py` nạp processed camera/environment nhưng xóa các camera rows cũ, chỉ chạy khi chủ động thay bộ media. Không cần seed để chạy file-based local.
+
+Backend Docker tự cài [gói output mini_val](deploy/artifacts/README.md) cho Radar,
+Occupancy và Flow (81 frame/task, 243 JSON; khoảng 0.5 MB nén). Gói chứa output thật
+đã tính sẵn và hash nguồn, không chứa raw dataset/checkpoint. Seg3D chưa có artifact.
+Nếu dùng `LAB_DATA_ROOT` khác `/app/data/lab` hoặc mount volume đè thư mục này, phải
+cài bundle vào `LAB_DATA_ROOT/cache/perception` của chính dataset tương ứng.
 
 ## Sample queries · PowerShell
 

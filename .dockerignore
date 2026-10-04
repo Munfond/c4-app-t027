@@ -4,6 +4,7 @@
 .venv
 .venv-lab
 .venv-inference
+.venv-spatial
 frontend/
 data/*
 !data/lab/
