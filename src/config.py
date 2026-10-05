@@ -39,6 +39,18 @@ class Settings(BaseSettings):
     openai_api_key: str = ""
     model_name: str = "gpt-4o-mini"
     llm_temperature: float = Field(default=0.7, ge=0.0, le=2.0)
+    experiment_root: Path = PROJECT_ROOT / "data/experiments"
+    experiment_device: Literal["cpu", "cuda"] = "cpu"
+    experiment_cpu_threads: int = Field(default=2, ge=1, le=32)
+    experiment_lease_seconds: int = Field(default=600, ge=60)
+    carla_host: str = "127.0.0.1"
+    carla_port: int = Field(default=2000, ge=1, le=65535)
+    carla_tm_port: int = Field(default=8001, ge=1, le=65535)
+    carla_timeout_seconds: float = Field(default=30, ge=1, le=120)
+    experiment_agent_enabled: bool = False
+    experiment_agent_model: str = "gpt-4o-mini"
+    experiment_api_enabled_in_production: bool = False
+    experiment_max_pending: int = Field(default=5, ge=1, le=50)
 
     # Database
     database_url: str = "sqlite:///./data/app.db"

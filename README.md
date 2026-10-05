@@ -200,3 +200,10 @@ eval/                        Manual report và evidence nhỏ được version c
 81 frame mini_val không phải full benchmark. Official pretraining trùng mini scenes; fusion là object-level late fusion. Occupancy là **BEV 2D**, static dùng pseudo-GT, free chứa vùng chưa quan sát. Learned Flow còn yếu. Risk chưa hiệu chuẩn, không phải xác suất va chạm. Runtime artifacts có thể dùng phần cứng khác nhau. Manual cases chứng minh chức năng và xử lý lỗi, không chứng minh cải thiện độ chính xác ML.
 
 CI chạy backend lint/tests và frontend lint/build trên runner Windows của đội. **CI xanh không tự deploy VPS**; merge rồi pull/build/restart riêng. Evidence local không xác nhận domain public đang hoạt động.
+
+## CARLA experiments và agent
+
+Xem [Experiments runbook](docs/EXPERIMENTS_RUNBOOK.vi.md) để chạy giao diện `/experiments`,
+worker bền vững, bảy checkpoint occupancy/flow hiện có và LLM planner tùy chọn.
+Adapter CARLA LiDAR đang ở mức experimental và cần server/client cấu hình riêng.
+Checkpoint radar/flow hiện chạy trên nuScenes; đầu vào CARLA chưa tương thích bị từ chối.
