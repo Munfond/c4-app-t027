@@ -5,6 +5,23 @@ from typing import Literal
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 
+class LidarSpec(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    channels: int = Field(default=32, ge=8, le=64)
+    points_per_second: int = Field(default=600000, ge=20000, le=600000)
+    range_m: float = Field(default=100, ge=10, le=100)
+    upper_fov: float = Field(default=10, ge=-10, le=30)
+    lower_fov: float = Field(default=-30, ge=-45, le=0)
+    mount_z: float = Field(default=2, ge=0.5, le=3)
+    pitch: float = Field(default=0, ge=-15, le=15)
+
+    @model_validator(mode="after")
+    def valid_fov(self):
+        if self.lower_fov >= self.upper_fov:
+            raise ValueError("lower_fov must be smaller than upper_fov")
+        return self
+
+
 class ScenarioSpec(BaseModel):
     model_config = ConfigDict(extra="forbid")
     map: Literal["Town01", "Town02", "Town03", "Town04", "Town05"] = "Town03"
@@ -17,6 +34,7 @@ class ScenarioSpec(BaseModel):
     capture_interval: Literal[0.5] = 0.5
     timestep: Literal[0.05] = 0.05
     route_spawn_index: int = Field(default=0, ge=0, le=1000)
+    lidar: LidarSpec = Field(default_factory=LidarSpec)
 
 
 class ExperimentSpec(BaseModel):
@@ -42,3 +60,28 @@ class ExperimentSpec(BaseModel):
 class AgentPlanRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")
     message: str = Field(min_length=1, max_length=2000)
+
+
+class SensorProfile(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    name: str = Field(min_length=1, max_length=40, pattern=r"^[a-zA-Z0-9_-]+$")
+    lidar: LidarSpec
+
+
+class SensorStudySpec(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    scenarios: list[ScenarioSpec] = Field(min_length=1, max_length=3)
+    profiles: list[SensorProfile] = Field(min_length=1, max_length=3)
+    max_iou_drop: float = Field(default=0.02, ge=0, le=0.2)
+
+    @model_validator(mode="after")
+    def bounded_study(self):
+        if len({profile.name for profile in self.profiles}) != len(self.profiles):
+            raise ValueError("Profile names must be unique")
+        if any(profile.name == "baseline" for profile in self.profiles):
+            raise ValueError("baseline is reserved")
+        if any(
+            scenario.frames > 20 or scenario.vehicles > 15 or scenario.pedestrians > 15 for scenario in self.scenarios
+        ):
+            raise ValueError("Sensor study is limited to 20 frames, 15 vehicles and 15 pedestrians per scene")
+        return self

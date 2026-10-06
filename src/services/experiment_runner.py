@@ -59,7 +59,10 @@ def replay_capture(spec):
     root = get_settings().experiment_root / spec.capture_id / "capture"
     manifest = json.loads((root / "manifest.json").read_text(encoding="utf-8"))
     if manifest["scenario"] != spec.scenario.model_dump():
-        raise ValueError("Replay scenario must match original capture exactly")
+        from src.models.experiments import ScenarioSpec
+
+        if ScenarioSpec.model_validate(manifest["scenario"]) != spec.scenario:
+            raise ValueError("Replay scenario must match original capture exactly")
     frames = []
     for item in manifest["frames"]:
         # Only worker-created frame names, not paths obtained from arbitrary JSON.
@@ -75,8 +78,8 @@ def replay_capture(spec):
                     "valid": data["valid"],
                     "flow": np.zeros((2, 200, 200), np.float32),
                     "flow_valid": np.zeros((200, 200), bool),
-                    "rotation": np.eye(3),
-                    "translation": np.zeros(3),
+                    "rotation": data["rotation"] if "rotation" in data else np.eye(3),
+                    "translation": data["translation"] if "translation" in data else np.zeros(3),
                 }
             )
     manifest["reused_from"] = spec.capture_id
@@ -110,10 +113,14 @@ def run_once():
 
             frames, manifest = capture(spec.scenario, root / "capture", pulse)
         digest = hashlib.sha256()
+        reference_digest = hashlib.sha256()
         for frame in frames:
             for key in ("x", "labels", "valid", "flow", "flow_valid", "rotation", "translation"):
                 digest.update(np.ascontiguousarray(frame[key]).tobytes())
+            for key in ("labels", "valid", "rotation", "translation"):
+                reference_digest.update(np.ascontiguousarray(frame[key]).tobytes())
         manifest["input_sha256"] = digest.hexdigest()
+        manifest["reference_sha256"] = reference_digest.hexdigest()
         (root / "manifest.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
         results = {}
         for name in spec.model_ids:
@@ -126,7 +133,7 @@ def run_once():
                 {
                     "input": digest.hexdigest(),
                     "checkpoint": adapter.digest,
-                    "pipeline": "bev-v1",
+                    "pipeline": "bev-v2",
                     "torch": adapter.torch.__version__,
                     "device": adapter.device,
                 },
@@ -204,6 +211,9 @@ def run_once():
         )
     except InterruptedError as exc:
         store.finish(ident, owner, "cancelled", error=str(exc))
+    except KeyboardInterrupt:
+        store.finish(ident, owner, "cancelled", error="Worker interrupted")
+        raise
     except Exception as exc:
         logger.exception("Experiment %s failed", ident)
         store.finish(ident, owner, "failed", error=f"{type(exc).__name__}: {exc}")

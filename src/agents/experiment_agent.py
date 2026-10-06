@@ -42,6 +42,8 @@ async def draft(state):
         "For a new CARLA capture set capture_id and scene_id null; defaults: Town03, clear, vehicles=8, "
         "pedestrians=8, seed=42, frames=4, capture_interval=0.5, timestep=0.05, route_spawn_index=0. "
         "max_latency_ms must be null unless user specified. Map/spawn-index autopilot is not verified highway. "
+        "scenario.lidar defaults channels32, points_per_second600000, range_m100, upper_fov10, "
+        "lower_fov-30, mount_z2, pitch0. Sensor changes only apply to CARLA. "
         "This call only proposes a spec; it never starts a job. Available registry: "
         + json.dumps(registry(), ensure_ascii=False)
     )

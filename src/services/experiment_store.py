@@ -41,7 +41,7 @@ def decode(row):
 def create(spec, key=None):
     validate_spec(spec)
     checkpoints = {name: verified_hash(name) for name in spec.model_ids}
-    frozen = {"request": spec.model_dump(), "checkpoints": checkpoints, "pipeline_version": "bev-v1"}
+    frozen = {"request": spec.model_dump(), "checkpoints": checkpoints, "pipeline_version": "bev-v2"}
     fingerprint = hashlib.sha256(json.dumps(frozen, sort_keys=True).encode()).hexdigest()
     with connection() as db:
         db.execute("BEGIN IMMEDIATE")

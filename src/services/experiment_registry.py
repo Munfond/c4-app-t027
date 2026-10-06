@@ -52,6 +52,11 @@ def registry():
 
 
 def validate_spec(spec):
+    if spec.source == "nuscenes":
+        from src.models.experiments import LidarSpec
+
+        if spec.scenario.lidar != LidarSpec():
+            raise ValueError("Sensor configuration changes require CARLA, not stored nuScenes")
     for model_id in spec.model_ids:
         if model_id not in MODELS:
             raise ValueError(f"Unknown checkpoint: {model_id}")

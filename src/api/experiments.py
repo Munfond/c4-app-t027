@@ -9,6 +9,7 @@ from fastapi.responses import FileResponse
 from src.config import get_settings
 from src.models.experiments import AgentPlanRequest, ExperimentSpec
 from src.services import experiment_store as store
+from src.services import sensor_studies as studies
 from src.services.experiment_registry import MODELS, registry, validate_spec
 
 
@@ -71,6 +72,58 @@ def create_experiment(spec: ExperimentSpec, idempotency_key: Annotated[str | Non
 @router.get("")
 def experiments():
     return {"items": store.recent()}
+
+
+@router.post("/sensor-agent/start", status_code=201)
+async def start_sensor_agent(request: AgentPlanRequest):
+    from src.agents.sensor_agent import start
+
+    try:
+        return await start(request.message)
+    except (RuntimeError, httpx.HTTPError) as exc:
+        raise HTTPException(503, str(exc)) from exc
+    except (ValueError, FileNotFoundError, KeyError, IndexError) as exc:
+        raise HTTPException(422, str(exc)) from exc
+
+
+@router.get("/sensor-agent/{ident}")
+def sensor_study(ident: ExperimentId):
+    try:
+        return studies.get(ident)
+    except KeyError as exc:
+        raise HTTPException(404, "Sensor study not found") from exc
+
+
+@router.post("/sensor-agent/{ident}/advance")
+def advance_study(ident: ExperimentId):
+    try:
+        return studies.advance(ident)
+    except KeyError as exc:
+        raise HTTPException(404, "Sensor study not found") from exc
+    except ValueError as exc:
+        raise HTTPException(422, str(exc)) from exc
+
+
+@router.post("/sensor-agent/{ident}/cancel")
+def cancel_study(ident: ExperimentId):
+    try:
+        return studies.cancel(ident)
+    except KeyError as exc:
+        raise HTTPException(404, "Sensor study not found") from exc
+
+
+@router.post("/sensor-agent/{ident}/summarize")
+async def summarize_study(ident: ExperimentId):
+    from src.agents.sensor_agent import summarize
+
+    try:
+        return await summarize(ident)
+    except KeyError as exc:
+        raise HTTPException(404, "Sensor study not found") from exc
+    except (RuntimeError, httpx.HTTPError) as exc:
+        raise HTTPException(503, str(exc)) from exc
+    except (ValueError, IndexError) as exc:
+        raise HTTPException(422, str(exc)) from exc
 
 
 @router.get("/{ident}")

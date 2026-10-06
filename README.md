@@ -1,5 +1,9 @@
 # Perception Lab · Team 27
 
+Test agent tối ưu LiDAR trên máy GPU: [SENSOR_AGENT_LOCAL_TEST.vi.md](docs/SENSOR_AGENT_LOCAL_TEST.vi.md).
+Chạy `python -m scripts.test_sensor_agent --deterministic` trước, sau đó test LLM
+gọi tool khi đã cấu hình API key. Chưa nghiệm thu simulator trên RTX 3050.
+
 Demo: [c4-app-t027.vercel.app/lab](https://c4-app-t027.vercel.app/lab).
 Frontend Vercel gọi backend qua `/api/...`; deployment được kiểm tra riêng với local evidence.
 
@@ -30,7 +34,7 @@ Kiểm chứng local 04/10/2026: 81 frame thuộc 2 scene; Occupancy, Flow và R
 
 - Python **3.12**, Node.js **22.x** (theo `frontend/package.json`), npm, Git.
 - Trình duyệt hỗ trợ WebGL cho Three.js viewer.
-- Bộ artifact của đội; nuScenes mini khi đọc cảm biến gốc hoặc chuẩn bị cache. **Clone repo không tự tải dữ liệu.** Raw, checkpoint, cache lớn và `.env` giữ ngoài Git.
+- Bộ artifact của đội; nuScenes mini khi đọc cảm biến gốc hoặc chuẩn bị cache. **Clone repo không tự tải raw dataset/cache.** Bảy checkpoint occupancy/flow hiện được Git track; raw dataset, cache lớn và `.env` giữ ngoài Git. Test CARLA dùng checkpoint có sẵn, không cần raw nuScenes.
 
 Cấu trúc phục vụ đầy đủ MVP, tính từ `LAB_DATA_ROOT`:
 

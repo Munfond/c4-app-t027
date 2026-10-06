@@ -1,5 +1,9 @@
 # Chạy Experiments: checkpoint hiện có, CARLA và agent
 
+Agent có tool thực thi study sensor: xem [SENSOR_AGENT_LOCAL_TEST.vi.md](SENSOR_AGENT_LOCAL_TEST.vi.md).
+Planner `/plan` cũ chỉ draft. API `/sensor-agent/start` tạo job thật và
+`/sensor-agent/<id>/summarize` gọi tool đọc/so sánh, không polling bằng LLM.
+
 Ngày: 05/10/2026.
 
 ## Đã triển khai
