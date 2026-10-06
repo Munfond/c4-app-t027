@@ -120,6 +120,10 @@ async def summarize(ident):
                 "Chỉ dùng metrics của tool; không bịa, không đổi lựa chọn provisional_selected của Python. "
                 "Nếu reference không khớp hoặc trial lỗi, nêu rõ chưa đủ bằng chứng. Không nói tối ưu điện/tiền "
                 "từ byte rate. Nhãn proxy và weather RGB không chứng minh an toàn/robustness thực tế."
+                " Với dataset_replay, camera_choice là riêng biệt, fidelity/consistency không phải GT accuracy. "
+                "provisional_selected có thể là cặp model/profile. Không gọi replay là mô phỏng phần cứng hay CARLA."
+                " Trả lời tối đa 180 từ, gồm lựa chọn model/profile, các số đo quyết định và giới hạn camera. "
+                "Không liệt kê lại toàn bộ bảng thử nghiệm."
             ),
         },
         {"role": "user", "content": f"Đọc và so sánh study {ident}"},
@@ -162,7 +166,7 @@ async def summarize(ident):
         ]
         trace.append({"tool": name, "tool_call_id": call_id})
         usage.append(data.get("usage", {}))
-    data = await completion(messages, max_tokens=700)
+    data = await completion(messages, max_tokens=1400)
     message = data["choices"][0]["message"]
     if message.get("tool_calls") or not message.get("content"):
         raise ValueError("Expected final explanation, no further tools")

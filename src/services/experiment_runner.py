@@ -12,7 +12,7 @@ from src.config import get_settings
 from src.evaluation.bev import BevEvaluator, recommend
 from src.models.experiments import ExperimentSpec
 from src.services import experiment_store as store
-from src.services.experiment_registry import verified_hash
+from src.services.experiment_registry import camera_fingerprint, verified_hash
 
 logger = logging.getLogger(__name__)
 
@@ -56,7 +56,7 @@ def nuscenes_frames(spec, pulse):
 
 
 def replay_capture(spec):
-    root = get_settings().experiment_root / spec.capture_id / "capture"
+    root = store.root() / spec.capture_id / "capture"
     manifest = json.loads((root / "manifest.json").read_text(encoding="utf-8"))
     if manifest["scenario"] != spec.scenario.model_dump():
         from src.models.experiments import ScenarioSpec
@@ -92,7 +92,7 @@ def run_once():
     if job is None:
         return None
     ident = job["id"]
-    root = get_settings().experiment_root / ident
+    root = store.root() / ident
     root.mkdir(parents=True, exist_ok=True)
 
     def pulse(stage="capture"):
@@ -103,7 +103,13 @@ def run_once():
         for name, expected in job["spec"]["checkpoints"].items():
             if verified_hash(name) != expected:
                 raise ValueError("Checkpoint changed after enqueue")
-        if spec.source == "nuscenes":
+        if spec.source == "dataset_replay":
+            from src.services.dataset_replay import frames as replay_frames
+
+            if camera_fingerprint() != job["spec"].get("camera_detector"):
+                raise ValueError("Camera detector/settings changed after enqueue")
+            frames, manifest = replay_frames(spec.replay, root / "capture", pulse)
+        elif spec.source == "nuscenes":
             frames, manifest = nuscenes_frames(spec, pulse)
         elif spec.capture_id:
             pulse()
@@ -114,6 +120,7 @@ def run_once():
             frames, manifest = capture(spec.scenario, root / "capture", pulse)
         digest = hashlib.sha256()
         reference_digest = hashlib.sha256()
+        reference_digest.update(manifest.get("dataset_reference_sha256", "").encode())
         for frame in frames:
             for key in ("x", "labels", "valid", "flow", "flow_valid", "rotation", "translation"):
                 digest.update(np.ascontiguousarray(frame[key]).tobytes())
@@ -140,7 +147,7 @@ def run_once():
                 sort_keys=True,
             )
             cache_key = hashlib.sha256(cache_identity.encode()).hexdigest()
-            cache = get_settings().experiment_root / "cache" / cache_key
+            cache = store.root() / "cache" / cache_key
             cache.mkdir(parents=True, exist_ok=True)
             hits = 0
             for index, frame in enumerate(frames):

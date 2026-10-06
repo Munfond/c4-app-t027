@@ -151,6 +151,8 @@ async def test_real_tool_dispatch_and_summary_cache(sensor_settings, monkeypatch
             arguments = spec().model_dump() if name == "create_sensor_study" else {"study_id": study_id}
             return httpx.Response(200, json=tool_response(name, arguments))
         assert [item["role"] for item in messages].count("tool") == 2
+        assert payload["max_tokens"] == 1400
+        assert "180 từ" in messages[0]["content"]
         return httpx.Response(200, json={
             "model": "mock-provider",
             "usage": {},

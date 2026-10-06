@@ -42,7 +42,8 @@ def registry():
             "channels": channels,
             "history": history,
             "available": checkpoint_path(name).is_file(),
-            "sources": ["nuscenes", "carla"] if name == "occupancy_lidar" else ["nuscenes"],
+            "sources": ["nuscenes", "dataset_replay", "carla"] if name == "occupancy_lidar" else
+                (["nuscenes", "dataset_replay"] if task == "occupancy" else ["nuscenes"]),
             "limitations": ["BEV 2D; not 3D detection", "Training static labels are pseudo-GT"]
             + (["Experimental flow; known weak quality"] if task == "flow" else [])
             + (["CARLA radar RCS/compensated velocity adapter unavailable"] if name != "occupancy_lidar" else []),
@@ -52,6 +53,13 @@ def registry():
 
 
 def validate_spec(spec):
+    if spec.source == "dataset_replay":
+        from src.models.replay import OCCUPANCY_MODELS
+        from src.services.dataset_replay import validate_trial
+
+        if not set(spec.model_ids) <= set(OCCUPANCY_MODELS):
+            raise ValueError("Dataset replay supports occupancy models only")
+        validate_trial(spec.replay)
     if spec.source == "nuscenes":
         from src.models.experiments import LidarSpec
 
@@ -64,3 +72,14 @@ def validate_spec(spec):
             raise ValueError(f"Checkpoint missing: {model_id}")
         if spec.source == "carla" and model_id != "occupancy_lidar":
             raise ValueError("CARLA currently supports occupancy_lidar only; radar feature adapter is not calibrated")
+
+
+def camera_fingerprint():
+    settings = get_settings()
+    path = settings.replay_camera_onnx
+    if not path:
+        return None
+    with path.open("rb") as stream:
+        digest = hashlib.file_digest(stream, "sha256").hexdigest()
+    return {"sha256": digest, "input_size": settings.replay_camera_input_size,
+            "score_threshold": settings.replay_camera_score_threshold}

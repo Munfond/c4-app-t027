@@ -3,11 +3,12 @@ import json
 from typing import Annotated
 
 import httpx
-from fastapi import APIRouter, Depends, Header, HTTPException, Path, Query
+from fastapi import APIRouter, Depends, Header, HTTPException, Path, Query, Request
 from fastapi.responses import FileResponse
 
 from src.config import get_settings
 from src.models.experiments import AgentPlanRequest, ExperimentSpec
+from src.models.replay import CAMERAS, OCCUPANCY_MODELS, RADARS, ReplayStudySpec
 from src.services import experiment_store as store
 from src.services import sensor_studies as studies
 from src.services.experiment_registry import MODELS, registry, validate_spec
@@ -21,8 +22,61 @@ def require_experiment_access():
         )
 
 
-router = APIRouter(prefix="/experiments", tags=["experiments"], dependencies=[Depends(require_experiment_access)])
+async def session_scope(request: Request):
+    from src.services import experiment_sessions as sessions
+
+    ident = request.headers.get("x-experiment-session") or request.query_params.get("session")
+    if not ident:
+        yield
+        return
+    try:
+        root = sessions.acquire(ident)
+    except (KeyError, ValueError) as exc:
+        raise HTTPException(410, "Phiên đã kết thúc. Hãy bắt đầu phiên mới.") from exc
+    try:
+        with store.scope(root):
+            yield
+    finally:
+        sessions.release(ident)
+
+
+router = APIRouter(prefix="/experiments", tags=["experiments"],
+                   dependencies=[Depends(require_experiment_access), Depends(session_scope)])
 ExperimentId = Annotated[str, Path(pattern=r"^[a-f0-9]{32}$")]
+
+
+@router.post("/sessions", status_code=201)
+def create_session():
+    from src.services.experiment_sessions import create
+
+    return create()
+
+
+@router.post("/sessions/{ident}/touch")
+def touch_session(ident: ExperimentId):
+    from src.services.experiment_sessions import touch
+
+    try:
+        touch(ident)
+    except KeyError as exc:
+        raise HTTPException(410, "Session expired or ended") from exc
+    return {"active": True}
+
+
+@router.post("/sessions/{ident}/suspend")
+def suspend_session(ident: ExperimentId):
+    from src.services.experiment_sessions import suspend
+
+    suspend(ident)
+    return {"active": False}
+
+
+@router.post("/sessions/{ident}/end")
+def end_session(ident: ExperimentId):
+    from src.services.experiment_sessions import end
+
+    end(ident)
+    return {"ended": True}
 
 
 @router.get("/registry")
@@ -86,6 +140,48 @@ async def start_sensor_agent(request: AgentPlanRequest):
         raise HTTPException(422, str(exc)) from exc
 
 
+@router.get("/replay/catalog")
+def replay_catalog():
+    from src.services.dataset_replay import catalog
+
+    return catalog() | {"cameras": CAMERAS, "radars": RADARS, "models": OCCUPANCY_MODELS}
+
+
+@router.post("/replay/studies", status_code=201)
+def create_replay_study(spec: ReplayStudySpec):
+    try:
+        return studies.create(spec)
+    except (ValueError, FileNotFoundError, KeyError) as exc:
+        raise HTTPException(422, str(exc)) from exc
+
+
+@router.get("/replay/studies")
+def replay_studies():
+    return {"items": [s for s in studies.recent() if s["source"] == "dataset_replay"]}
+
+
+@router.post("/replay/agent/start", status_code=201)
+async def start_replay_agent(request: AgentPlanRequest):
+    from src.agents.replay_agent import start
+
+    try:
+        return await start(request.message)
+    except (RuntimeError, httpx.HTTPError) as exc:
+        raise HTTPException(503, str(exc)) from exc
+    except (ValueError, FileNotFoundError, KeyError, IndexError) as exc:
+        raise HTTPException(422, str(exc)) from exc
+
+
+@router.get("/sensor-agent/{ident}/comparison")
+def compare_study(ident: ExperimentId):
+    try:
+        return studies.comparison(ident)
+    except KeyError as exc:
+        raise HTTPException(404, "Sensor study not found") from exc
+    except ValueError as exc:
+        raise HTTPException(409, str(exc)) from exc
+
+
 @router.get("/sensor-agent/{ident}")
 def sensor_study(ident: ExperimentId):
     try:
@@ -147,20 +243,61 @@ def prediction(ident: ExperimentId, model_id: str, index: int = Path(ge=0, le=80
     job = experiment(ident)
     if model_id not in MODELS or model_id not in job["spec"]["request"]["model_ids"]:
         raise HTTPException(404, "Model not in experiment")
-    path = get_settings().experiment_root / ident / "predictions" / model_id / f"{index:04d}.json"
+    path = store.root() / ident / "predictions" / model_id / f"{index:04d}.json"
     if not path.is_file():
         raise HTTPException(404, "Prediction not yet available")
     return json.loads(path.read_text(encoding="utf-8"))
 
 
 @router.get("/{ident}/camera")
-def capture_camera(ident: ExperimentId, index: int = Query(default=0, ge=0, le=80)):
+def capture_camera(ident: ExperimentId, index: int = Query(default=0, ge=0, le=80),
+                   channel: str = Query(default="CAM_FRONT"), reference: bool = False):
     job = experiment(ident)
     spec = job["spec"]["request"]
+    if spec["source"] == "dataset_replay":
+        if channel not in spec["replay"]["cameras"]:
+            raise HTTPException(404, "Camera not in replay")
+        suffix = "_reference" if reference else ""
+        path = store.root() / ident / "capture" / f"{index:04d}_{channel}{suffix}.jpg"
+        if not path.is_file():
+            raise HTTPException(404, "Camera preview not yet available")
+        return FileResponse(path, media_type="image/jpeg")
     if spec["source"] != "carla":
         raise HTTPException(404, "Use processed nuScenes camera endpoint")
     capture_id = spec.get("capture_id") or ident
-    path = get_settings().experiment_root / capture_id / "capture" / f"frame_{index:04d}.png"
+    path = store.root() / capture_id / "capture" / f"frame_{index:04d}.png"
     if not path.is_file():
         raise HTTPException(404, "Camera capture not yet available")
     return FileResponse(path, media_type="image/png")
+
+
+@router.get("/{ident}/sensor-preview")
+def sensor_preview(ident: ExperimentId, index: int = Query(default=0, ge=0, le=19)):
+    """Bounded visualization from actual captured inputs; never re-run inference."""
+    import numpy as np
+
+    job = experiment(ident)
+    if job["spec"]["request"]["source"] != "dataset_replay":
+        raise HTTPException(422, "Sensor preview currently supports dataset replay")
+    path = store.root() / ident / "capture" / f"{index:04d}.npz"
+    if not path.is_file() or not job.get("result"):
+        raise HTTPException(404, "Sensor preview not yet available")
+    manifest = job["result"]["manifest"]
+    if index >= len(manifest["frames"]):
+        raise HTTPException(404, "Frame not available")
+    with np.load(path, allow_pickle=False) as data:
+        output = {}
+        for name, key in (("lidar", "points"), ("radar", "radar_points")):
+            points = data[key]
+            indices = np.linspace(0, len(points) - 1, min(len(points), 6000), dtype=int)
+            selected = points[indices]
+            finite = np.isfinite(selected).all(axis=1)
+            rows = selected[finite].tolist()
+            output[name] = {"count": len(points), "displayed": len(rows), "points": rows}
+            if name == "radar":
+                output[name]["speed"] = np.nan_to_num(data["radar_speed"][indices][finite]).tolist()
+                output[name]["rcs"] = np.nan_to_num(data["radar_rcs"][indices][finite]).tolist()
+    return {"frame_id": manifest["frames"][index]["id"], "index": index,
+            "profile": manifest["replay"]["profile"], "sensors": output,
+            "camera": [row for row in manifest["camera"]["rows"] if row["frame"] == index],
+            "note": "BEV ego coordinates: forward up, left left; display capped at 6000 points per sensor"}

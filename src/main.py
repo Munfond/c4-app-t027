@@ -1,4 +1,6 @@
-from contextlib import asynccontextmanager
+import asyncio
+import logging
+from contextlib import asynccontextmanager, suppress
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -13,7 +15,23 @@ from src.config import get_settings
 async def lifespan(app: FastAPI):
     settings = get_settings()
     print(f"Starting {settings.app_name} in {settings.app_env} mode")
-    yield
+    async def clean_sessions():
+        from src.services.experiment_sessions import sweep
+
+        while True:
+            try:
+                await asyncio.to_thread(sweep)
+            except Exception:
+                logging.getLogger(__name__).exception("Temporary session cleanup failed")
+            await asyncio.sleep(5)
+
+    cleaner = asyncio.create_task(clean_sessions())
+    try:
+        yield
+    finally:
+        cleaner.cancel()
+        with suppress(asyncio.CancelledError):
+            await cleaner
     print("Shutting down...")
 
 

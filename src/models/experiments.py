@@ -4,6 +4,8 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
+from src.models.replay import ReplayTrialSpec
+
 
 class LidarSpec(BaseModel):
     model_config = ConfigDict(extra="forbid")
@@ -39,7 +41,8 @@ class ScenarioSpec(BaseModel):
 
 class ExperimentSpec(BaseModel):
     model_config = ConfigDict(extra="forbid")
-    source: Literal["carla", "nuscenes"] = "carla"
+    source: Literal["carla", "nuscenes", "dataset_replay"] = "carla"
+    replay: ReplayTrialSpec | None = None
     model_ids: list[str] = Field(default_factory=lambda: ["occupancy_lidar"], min_length=1, max_length=7)
     scenario: ScenarioSpec = Field(default_factory=ScenarioSpec)
     scene_id: str | None = Field(default=None, max_length=64, pattern=r"^scene-\d{4}$")
@@ -54,6 +57,10 @@ class ExperimentSpec(BaseModel):
             raise ValueError("scene_id is required for nuScenes")
         if self.source == "nuscenes" and self.capture_id is not None:
             raise ValueError("capture_id is only supported for CARLA replay")
+        if self.source == "dataset_replay" and (self.replay is None or self.capture_id is not None):
+            raise ValueError("dataset_replay requires replay spec and forbids capture_id")
+        if self.source != "dataset_replay" and self.replay is not None:
+            raise ValueError("replay spec is only supported for dataset_replay")
         return self
 
 
