@@ -207,7 +207,15 @@ CI chạy backend lint/tests và frontend lint/build trên runner Windows của 
 
 ## CARLA experiments và agent
 
+Thành viên mới bắt đầu từ [CARLA + Sensor Agent quickstart](docs/CARLA_AGENT_QUICKSTART.vi.md)
+(cài đặt, nghiệm thu, chạy bằng prompt, xử lý sự cố).
+Giao diện chat và bảng so sánh metric: `/agent`, xem [hướng dẫn Sensor Agent UI](docs/SENSOR_AGENT_UI.vi.md).
+
 Xem [Experiments runbook](docs/EXPERIMENTS_RUNBOOK.vi.md) để chạy giao diện `/experiments`,
 worker bền vững, bảy checkpoint occupancy/flow hiện có và LLM planner tùy chọn.
 Adapter CARLA LiDAR đang ở mức experimental và cần server/client cấu hình riêng.
+CARLA 0.9.11 trên Windows/GPU 4 GB dùng client Python 3.7 riêng và worker Python mới;
+xem [cấu hình CARLA 0.9.11 + agent](docs/CARLA_0911_AGENT_SETUP.vi.md).
+Luồng prompt → dữ liệu LiDAR → checkpoint/output có [hướng dẫn dataset](docs/PROMPT_LIDAR_DATASET.vi.md)
+và `dataset-index.json` để liên kết từng cấu hình/frame với input và prediction.
 Checkpoint radar/flow hiện chạy trên nuScenes; đầu vào CARLA chưa tương thích bị từ chối.
