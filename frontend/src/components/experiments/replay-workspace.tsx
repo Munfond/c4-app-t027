@@ -60,7 +60,7 @@ function selectedStats(env: Environment) {
 export function ReplayWorkspace() {
   const { session, loading, error, end, start } = useExperimentSession();
   return <section className="grid gap-6">
-    <header className="flex flex-wrap items-start justify-between gap-4"><div><p className="mb-2 text-xs font-semibold uppercase tracking-widest text-[var(--accent)]">04 / AI Agent · Occupancy</p><h1 className="text-2xl font-semibold sm:text-3xl">Tìm cấu hình sensor cho Occupancy</h1><p className="mt-2 max-w-2xl text-sm text-[var(--muted)]">Giảm dữ liệu LiDAR/radar trong khi giữ chất lượng bản đồ vật cản BEV. Agent thử cấu hình trên dữ liệu ghi sẵn và đề xuất phương án dựa trên IoU.</p></div><div className="grid justify-items-end gap-2"><span className="rounded-full bg-[var(--accent-soft)] px-3 py-1.5 text-xs font-medium">{session ? "● Phiên tạm đang mở" : loading ? "Đang mở phiên…" : "Phiên đã kết thúc"}</span>{session ? <Button variant="ghost" loading={loading} onClick={() => void end()}>Kết thúc phiên</Button> : !loading ? <Button onClick={() => void start()}>Bắt đầu phiên mới</Button> : null}</div></header>
+    <header className="flex flex-wrap items-start justify-between gap-4"><div><p className="mb-2 text-xs font-semibold uppercase tracking-widest text-[var(--accent)]">04 / Experiments · Occupancy</p><h1 className="text-2xl font-semibold sm:text-3xl">Tìm cấu hình sensor cho Occupancy</h1><p className="mt-2 max-w-2xl text-sm text-[var(--muted)]">Giảm dữ liệu LiDAR/radar trong khi giữ chất lượng bản đồ vật cản BEV. Agent thử cấu hình trên dữ liệu ghi sẵn và đề xuất phương án dựa trên IoU.</p></div><div className="grid justify-items-end gap-2"><span className="rounded-full bg-[var(--accent-soft)] px-3 py-1.5 text-xs font-medium">{session ? "● Phiên tạm đang mở" : loading ? "Đang mở phiên…" : "Phiên đã kết thúc"}</span>{session ? <Button variant="ghost" loading={loading} onClick={() => void end()}>Kết thúc phiên</Button> : !loading ? <Button onClick={() => void start()}>Bắt đầu phiên mới</Button> : null}</div></header>
     <p className="rounded-xl bg-[var(--accent-soft)] p-4 text-sm"><strong>Mục 04 dành cho Occupancy:</strong> so sánh ba model LiDAR, Radar và LiDAR + Radar trên cùng frame. Camera được đánh giá riêng về chất lượng ảnh và dung lượng. Luồng này chưa tối ưu Detection, Flow hoặc Risk; Lab và Compare phục vụ các kết quả tính sẵn riêng.</p>
     <p className="rounded-xl border border-[var(--line)] bg-[var(--surface-subtle)] p-4 text-xs text-[var(--muted)]">Lịch sử chỉ thuộc phiên này, giữ khi refresh. Đóng tab: tự dọn sau khoảng 30 giây; nếu trình duyệt không gửi tín hiệu đóng, phiên hết hạn sau 3 phút. Kết thúc phiên hủy lượt đang chạy và dọn dữ liệu tạm. Tải báo cáo nếu muốn giữ kết quả.</p>
     {error ? <p role="alert" className="rounded-xl bg-red-50 p-4 text-sm text-red-700">{error}</p> : null}
@@ -71,8 +71,6 @@ export function ReplayWorkspace() {
 function SessionWorkspace({ session }: { session: string }) {
   const post = <T,>(path: string, body: unknown = {}) => sessionPost<T>(path, session, body);
   const [catalog, setCatalog] = useState<Catalog | null>(null);
-  const [agentEnabled, setAgentEnabled] = useState(false);
-  const [message, setMessage] = useState("Thử cả LiDAR, radar và camera ở scene-0103, 2 frames; profile half giữ 50% điểm LiDAR/radar, ảnh nửa độ phân giải, JPEG 80; IoU giảm tối đa 0.02");
   const [studies, setStudies] = useState<Study[]>([]);
   const [selected, setSelected] = useState("");
   const [pendingRequest, setPendingRequest] = useState<string | null>(null);
@@ -96,9 +94,8 @@ function SessionWorkspace({ session }: { session: string }) {
 
   useEffect(() => {
     const controller = new AbortController();
-    void Promise.all([apiJson<Catalog>(`${base}/replay/catalog`, controller.signal),
-      apiJson<{ agent_enabled: boolean }>(`${base}/registry`, controller.signal)])
-      .then(([data, registry]) => { if (!controller.signal.aborted) { setCatalog(data); setAgentEnabled(registry.agent_enabled); } })
+    void apiJson<Catalog>(`${base}/replay/catalog`, controller.signal)
+      .then(data => { if (!controller.signal.aborted) { setCatalog(data);  } })
       .catch(cause => { if (!controller.signal.aborted) setError(String(cause)); });
     return () => controller.abort();
   }, []);
@@ -139,40 +136,20 @@ function SessionWorkspace({ session }: { session: string }) {
     catch (cause) { setError(String(cause)); }
     finally { setBusy(false); }
   };
-  const summarize = async () => {
-    if (!chosen) return;
-    setBusy(true); setError("");
-    try { const summary = await post<{ explanation: string }>(`/sensor-agent/${chosen.id}/summarize`);
-      setStudies(previous => previous.map(s => s.id === chosen.id ? { ...s, summary } : s)); }
-    catch (cause) { setError(String(cause)); }
-    finally { setBusy(false); }
-  };
-
-  return <div className="grid items-start gap-6 xl:grid-cols-[minmax(300px,0.85fr)_minmax(0,1.35fr)]">
-    <section className="grid gap-5 rounded-2xl border border-[var(--line)] bg-white p-5 sm:p-6">
-    <div><h2 className="text-lg font-semibold">1. Giao nhiệm vụ cho agent</h2>
-      <p className="mt-1 text-sm text-[var(--muted)]">Nêu sensor, môi trường và mức chất lượng cần giữ. Agent sẽ lập kế hoạch thí nghiệm.</p></div>
-    {catalog && !catalog.ready ? <p role="alert" className="text-sm text-red-700">{catalog.error ?? "Chưa có dataset."} Chuẩn bị raw nuScenes-mini và cấu hình NUSC_ROOT. Checkpoint có sẵn chưa thay thế dữ liệu sensor gốc.</p> : null}
-    {error ? <p role="alert" className="rounded-xl bg-red-50 p-3 text-sm text-red-700">{error.replace(/^Error: /, "")}</p> : null}
-    {connectionError ? <p role="status" className="rounded-xl bg-amber-50 p-3 text-sm text-amber-800">{connectionError}</p> : null}
-    <label className="grid gap-2 text-sm font-medium">Bạn muốn thử điều gì?<textarea maxLength={2000} rows={7} className="rounded-xl border border-[var(--line)] p-3 text-sm leading-relaxed" value={message} onChange={e => setMessage(e.target.value)} placeholder="Thử LiDAR/radar 50% điểm và camera nửa độ phân giải ở scene-0103, 2 frames" /></label>
-    <div className="flex flex-wrap gap-2">{[["Thử nhanh 3 sensor", "Thử cả LiDAR, radar và camera ở scene-0103, 2 frames; profile half giữ 50% điểm LiDAR/radar, ảnh nửa độ phân giải, JPEG 80; IoU giảm tối đa 0.02"], ["Ảnh có hiệu ứng mưa", "So sánh baseline và half cho LiDAR, radar và camera ở scene-0103, 2 frames, hiệu ứng mưa; IoU giảm tối đa 0.02"]].map(([label, prompt]) => <button key={label} onClick={() => setMessage(prompt)} className="rounded-full border border-[var(--line)] px-3 py-2 text-xs hover:bg-[var(--surface-subtle)]">{label}</button>)}</div>
-    <p className="text-xs text-[var(--muted)]">Agent lập kế hoạch từ yêu cầu ở trên. Worker đo kết quả trên dữ liệu ghi sẵn.</p>
-    {catalog?.ready ? <p className="text-xs text-[var(--muted)]">Scene hiện có: {catalog.scenes.map(s => s.id).join(", ")}. Agent chỉ chạy trên scene có dữ liệu.</p> : null}
-    <Button loading={busy} disabled={!catalog?.ready || !agentEnabled || !message.trim()} onClick={() => void action(() => post<Study>("/replay/agent/start", { message }), message)}>Để agent lập kế hoạch và chạy</Button>
-    <p className="text-center text-xs text-[var(--muted)]">Có dùng token API cho bước lập kế hoạch. Giải thích kết quả được gọi riêng khi bạn yêu cầu.</p>
-    {!agentEnabled ? <p className="text-xs text-[var(--muted)]">Agent chưa được bật hoặc chưa có API key. Bật agent và cấu hình API key ở backend để bắt đầu.</p> : null}
-    <details className="text-xs text-[var(--muted)]"><summary className="cursor-pointer">Các phép đo này có ý nghĩa gì?</summary><p className="mt-2 leading-relaxed">Camera {catalog?.camera_detector_configured ? "đo độ giữ lại detection bằng detector" : "đo chất lượng ảnh/dung lượng, chưa có detector"}. Mưa/sương mù là hiệu ứng ảnh, chưa mô phỏng vật lý sensor. Kết quả là lựa chọn thử nghiệm. Giảm dữ liệu chưa chứng minh giảm điện năng hoặc chi phí phần cứng.</p></details>
-    </section>
+  return <div className="grid gap-5">
+    <div className="flex flex-wrap items-center justify-between gap-4"><p className="text-sm text-[var(--muted)]">Agent hội thoại nằm cạnh workspace. Lịch sử và kết quả replay giữ ở đây.</p><Button variant="secondary" onClick={() => window.dispatchEvent(new Event("p027-open-agent"))}>Mở bot để giao nhiệm vụ ↗</Button></div>
+    {catalog && !catalog.ready && <p role="alert">{catalog.error ?? "Chưa có dataset nuScenes."}</p>}
+    {error && <p role="alert" className="text-red-700">{error}</p>}
+    {connectionError && <p role="status">{connectionError}</p>}
     <section className="grid min-w-0 gap-5 rounded-2xl border border-[var(--line)] bg-white p-5 sm:p-6">
-    <div className="flex items-center justify-between gap-2"><h2 className="text-lg font-semibold">2. Kết quả trong phiên</h2><span className="text-xs text-[var(--muted)]">{studies.length} thí nghiệm</span></div>
+    <div className="flex items-center justify-between gap-2"><h2 className="text-lg font-semibold">Kết quả trong phiên</h2><span className="text-xs text-[var(--muted)]">{studies.length} thí nghiệm</span></div>
     {studies.length ? <Select label="Lịch sử thí nghiệm trong phiên" disabled={busy} value={chosen?.id ?? ""} onChange={e => { if (!e.target.value) return; setPendingRequest(null); setError(""); setSelected(e.target.value); setReport(null); setPreviewId(""); setFrame(0); }}>
       <option value="" disabled>Chọn một lượt cũ để xem lại</option>
       {studies.map((s, i) => <option key={s.id} value={s.id}>Lượt {studies.length - i} · {s.spec.scenarios.map(scene => scene.scene_id).join(", ")} · {statusNames[s.status] ?? s.status}</option>)}
     </Select> : null}
     {!chosen ? <div role={pendingRequest !== null ? "status" : undefined} className="grid min-h-72 content-center gap-3 rounded-xl border border-dashed border-[var(--line)] bg-[var(--surface-subtle)] p-6 text-center">
       <h3 className="font-semibold">{pendingRequest !== null ? busy ? "Agent đang lập kế hoạch cho yêu cầu mới…" : "Yêu cầu mới chưa tạo được thí nghiệm" : "Sẵn sàng thử cấu hình đầu tiên"}</h3>
-      {pendingRequest !== null ? <><p className="whitespace-pre-wrap text-sm">{pendingRequest}</p>{error ? <p className="text-sm text-red-700">{error.replace(/^Error: /, "")}</p> : null}<p className="text-xs text-[var(--muted)]">Kết quả lượt trước chỉ hiển thị khi bạn chọn lại trong lịch sử.</p></> : <p className="mx-auto max-w-sm text-sm text-[var(--muted)]">Nhập yêu cầu rồi bấm “Để agent lập kế hoạch và chạy” để xem kết quả.</p>}
+      {pendingRequest !== null ? <><p className="whitespace-pre-wrap text-sm">{pendingRequest}</p>{error ? <p className="text-sm text-red-700">{error.replace(/^Error: /, "")}</p> : null}<p className="text-xs text-[var(--muted)]">Kết quả lượt trước chỉ hiển thị khi bạn chọn lại trong lịch sử.</p></> : <p className="mx-auto max-w-sm text-sm text-[var(--muted)]">Mở bot cạnh workspace, gửi yêu cầu để tạo lượt đánh giá mới.</p>}
     </div> : null}
     {chosen ? <><div className="flex items-center justify-between gap-3"><span className="rounded-full bg-[var(--accent-soft)] px-3 py-1.5 text-xs font-semibold">{statusNames[chosen.status] ?? chosen.status}</span><p className="text-xs text-[var(--muted)]">{chosen.jobs.filter(j => ["succeeded", "failed", "cancelled"].includes(j.status)).length}/{chosen.total_trials} cấu hình đã xử lý</p></div>
       <div className="grid gap-3 rounded-xl bg-[var(--surface-subtle)] p-4"><h3 className="text-sm font-semibold">Kế hoạch thực tế của lượt {chosen.id.slice(0, 8)}</h3>
@@ -194,13 +171,12 @@ function SessionWorkspace({ session }: { session: string }) {
         <div className="grid grid-cols-2 gap-3"><div className="rounded-xl border border-[var(--line)] p-4"><p className="text-xs text-[var(--muted)]">IoU cấu hình đề xuất</p><p className="mt-1 text-2xl font-semibold">{percent(selectedStats(env).iou)}</p></div><div className="rounded-xl border border-[var(--line)] p-4"><p className="text-xs text-[var(--muted)]">Dữ liệu điểm giảm</p><p className="mt-1 text-2xl font-semibold">{percent(selectedStats(env).reduction)}</p><p className="mt-1 text-xs text-[var(--muted)]">So với cấu hình gốc của model này</p></div></div>
         <details><summary className="cursor-pointer text-sm font-medium">Xem bảng số đo chi tiết</summary><div className="mt-3 overflow-x-auto"><table className="w-full min-w-[700px] text-left text-xs"><caption className="mb-2 text-left text-[var(--muted)]">Dung lượng trung bình mỗi frame. IoU và PSNR cao hơn là tốt hơn khi so trên cùng tham chiếu.</caption><thead><tr>{["Cấu hình", "Tham chiếu", "LiDAR IoU", "Radar IoU", "Fusion IoU", "LiDAR", "Radar", "Camera", "PSNR dB", "Detection"].map(h => <th key={h} className="p-2">{h}</th>)}</tr></thead><tbody>{env.trials.map(t => <tr key={t.job_id} className="border-t"><td className="p-2 font-medium">{profileName(t.profile)}</td><td>{t.reference_matches_baseline ? "Khớp" : "Không khớp/lỗi"}</td>{["occupancy_lidar", "occupancy_radar", "occupancy_lidar_radar"].map(m => <td key={m} className="p-2">{percent(t.models[m]?.metrics.occupied_iou)}</td>)}<td>{number(t.sensor_cost.lidar_payload_bytes)}</td><td>{number(t.sensor_cost.radar_payload_bytes)}</td><td>{number(t.sensor_cost.camera_encoded_bytes)}</td><td>{t.camera.mean_psnr_db?.toFixed(1) ?? "—"}</td><td>{percent(t.camera.detection_retention)}</td></tr>)}</tbody></table></div></details>
       </div>)}
-      <h3 className="mt-2 text-lg font-semibold">3. Xem ảnh và giải thích</h3>
+      <h3 className="mt-2 text-lg font-semibold">Xem ảnh và giải thích</h3>
       <div className="grid gap-3 sm:grid-cols-3"><Select label="Cấu hình xem trước" value={trial?.job_id ?? ""} onChange={e => setPreviewId(e.target.value)}>{currentReport.environments.flatMap(e => e.trials).filter(t => t.status === "succeeded").map(t => <option key={t.job_id} value={t.job_id}>{profileName(t.profile)}</option>)}</Select>
         <Select label="Model BEV" value={previewModel} onChange={e => setPreviewModel(e.target.value)}>{Object.keys(trial?.models ?? {}).map(m => <option key={m} value={m}>{modelNames[m] ?? m}</option>)}</Select>
         <label className="grid gap-2 text-xs">Frame<input type="number" min={0} max={(environment?.scenario.frames ?? 1) - 1} value={previewFrame} onChange={e => setFrame(Number(e.target.value))} className="rounded border p-2" /></label></div>
       {trial ? <><Select label="Góc nhìn camera" value={cameraChannel} onChange={e => setPreviewCamera(e.target.value)}>{studyCameras.map(c => <option key={c} value={c}>{cameraNames[c] ?? c}</option>)}</Select>{environment?.trials.find(t => t.profile === "baseline" && t.status === "succeeded") && trial.reference_matches_baseline ? <SensorComparison baseline={environment.trials.find(t => t.profile === "baseline")!.job_id} candidate={trial.job_id} model={Object.keys(trial.models).includes(previewModel) ? previewModel : Object.keys(trial.models)[0]} frame={previewFrame} session={session} channel={cameraChannel} /> : <p className="text-xs text-amber-800">Chưa có baseline cùng tham chiếu để đối chiếu trực quan.</p>}
         <div className="grid gap-3 sm:grid-cols-2">{[true, false].map(reference => <figure key={String(reference)} className="overflow-hidden rounded-xl border border-[var(--line)]"><figcaption className="bg-[var(--surface-subtle)] px-3 py-2 text-xs font-medium">{reference ? "Ảnh tham chiếu" : `Ảnh sau giảm dữ liệu · ${profileName(trial.profile)}`}</figcaption><Image unoptimized width={800} height={450} alt={reference ? "Ảnh camera tham chiếu" : "Ảnh camera sau giảm dữ liệu"} src={scopedUrl(`/${trial.job_id}/camera?index=${previewFrame}&channel=${cameraChannel}&reference=${reference}`, session)} className="h-auto w-full" /></figure>)}</div></> : null}
-    {!chosen?.summary ? <Button variant="secondary" loading={busy} disabled={!agentEnabled} onClick={() => void summarize()}>Nhờ agent giải thích kết quả · dùng token API</Button> : null}
       {chosen?.summary ? <div className="rounded-xl bg-[var(--accent-soft)] p-4"><h3 className="mb-2 text-sm font-semibold">Nhận xét của agent</h3><p className="whitespace-pre-wrap text-sm leading-relaxed">{chosen.summary.explanation}</p></div> : null}
       <Button variant="secondary" onClick={() => { const blob = new Blob([JSON.stringify(currentReport, null, 2)], { type: "application/json" }); const url = URL.createObjectURL(blob); const a = document.createElement("a"); a.href = url; a.download = `sensor-study-${currentReport.study_id}.json`; a.click(); URL.revokeObjectURL(url); }}>Tải báo cáo JSON</Button>
       <p className="text-xs text-[var(--muted)]">Đánh giá trên các frame đã chọn. Camera chưa đánh giá độ chính xác ground truth. Cần nhiều cảnh và nhãn để kết luận về khả năng hoạt động thực tế.</p>

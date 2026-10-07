@@ -133,6 +133,9 @@ async def summarize(ident):
                 "từ byte rate. Nhãn proxy và weather RGB không chứng minh an toàn/robustness thực tế."
                 " Với dataset_replay, camera_choice là riêng biệt, fidelity/consistency không phải GT accuracy. "
                 "provisional_selected có thể là cặp model/profile. Không gọi replay là mô phỏng phần cứng hay CARLA."
+                " Phải dẫn run ID/reference từ evidence. Không ép cấu hình gốc thành kém: nếu evidence nói "
+                "no_improvement thì báo không tìm được cấu hình giảm dữ liệu tốt hơn trong tập đã thử; "
+                "inconclusive thì báo thiếu bằng chứng và lý do loại ứng viên. Không khẳng định tối ưu toàn cục."
                 " Trả lời tối đa 180 từ, gồm lựa chọn model/profile, các số đo quyết định và giới hạn camera. "
                 "Không liệt kê lại toàn bộ bảng thử nghiệm."
             ),
@@ -169,8 +172,10 @@ async def summarize(ident):
                 ],
             }
         else:
+            from src.services.agent_evidence import evidence
+
             comparison = studies.comparison(ident)
-            output = comparison
+            output = {"comparison": comparison, "evidence": evidence(ident)}
         messages += [
             assistant,
             {"role": "tool", "tool_call_id": call_id, "content": json.dumps(output, ensure_ascii=False)},

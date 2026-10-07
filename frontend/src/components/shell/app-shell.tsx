@@ -1,16 +1,20 @@
 "use client";
 
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
-import type { ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
+import type { Inspection } from "@/components/experiments/agent-panel";
+import { EvidenceViewport } from "@/components/experiments/evidence-viewport";
+
+const AgentPanel = dynamic(() => import("@/components/experiments/agent-panel"), { loading: () => <p className="agent-panel-body" role="status">Đang kết nối agent…</p> });
 
 const navigation = [
   { href: "/lab", label: "Lab", number: "01" },
   { href: "/compare", label: "Compare", number: "02" },
   { href: "/benchmarks", label: "Benchmarks", number: "03" },
-  { href: "/experiments", label: "Replay Agent", number: "04" },
-  { href: "/agent", label: "CARLA Agent", number: "05" },
-  { href: "/carla", label: "CARLA Lab", number: "06" },
+  { href: "/experiments", label: "Experiments", number: "04" },
+  { href: "/carla", label: "CARLA Lab", number: "05" },
 ];
 
 function PerceptionMark() {
@@ -23,20 +27,48 @@ function PerceptionMark() {
 
 export function AppShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
-  return <div className="product-shell">
+  const [open, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const [inspection, setInspection] = useState<Inspection | null>(null);
+  const origin = inspection?.source ?? (pathname === "/carla" ? "carla" : pathname === "/experiments" ? "dataset_replay" : "precomputed");
+  const launcher = useRef<HTMLButtonElement>(null);
+  const closeButton = useRef<HTMLButtonElement>(null);
+  const close = () => { setOpen(false); launcher.current?.focus(); };
+  const show = () => { setMounted(true); setOpen(true); };
+  useEffect(() => {
+    const showAgent = () => { setMounted(true); setOpen(true); };
+    const escape = (event: KeyboardEvent) => { if (open && event.key === "Escape") { setOpen(false); launcher.current?.focus(); } };
+    window.addEventListener("p027-open-agent", showAgent);
+    window.addEventListener("keydown", escape);
+    return () => { window.removeEventListener("p027-open-agent", showAgent); window.removeEventListener("keydown", escape); };
+    if (open) closeButton.current?.focus();
+  }, [open]);
+  return <div className="product-shell" data-agent-open={open}>
     <header className="product-header">
-      <Link href="/lab" className="product-brand" aria-label="Perception Lab — trang Lab">
+      <Link href="/lab" className="product-brand" aria-label="Perception Lab — trang Lab" onClick={() => setInspection(null)}>
         <PerceptionMark />
         <span>perception<span className="brand-suffix"> / lab</span></span>
       </Link>
       <nav aria-label="Điều hướng chính" className="product-nav">
-        {navigation.map(item => <Link key={item.href} href={item.href} aria-current={pathname.startsWith(item.href) ? "page" : undefined}>
+        {navigation.map(item => <Link key={item.href} href={item.href} onClick={() => setInspection(null)} aria-current={pathname.startsWith(item.href) ? "page" : undefined}>
           <span className="nav-index">{item.number}</span>{item.label}<span className="nav-active-dot" />
         </Link>)}
       </nav>
       <div className="product-edition"><span className="edition-label">ADAS RESEARCH</span><span className="team-stamp">T/27</span></div>
     </header>
-    <main id="main-content" className="product-main">{children}</main>
-    <footer className="product-footer"><span>PERCEPTION LAB <span className="footer-divider">/</span> TEAM 27 · MUNFOND</span><span>nuScenes mini · Kết quả tính sẵn</span></footer>
+    <div className="agent-workspace-layout">
+      <main id="main-content" className="product-main">
+        {inspection && <EvidenceViewport key={`${inspection.study}:${inspection.candidate.job_id}:${inspection.model}`} inspection={inspection} onClose={() => setInspection(null)} />}
+        <div hidden={!!inspection}>{children}</div>
+      </main>
+      <aside id="perception-agent" aria-label="Perception agent" className="agent-dock" hidden={!open}>
+        <header className="agent-dock-header"><div><span className="eyebrow">PERCEPTION ASSISTANT</span><h2>Hỏi. Đo. Đối chiếu.</h2></div><button ref={closeButton} onClick={close} aria-label="Thu gọn agent">×</button></header>
+        {mounted && <AgentPanel initialSource={pathname === "/carla" ? "carla" : "dataset_replay"} onInspect={setInspection} />}
+      </aside>
+    </div>
+    <button ref={launcher} className="agent-launcher" aria-expanded={open} aria-controls="perception-agent" aria-label={open ? "Thu gọn Perception agent" : "Mở Perception agent"} onClick={open ? close : show}>
+      <svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M20 5v6M16 5h8M9 16a5 5 0 0 1 5-5h12a5 5 0 0 1 5 5v12a5 5 0 0 1-5 5H14a5 5 0 0 1-5-5V16Z" stroke="currentColor" strokeWidth="2"/><path d="M5 19v7M35 19v7M16 27h8" stroke="currentColor" strokeWidth="2"/><circle cx="15" cy="20" r="2" fill="currentColor"/><circle cx="25" cy="20" r="2" fill="currentColor"/></svg><span>Agent<span>Evidence first</span></span>
+    </button>
+    <footer className="product-footer"><span>PERCEPTION LAB <span className="footer-divider">/</span> TEAM 27 · MUNFOND</span><span>{origin === "carla" ? "CARLA · Kết quả thí nghiệm" : origin === "dataset_replay" ? "nuScenes · Replay dữ liệu ghi sẵn" : "nuScenes mini · Kết quả tính sẵn"}</span></footer>
   </div>;
 }

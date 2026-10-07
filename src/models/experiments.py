@@ -7,6 +7,14 @@ from pydantic import BaseModel, ConfigDict, Field, model_validator
 from src.models.replay import ReplayTrialSpec
 
 
+class EngineerReview(BaseModel):
+    model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
+    evidence_sha256: str = Field(pattern=r"^[a-f0-9]{64}$")
+    reviewer: str = Field(min_length=1, max_length=80)
+    verdict: Literal["accept", "reject", "needs_evidence"]
+    notes: str = Field(min_length=10, max_length=2000)
+
+
 class LidarSpec(BaseModel):
     model_config = ConfigDict(extra="forbid")
     channels: int = Field(default=32, ge=8, le=64)

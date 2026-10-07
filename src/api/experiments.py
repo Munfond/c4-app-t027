@@ -7,7 +7,7 @@ from fastapi import APIRouter, Depends, Header, HTTPException, Path, Query, Requ
 from fastapi.responses import FileResponse
 
 from src.config import get_settings
-from src.models.experiments import AgentPlanRequest, ExperimentSpec, SensorAgentRequest
+from src.models.experiments import AgentPlanRequest, EngineerReview, ExperimentSpec, SensorAgentRequest
 from src.models.replay import CAMERAS, OCCUPANCY_MODELS, RADARS, ReplayStudySpec
 from src.services import experiment_store as store
 from src.services import sensor_studies as studies
@@ -184,6 +184,40 @@ def compare_study(ident: ExperimentId):
         return studies.comparison(ident)
     except KeyError as exc:
         raise HTTPException(404, "Sensor study not found") from exc
+    except ValueError as exc:
+        raise HTTPException(409, str(exc)) from exc
+
+
+@router.get("/sensor-agent/{ident}/evidence")
+def study_evidence(ident: ExperimentId):
+    from src.services.agent_evidence import evidence
+
+    try:
+        return evidence(ident)
+    except KeyError as exc:
+        raise HTTPException(404, "Study not found") from exc
+    except ValueError as exc:
+        raise HTTPException(409, str(exc)) from exc
+
+
+@router.get("/sensor-agent/{ident}/reviews")
+def study_reviews(ident: ExperimentId):
+    from src.services.agent_evidence import reviews
+
+    try:
+        return {"items": reviews(ident)}
+    except KeyError as exc:
+        raise HTTPException(404, "Study not found") from exc
+
+
+@router.post("/sensor-agent/{ident}/reviews", status_code=201)
+def review_study(ident: ExperimentId, request: EngineerReview):
+    from src.services.agent_evidence import save_review
+
+    try:
+        return save_review(ident, request)
+    except KeyError as exc:
+        raise HTTPException(404, "Study not found") from exc
     except ValueError as exc:
         raise HTTPException(409, str(exc)) from exc
 

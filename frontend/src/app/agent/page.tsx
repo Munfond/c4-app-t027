@@ -1,7 +1,7 @@
-import { SensorAgentWorkspace } from "@/components/experiments/sensor-agent-workspace";
+import { redirect } from "next/navigation";
 
 export const metadata = { title: "Sensor Agent" };
 
 export default function AgentPage() {
-  return <SensorAgentWorkspace />;
+  redirect("/carla");
 }

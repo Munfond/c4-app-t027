@@ -1,7 +1,8 @@
 # Active sensing: triển khai theo cổng nghiệm thu
 
 Ngày kiểm tra: 08/10/2026. Nguồn yêu cầu: active-sensing-rl.vi.md do người dùng cung cấp.
-Đây là nền móng phần mềm cho plan; chưa phải demo CARLA, policy đã train hoặc kết quả tiết kiệm GPU.
+Đây là nền móng phần mềm cho plan. Capture CARLA đã chạy thật; chưa có policy RL
+được train trên dữ liệu đo thật hoặc kết quả tiết kiệm GPU.
 
 ## Trạng thái đã làm
 
@@ -16,10 +17,12 @@ Ngày kiểm tra: 08/10/2026. Nguồn yêu cầu: active-sensing-rl.vi.md do ng�
   phạt false positives và output trễ, không ép GPU ratio vào [0,1].
 - Ràng buộc segmentation riêng cho camera/LiDAR: cần nhãn tham chiếu thật và số phần tử đã đánh giá.
 - Adapter Gymnasium và script BC + masked PPO + cập nhật Lagrange được chuẩn bị.
-  **Chưa chạy trainer**, vì chưa chuẩn bị Gymnasium/SB3 và dữ liệu measured replay. Venv review đã có NumPy/Torch CPU.
+  Đã cài Gymnasium/SB3 và smoke BC/PPO 256 bước bằng fixture tổng hợp. Chưa có measured replay
+  đủ điều kiện train; smoke này chỉ kiểm tra trainer, không phải policy được nghiệm thu.
 - CLI doctor, catalog profiles, fixture synthetic và đánh giá 3 baseline có timeline.
 
-Frontend giữ cả replay (/experiments), CARLA agent (/agent) và CARLA form (/carla).
+Frontend giữ replay (/experiments) và CARLA form (/carla); hội thoại agent dùng bot mở rộng
+cạnh workspace, `/agent` cũ chuyển về `/carla`. Xem AGENT_EVIDENCE.vi.md về evidence/review.
 Chưa nối ROS. Policy luật hiện là baseline bảo thủ theo
 sensor health/brightness/contrast/return ratio; chưa port toàn bộ bảng luật nhiều yếu tố của plan.
 
@@ -72,7 +75,7 @@ sensor health/brightness/contrast/return ratio; chưa port toàn bộ bảng lu�
 - src/active_sensing/replay.py: schema, actor boundary, replay, timeline/summary.
 - src/active_sensing/gym_env.py: adapter Gymnasium tùy chọn.
 - scripts/active_sensing.py: diagnostics/catalog/replay.
-- scripts/train_active_sensing.py: trainer tùy chọn; chưa smoke train.
+- scripts/train_active_sensing.py: trainer tùy chọn; smoke synthetic đã qua, measured training chưa chạy.
 - tests/active_sensing/test_core.py: unittest độc lập app dependencies.
 
 ## Chạy phần core ngay trên Linux
@@ -138,9 +141,10 @@ python3 -m venv .venv-active-sensing
 ~~~
 
 Máy có Python hệ thống 3.10.12; kiểm thử API dùng Python 3.12.14 trong .venv-review.
-Runtime RL, ROS và CARLA vẫn chưa được chuẩn bị/chạy trong lượt tích hợp này.
-Có thiết bị NVIDIA trong lspci; chưa có nvidia-smi nên chưa xác nhận driver/VRAM/CUDA.
-Không cài hoặc thay driver hệ thống trong lượt này.
+Runtime RL và CARLA 0.9.16 đã cài; NVIDIA driver hoạt động trên RTX 2050 4 GB.
+Capture thử hai frame camera/LiDAR/occupancy thành công; chưa dựng rig 6 camera/5 radar,
+chưa có bridge ROS 2. Workaround native reload crash dùng server/client mới mỗi capture,
+chi tiết tại CARLA_LINUX_SETUP.vi.md. Perception hiện chạy CPU, chưa có GPU work/window đo thật.
 
 ## Cổng nghiệm thu tiếp theo
 
@@ -155,10 +159,17 @@ Không cài hoặc thay driver hệ thống trong lượt này.
 7. Bridge online, Lab timeline và shield events. Chỉ sau đó báo demo vòng kín hoàn thành.
 8. Kiểm chứng dữ liệu thực; chưa tuyên bố an toàn ngoài đường hoặc GPU tiết kiệm đã đạt.
 
+**Thứ tự tiếp tục:** rig/calibration/GT → smoke detector và radar adapter → đo 2–3 profile
+→ kiểm định catalog 12–24 profile → bảng perception đo thật → BC/PPO offline → so bốn policy
+→ bridge online. Chưa mở MultiDiscrete hoặc train từ hai-frame occupancy proxy smoke.
+
 ## Bằng chứng
 
 eval/agent-integration-2026-10-08/ lưu kiểm tra phần mềm thực chạy.
 Không có inference CARLA, checkpoint RL đã train, phép đo GPU hay kết quả sim-to-real trong thư mục này.
+Capture CARLA thực nằm riêng tại eval/carla-linux-2026-10-08/ và
+eval/agent-evidence-2026-10-08/. Study ba cấu hình mới kết luận giữ baseline theo ngưỡng,
+không chứng minh độ tin cậy detection hoặc khả năng tiết kiệm GPU.
 
 ## Tích hợp hai branch agent
 

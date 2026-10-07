@@ -90,7 +90,6 @@ export function ExperimentWorkspace() {
   const [selectedId, setSelectedId] = useState("");
   const [selectedModel, setSelectedModel] = useState("");
   const [frameIndex, setFrameIndex] = useState(0);
-  const [message, setMessage] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const attempt = useRef<{ body: string; key: string } | null>(null);
@@ -115,6 +114,14 @@ export function ExperimentWorkspace() {
     return () => { controller.abort(); clearTimeout(timer); };
   }, []);
 
+  useEffect(() => {
+    const receive = (event: Event) => {
+      setSpec((event as CustomEvent<Spec>).detail); setError("");
+    };
+    window.addEventListener("p027-agent-plan", receive);
+    return () => window.removeEventListener("p027-agent-plan", receive);
+  }, []);
+
   const chosen = jobs.find(job => job.id === selectedId) ?? jobs[0];
   const models = registry?.models.filter(model => model.available && model.sources.includes(spec.source)) ?? [];
   const previewModel = chosen?.spec.request.model_ids.includes(selectedModel) ? selectedModel : chosen?.spec.request.model_ids[0] ?? "";
@@ -133,12 +140,6 @@ export function ExperimentWorkspace() {
     } catch (cause) { setError(String(cause)); }
     finally { setBusy(false); }
   };
-  const draft = async () => {
-    setBusy(true); setError("");
-    try { setSpec((await post<{ spec: Spec }>("/plan", { message })).spec); }
-    catch (cause) { setError(String(cause)); }
-    finally { setBusy(false); }
-  };
   const cancel = async () => {
     if (!chosen) return;
     setBusy(true); setError("");
@@ -150,7 +151,7 @@ export function ExperimentWorkspace() {
   };
 
   return <div className="grid gap-6">
-    <PageHeader title="CARLA Experiments" description="Tạo capture, chạy checkpoint thật và so sánh BEV occupancy. Agent đề xuất cấu hình; bạn tạo job bằng nút bên dưới." />
+    <PageHeader title="CARLA Experiments" description="Tạo capture, chạy checkpoint thật và so sánh BEV occupancy. Mở bot cạnh workspace để trao đổi và đối chiếu evidence; form này tạo thí nghiệm thủ công." />
     <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
       CARLA hiện hỗ trợ occupancy LiDAR. Bảy checkpoint chạy được trên nuScenes; radar CARLA chưa có adapter RCS/velocity phù hợp.
       Model không dùng camera, nên weather RGB chưa đo được độ bền trước mưa/sương mù.
@@ -170,8 +171,7 @@ export function ExperimentWorkspace() {
       <div className="grid gap-3 sm:grid-cols-4">{([ ["frames", "Số frame", 81], ["vehicles", "Xe nền", 40], ["pedestrians", "Người đi bộ", 40], ["seed", "Seed", 2147483647] ] as const)
         .filter(([key]) => spec.source === "carla" || key === "frames").map(([key, label, max]) => <label key={key} className="grid gap-2 text-xs text-[var(--muted)]">{label}<input type="number" min={key === "frames" ? 1 : 0} max={max} value={spec.scenario[key]} onChange={event => scenario(key, Number(event.target.value))} className="rounded-lg border border-[var(--line)] p-3 text-sm" /></label>)}</div>
       <fieldset><legend className="mb-2 text-xs font-semibold">Checkpoint</legend><div className="flex flex-wrap gap-4">{models.map(model => <label key={model.id} className="flex items-center gap-2 text-sm"><input type="checkbox" checked={spec.model_ids.includes(model.id)} onChange={event => setSpec(previous => ({ ...previous, model_ids: event.target.checked ? [...previous.model_ids, model.id] : previous.model_ids.filter(id => id !== model.id) }))} />{model.id}</label>)}</div></fieldset>
-      <label className="grid gap-2 text-sm">Yêu cầu cho agent<textarea value={message} maxLength={2000} onChange={event => setMessage(event.target.value)} rows={2} className="rounded-lg border border-[var(--line)] p-3" placeholder="Chạy occupancy LiDAR trên Town03, 4 frame, sương mù, seed 42" /></label>
-      <div className="flex flex-wrap items-center gap-3"><Button variant="secondary" loading={busy} disabled={!registry?.agent_enabled || !message.trim()} onClick={draft}>Agent lập cấu hình</Button><Button loading={busy} disabled={!spec.model_ids.length} onClick={submit}>Tạo thí nghiệm</Button><span className="text-xs text-[var(--muted)]">{registry?.agent_enabled ? registry.agent_model : "Agent tắt; form vẫn hoạt động"}</span></div>
+      <div className="flex flex-wrap items-center gap-3"><Button loading={busy} disabled={!spec.model_ids.length} onClick={submit}>Tạo thí nghiệm</Button><Button variant="secondary" onClick={() => window.dispatchEvent(new Event("p027-open-agent"))}>Trao đổi với agent ↗</Button><span className="text-xs text-[var(--muted)]">Agent mở cạnh kết quả, không cần đổi trang.</span></div>
       <details><summary className="cursor-pointer text-xs text-[var(--muted)]">Cấu hình sẽ chạy</summary><pre className="mt-3 overflow-auto text-xs">{JSON.stringify(spec, null, 2)}</pre></details>
     </section>
     <section className="grid gap-4 rounded-xl border border-[var(--line)] bg-white p-5">

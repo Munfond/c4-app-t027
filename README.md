@@ -217,7 +217,8 @@ Trên Ubuntu 22.04, dùng [CARLA Linux setup](docs/CARLA_LINUX_SETUP.vi.md)
 
 Thành viên mới bắt đầu từ [CARLA + Sensor Agent quickstart](docs/CARLA_AGENT_QUICKSTART.vi.md)
 (cài đặt, nghiệm thu, chạy bằng prompt, xử lý sự cố).
-Giao diện chat và bảng so sánh metric: `/agent`, xem [hướng dẫn Sensor Agent UI](docs/SENSOR_AGENT_UI.vi.md).
+Bot mở rộng ngay cạnh workspace để chat, đọc evidence và đối chiếu baseline/ứng viên.
+Xem [Bot + evidence + engineer review](docs/AGENT_EVIDENCE.vi.md); `/agent` cũ chuyển về `/carla`.
 
 Xem [Experiments runbook](docs/EXPERIMENTS_RUNBOOK.vi.md) để chạy giao diện `/carla`,
 worker bền vững, bảy checkpoint occupancy/flow hiện có và LLM planner tùy chọn.
@@ -232,12 +233,15 @@ Luồng agent chạy inference trong worker riêng; Lab/Compare vẫn đọc out
 Không dùng kết quả agent để thay thế `cache/perception` của Lab. API key chỉ cần
 planning và giải thích, không cần cho xem Lab hoặc CLI replay deterministic.
 
-Giao diện agent chỉ giữ lịch sử phiên: refresh giữ, đóng tab/Kết thúc phiên dọn
+Replay giữ lịch sử phiên: refresh giữ, đóng tab/Kết thúc phiên dọn
 artifacts tạm theo lease. Tải báo cáo để giữ lâu dài. CLI QA giữ output riêng để resume.
+Engineer review lưu snapshot độc lập tại `EXPERIMENT_ROOT/engineer-feedback.sqlite3`;
+chưa tự dùng feedback để train lại hoặc thay đổi kết quả đo.
 Backend/worker phải dùng cùng EXPERIMENT_ROOT. Xem
 [runbook hiện tại](docs/REPLAY_SENSOR_AGENT.vi.md) trước khi chạy hoặc deploy.
 
-Luồng CARLA được giữ riêng tại /agent và /carla; mục /experiments chạy replay.
+CARLA dùng form `/carla`; `/experiments` giữ kết quả replay. Cả hai dùng chung panel bot,
+với nguồn dữ liệu được chọn rõ ràng trong panel.
 Không cần GPU/Vulkan/CARLA để chạy agent replay. Flow có checkpoint và output Lab,
 nhưng chưa được hỗ trợ trong agent replay. Cấu hình đạt occupancy không chứng minh
 chất lượng detection, flow hoặc risk.
