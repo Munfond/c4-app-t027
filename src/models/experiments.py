@@ -34,7 +34,15 @@ class ScenarioSpec(BaseModel):
     capture_interval: Literal[0.5] = 0.5
     timestep: Literal[0.05] = 0.05
     route_spawn_index: int = Field(default=0, ge=0, le=1000)
+    route_kind: Literal["spawn", "highway"] = "spawn"
+    lane_change_interval_seconds: float | None = Field(default=None, ge=2, le=15)
     lidar: LidarSpec = Field(default_factory=LidarSpec)
+
+    @model_validator(mode="after")
+    def supported_route(self):
+        if self.route_kind == "highway" and self.map != "Town04":
+            raise ValueError("Verified highway capture currently requires Town04")
+        return self
 
 
 class ExperimentSpec(BaseModel):
@@ -62,9 +70,15 @@ class AgentPlanRequest(BaseModel):
     message: str = Field(min_length=1, max_length=2000)
 
 
+class SensorAgentRequest(AgentPlanRequest):
+    max_iou_drop: float | None = Field(default=None, ge=0, le=0.2)
+    frames: int | None = Field(default=None, ge=2, le=20)
+
+
 class SensorProfile(BaseModel):
     model_config = ConfigDict(extra="forbid")
-    name: str = Field(min_length=1, max_length=40, pattern=r"^[a-zA-Z0-9_-]+$")
+    name: str = Field(min_length=1, max_length=40, pattern=r"^[a-zA-Z0-9_-]+$",
+                      description="Candidate profile name. Never use baseline; baseline runs automatically.")
     lidar: LidarSpec
 
 

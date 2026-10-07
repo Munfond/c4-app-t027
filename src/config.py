@@ -47,6 +47,12 @@ class Settings(BaseSettings):
     carla_port: int = Field(default=2000, ge=1, le=65535)
     carla_tm_port: int = Field(default=8001, ge=1, le=65535)
     carla_timeout_seconds: float = Field(default=30, ge=1, le=120)
+    # Optional isolated client (e.g. Python 3.7 + CARLA 0.9.11); backend stays on Python >=3.11.
+    carla_python_executable: Path | None = None
+    carla_client_path: Path | None = None
+    carla_bridge_timeout_seconds: float = Field(default=600, ge=60, le=7200)
+    carla_follow_ego: bool = False
+    carla_realtime_capture: bool = False
     experiment_agent_enabled: bool = False
     experiment_agent_model: str = "gpt-4o-mini"
     experiment_api_enabled_in_production: bool = False

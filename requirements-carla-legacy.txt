@@ -1,0 +1,3 @@
+# ONLY for the isolated Python 3.7 client; extract the bundled CARLA 0.9.11 egg.
+numpy==1.21.6
+# Backend/model/agent use Python >=3.11 + requirements-experiments.txt.
