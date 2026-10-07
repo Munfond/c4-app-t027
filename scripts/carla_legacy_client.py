@@ -36,11 +36,12 @@ def main():
                   "client_python": sys.version,
                   "pedestrian_seed_supported": hasattr(world, "set_pedestrians_seed")}
         Path(request["result"]).write_text(json.dumps(result), encoding="utf-8")
-    elif request["mode"] == "capture":
+    elif request["mode"] in ("capture", "capture_rig"):
         from src.simulation.carla_capture_core import capture
         data = dict(request["scenario"])
         data["lidar"] = SimpleNamespace(**data["lidar"])
-        capture(Scenario(**data), Path(request["root"]), lambda: None, settings)
+        capture(Scenario(**data), Path(request["root"]), lambda: None, settings,
+                rig_options=request.get("rig_options") if request["mode"] == "capture_rig" else None)
     else:
         raise ValueError("Unknown client operation")
 

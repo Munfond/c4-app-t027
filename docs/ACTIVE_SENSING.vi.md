@@ -142,8 +142,10 @@ python3 -m venv .venv-active-sensing
 
 Máy có Python hệ thống 3.10.12; kiểm thử API dùng Python 3.12.14 trong .venv-review.
 Runtime RL và CARLA 0.9.16 đã cài; NVIDIA driver hoạt động trên RTX 2050 4 GB.
-Capture thử hai frame camera/LiDAR/occupancy thành công; chưa dựng rig 6 camera/5 radar,
-chưa có bridge ROS 2. Workaround native reload crash dùng server/client mới mỗi capture,
+Capture occupancy hai frame thành công. Full rig CLI đã thu thật 20 frame đồng bộ,
+6 RGB + 6 camera GT, LiDAR 32/64 + semantic LiDAR GT, 5 radar và actor GT/calibration.
+Xem FULL_SENSOR_CAPTURE.vi.md và eval/full-rig-2026-10-08/. Reader/gate/scheduler đã qua;
+chưa có detector input adapter/inference hoặc bridge ROS 2. Workaround native reload crash dùng server/client mới mỗi capture,
 chi tiết tại CARLA_LINUX_SETUP.vi.md. Perception hiện chạy CPU, chưa có GPU work/window đo thật.
 
 ## Cổng nghiệm thu tiếp theo

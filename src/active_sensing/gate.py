@@ -18,6 +18,9 @@ def gate_capture(capture: dict, profile: Profile, *, seed: int = 0) -> dict:
     frame_id = capture["frame_id"]
     streams = capture["streams"]
     output = {"frame_id": frame_id, "profile_id": profile.id, "streams": {}}
+    for key in ("sensor_abi", "point_frame", "timestamp_s", "detector_adapter_validated"):
+        if key in capture:
+            output[key] = capture[key]
     if profile.cameras:
         if set(streams.get("camera", {})) != set(CAMERAS):
             raise ValueError("Expected the full six-camera rig")
@@ -34,6 +37,9 @@ def gate_capture(capture: dict, profile: Profile, *, seed: int = 0) -> dict:
             "frame_id": frame_id, "channels": profile.lidar_channels,
             "points": gate_points(lidar["points"], profile.lidar_keep, seed),
         }
+        for key in ("point_frame", "intensity_policy", "timestamp_s"):
+            if key in lidar:
+                output["streams"]["lidar"][key] = lidar[key]
     if profile.radars:
         if set(streams.get("radar", {})) != set(RADARS):
             raise ValueError("Expected the full five-radar rig")

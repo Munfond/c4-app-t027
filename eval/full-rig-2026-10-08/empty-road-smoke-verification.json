@@ -1,0 +1,32 @@
+{
+  "status": "verified",
+  "frames": 2,
+  "sensors": 20,
+  "duration_between_first_last_s": 0.05000000074505806,
+  "element_totals": {
+    "RADAR_BACK_LEFT": 149,
+    "RADAR_BACK_RIGHT": 136,
+    "CAM_FRONT_LEFT": 460800,
+    "CAM_BACK_RIGHT": 460800,
+    "GT_LIDAR": 111398,
+    "LIDAR_TOP": 30895,
+    "LIDAR_TOP_64": 61252,
+    "RADAR_FRONT": 105,
+    "CAM_BACK": 460800,
+    "CAM_BACK_LEFT": 460800,
+    "GT_CAM_BACK_RIGHT": 460800,
+    "RADAR_FRONT_LEFT": 150,
+    "CAM_FRONT_RIGHT": 460800,
+    "GT_CAM_FRONT_LEFT": 460800,
+    "GT_CAM_BACK_LEFT": 460800,
+    "CAM_FRONT": 460800,
+    "RADAR_FRONT_RIGHT": 150,
+    "GT_CAM_FRONT": 460800,
+    "GT_CAM_FRONT_RIGHT": 460800,
+    "GT_CAM_BACK": 460800
+  },
+  "manifest_sha256": "f7669ee3eda5108ddb90735ad42bfbe2ac92183be5477ae6bbadefc62e79f21f",
+  "perception_ready": false,
+  "server_lifecycle": "fresh_server_and_isolated_matching_client",
+  "disk_reserve_bytes": 1106362624
+}

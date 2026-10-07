@@ -56,7 +56,7 @@ def release_stale_sync(world):
     return True
 
 
-def capture(scenario, root, pulse, settings):
+def capture(scenario, root, pulse, settings, rig_options=None):
     try:
         carla = importlib.import_module("carla")
     except ImportError as exc:
@@ -115,7 +115,13 @@ def capture(scenario, root, pulse, settings):
             candidates = [i for i in range(len(spawns)) if i != scenario.route_spawn_index]
             rng.shuffle(candidates)
             traffic_spawns = [spawns[i] for i in candidates]
+            if rig_options is not None and rig_options["traffic_placement"] == "nearest_spawn":
+                traffic_spawns.sort(key=lambda spawn: ego_spawn.location.distance(spawn.location))
             route_evidence = {"policy": "autopilot spawn-index route", "original_spawn_index": scenario.route_spawn_index}
+        if rig_options is not None:
+            route_evidence["traffic_placement"] = (
+                "verified_highway" if route_kind == "highway" else rig_options["traffic_placement"]
+            )
         vehicles = sorted(library.filter("vehicle.*"), key=lambda bp: bp.id)
         if route_kind == "highway":
             vehicles = [bp for bp in vehicles if bp.has_attribute("number_of_wheels")
@@ -201,7 +207,12 @@ def capture(scenario, root, pulse, settings):
             ),
             "camera": ("sensor.camera.rgb", {"image_size_x": "640", "image_size_y": "360", "fov": "90"}),
         }
-        logger.info("Attaching LiDAR, semantic LiDAR and RGB camera")
+        rig = None
+        if rig_options is not None:
+            from src.simulation.carla_rig import RigRecorder
+            rig = RigRecorder(root, rig_options, scenario.timestep)
+            sensor_specs = rig.specs
+        logger.info("Attaching %s synchronized sensors", len(sensor_specs))
         for name, (blueprint_id, attrs) in sensor_specs.items():
             bp = library.find(blueprint_id)
             for key, value in attrs.items():
@@ -212,6 +223,8 @@ def capture(scenario, root, pulse, settings):
                 if name == "lidar"
                 else (carla.Transform(carla.Location(z=2.0)))
             )
+            if rig is not None:
+                transform = rig.transform(name, carla)
             sensor = world.spawn_actor(bp, transform, attach_to=ego)
             sensors.append(sensor)
             q = queue.Queue(maxsize=8)
@@ -262,6 +275,9 @@ def capture(scenario, root, pulse, settings):
             ground_location = ego_transform.transform(carla.Location(z=ground_offset))
             reference = carla.Transform(ground_location, ego_transform.rotation)
             ego_matrix = np.asarray(reference.get_matrix(), dtype=float)
+            if rig is not None:
+                rig.record(packets, snapshot, ego_matrix, actors, ego)
+                continue
             raw = np.frombuffer(packets["lidar"].raw_data, dtype="<f4").reshape(-1, 4)
             if not len(raw):
                 raise RuntimeError("LiDAR returned no points; cannot evaluate sensor cost/quality")
@@ -336,6 +352,16 @@ def capture(scenario, root, pulse, settings):
             )
             captured.append({"id": name, "frame_id": frame_id, "timestamp": snapshot.timestamp.elapsed_seconds})
             visible_counts.append(len(boxes))
+        if rig is not None:
+            manifest = rig.finish(scenario, {
+                "source": "carla", "server_version": client.get_server_version(),
+                "pedestrian_seed_supported": pedestrian_seed_supported,
+                "route_evidence": route_evidence, "ego_actor_id": ego.id,
+                "realized_vehicles": count_vehicle, "realized_pedestrians": count_pedestrian,
+                "lane_change_requests": lane_changes.requests if lane_changes else [],
+                "observed_lane_changes": lane_changes.observed if lane_changes else [],
+            })
+            return [], manifest
         manifest = {
             "source": "carla",
             "server_version": client.get_server_version(),
