@@ -6,16 +6,33 @@ import sqlite3
 import time
 import uuid
 from contextlib import contextmanager
+from contextvars import ContextVar
+from pathlib import Path
 
 from src.config import get_settings
-from src.services.experiment_registry import validate_spec, verified_hash
+from src.services.experiment_registry import camera_fingerprint, validate_spec, verified_hash
+
+_scoped_root: ContextVar[Path | None] = ContextVar("experiment_session_root", default=None)
+
+
+def root():
+    return _scoped_root.get() or get_settings().experiment_root
+
+
+@contextmanager
+def scope(path):
+    token = _scoped_root.set(path)
+    try:
+        yield
+    finally:
+        _scoped_root.reset(token)
 
 
 @contextmanager
 def connection():
-    root = get_settings().experiment_root
-    root.mkdir(parents=True, exist_ok=True)
-    db = sqlite3.connect(root / "jobs.sqlite3", timeout=30, isolation_level=None)
+    directory = root()
+    directory.mkdir(parents=True, exist_ok=True)
+    db = sqlite3.connect(directory / "jobs.sqlite3", timeout=30, isolation_level=None)
     db.row_factory = sqlite3.Row
     db.execute("PRAGMA journal_mode=WAL")
     db.execute("""CREATE TABLE IF NOT EXISTS experiments (
@@ -42,6 +59,9 @@ def create(spec, key=None):
     validate_spec(spec)
     checkpoints = {name: verified_hash(name) for name in spec.model_ids}
     frozen = {"request": spec.model_dump(), "checkpoints": checkpoints, "pipeline_version": "bev-v2"}
+    if spec.source == "dataset_replay":
+        frozen["camera_detector"] = camera_fingerprint()
+        frozen["pipeline_version"] = "dataset-replay-v1"
     fingerprint = hashlib.sha256(json.dumps(frozen, sort_keys=True).encode()).hexdigest()
     with connection() as db:
         db.execute("BEGIN IMMEDIATE")

@@ -57,6 +57,10 @@ class Settings(BaseSettings):
     experiment_agent_model: str = "gpt-4o-mini"
     experiment_api_enabled_in_production: bool = False
     experiment_max_pending: int = Field(default=5, ge=1, le=50)
+    # Optional local post-NMS camera detector; never supplied by API/LLM.
+    replay_camera_onnx: Path | None = None
+    replay_camera_input_size: int = Field(default=640, ge=64, le=2048)
+    replay_camera_score_threshold: float = Field(default=0.25, ge=0, le=1)
 
     # Database
     database_url: str = "sqlite:///./data/app.db"

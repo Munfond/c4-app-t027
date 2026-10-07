@@ -75,7 +75,7 @@ async def start(message, max_iou_drop=None, frames=None):
         "Mặc định test nhẹ: Town01, clear, 2 vehicles, 0 pedestrians, 2 frames, seed42, spawn0, "
         "capture_interval0.5, timestep0.05. LiDAR baseline channels32 points600000 range100 "
         "upper_fov10 lower_fov-30 mount_z2 pitch0. Profiles tiết kiệm 300000 và 150000 points/sec nếu "
-        "người dùng không chỉ định. max_iou_drop mặc định0.02 là chênh lệch IoU tuyệt đối. "
+        "người dùng không chỉ định. max_iou_drop mặc định0.02 là chênh lệch IoU tuyệt đối; min_occupied_iou mặc định0.3. "
         "Mưa/sương mù chỉ thay RGB, chưa chứng minh suy giảm LiDAR; không khẳng định mô phỏng vật lý. "
         "Nếu người dùng yêu cầu cao tốc: map Town04, route_kind=highway, vehicles15, pedestrians0, frames20. "
         "Nếu yêu cầu đổi làn liên tục: lane_change_interval_seconds=2.5; runner gửi lệnh và ghi nhận đổi làn thật. "
@@ -131,6 +131,10 @@ async def summarize(ident):
                 "Chỉ dùng metrics của tool; không bịa, không đổi lựa chọn provisional_selected của Python. "
                 "Nếu reference không khớp hoặc trial lỗi, nêu rõ chưa đủ bằng chứng. Không nói tối ưu điện/tiền "
                 "từ byte rate. Nhãn proxy và weather RGB không chứng minh an toàn/robustness thực tế."
+                " Với dataset_replay, camera_choice là riêng biệt, fidelity/consistency không phải GT accuracy. "
+                "provisional_selected có thể là cặp model/profile. Không gọi replay là mô phỏng phần cứng hay CARLA."
+                " Trả lời tối đa 180 từ, gồm lựa chọn model/profile, các số đo quyết định và giới hạn camera. "
+                "Không liệt kê lại toàn bộ bảng thử nghiệm."
             ),
         },
         {"role": "user", "content": f"Đọc và so sánh study {ident}"},
@@ -173,8 +177,7 @@ async def summarize(ident):
         ]
         trace.append({"tool": name, "tool_call_id": call_id})
         usage.append(data.get("usage", {}))
-    # Vietnamese summaries require more tokens than the short tool-call responses.
-    data = await completion(messages, max_tokens=1800)
+    data = await completion(messages, max_tokens=1400)
     message = data["choices"][0]["message"]
     if message.get("tool_calls") or not message.get("content"):
         raise ValueError("Expected final explanation, no further tools")

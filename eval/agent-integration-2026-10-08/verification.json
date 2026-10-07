@@ -1,0 +1,41 @@
+{
+  "date": "2026-10-08",
+  "checkout": "P-027-active-sensing",
+  "branch": "codex/active-sensing-integration",
+  "source_refs": {
+    "carla": "e8873c3",
+    "replay": "d312b24"
+  },
+  "backend": {
+    "chunk_id": "250bc3",
+    "wall_time_seconds": 0.000013085,
+    "exit_code": 0,
+    "original_token_count": 45,
+    "output": "........................................................................ [ 51%]\n...................................................................      [100%]\n139 passed in 9.08s\n"
+  },
+  "targeted_test_count": 115,
+  "ruff_src_tests": "passed",
+  "frontend": {
+    "node": "22.23.3",
+    "next": "16.3.8",
+    "lint": "passed",
+    "production_build": "passed",
+    "routes": [
+      "/lab",
+      "/compare",
+      "/benchmarks",
+      "/experiments",
+      "/agent",
+      "/carla"
+    ]
+  },
+  "scope": {
+    "llm": "mocked, no external calls",
+    "checkpoint_smoke": "repository occupancy checkpoints on labeled fixture, CPU",
+    "carla_live": false,
+    "ros": false,
+    "rl_training": false,
+    "remote_push": false,
+    "main_modified": false
+  }
+}

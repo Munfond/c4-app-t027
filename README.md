@@ -1,8 +1,12 @@
 # Perception Lab · Team 27
 
-Test agent tối ưu LiDAR trên máy GPU: [SENSOR_AGENT_LOCAL_TEST.vi.md](docs/SENSOR_AGENT_LOCAL_TEST.vi.md).
-Chạy `python -m scripts.test_sensor_agent --deterministic` trước, sau đó test LLM
-gọi tool khi đã cấu hình API key. Chưa nghiệm thu simulator trên RTX 3050.
+**Mục 04 / Agent Occupancy** tìm cấu hình giảm dữ liệu LiDAR/radar trên nuScenes
+mini bằng inference CPU, không cần CARLA. LLM lập kế hoạch; worker đo bằng ba
+checkpoint occupancy, Python chọn phương án theo IoU và dung lượng. Camera được
+đánh giá riêng về chất lượng ảnh; detection/flow/risk chưa là mục tiêu của agent.
+
+- [Hướng dẫn AI Agent: setup, FE/worker, phiên tạm, API và giới hạn](docs/REPLAY_SENSOR_AGENT.vi.md)
+- [Prompt kiểm thử và kết quả mong đợi](docs/AGENT_TEST_PROMPTS.vi.md)
 
 Demo: [c4-app-t027.vercel.app/lab](https://c4-app-t027.vercel.app/lab).
 Frontend Vercel gọi backend qua `/api/...`; deployment được kiểm tra riêng với local evidence.
@@ -25,6 +29,7 @@ Lab trực quan hóa ADAS trên nuScenes mini: quan sát Camera/LiDAR/Radar, đ�
 | `/lab` | Chọn scene/frame → Cảm biến (6 camera hoặc LiDAR/Radar) → Kết quả mô hình (Detection/Seg3D/Occupancy/Flow) → Risk. Timeline dùng chung trong Lab. |
 | `/compare` | Cùng scene, frame và ngưỡng điểm; so sánh hai mô hình Detection trong BEV. |
 | `/benchmarks` | Bốn nhóm số liệu, nguồn artifact và giới hạn thực nghiệm. |
+| `/experiments` | Agent Occupancy: yêu cầu → baseline/ứng viên → IoU/dung lượng → đối chiếu điểm, occupancy và ảnh trước/sau; lịch sử trong phiên. |
 
 LiDAR tham chiếu hiển thị độc lập với đầu vào mô hình. **CRN sử dụng Camera + Radar**, không có LiDAR. Tick ẩn cảm biến chỉ đổi hình hiển thị, không thực hiện ablation. Timeline phát keyframe dataset, không phải video/inference thời gian thực.
 
@@ -34,7 +39,7 @@ Kiểm chứng local 04/10/2026: 81 frame thuộc 2 scene; Occupancy, Flow và R
 
 - Python **3.12**, Node.js **22.x** (theo `frontend/package.json`), npm, Git.
 - Trình duyệt hỗ trợ WebGL cho Three.js viewer.
-- Bộ artifact của đội; nuScenes mini khi đọc cảm biến gốc hoặc chuẩn bị cache. **Clone repo không tự tải raw dataset/cache.** Bảy checkpoint occupancy/flow hiện được Git track; raw dataset, cache lớn và `.env` giữ ngoài Git. Test CARLA dùng checkpoint có sẵn, không cần raw nuScenes.
+- Bộ artifact của đội; nuScenes mini khi đọc cảm biến gốc hoặc chuẩn bị cache. **Clone repo không tự tải raw dataset/cache.** Bảy checkpoint occupancy/flow hiện được Git track; raw dataset, cache lớn và `.env` giữ ngoài Git. Agent cần raw nuScenes và PyTorch; xem runbook riêng ở trên.
 
 Cấu trúc phục vụ đầy đủ MVP, tính từ `LAB_DATA_ROOT`:
 
@@ -205,13 +210,13 @@ eval/                        Manual report và evidence nhỏ được version c
 
 CI chạy backend lint/tests và frontend lint/build trên runner Windows của đội. **CI xanh không tự deploy VPS**; merge rồi pull/build/restart riêng. Evidence local không xác nhận domain public đang hoạt động.
 
-## CARLA experiments và agent
+## Agents: CARLA và replay dataset
 
 Thành viên mới bắt đầu từ [CARLA + Sensor Agent quickstart](docs/CARLA_AGENT_QUICKSTART.vi.md)
 (cài đặt, nghiệm thu, chạy bằng prompt, xử lý sự cố).
 Giao diện chat và bảng so sánh metric: `/agent`, xem [hướng dẫn Sensor Agent UI](docs/SENSOR_AGENT_UI.vi.md).
 
-Xem [Experiments runbook](docs/EXPERIMENTS_RUNBOOK.vi.md) để chạy giao diện `/experiments`,
+Xem [Experiments runbook](docs/EXPERIMENTS_RUNBOOK.vi.md) để chạy giao diện `/carla`,
 worker bền vững, bảy checkpoint occupancy/flow hiện có và LLM planner tùy chọn.
 Adapter CARLA LiDAR đang ở mức experimental và cần server/client cấu hình riêng.
 CARLA 0.9.11 trên Windows/GPU 4 GB dùng client Python 3.7 riêng và worker Python mới;
@@ -219,3 +224,19 @@ xem [cấu hình CARLA 0.9.11 + agent](docs/CARLA_0911_AGENT_SETUP.vi.md).
 Luồng prompt → dữ liệu LiDAR → checkpoint/output có [hướng dẫn dataset](docs/PROMPT_LIDAR_DATASET.vi.md)
 và `dataset-index.json` để liên kết từng cấu hình/frame với input và prediction.
 Checkpoint radar/flow hiện chạy trên nuScenes; đầu vào CARLA chưa tương thích bị từ chối.
+
+Luồng agent chạy inference trong worker riêng; Lab/Compare vẫn đọc output tính sẵn.
+Không dùng kết quả agent để thay thế `cache/perception` của Lab. API key chỉ cần
+planning và giải thích, không cần cho xem Lab hoặc CLI replay deterministic.
+
+Giao diện agent chỉ giữ lịch sử phiên: refresh giữ, đóng tab/Kết thúc phiên dọn
+artifacts tạm theo lease. Tải báo cáo để giữ lâu dài. CLI QA giữ output riêng để resume.
+Backend/worker phải dùng cùng EXPERIMENT_ROOT. Xem
+[runbook hiện tại](docs/REPLAY_SENSOR_AGENT.vi.md) trước khi chạy hoặc deploy.
+
+Luồng CARLA được giữ riêng tại /agent và /carla; mục /experiments chạy replay.
+Không cần GPU/Vulkan/CARLA để chạy agent replay. Flow có checkpoint và output Lab,
+nhưng chưa được hỗ trợ trong agent replay. Cấu hình đạt occupancy không chứng minh
+chất lượng detection, flow hoặc risk.
+
+Đối chiếu hai branch và lộ trình RL: [Agent branch audit](docs/AGENT_BRANCH_AUDIT.vi.md), [Active Sensing](docs/ACTIVE_SENSING.vi.md).
