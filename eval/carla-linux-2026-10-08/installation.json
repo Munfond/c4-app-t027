@@ -1,0 +1,58 @@
+{
+  "recorded_at": "2026-10-07T19:17:09.871656+00:00",
+  "os": "Ubuntu 22.04.5, kernel 6.8.0-138-generic",
+  "python": "3.12.14",
+  "packages": {
+    "carla": "0.9.16",
+    "torch": "2.14.1+cpu",
+    "gymnasium": "1.2.3",
+    "stable-baselines3": "2.7.0",
+    "sb3-contrib": "2.7.0"
+  },
+  "server": {
+    "release": "0.9.16",
+    "source": "https://downloads.carlasim.com/Linux/CARLA_0.9.16.tar.gz",
+    "archive_bytes": 8346095504,
+    "unpacked_bytes": 20272275914,
+    "local_sha256": "09e3ebb28df17962f0c997e66f4b914ad5ea6f1d6a6dbbf13c9f87eb38346d57",
+    "publisher_sha256_verified": false,
+    "gzip_crc_check": "passed",
+    "extraction": "passed; Python tarfile data filter",
+    "native_missing_libraries": [],
+    "path": "data/runtime/carla-0.9.16",
+    "archive_removed_after_validation": true
+  },
+  "nvidia": {
+    "package": "nvidia-driver-595 595.91.07-0ubuntu0.22.04.1",
+    "kernel_module_available": "595.91.07",
+    "loaded_driver": "nouveau",
+    "nvidia_smi": "cannot communicate with NVIDIA driver",
+    "status": "reboot_required"
+  },
+  "pip_check": "passed",
+  "active_sensing_tests": {
+    "passed": 41
+  },
+  "gymnasium_check_env": "passed on synthetic replay",
+  "rl_runtime_smoke": {
+    "actual_steps": 256,
+    "bc_steps": 4,
+    "data": "synthetic_contract_fixture",
+    "output": "data/runtime/rl-smoke/policy",
+    "validated_on_test": false
+  },
+  "live_carla_smoke": {
+    "status": "not_run",
+    "reason": "NVIDIA driver requires reboot"
+  },
+  "llm_calls": false,
+  "notice": "Installation/runtime checks only. Synthetic training does not establish CARLA policy quality, real-world safety, or GPU savings.",
+  "carla_bridge_and_sensor_agent_tests": {
+    "passed": 16,
+    "llm": "mocked",
+    "execution": "outside sandbox; ASGI event loop stalled inside sandbox"
+  },
+  "lint": "passed: smoke script and active sensing module",
+  "bash_syntax": "passed: setup and start scripts",
+  "disk_available_after_archive_cleanup": "14 GiB"
+}

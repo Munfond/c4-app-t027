@@ -212,6 +212,9 @@ CI chạy backend lint/tests và frontend lint/build trên runner Windows của 
 
 ## Agents: CARLA và replay dataset
 
+Trên Ubuntu 22.04, dùng [CARLA Linux setup](docs/CARLA_LINUX_SETUP.vi.md)
+để cài driver, chạy server 0.9.16 và kiểm tra capture không cần LLM.
+
 Thành viên mới bắt đầu từ [CARLA + Sensor Agent quickstart](docs/CARLA_AGENT_QUICKSTART.vi.md)
 (cài đặt, nghiệm thu, chạy bằng prompt, xử lý sự cố).
 Giao diện chat và bảng so sánh metric: `/agent`, xem [hướng dẫn Sensor Agent UI](docs/SENSOR_AGENT_UI.vi.md).

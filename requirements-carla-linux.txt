@@ -1,0 +1,3 @@
+# Tested client for the CARLA 0.9.16 Linux server; worker Python 3.12.
+-r requirements-experiments.txt
+carla==0.9.16
