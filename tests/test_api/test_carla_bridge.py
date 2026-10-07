@@ -71,3 +71,31 @@ def test_external_client_is_available_without_importing_carla(tmp_path):
     assert bridge.client_available(settings)
     settings.carla_python_executable = tmp_path / "missing-python.exe"
     assert not bridge.client_available(settings)
+
+
+def test_second_capture_on_same_simulator_is_rejected(tmp_path):
+    from src.simulation.carla_capture import simulator_lock
+
+    settings = Settings(_env_file=None)
+    with simulator_lock(settings, tmp_path):
+        with pytest.raises(RuntimeError, match="busy"), simulator_lock(settings, tmp_path):
+            pass
+    with simulator_lock(settings, tmp_path):
+        pass
+
+
+def test_stale_synchronous_world_is_released_before_map_load():
+    from types import SimpleNamespace
+
+    from src.simulation.carla_capture_core import release_stale_sync
+
+    applied = []
+    world = SimpleNamespace(
+        get_settings=lambda: SimpleNamespace(synchronous_mode=True, fixed_delta_seconds=0.05),
+        apply_settings=applied.append,
+    )
+    assert release_stale_sync(world)
+    assert applied[0].synchronous_mode is False
+    world.get_settings = lambda: SimpleNamespace(synchronous_mode=False)
+    assert not release_stale_sync(world)
+    assert len(applied) == 1

@@ -45,6 +45,17 @@ def matching_sensor(q, frame_id, timeout, pulse):
     raise TimeoutError(f"Missing sensor frame {frame_id}")
 
 
+def release_stale_sync(world):
+    """A killed client never restores settings; nobody ticks the synchronous world, so load_world stalls."""
+    stale = world.get_settings()
+    if not stale.synchronous_mode:
+        return False
+    logger.warning("Releasing synchronous mode left by a previous client")
+    stale.synchronous_mode = False
+    world.apply_settings(stale)
+    return True
+
+
 def capture(scenario, root, pulse, settings):
     try:
         carla = importlib.import_module("carla")
@@ -55,7 +66,7 @@ def capture(scenario, root, pulse, settings):
     client.set_timeout(settings.carla_timeout_seconds)
     if client.get_client_version() != client.get_server_version():
         raise RuntimeError("CARLA client/server version mismatch")
-    world = client.get_world()
+    release_stale_sync(client.get_world())
     # Dedicated simulator required: loading a map changes its world.
     # Reset the world for every fresh trial; population/route comparisons need a common start.
     logger.info("Loading map %s", scenario.map)
