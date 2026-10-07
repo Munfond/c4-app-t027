@@ -9,6 +9,7 @@ const navigation = [
   { href: "/compare", label: "Compare", number: "02" },
   { href: "/benchmarks", label: "Benchmarks", number: "03" },
   { href: "/experiments", label: "Experiments", number: "04" },
+  { href: "/agent", label: "Sensor Agent", number: "05" },
 ];
 
 function PerceptionMark() {

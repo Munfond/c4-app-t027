@@ -7,10 +7,11 @@ from fastapi import APIRouter, Depends, Header, HTTPException, Path, Query
 from fastapi.responses import FileResponse
 
 from src.config import get_settings
-from src.models.experiments import AgentPlanRequest, ExperimentSpec
+from src.models.experiments import AgentPlanRequest, ExperimentSpec, SensorAgentRequest
 from src.services import experiment_store as store
 from src.services import sensor_studies as studies
 from src.services.experiment_registry import MODELS, registry, validate_spec
+from src.simulation.carla_bridge import client_available
 
 
 def require_experiment_access():
@@ -30,7 +31,7 @@ def experiment_registry():
     settings = get_settings()
     return {
         "models": registry(),
-        "carla_client_installed": importlib.util.find_spec("carla") is not None,
+        "carla_client_installed": client_available(settings),
         "torch_installed": importlib.util.find_spec("torch") is not None,
         "agent_enabled": settings.experiment_agent_enabled and bool(settings.openai_api_key),
         "agent_model": settings.experiment_agent_model,
@@ -75,15 +76,30 @@ def experiments():
 
 
 @router.post("/sensor-agent/start", status_code=201)
-async def start_sensor_agent(request: AgentPlanRequest):
+async def start_sensor_agent(request: SensorAgentRequest):
     from src.agents.sensor_agent import start
 
     try:
-        return await start(request.message)
+        return await start(request.message, max_iou_drop=request.max_iou_drop, frames=request.frames)
     except (RuntimeError, httpx.HTTPError) as exc:
         raise HTTPException(503, str(exc)) from exc
     except (ValueError, FileNotFoundError, KeyError, IndexError) as exc:
         raise HTTPException(422, str(exc)) from exc
+
+
+@router.get("/sensor-agent")
+def recent_sensor_studies():
+    return {"items": studies.recent()}
+
+
+@router.get("/sensor-agent/{ident}/comparison")
+def sensor_comparison(ident: ExperimentId):
+    try:
+        return studies.comparison(ident)
+    except KeyError as exc:
+        raise HTTPException(404, "Sensor study not found") from exc
+    except ValueError as exc:
+        raise HTTPException(409, str(exc)) from exc
 
 
 @router.get("/sensor-agent/{ident}")
@@ -164,3 +180,16 @@ def capture_camera(ident: ExperimentId, index: int = Query(default=0, ge=0, le=8
     if not path.is_file():
         raise HTTPException(404, "Camera capture not yet available")
     return FileResponse(path, media_type="image/png")
+
+
+@router.get("/{ident}/capture/{index}/{kind}")
+def capture_artifact(ident: ExperimentId, index: int = Path(ge=0, le=80), kind: str = "npz"):
+    job = experiment(ident)
+    spec = job["spec"]["request"]
+    if spec["source"] != "carla" or kind not in ("npz", "json", "png"):
+        raise HTTPException(404, "Capture artifact not found")
+    capture_id = spec.get("capture_id") or ident
+    path = get_settings().experiment_root / capture_id / "capture" / f"frame_{index:04d}.{kind}"
+    if not path.is_file():
+        raise HTTPException(404, "Capture artifact not yet available")
+    return FileResponse(path, filename=path.name)

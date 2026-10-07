@@ -20,8 +20,45 @@ from src.models.experiments import SensorStudySpec
 from src.services import sensor_studies as studies
 
 
+def save_dataset_index(study, root):
+    """Map the original prompt and sensor settings to each checkpoint input/output."""
+    records = []
+    for job in study["jobs"]:
+        if job["status"] != "succeeded":
+            continue
+        manifest = job["result"]["manifest"]
+        for index, frame in enumerate(manifest["frames"]):
+            name = frame["id"]
+            prefix = f"{job['id']}/capture/{name}"
+            prediction = f"{job['id']}/predictions/occupancy_lidar/{index:04d}.json"
+            for path in (prefix + ".npz", prefix + ".png", prefix + ".json", prediction):
+                if not (root / path).is_file():
+                    raise RuntimeError(f"Dataset artifact missing: {path}")
+            records.append({
+                "job_id": job["id"], "environment": job["environment"], "profile": job["profile"],
+                "frame": frame, "lidar": manifest["scenario"]["lidar"],
+                "input_npz": prefix + ".npz", "camera_png": prefix + ".png",
+                "geometry_json": prefix + ".json", "prediction_json": prediction,
+            })
+    (root / "dataset-index.json").write_text(json.dumps({
+        "study_id": study["id"], "prompt": study["metadata"].get("request"),
+        "artifact_root": str(root.resolve()),
+        "trials": [{"job_id": job["id"], "profile": job["profile"], "status": job["status"]}
+                   for job in study["jobs"]],
+        "checkpoint_id": "occupancy_lidar", "checkpoint_sha256": study["checkpoint_sha256"],
+        "input": "NPZ x has 7 BEV channels; occupancy_lidar consumes channels 0,1,2,3",
+        "output": "200x200 occupancy classes: free, static, object",
+        "records": records,
+    }, indent=2, ensure_ascii=False), encoding="utf-8")
+
+
 async def run(args):
     settings = get_settings()
+    if args.watch:
+        settings.carla_follow_ego = True
+        settings.carla_realtime_capture = True
+        os.environ["CARLA_FOLLOW_EGO"] = "true"
+        os.environ["CARLA_REALTIME_CAPTURE"] = "true"
     # A fresh queue avoids executing other user's experiments during an acceptance test.
     root = args.root or settings.experiment_root / "sensor-agent-tests" / uuid.uuid4().hex
     settings.experiment_root = root.resolve()
@@ -71,6 +108,7 @@ async def run(args):
         result = studies.comparison(ident)
         (root / "comparison.json").write_text(json.dumps(result, indent=2, ensure_ascii=False), encoding="utf-8")
         print(json.dumps(result, indent=2, ensure_ascii=False), flush=True)
+        save_dataset_index(study, root)
         if not args.deterministic:
             summary = await sensor_agent.summarize(ident)
             (root / "agent-summary.json").write_text(
@@ -86,9 +124,14 @@ async def run(args):
 
 
 def main():
+    # Windows redirected stdout may default to cp1252; agent summaries are Vietnamese.
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure"):
+            stream.reconfigure(encoding="utf-8")
     parser = argparse.ArgumentParser()
     parser.add_argument("--message", default="Thử cấu hình LiDAR tiết kiệm dữ liệu ở Town01 ít xe, 2 frames")
     parser.add_argument("--deterministic", action="store_true", help="Test simulator/tools without LLM calls")
+    parser.add_argument("--watch", action="store_true", help="Follow ego in the CARLA window and pace capture in real time")
     parser.add_argument("--root", type=Path, help="Dedicated artifacts directory; required when resuming a study")
     parser.add_argument("--study-id", help="Resume existing study in --root; never repeat LLM planning")
     parser.add_argument("--timeout", type=int, default=1800)

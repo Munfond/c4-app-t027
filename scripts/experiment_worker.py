@@ -4,6 +4,7 @@ import argparse
 import logging
 import time
 
+from src.services import sensor_studies
 from src.services.experiment_runner import run_once
 
 
@@ -13,6 +14,8 @@ def main():
     args = parser.parse_args()
     logging.basicConfig(level=logging.INFO)
     while True:
+        if not args.once:
+            sensor_studies.advance_running()
         result = run_once()
         if result:
             print(f"{result['id']} {result['status']}", flush=True)

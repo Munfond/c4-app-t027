@@ -194,3 +194,43 @@ async def test_agent_rejects_unexpected_tool_without_side_effects(sensor_setting
     with pytest.raises(ValueError, match="allowed tool"):
         await sensor_agent.start("test")
     assert store.recent() == []
+
+
+def test_worker_advances_without_browser_and_respects_cancel(sensor_settings):
+    study = studies.create(spec())
+    finish_trial(result())
+    studies.advance_running()
+    assert len(studies.get(study["id"])["jobs"]) == 2
+    studies.advance_running()
+    assert len(store.recent()) == 2
+    studies.cancel(study["id"])
+    studies.advance_running()
+    assert studies.recent()[0]["status"] == "cancelled"
+
+
+@pytest.mark.asyncio
+async def test_explicit_quality_controls_override_llm(client, sensor_settings, monkeypatch):
+    sensor_settings.experiment_agent_enabled = True
+    sensor_settings.openai_api_key = "mock-key-never-sent"
+
+    async def fake_completion(*args, **kwargs):
+        return tool_response("create_sensor_study", spec().model_dump())
+
+    monkeypatch.setattr(sensor_agent, "completion", fake_completion)
+    response = await client.post("/api/v1/experiments/sensor-agent/start", json={
+        "message": "Find a lower data rate", "max_iou_drop": 0.01, "frames": 20,
+    })
+    assert response.status_code == 201
+    study = response.json()
+    assert study["spec"]["max_iou_drop"] == 0.01
+    assert study["spec"]["scenarios"][0]["frames"] == 20
+    assert study["metadata"]["request"] == "Find a lower data rate"
+    pending = await client.get(f"/api/v1/experiments/sensor-agent/{study['id']}/comparison")
+    assert pending.status_code == 409
+    history = await client.get("/api/v1/experiments/sensor-agent")
+    assert history.json()["items"][0]["id"] == study["id"]
+    invalid = await client.post("/api/v1/experiments/sensor-agent/start", json={
+        "message": "Invalid limit", "max_iou_drop": -0.1,
+    })
+    assert invalid.status_code == 422
+    assert len(store.recent()) == 1

@@ -189,3 +189,15 @@ def comparison(ident):
 def save_summary(ident, summary):
     with connection() as db:
         db.execute("UPDATE sensor_studies SET summary=? WHERE id=?", (json.dumps(summary, ensure_ascii=False), ident))
+
+
+def recent():
+    with connection() as db:
+        rows = list(db.execute("SELECT id FROM sensor_studies ORDER BY created DESC LIMIT 30"))
+    return [get(row["id"]) for row in rows]
+
+
+def advance_running():
+    for study in recent():
+        if study["status"] == "running":
+            advance(study["id"])

@@ -48,7 +48,7 @@ async def completion(messages, tools=None, choice=None, max_tokens=1800):
         raise RuntimeError(f"LLM provider HTTP {response.status_code}; inspect account/model/credits, no auto retry")
     data = response.json()
     if data["choices"][0].get("finish_reason") == "length":
-        raise ValueError("LLM output truncated; no tool executed")
+        raise ValueError("LLM output truncated; increase the response token limit")
     return data
 
 
@@ -64,19 +64,23 @@ def one_call(data, expected):
     return assistant, call["id"], arguments
 
 
-async def start(message):
+async def start(message, max_iou_drop=None, frames=None):
     enabled()
     system = (
         "Bạn là agent lập thí nghiệm tối ưu lượng dữ liệu LiDAR P-027. Gọi create_sensor_study đúng một lần. "
         "Công cụ thực sự tạo job; worker riêng chạy CARLA. Chỉ occupancy_lidar, không camera/radar model. "
         "Chỉ chỉnh sensor trong miền schema; ưu tiên đổi points_per_second, channels, range_m. "
         "Tạo tối đa 3 environments và 3 profiles; baseline là lidar của từng scenario, được chạy tự động. "
+        "Tuyệt đối không thêm baseline vào profiles và không đặt tên profile là baseline. "
         "Mặc định test nhẹ: Town01, clear, 2 vehicles, 0 pedestrians, 2 frames, seed42, spawn0, "
         "capture_interval0.5, timestep0.05. LiDAR baseline channels32 points600000 range100 "
         "upper_fov10 lower_fov-30 mount_z2 pitch0. Profiles tiết kiệm 300000 và 150000 points/sec nếu "
         "người dùng không chỉ định. max_iou_drop mặc định0.02 là chênh lệch IoU tuyệt đối. "
         "Mưa/sương mù chỉ thay RGB, chưa chứng minh suy giảm LiDAR; không khẳng định mô phỏng vật lý. "
-        "Spawn route không phải tuyến cao tốc đã xác minh. Không hứa tiết kiệm điện hoặc chi phí tiền."
+        "Nếu người dùng yêu cầu cao tốc: map Town04, route_kind=highway, vehicles15, pedestrians0, frames20. "
+        "Nếu yêu cầu đổi làn liên tục: lane_change_interval_seconds=2.5; runner gửi lệnh và ghi nhận đổi làn thật. "
+        "Với cảnh thông thường dùng route_kind=spawn và lane_change_interval_seconds=null nếu không yêu cầu đổi làn. "
+        "Không hứa tiết kiệm điện hoặc chi phí tiền."
     )
     name = "create_sensor_study"
     data = await completion(
@@ -92,6 +96,13 @@ async def start(message):
     )
     _, call_id, arguments = one_call(data, name)
     spec = SensorStudySpec.model_validate(arguments)
+    # Explicit user controls take precedence over LLM defaults.
+    if max_iou_drop is not None:
+        spec = SensorStudySpec.model_validate({**spec.model_dump(), "max_iou_drop": max_iou_drop})
+    if frames is not None:
+        spec = SensorStudySpec.model_validate({**spec.model_dump(), "scenarios": [
+            {**scenario.model_dump(), "frames": frames} for scenario in spec.scenarios
+        ]})
     study = studies.create(
         spec,
         {
@@ -162,7 +173,8 @@ async def summarize(ident):
         ]
         trace.append({"tool": name, "tool_call_id": call_id})
         usage.append(data.get("usage", {}))
-    data = await completion(messages, max_tokens=700)
+    # Vietnamese summaries require more tokens than the short tool-call responses.
+    data = await completion(messages, max_tokens=1800)
     message = data["choices"][0]["message"]
     if message.get("tool_calls") or not message.get("content"):
         raise ValueError("Expected final explanation, no further tools")
