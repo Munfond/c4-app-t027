@@ -1,6 +1,7 @@
 """Dispatch capture to a local client or an isolated legacy Python client."""
 import os
 import re
+import sys
 import tempfile
 from contextlib import contextmanager
 from pathlib import Path
@@ -40,4 +41,20 @@ def capture(scenario, root, pulse):
             from src.simulation.carla_bridge import capture_external
             return capture_external(scenario, root, pulse, settings)
         from src.simulation.carla_capture_core import capture as capture_local
-        return capture_local(scenario, root, pulse, settings)
+        from src.simulation.carla_server import fresh_server
+
+        if settings.carla_server_executable:
+            from src.simulation.carla_bridge import capture_external
+
+            # CARLA caches native Traffic Manager clients by port. Keep those
+            # objects out of the long-lived worker when servers are restarted.
+            isolated = settings.model_copy(update={"carla_python_executable": Path(sys.executable),
+                                                   "carla_client_path": None})
+            with fresh_server(settings, root, pulse):
+                frames, manifest = capture_external(scenario, root, pulse, isolated)
+            manifest["client_runtime"] = "isolated_matching_worker_python"
+            manifest["server_lifecycle"] = "fresh_process_per_capture"
+        else:
+            frames, manifest = capture_local(scenario, root, pulse, settings)
+            manifest["server_lifecycle"] = "external"
+        return frames, manifest

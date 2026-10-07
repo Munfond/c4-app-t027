@@ -13,7 +13,16 @@ from src.simulation.carla_bridge import probe
 def check():
     settings = get_settings()
     checkpoint = verified_hash("occupancy_lidar")
-    connection = probe(settings)
+    if settings.carla_server_executable:
+        from importlib.metadata import version
+
+        connection = {
+            "mode": "worker_managed", "client_version": version("carla"),
+            "server_binary_exists": settings.carla_server_executable.is_file(),
+            "notice": "Live server/client match is checked by the worker on each fresh capture",
+        }
+    else:
+        connection = probe(settings)
     return {
         "python": sys.version,
         "platform": platform.platform(),

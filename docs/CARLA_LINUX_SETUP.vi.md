@@ -17,39 +17,47 @@ BC/PPO 256 bước dùng **fixture tổng hợp** đã chạy để kiểm tra p
 phải policy được huấn luyện trên CARLA. NVIDIA driver được Ubuntu chọn tự động.
 Sau khi cài driver, phải reboot và kiểm tra `nvidia-smi` trước khi chạy server.
 
-## Khởi động sau reboot
+## Chạy trên máy này sau reboot
 
-Terminal 1, giữ mở trong lúc dùng simulator:
+Driver NVIDIA 595 đã hoạt động, GPU RTX 2050 có 4 GB VRAM. CARLA 0.9.16
+đã capture được, nhưng lần reload Town01 tiếp theo trong cùng process gây crash
+native ở landscape renderer. Cấu hình máy hiện tại dùng **server mới cho mỗi
+capture**, bật bằng đường dẫn `CARLA_SERVER_EXECUTABLE` trong `.env`. Worker
+khởi động server, chờ client/server cùng version, capture và đóng process do nó
+sở hữu. Capture dùng client subprocess cùng Python/client version để native Traffic
+Manager không giữ kết nối của trial trước trong worker. Cổng đang có server khác sẽ bị từ chối; worker không tự kill server ngoài.
+
+**Không cần mở CARLA riêng trong chế độ này.** Chạy smoke không cần API hoặc LLM:
 
 ```bash
 cd /home/lam/WorkSpace/vinuni-buildphase/P-027-active-sensing
 nvidia-smi
-bash scripts/start_carla_linux.sh
-```
-
-Launcher dùng `-RenderOffScreen` và chất lượng Low để giảm tải, giữ camera RGB
-hoạt động. Không dùng `no_rendering_mode` nếu cần ảnh camera. Máy ít VRAM có thể
-vẫn không đủ chạy CARLA 0.9.16; chỉ kết luận sau khi kiểm tra GPU và capture thật.
-Không chạy server bằng `sudo`. Khi đổi cổng, phải đổi cả `.env` và cờ launcher.
-
-Terminal 2, đợi server load map rồi kiểm tra:
-
-```bash
-cd /home/lam/WorkSpace/vinuni-buildphase/P-027-active-sensing
 .venv-experiments/bin/python -m scripts.check_carla
 .venv-experiments/bin/python -m scripts.smoke_carla
 ```
 
-`check_carla` phải báo hai version `0.9.16`. Smoke tạo hai frame Town01, seed 42,
-hai xe, không người đi bộ, chạy checkpoint `occupancy_lidar`, không gọi LLM.
-Kết quả ở `data/runtime/carla-smoke/smoke-report.json`; `status` phải là
-`succeeded`. Chỉ chạy một capture/worker trên cùng server; dừng worker khác trước
-khi chạy smoke. Nếu GPU báo lỗi hoặc capture thất bại, giữ log để xử lý, không
-coi cài package thành công là mô phỏng đã hoạt động.
+`check_carla` kiểm tra binary/client/checkpoint; version của server đang chạy
+được kiểm tra trong mỗi capture. Smoke tạo hai frame Town01, seed 42, hai xe,
+không người đi bộ và chạy checkpoint `occupancy_lidar`. Kết quả ở
+`data/runtime/carla-smoke/smoke-report.json`; `status` phải là `succeeded`.
+Đợi smoke hoàn tất trước khi mở worker; không chạy hai capture đồng thời trên
+cùng cổng CARLA.
+Log server nằm tại `<JOB_ROOT>/capture/server.log`. Server chạy Low, offscreen,
+640 × 360, giới hạn render 20 FPS; checkpoint chạy CPU. Không gọi LLM.
+
+Mỗi trial mất thêm thời gian khởi động server; đây là workaround cho máy này,
+không phải cam kết simulator chạy ổn định lâu dài. Startup không nằm trong metric
+`latency_model_only_ms`. Trial vẫn reset world/seed, không bỏ reload để làm metric
+trông ổn hơn. Capture dùng timestep 0,05 giây, xuất frame mỗi 0,5 giây.
+
+Máy khác có thể dùng server ngoài: bỏ `CARLA_SERVER_EXECUTABLE` khỏi `.env`,
+restart worker và chạy `bash scripts/start_carla_linux.sh` trong terminal riêng.
+Trên máy hiện tại, chế độ server ngoài đã gặp crash khi reload map lặp lại.
+Không dùng `no_rendering_mode` nếu cần ảnh camera. Không chạy server bằng `sudo`.
 
 ## Mở backend và worker
 
-Sau smoke thành công, dùng hai terminal riêng:
+Sau smoke thành công, dùng hai terminal riêng (managed mode tự mở CARLA khi có job):
 
 ```bash
 cd /home/lam/WorkSpace/vinuni-buildphase/P-027-active-sensing
@@ -93,7 +101,9 @@ vào `data/runtime/downloads/`, giải nén server vào `data/runtime/carla-0.9.
 sao cho thư mục này chứa `CarlaUE4.sh`. Kiểm tra đủ dung lượng cho cả archive và
 server trước khi giải nén. Tạo `.env` từ `.env.example` nếu chưa có, giữ
 `CARLA_HOST=127.0.0.1`, `CARLA_PORT=2000`, `CARLA_TM_PORT=8001`,
-`CARLA_TIMEOUT_SECONDS=120`, `EXPERIMENT_DEVICE=cpu`. Với client 0.9.16 cùng
+`CARLA_TIMEOUT_SECONDS=120`, `EXPERIMENT_DEVICE=cpu`. Nếu dùng managed mode, thêm
+`CARLA_SERVER_EXECUTABLE` trỏ tới `CarlaUE4/Binaries/Linux/CarlaUE4-Linux-Shipping`
+trong thư mục server. Với client 0.9.16 cùng
 runtime, không đặt `CARLA_PYTHON_EXECUTABLE` hoặc `CARLA_CLIENT_PATH` legacy.
 
 ## Giới hạn của bằng chứng

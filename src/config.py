@@ -47,6 +47,8 @@ class Settings(BaseSettings):
     carla_port: int = Field(default=2000, ge=1, le=65535)
     carla_tm_port: int = Field(default=8001, ge=1, le=65535)
     carla_timeout_seconds: float = Field(default=30, ge=1, le=120)
+    # Optional trusted local binary: a fresh simulator per capture, owned by worker.
+    carla_server_executable: Path | None = None
     # Optional isolated client (e.g. Python 3.7 + CARLA 0.9.11); backend stays on Python >=3.11.
     carla_python_executable: Path | None = None
     carla_client_path: Path | None = None

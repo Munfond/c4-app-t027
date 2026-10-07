@@ -13,8 +13,9 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, default=Path("data/runtime/carla-smoke"))
     args = parser.parse_args()
-    # Refuse a version mismatch before queuing a capture.
-    connection = probe(store.get_settings())
+    # External servers are checked now; managed servers are checked on startup.
+    settings = store.get_settings()
+    connection = {"mode": "worker_managed"} if settings.carla_server_executable else probe(settings)
     with store.scope(args.output.resolve()):
         if any(job["status"] in ("queued", "running") for job in store.recent()):
             parser.error("Smoke output has pending jobs; inspect them or choose another --output")

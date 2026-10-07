@@ -1,4 +1,4 @@
-"""Python 3.7 child process: no backend, Pydantic, Torch or LLM imports."""
+"""Isolated matching/legacy CARLA client; no Pydantic, Torch or LLM imports."""
 import argparse
 import importlib
 import json

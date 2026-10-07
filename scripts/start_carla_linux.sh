@@ -23,4 +23,5 @@ export __GLX_VENDOR_LIBRARY_NAME=nvidia
 export __VK_LAYER_NV_optimus=NVIDIA_only
 cd -- "${carla_root}"
 exec ./CarlaUE4.sh -RenderOffScreen -quality-level=Low \
+  -ResX=640 -ResY=360 '-ExecCmds=t.MaxFPS 20' \
   -carla-rpc-port=2000 -nosound "$@"
