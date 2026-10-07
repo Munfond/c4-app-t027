@@ -1,0 +1,82 @@
+{
+  "prompt": "Tôi muốn tạo xe chạy trên đường cao tốc với nhiều xe và thay đổi làn liên tục",
+  "records_verified": 60,
+  "trials": [
+    {
+      "profile": "baseline",
+      "vehicles": 15,
+      "frames": 20,
+      "route": {
+        "policy": "Town04 non-junction road >=300m with >=3 same-direction driving lanes",
+        "original_spawn_index": 184,
+        "road_id": 45,
+        "lane_id": -4,
+        "s": 224.0,
+        "same_direction_lanes": 4,
+        "road_length_m": 576.0
+      },
+      "lane_requests": 29,
+      "lane_transitions": 18,
+      "ego_transitions": [
+        {
+          "time": 6.8500000000000005,
+          "actor_id": 3194,
+          "road_id": 45,
+          "from_lane": -4,
+          "to_lane": -3
+        }
+      ]
+    },
+    {
+      "profile": "profile_300k",
+      "vehicles": 15,
+      "frames": 20,
+      "route": {
+        "policy": "Town04 non-junction road >=300m with >=3 same-direction driving lanes",
+        "original_spawn_index": 184,
+        "road_id": 45,
+        "lane_id": -4,
+        "s": 224.0,
+        "same_direction_lanes": 4,
+        "road_length_m": 576.0
+      },
+      "lane_requests": 29,
+      "lane_transitions": 18,
+      "ego_transitions": [
+        {
+          "time": 6.8500000000000005,
+          "actor_id": 3334,
+          "road_id": 45,
+          "from_lane": -4,
+          "to_lane": -3
+        }
+      ]
+    },
+    {
+      "profile": "profile_150k",
+      "vehicles": 15,
+      "frames": 20,
+      "route": {
+        "policy": "Town04 non-junction road >=300m with >=3 same-direction driving lanes",
+        "original_spawn_index": 184,
+        "road_id": 45,
+        "lane_id": -4,
+        "s": 224.0,
+        "same_direction_lanes": 4,
+        "road_length_m": 576.0
+      },
+      "lane_requests": 29,
+      "lane_transitions": 18,
+      "ego_transitions": [
+        {
+          "time": 6.8500000000000005,
+          "actor_id": 3474,
+          "road_id": 45,
+          "from_lane": -4,
+          "to_lane": -3
+        }
+      ]
+    }
+  ],
+  "note": "Transitions are lane-ID boundary crossings, not certification of completed maneuvers or collision-free driving."
+}

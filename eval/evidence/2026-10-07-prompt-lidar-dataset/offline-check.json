@@ -1,0 +1,15 @@
+{
+  "input_npz": "03cb194fad834a44a8dd4918df9bbbf0/capture/frame_0000.npz",
+  "input_shape": [
+    1,
+    4,
+    200,
+    200
+  ],
+  "output_shape": [
+    200,
+    200
+  ],
+  "checkpoint_sha256": "8d6c7155534906a50ca2f52b039696700072ff200768f0d91ead33c828e9f878",
+  "matches_saved_prediction": true
+}
