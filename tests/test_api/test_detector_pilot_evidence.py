@@ -58,6 +58,12 @@ async def test_sparse_tamper_is_not_silently_replaced_by_old_pilot(client, archi
 
 
 @pytest.mark.asyncio
+async def test_missing_declared_bundle_member_is_integrity_failure_not_optional_absence(client, archive):
+    (pilot.SPARSE_ROOT / 'full-gt-audit.zip').unlink()
+    assert (await client.get(pilot.BASE + '?pilot=sparse60')).status_code == 409
+
+
+@pytest.mark.asyncio
 async def test_actual_bundle_has_traceable_diagnostic_scope(client, archive):
     response = await client.get(pilot.BASE)
     assert response.status_code == 200

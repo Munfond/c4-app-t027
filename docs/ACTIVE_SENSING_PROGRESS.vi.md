@@ -27,7 +27,7 @@
   riêng. Không đổi bộ đo khi còn review nháp/đang lưu, không tự train/áp profile.
   Các report/geometry/auditZIP có link từ panel. Prototype chưa có real LLM call.
 - Canonical readonly bundle141members:eval/detector-pilot-sparse-60s-2026-10-08/.
-  Case3 ban đầu và case64 giữ riêng; không sửa reports đã đo. Plot4đã tạo; plot3
+  Case3 ban đầu và case64 giữ riêng; không sửa reports đã đo. Plot4đã view_image kiểm tra; plot3
   đã view_image/refine để p95 và mean không đè chữ. Raw/checkpoints không đưa Git.
 - Audit toàn1200frame: reference-visible instances5299; zero input32returns1161,
   input64returns285. Trong radius54m:3484instances,zero32=103,zero64=8.
@@ -44,7 +44,7 @@
   EvidenceSHA mới2469b20de1d9e001ac0a9e7e98d08368d5f2f8216ca8a34face2f037e3a28f92.
   eval/detector-sparse-60s-api-check.json. Actual engineer reviews0; không tạo giả.
   SSR không chứa picker vì dock chưa mở; **chưa browser render QA**, vẫn bị policy.
-- Backend8000PID159702/session7228,frontend3111PID159832/session49012, dùng build
+- Backend8000PID162507/session31707,frontend3111PID159832/session49012, dùng build
   standalone mới/static đã copy. Worker9023idle giữ nguyên, chưa restart worker.
   Không gọi capture/detector/train online từ bot; đây là đọc số đo đã lưu.
 - Ổ đĩa còn khoảng1,18GiB sau build. Đã hỏi phương án thêm15–20GiB/ổ khác/máy khác,
@@ -54,7 +54,9 @@
 Chưa có 12–24 **validated** profiles, complete GT ontology/static mapping, CRN/seg
 adapters, total GPU/window, ROS2 bridge hoặc real BC/PPO. Không ép train từ pilot.
 Không push/merge trong lượt này. Commit phần compact64edf65; baseline/stride3837a39.
-Lưu thay đổi GUI/evidence hiện tại trước khi tiếp tục. AutomationPAUSED, không bật lại.
+GUI/evidence đã commit0d3831c; guard thiếu member trong bundle đi kèm checkpoint này.
+9 focused tests qua sau guard: missing artifact→409, optional absent archive→available=false.
+AutomationPAUSED, không bật lại.
 Hạn mức mới nhất85%used/15%remaining, reset12:05:33VN; query lại trước công việc dài.
 - Metadata ngắt cũ đã kiểm kê 517 frame, mỗi frame 20 stream; file tham chiếu
   hiện diện, chưa verify checksum toàn bộ. Không gắn manifest complete cho lượt cũ.

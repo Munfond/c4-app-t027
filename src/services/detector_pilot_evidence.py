@@ -28,7 +28,7 @@ def artifact(name, pilot='short'):
     path = (selected / name).resolve()
     root = selected.resolve()
     expected = members[name]
-    if (not path.is_relative_to(root) or path.stat().st_size != expected['bytes']
+    if (not path.is_relative_to(root) or not path.is_file() or path.stat().st_size != expected['bytes']
             or expected['bytes'] > 2 * 1024 ** 2 or sha256_file(path) != expected['sha256']):
         raise ValueError('Evidence bundle artifact checksum/boundary mismatch')
     return path
