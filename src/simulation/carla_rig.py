@@ -6,6 +6,7 @@ Ground truth files are separate from perception inputs; no GT inference features
 import hashlib
 import json
 import math
+import shutil
 from pathlib import Path
 
 import numpy as np
@@ -33,6 +34,38 @@ RADARS = {
     "RADAR_BACK_LEFT": (-1.7, -0.7, 0.7, -135),
     "RADAR_BACK_RIGHT": (-1.7, 0.7, 0.7, 135),
 }
+LEGACY_STORAGE = 'raw-and-ego-v1'
+COMPACT_STORAGE = 'raw-only-lossless-v2'
+
+
+def storage_encoding(manifest):
+    version = manifest.get('schema_version')
+    encoding = manifest.get('storage_encoding', LEGACY_STORAGE)
+    if (version, encoding) not in ((1, LEGACY_STORAGE), (2, COMPACT_STORAGE)):
+        raise ValueError('Unknown episode schema/storage encoding')
+    return encoding
+
+
+def point_arrays(path, sensor, ego_matrix, encoding):
+    """Reconstruct derived coordinates from measured raw data and extrinsics."""
+    with np.load(path, allow_pickle=False) as data:
+        raw = data['raw']
+        if raw.dtype == SEMANTIC_DTYPE:
+            if raw.ndim != 1:
+                raise ValueError('Invalid semantic point artifact')
+            xyz = np.column_stack((raw['x'], raw['y'], raw['z']))
+        else:
+            if raw.ndim != 2 or raw.shape[1] != 4 or raw.dtype != np.dtype('<f4') or not np.isfinite(raw).all():
+                raise ValueError('Invalid raw point artifact')
+            xyz = radar_xyz(raw) if sensor['encoding'] == 'velocity_azimuth_altitude_depth' else raw[:, :3]
+        transformed = carla_to_ego(xyz, np.asarray(sensor['sensor_to_world_carla']), ego_matrix)
+        if encoding == COMPACT_STORAGE:
+            if set(data.files) != {'raw'}:
+                raise ValueError('Compact point artifact must store raw only')
+            return raw, transformed
+        if encoding != LEGACY_STORAGE or set(data.files) != {'raw', 'points_ego'}:
+            raise ValueError('Legacy point artifact requires stored ego coordinates')
+        return raw, data['points_ego']
 
 
 def camera_intrinsic(width, height, fov):
@@ -89,6 +122,36 @@ class RigRecorder:
         self.artifact_bytes = 0
         self.counts = {name: [] for name in self.specs}
         self.raw_bytes = {name: 0 for name in self.specs}
+        self.storage = options.get('storage_encoding', LEGACY_STORAGE)
+        if self.storage not in (LEGACY_STORAGE, COMPACT_STORAGE):
+            raise ValueError('Unknown storage encoding')
+        self.disk_budget = options.get('disk_budget_bytes')
+        if self.disk_budget is not None and (self.storage != COMPACT_STORAGE or self.disk_budget <= 0):
+            raise ValueError('Bounded storage budget requires compact encoding')
+        self.environment_inventory = None
+        self.actor_scope = 'episode_spawned_actors'
+
+    def record_environment(self, world, carla):
+        """Reference inventory, not deduplicated detection GT or semantic ID mapping."""
+        labels = ('Car', 'Truck', 'Bus', 'Motorcycle', 'Bicycle', 'Pedestrians', 'Rider',
+                  'Buildings', 'Walls', 'Fences', 'Roads', 'Sidewalks', 'GuardRail')
+        records = []
+        for name in labels:
+            for obj in world.get_environment_objects(getattr(carla.CityObjectLabel, name)):
+                bb = obj.bounding_box  # Already world-space; do not apply obj.transform again.
+                matrix = np.asarray(carla.Transform(bb.location, bb.rotation).get_matrix())
+                records.append({'environment_id': int(obj.id), 'name': obj.name, 'semantic_label': name,
+                                'semantic_tag': int(obj.type), 'box_to_world_carla': matrix.tolist(),
+                                'size_lwh': [bb.extent.x * 2, bb.extent.y * 2, bb.extent.z * 2]})
+        path = self.root / 'ground_truth/environment-inventory.json'
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps({'kind': 'CARLA_engine_environment_geometry_inventory', 'objects': records,
+                                   'queried_labels': labels, 'source': 'world.get_environment_objects',
+                                   'coordinates': 'bounding boxes already in world-space CARLA axes',
+                                   'semantic_lidar_id_mapping_validated': False,
+                                   'object_deduplication_validated': False,
+                                   'scene_precision_ready': False}, indent=2, allow_nan=False))
+        self.environment_inventory = self.artifact(path)
 
     def transform(self, name, carla):
         x, y, z, yaw = self.poses[name]
@@ -99,7 +162,10 @@ class RigRecorder:
         return {"path": path.relative_to(self.root).as_posix(), "bytes": path.stat().st_size,
                 "sha256": sha256_file(path)}
 
-    def record(self, packets, snapshot, ego_matrix, actors, ego):
+    def record(self, packets, snapshot, ego_matrix, actors, ego, actor_scope='episode_spawned_actors'):
+        if actor_scope not in ('episode_spawned_actors', 'world_vehicle_walker_actors'):
+            raise ValueError('Unknown actor annotation scope')
+        self.actor_scope = actor_scope
         frame_id = snapshot.frame
         timestamp = snapshot.timestamp.elapsed_seconds
         if set(packets) != set(self.specs):
@@ -107,13 +173,21 @@ class RigRecorder:
         for packet in packets.values():
             if packet.frame != frame_id or abs(packet.timestamp - timestamp) > 1e-5:
                 raise ValueError("Rig packet frame/timestamp does not match world snapshot")
+        if self.disk_budget is not None:
+            # Reserve worst-case next raw frame plus codec/metadata overhead. Never
+            # rely on an assumed compression ratio or consume the last GiB.
+            next_frame = math.ceil(sum(len(p.raw_data) for p in packets.values()) * 1.2 + 1024 ** 2)
+            if (self.artifact_bytes + next_frame > self.disk_budget
+                    or shutil.disk_usage(self.root).free < 1024 ** 3 + next_frame):
+                raise ValueError('Capture storage budget/headroom exhausted; incomplete episode is not usable')
         name = f"frame_{len(self.frames):05d}"
         inputs = self.root / "inputs" / name
         truth = self.root / "ground_truth" / name
         inputs.mkdir(parents=True)
         truth.mkdir(parents=True)
         metadata = {"id": name, "frame_id": frame_id, "timestamp": timestamp,
-                    "ego_ground_to_world_carla": ego_matrix.tolist(), "sensors": {}}
+                    "ego_ground_to_world_carla": ego_matrix.tolist(), "sensors": {},
+                    'actor_annotation_scope': actor_scope}
         semantic = np.frombuffer(packets["GT_LIDAR"].raw_data, dtype=SEMANTIC_DTYPE)
         visible_ids = set(int(v) for v in semantic["object"])
         for sensor_name, packet in packets.items():
@@ -133,8 +207,15 @@ class RigRecorder:
                 item["intrinsic"] = camera_intrinsic(packet.width, packet.height, self.options["fov"]).tolist()
                 item["optical_to_ego_lab"] = (extrinsic @ np.linalg.inv(OPTICAL)).tolist()
                 if is_gt:
-                    path = base / (sensor_name + ".npy")
-                    np.save(path, pixels[:, :, 2])  # Raw BGRA red channel contains semantic IDs.
+                    if self.storage == COMPACT_STORAGE:
+                        from PIL import Image
+                        path = base / (sensor_name + '.png')
+                        Image.fromarray(pixels[:, :, 2]).save(path, format='PNG')
+                    else:
+                        path = base / (sensor_name + ".npy")
+                        np.save(path, pixels[:, :, 2])
+                    # Raw BGRA red channel contains semantic IDs. PNG is uint8 L,
+                    # not a palette visualization or lossy RGB/JPEG conversion.
                     item["encoding"] = "CARLA_0.9.16_semantic_tag_uint8"
                 else:
                     path = base / (sensor_name + ".png")
@@ -144,7 +225,10 @@ class RigRecorder:
             elif "semantic" in blueprint:
                 path = base / (sensor_name + ".npz")
                 xyz = np.column_stack((semantic["x"], semantic["y"], semantic["z"]))
-                np.savez_compressed(path, raw=semantic, points_ego=carla_to_ego(xyz, sensor_matrix, ego_matrix))
+                arrays = {'raw': semantic}
+                if self.storage == LEGACY_STORAGE:
+                    arrays['points_ego'] = carla_to_ego(xyz, sensor_matrix, ego_matrix)
+                np.savez_compressed(path, **arrays)
                 count = len(semantic)
                 item["encoding"] = "xyz_incidence_actor_id_semantic_tag"
             else:
@@ -153,7 +237,10 @@ class RigRecorder:
                     raise ValueError("Non-finite sensor measurement")
                 xyz = radar_xyz(raw) if "radar" in blueprint else raw[:, :3]
                 path = base / (sensor_name + ".npz")
-                np.savez_compressed(path, raw=raw, points_ego=carla_to_ego(xyz, sensor_matrix, ego_matrix))
+                arrays = {'raw': raw}
+                if self.storage == LEGACY_STORAGE:
+                    arrays['points_ego'] = carla_to_ego(xyz, sensor_matrix, ego_matrix)
+                np.savez_compressed(path, **arrays)
                 count = len(raw)
                 item["encoding"] = "velocity_azimuth_altitude_depth" if "radar" in blueprint else "XYZI_CARLA_0_to_1"
             item["elements"] = int(count)
@@ -192,7 +279,8 @@ class RigRecorder:
     def finish(self, scenario, common):
         if len(self.frames) != scenario.frames:
             raise ValueError("Incomplete full-rig capture")
-        manifest = dict(common, schema_version=1, kind="carla_raw_sensor_episode", status="complete",
+        manifest = dict(common, schema_version=2 if self.storage == COMPACT_STORAGE else 1,
+                        storage_encoding=self.storage, kind="carla_raw_sensor_episode", status="complete",
                         rig_options=self.options, frames=self.frames, scenario=scenario.model_dump(),
                         sensor_specs=self.specs, sensor_poses_carla=self.poses,
                         sensor_element_counts=self.counts, sensor_raw_payload_bytes=self.raw_bytes,
@@ -200,13 +288,16 @@ class RigRecorder:
                                             "ego_lab": "x-forward/y-left/z-up, bounding-box bottom origin",
                                             "camera_optical": "x-right/y-down/z-forward"},
                         artifact_bytes=self.artifact_bytes,
+                        actor_annotation_scope=self.actor_scope, environment_inventory=self.environment_inventory,
                         perception_ready=False, measured_gpu_work=False,
                         limitations=[
                             "Synthetic CARLA geometry/calibration, not nuScenes-equivalent rig or calibrated hardware",
                             "Radar supplies radial velocity only; RCS and full compensated velocity are unavailable",
                             "Semantic LiDAR is an independent reference; labels are not point-aligned to input LiDAR",
                             "Weather changes rendered RGB; no validated weather degradation model for LiDAR/radar",
-                            "GT boxes cover actors spawned by this episode, not every static/parked vehicle or map prop",
+                            ('GT boxes cover world vehicle/walker actors; environment mesh inventory still needs mapping/deduplication'
+                             if self.actor_scope == 'world_vehicle_walker_actors' else
+                             "GT boxes cover actors spawned by this episode, not every static/parked vehicle or map prop"),
                             "GT is engine actor boxes and visible semantic surfaces, not complete occupancy/free-space truth",
                             "Actor population may be outside ego ROI; inspect per-frame visible_actor_count",
                             "No detector adapter, GPU perception timing, trained policy, or ROS publication in this capture",
@@ -222,12 +313,14 @@ def verify_episode(root):
     """Checksum, synchrony and calibration validation before any adapter consumes files."""
     root = Path(root).resolve()
     manifest = json.loads((root / "manifest.json").read_text())
+    encoding = storage_encoding(manifest)
     if manifest.get("kind") != "carla_raw_sensor_episode" or manifest.get("status") != "complete":
         raise ValueError("Not a complete raw sensor episode")
     frames = manifest["frames"]
     if not frames or len(frames) != manifest["scenario"]["frames"]:
         raise ValueError("Incomplete episode frame count")
     expected = set(rig_specs(manifest["rig_options"], manifest["scenario"]["timestep"])[0])
+    options = manifest['rig_options']
     if set(manifest["sensor_specs"]) != expected:
         raise ValueError("Rig sensor inventory mismatch")
     def checked(artifact):
@@ -238,6 +331,17 @@ def verify_episode(root):
             raise ValueError("Artifact checksum mismatch: " + artifact["path"])
         return path
     previous = None
+    if manifest.get('environment_inventory'):
+        inventory_artifact = manifest['environment_inventory']
+        if not (root / inventory_artifact['path']).resolve().is_relative_to(root / 'ground_truth'):
+            raise ValueError('Environment inventory is outside GT boundary')
+        inventory = json.loads(checked(inventory_artifact).read_text())
+        if inventory['scene_precision_ready'] is not False or inventory['semantic_lidar_id_mapping_validated'] is not False:
+            raise ValueError('Environment mesh reference is not validated detection GT')
+        for record in inventory['objects']:
+            matrix, size = np.asarray(record['box_to_world_carla']), np.asarray(record['size_lwh'])
+            if matrix.shape != (4, 4) or size.shape != (3,) or not np.isfinite(matrix).all() or not np.isfinite(size).all():
+                raise ValueError('Invalid environment reference geometry')
     element_totals = {name: 0 for name in expected}
     for frame in frames:
         stamp = (frame["frame_id"], frame["timestamp"])
@@ -269,21 +373,20 @@ def verify_episode(root):
             if sensor["ground_truth_only"] != name.startswith("GT_"):
                 raise ValueError("GT/input boundary mismatch")
             if path.suffix == ".npz":
-                with np.load(path, allow_pickle=False) as data:
-                    raw, points = data["raw"], data["points_ego"]
-                    if name == "GT_LIDAR":
-                        if raw.dtype != SEMANTIC_DTYPE or raw.ndim != 1:
-                            raise ValueError("Invalid semantic LiDAR encoding")
-                        xyz = np.column_stack((raw["x"], raw["y"], raw["z"]))
-                    else:
-                        if raw.ndim != 2 or raw.shape[1] != 4 or not np.isfinite(raw).all():
-                            raise ValueError("Invalid point input encoding")
-                        xyz = radar_xyz(raw) if name.startswith("RADAR_") else raw[:, :3]
-                    if points.shape != (len(raw), 3) or len(raw) != sensor["elements"]:
-                        raise ValueError("Point count/shape mismatch")
-                    converted = carla_to_ego(xyz, np.asarray(sensor["sensor_to_world_carla"]), ego)
-                    if not np.isfinite(points).all() or not np.allclose(points, converted, atol=1e-5):
-                        raise ValueError("Point coordinates/calibration mismatch")
+                raw, points = point_arrays(path, sensor, ego, encoding)
+                if name == "GT_LIDAR":
+                    if raw.dtype != SEMANTIC_DTYPE or raw.ndim != 1:
+                        raise ValueError("Invalid semantic LiDAR encoding")
+                    xyz = np.column_stack((raw["x"], raw["y"], raw["z"]))
+                else:
+                    if raw.ndim != 2 or raw.shape[1] != 4 or not np.isfinite(raw).all():
+                        raise ValueError("Invalid point input encoding")
+                    xyz = radar_xyz(raw) if name.startswith("RADAR_") else raw[:, :3]
+                if points.shape != (len(raw), 3) or len(raw) != sensor["elements"]:
+                    raise ValueError("Point count/shape mismatch")
+                converted = carla_to_ego(xyz, np.asarray(sensor["sensor_to_world_carla"]), ego)
+                if not np.isfinite(points).all() or not np.allclose(points, converted, atol=1e-5):
+                    raise ValueError("Point coordinates/calibration mismatch")
             elif path.suffix == ".npy":
                 tags = np.load(path, allow_pickle=False)
                 if tags.dtype != np.uint8 or tags.shape != (options["height"], options["width"]):
@@ -294,6 +397,8 @@ def verify_episode(root):
                     image.load()
                     if image.size != (options["width"], options["height"]):
                         raise ValueError("RGB camera size mismatch")
+                    if name.startswith('GT_') and (encoding != COMPACT_STORAGE or image.mode != 'L'):
+                        raise ValueError('Camera GT PNG must preserve uint8 semantic IDs')
             else:
                 raise ValueError("Unknown sensor artifact encoding")
             element_totals[name] += sensor["elements"]

@@ -76,8 +76,11 @@ không để lại manifest hoàn tất. Log/partial files giữ để điều t
 
 Raw CARLA: x trước/y phải/z lên. Ego Lab: x trước/y trái/z lên, gốc xấp xỉ đáy bounding box ego.
 Camera optical: x phải/y xuống/z trước; K dùng FOV ngang và pixel width/height thật.
-Box GT hiện chỉ gồm actor được episode spawn. Xe đỗ/prop tĩnh trên map chưa có
-box annotation đầy đủ; cần quy tắc coverage/ignore trước khi tính false positives.
+Capture v1 cũ chỉ ghi actor được episode spawn. Capture mới ghi toàn bộ vehicle/walker
+trong world cùng frame, thêm environment mesh inventory nếu bật (mặc định CLI mới).
+Environment box đã world-space, không nhân transform của object thêm lần nữa.
+Inventory có ID/tag/name nhưng **chưa** nghiệm thu semantic ID mapping hoặc grouping/dedup
+mesh thành đối tượng. Xe đỗ/prop tĩnh vẫn cần protocol coverage/ignore trước khi tính FP.
 Không coi bản ghi này là detection-eval ready chỉ vì có box.
 
 Actor velocity là vận tốc world được biểu diễn trong trục ego; **không** phải vận tốc tương đối
@@ -101,7 +104,8 @@ capture đồng bộ offline, không phải phép đo latency/age của một d�
 ## Cổng tiếp theo
 
 1. Runtime CUDA riêng và OpenMMLab BEVFusion LiDAR đã chạy smoke thật;
-   xem DETECTOR_CARLA_SMOKE.vi.md. Trọng số team, Camera+LiDAR và CRN vẫn chưa có trên máy.
+   xem DETECTOR_CARLA_SMOKE.vi.md. Camera+LiDAR và PointPillars đã có pilot riêng;
+   trọng số team và CRN tương thích vẫn chưa có trên máy.
 2. Hoàn thiện GT coverage/ontology và đánh giá LiDAR sau smoke/projected GT/canonical box axes.
    Mỗi artifact ghi checkpoint SHA/config SHA; không lấy metric nuScenes cũ cho CARLA mới.
 3. CL/radar/segmentation chỉ mở sau kiểm chứng riêng; giữ profile ứng viên chưa đạt cổng ở trạng thái disabled.
@@ -111,3 +115,45 @@ capture đồng bộ offline, không phải phép đo latency/age của một d�
 
 Nguồn contract: [CARLA 0.9.16 sensors](https://carla.readthedocs.io/en/0.9.16/ref_sensors/)
 và [bounding-box projection](https://carla.readthedocs.io/en/0.9.16/tuto_G_bounding_boxes/).
+
+## Storage v2 — nén không mất dữ liệu và quota khi thu dài
+
+CLI mới mặc định `raw-only-lossless-v2` (schema2). V1 cũ vẫn đọc được, không ghi đè.
+
+- NPZ giữ raw sensor nguyên dtype/bytes đã giải mã; ego XYZ tái dựng từ extrinsic đo thật
+  và ego matrix của frame. Không đổi tọa độ bằng quantization hoặc bỏ điểm.
+- Camera semantic GT giữ ID uint8 bằng PNG grayscale `L`, không dùng palette/RGB/JPEG.
+- RGB vẫn PNG lossless. Công cụ chuyển bản v1 copy nguyên bytes RGB.
+- `scripts/compact_sensor_episode.py` luôn tạo thư mục mới, ghi SHA manifest nguồn,
+  đối chiếu từng raw array + ego XYZ tái dựng + semantic IDs trước khi verify hoàn tất.
+  Prediction cũ vẫn reference manifest cũ; không tự sửa reference sang capture mới.
+
+Đã chuyển capture20frame và verify: sensor121.967.963 →71.217.954 bytes, giảm41,61%;
+decoded point/semantic arrays exact, RGB bytes unchanged. Đây là số đo của capture đó,
+không cam kết compression ratio khi đổi map/thời tiết/cảnh nhiều texture.
+
+```bash
+.venv-experiments/bin/python scripts/compact_sensor_episode.py \
+  data/active-sensing/rig-nearby-20261008 --output data/active-sensing/compact-new
+
+CARLA_BRIDGE_TIMEOUT_SECONDS=1800 .venv-experiments/bin/python \
+  scripts/collect_active_sensing.py capture --seconds 60 --hz 20 --map Town01 \
+  --vehicles 8 --pedestrians 0 --seed 7 --include-64 --disk-budget-gib 4 \
+  --output data/active-sensing/long-new
+```
+
+Không có quota thì vẫn dùng reserve theo raw worst-case trước launch.
+Với `--disk-budget-gib`, preflight phải đủ quota +1GiB +worst-case một frame;
+trước **mỗi frame** kiểm bytes đã ghi +raw-frame reserve và free disk floor1GiB.
+Đây là lựa chọn thu có giới hạn rõ ràng, không dùng ước lượng compression để hạ guard.
+Hết quota/headroom → lỗi, không manifest complete, không tự cắt60s thành episode ngắn.
+Giữ partial files/log để điều tra. Giới hạn không bao gồm toàn disk hệ thống đang dùng;
+floor1GiB bảo vệ trước ghi, không phải bảo đảm mọi ứng dụng khác không ghi thêm.
+
+Smoke native Town01/seed7/8vehicles/0pedestrians: 2frame,20stream, world actor GT,
+inventory engine4125 mesh references (car9,truck2,buildings481,walls869,fences1218,
+roads718,sidewalks733,guardrail95), verify qua. Xem `eval/compact-rig-2026-10-08/`.
+Các mesh không phải4125 annotated detection objects. Town02/seed27/4vehicles/2pedestrians
+thất bại native Signal11 trước frame đầu; root cause chưa được cô lập, không che failure.
+Managed lifecycle mới theo dõi server chết trong lúc capture, ngắt client sớm thay vì đợi
+hết bridge timeout. Không kill simulator bên ngoài hoặc process không thuộc phiên của mình.

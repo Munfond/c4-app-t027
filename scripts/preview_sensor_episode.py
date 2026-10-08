@@ -11,6 +11,7 @@ from PIL import Image
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from src.active_sensing.episode_inputs import RawEpisode  # noqa: E402
+from src.simulation.carla_rig import point_arrays  # noqa: E402
 
 EDGES = [(a, b) for a in range(8) for b in range(a + 1, 8)
          if bin(a ^ b).count("1") == 1]
@@ -65,16 +66,17 @@ def preview(root, output, index=0, prediction_root=None):
         ax.set_title(name.removeprefix("CAM_").replace("_", " "), loc="left", fontsize=10, weight="bold")
         ax.axis("off")
     ax = fig.add_subplot(grid[3, :2], facecolor="#081d25")
-    with np.load(episode.root / meta["sensors"]["LIDAR_TOP"]["artifact"]["path"]) as data:
-        points = data["points_ego"]
-        keep = (np.abs(points[:, :2]) < 55).all(axis=1)
-        points = points[keep][::3]
-        ax.scatter(-points[:, 1], points[:, 0], s=0.8, c=points[:, 2], cmap="viridis", vmin=-0.5, vmax=3, alpha=0.6)
+    sensor = meta['sensors']['LIDAR_TOP']
+    _, points = point_arrays(episode.root / sensor['artifact']['path'], sensor,
+                             np.asarray(meta['ego_ground_to_world_carla']), episode.storage)
+    keep = (np.abs(points[:, :2]) < 55).all(axis=1)
+    points = points[keep][::3]
+    ax.scatter(-points[:, 1], points[:, 0], s=0.8, c=points[:, 2], cmap="viridis", vmin=-0.5, vmax=3, alpha=0.6)
     for name, sensor in meta["sensors"].items():
         if name.startswith("RADAR_"):
-            with np.load(episode.root / sensor["artifact"]["path"]) as data:
-                xyz = data["points_ego"]
-                ax.scatter(-xyz[:, 1], xyz[:, 0], s=9, c="#ffb256", alpha=0.7)
+            _, xyz = point_arrays(episode.root / sensor['artifact']['path'], sensor,
+                                  np.asarray(meta['ego_ground_to_world_carla']), episode.storage)
+            ax.scatter(-xyz[:, 1], xyz[:, 0], s=9, c="#ffb256", alpha=0.7)
     for box, color, weight in overlays:
         signs = np.array([[-1,-1,0], [-1,1,0], [1,1,0], [1,-1,0], [-1,-1,0]])
         corners = signs * np.array(box["size_lwh"]) / 2

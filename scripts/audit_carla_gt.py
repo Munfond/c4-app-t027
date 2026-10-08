@@ -12,6 +12,7 @@ sys.path.insert(0, str(PROJECT))
 from src.active_sensing.detection_diagnostic import geometry  # noqa: E402
 from src.active_sensing.episode_inputs import RawEpisode  # noqa: E402
 from src.active_sensing.sampling import SAMPLING_ABI, subset_indices  # noqa: E402
+from src.simulation.carla_rig import point_arrays  # noqa: E402
 
 # Values inspected from the installed CARLA 0.9.16 CityObjectLabel enum.
 # Earlier CARLA taxonomies use different integers: refuse unknown server versions.
@@ -49,11 +50,11 @@ def audit(episode_root, seed=7):
             sensor = meta['sensors'].get(name)
             if sensor is None:
                 continue
-            with np.load(episode._artifact(sensor['artifact'], 'inputs'), allow_pickle=False) as data:
-                points = data['points_ego']
-                counts[name] = box_return_counts(points, boxes)
-                counts[name + '_keep_50'] = box_return_counts(
-                    points[subset_indices(len(points), .5, seed + ref['frame_id'])], boxes)
+            _, points = point_arrays(episode._artifact(sensor['artifact'], 'inputs'), sensor,
+                                     np.asarray(meta['ego_ground_to_world_carla']), episode.storage)
+            counts[name] = box_return_counts(points, boxes)
+            counts[name + '_keep_50'] = box_return_counts(
+                points[subset_indices(len(points), .5, seed + ref['frame_id'])], boxes)
         sensor = meta['sensors']['GT_LIDAR']
         with np.load(episode._artifact(sensor['artifact'], 'ground_truth'), allow_pickle=False) as data:
             raw = data['raw']

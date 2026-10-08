@@ -1,0 +1,21 @@
+{
+  "inventory_reference": {
+    "path": "ground_truth/environment-inventory.json",
+    "bytes": 3052891,
+    "sha256": "82b5414493255d5bf91b16417312b9c5d128cd5014cfaa1294a55d1c25b86a29"
+  },
+  "counts_by_label": {
+    "Car": 9,
+    "Truck": 2,
+    "Buildings": 481,
+    "Walls": 869,
+    "Fences": 1218,
+    "Roads": 718,
+    "Sidewalks": 733,
+    "GuardRail": 95
+  },
+  "semantic_lidar_id_mapping_validated": false,
+  "object_deduplication_validated": false,
+  "scene_precision_ready": false,
+  "raw_kept_outside_git": true
+}

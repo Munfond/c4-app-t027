@@ -211,6 +211,8 @@ def capture(scenario, root, pulse, settings, rig_options=None):
         if rig_options is not None:
             from src.simulation.carla_rig import RigRecorder
             rig = RigRecorder(root, rig_options, scenario.timestep)
+            if rig_options.get('record_environment_inventory'):
+                rig.record_environment(world, carla)
             sensor_specs = rig.specs
         logger.info("Attaching %s synchronized sensors", len(sensor_specs))
         for name, (blueprint_id, attrs) in sensor_specs.items():
@@ -276,7 +278,11 @@ def capture(scenario, root, pulse, settings, rig_options=None):
             reference = carla.Transform(ground_location, ego_transform.rotation)
             ego_matrix = np.asarray(reference.get_matrix(), dtype=float)
             if rig is not None:
-                rig.record(packets, snapshot, ego_matrix, actors, ego)
+                # All live vehicle/walker actors, not only the list created here.
+                reference_actors = [a for a in world.get_actors()
+                                    if a.type_id.startswith(('vehicle.', 'walker.pedestrian.'))]
+                rig.record(packets, snapshot, ego_matrix, reference_actors, ego,
+                           actor_scope='world_vehicle_walker_actors')
                 continue
             raw = np.frombuffer(packets["lidar"].raw_data, dtype="<f4").reshape(-1, 4)
             if not len(raw):
@@ -434,4 +440,3 @@ def capture(scenario, root, pulse, settings, rig_options=None):
         finally:
             tm.set_synchronous_mode(False)
         logger.info("Capture cleanup complete")
-

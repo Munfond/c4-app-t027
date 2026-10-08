@@ -109,6 +109,13 @@ Dùng fixture để xem schema, rồi thay bằng kết quả **inference và ti
 - provenance.history_mode=stateless_independent_windows.
 - capture_id, model_manifest_sha256, hardware, timing_scope=total_gpu_work_per_window,
   monitoring_cost_included=true.
+- Cổng nhận replay đo thật yêu cầu các boolean literal `true` trong provenance:
+  `validated_detection_quality`, `usable_for_rl_reward`, `validated_profile_catalog`;
+  `evaluation_protocol_sha256` là SHA256 64 ký tự hex chữ thường của protocol đã chốt.
+  Mỗi profile_result cũng phải có `validated_detection_quality=true` và
+  `usable_for_rl_reward=true`. Chuỗi `"false"` không được coi là boolean hợp lệ.
+  Đây là hợp đồng khai báo để chặn dùng nhầm pilot, **không tự chứng minh chất lượng**.
+  Chỉ xuất các cờ này sau kiểm định có evidence và review; không thêm cờ để ép train.
 - profiles: cấu hình chính xác dùng tạo dữ liệu; reference_profile thuộc catalog.
 - constraints.required_tasks: cùng nhiệm vụ cho mọi cấu hình được so.
 - episodes: id, capture_id, split train/validation/test, steps.

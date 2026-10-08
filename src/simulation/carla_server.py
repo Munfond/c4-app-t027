@@ -53,7 +53,12 @@ def fresh_server(settings, root, pulse):
             if client.get_client_version() != server_version:
                 raise RuntimeError("CARLA client/server version mismatch")
             del client  # No readiness RPC connection survives server termination.
-            yield
+            def managed_pulse():
+                pulse()
+                if process.poll() is not None:
+                    raise RuntimeError(f'Owned CARLA server exited during capture ({process.returncode}); inspect server.log')
+
+            yield managed_pulse
         finally:
             # Only the process created above; cleanup also runs on cancellation/errors.
             if process.poll() is None:

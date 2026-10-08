@@ -1,0 +1,89 @@
+{
+  "source_manifest_sha256": "c72255c929c32d55c07fa1ec48ba0dc4504cf4142b2316714eabbc8ee7f581b3",
+  "compact_manifest_sha256": "3085ada54d753b09cc149c5e9da94cce0900c5fce3fa2fcd6bb5b9786241e52d",
+  "frames": [
+    {
+      "frame_id": 64,
+      "detector_input_sha256": "d3646911b2d584985bc6e4449f1472717221824683073b13bd9be58e0db07d06"
+    },
+    {
+      "frame_id": 65,
+      "detector_input_sha256": "123b7e458438c400000964e5e17abef3a55af35b97470d6ac91c9094dc3b4da5"
+    },
+    {
+      "frame_id": 66,
+      "detector_input_sha256": "ddfb9bc4e7e44def788c655f9fb8e092726391065c8e79df6da5f6f219c04509"
+    },
+    {
+      "frame_id": 67,
+      "detector_input_sha256": "72bad7d63929100ff632f69cf1cdb55a64d7e3d9a6c4c8595ac9c022ce4bc2c5"
+    },
+    {
+      "frame_id": 68,
+      "detector_input_sha256": "1d6e3d62c9877bcd22162d53ab9ac0ef102307da0cdd4ed2a03195da819aa914"
+    },
+    {
+      "frame_id": 69,
+      "detector_input_sha256": "c1416c7efba0fab7afaf0b279abff900521f166d09b3b0eecccdf1f13722be70"
+    },
+    {
+      "frame_id": 70,
+      "detector_input_sha256": "455454e8f74bd70c08d6bda23afa7f55ab54cd38b1c6815289716ee702baa449"
+    },
+    {
+      "frame_id": 71,
+      "detector_input_sha256": "a44848fa7ebc74db9f1cbcf8d43212f804042de7cf0973c5e1f6e069e04251c6"
+    },
+    {
+      "frame_id": 72,
+      "detector_input_sha256": "f37e3756fe47d219cdf6806fe700b6fab74f69ea2bae4a3194472a762d4e8a3d"
+    },
+    {
+      "frame_id": 73,
+      "detector_input_sha256": "8a284a3d54319ef30746ece365cd1a2d7aee63b8b42fdd455cb5a205565d711e"
+    },
+    {
+      "frame_id": 74,
+      "detector_input_sha256": "cb9239bdb4494108e8728e279bb50dddc67efa894895a09ea30f13b3278d5e50"
+    },
+    {
+      "frame_id": 75,
+      "detector_input_sha256": "5eedcbe01c8ac986df21d0211f293a54bafa77d18596b25a28c418a41d9a2493"
+    },
+    {
+      "frame_id": 76,
+      "detector_input_sha256": "e7824040a9bc65a238885cd7fedddf60e95317b824ba93a0f02429e3b83c08e0"
+    },
+    {
+      "frame_id": 77,
+      "detector_input_sha256": "c1ad3927c086fbf28b2496258f2cfd03808e23cdd271c451289e88e99a9b977e"
+    },
+    {
+      "frame_id": 78,
+      "detector_input_sha256": "f1fa0f30bc2a552e77e8984da094a50c9189ac747186012693b3613092fd2f9c"
+    },
+    {
+      "frame_id": 79,
+      "detector_input_sha256": "bd9bdc271666e2564979815b1ba6fb8982ae0eca7e84d98bd58fc5b362dd9f69"
+    },
+    {
+      "frame_id": 80,
+      "detector_input_sha256": "9347670f94990902304e897aa9bc7ac350184d9bd2167e03bcf9918230c74814"
+    },
+    {
+      "frame_id": 81,
+      "detector_input_sha256": "ddd8891e33afe62b783492755b11cccb2300b60edcce1382580e48ce0874e8bd"
+    },
+    {
+      "frame_id": 82,
+      "detector_input_sha256": "54c468ab5f160bca8f7ceb818075ca92f1e1f52b3d3e0ab22e097e46c0515ff4"
+    },
+    {
+      "frame_id": 83,
+      "detector_input_sha256": "d801272b617cd3e3ba34484569c9663853994a29bdaa59abfdc97b17792a5b1e"
+    }
+  ],
+  "model_input_exact_against_archived_bevfusion_lidar_amp": true,
+  "model_forward_rerun": false,
+  "gpu_window_cost_validated": false
+}

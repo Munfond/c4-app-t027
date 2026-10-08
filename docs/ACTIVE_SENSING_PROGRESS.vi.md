@@ -1,4 +1,83 @@
-# Checkpoint tiếp tục active sensing — 08/10/2026, khoảng 08:07 Việt Nam
+# Checkpoint active sensing — 08/10/2026, đã nhận yêu cầu tiếp tục
+
+## Trạng thái hiện tại: chạy lại capture theo yêu cầu mới
+
+- Người dùng đã cho phép tiếp tục sau khi chuyển máy sang phòng khác. Không bật
+  lại automation. Khi hạn mức 5 giờ còn dưới 10% (hoặc gần ngưỡng trước việc dài),
+  lưu checkpoint và dừng có kiểm soát các tác vụ GPU của chat này, chờ yêu cầu mới.
+- Lượt retry ban đầu bị reserve guard chặn: cần 5,01 GiB, còn 4,96 GiB. Đã dọn
+  232.815.987 bytes của hai archive cài CUDA có thể tải lại, giữ SDK đã cài và
+  toàn bộ raw/model. Hash cache cũ ở eval/compact-rig-2026-10-08/cache-cleanup.json.
+- Đang thu **episode mới** tại data/active-sensing/rig-town01-60s-retry-20261008,
+  exec session 34261, mục tiêu 1.200 frame/60 giây, quota 4 GiB + headroom 1 GiB.
+  Không chạy detector đồng thời trên GPU 4 GB. GPU đo gần nhất 54°C/3.110 MiB.
+- Metadata ngắt cũ đã kiểm kê 517 frame, mỗi frame 20 stream; file tham chiếu
+  hiện diện, chưa verify checksum toàn bộ. Không gắn manifest complete cho lượt cũ.
+
+## Lịch sử yêu cầu dừng trước đó
+
+- Người dùng yêu cầu dừng CARLA vì tiếng quạt ảnh hưởng giấc ngủ; lệnh dừng được
+  chuyển từ chat liên quan. Collector/client đã nhận SIGINT, server riêng nhận SIGTERM.
+  Kiểm tra PID 145194/144923/144935 và danh sách CUDA compute: không còn tiến trình.
+  Yêu cầu mới cho phép chạy lại đã được ghi ở đầu checkpoint này.
+- Automation `ti-p-t-c-p-027-sau-reset-h-n-m-c` **PAUSED** theo yêu cầu dừng,
+  prompt hiện tại “Đã dừng theo yêu cầu người dùng.” Không tự bật lại.
+- Capture dự kiến 60 giây/1.200 frame đã giữ **517 file metadata**, frame CARLA
+  65–581, khoảng 25,8 giây từ timestamp đầu đến cuối. Thư mục
+  `data/active-sensing/rig-town01-60s-20261008`, `user-interruption.json` ghi
+  `interrupted`, `complete=false`. Không có manifest hoàn tất; không dùng làm
+  episode 60 giây hoàn chỉnh hoặc dữ liệu train đã nghiệm thu.
+- Giữ nguyên partial artifacts/log. Chỉ kiểm kê metadata và file hiện diện khi dừng;
+  chưa verify toàn bộ checksum của partial capture, chưa chạy perception trên nó.
+
+## Thay đổi mới đã kiểm tra trước khi dừng
+
+- Collector schema 2 `raw-only-lossless-v2`: raw NPZ giữ nguyên, tọa độ ego dựng lại
+  bằng calibration đo thật; semantic camera GT thành PNG uint8 lossless, RGB PNG
+  giữ nguyên. Schema 1 cũ vẫn đọc được. Không dùng semantic GT làm actor input.
+- Chuyển 20 frame cũ: sensor bytes 121.967.963 → 71.217.954, giảm **41,61%**.
+  Đối chiếu raw/ego/semantic chính xác; SHA tensor đầu vào BEVFusion AMP của cả
+  20 frame khớp archive cũ. Không chạy lại model, không đổi provenance prediction cũ.
+- Capture native 2 frame Town01 compact đã verify đủ 20 streams. Inventory gồm
+  4.125 mesh references của môi trường; bbox world đúng hệ tọa độ. Actor GT mới
+  lấy toàn bộ vehicle/walker trong world. Mapping ID mesh ↔ semantic LiDAR và
+  coverage/ontology chưa kiểm định, nên chưa có scene precision hoặc reward RL.
+- Town02/seed27/4 xe/2 pedestrian bị native Signal 11 trước frame đầu. Chưa xác
+  định nguyên nhân; không gán cho pedestrian/GPU hoặc xem Town01 là chứng minh fix.
+- Quota ghi compact + reserve 1 GiB bảo vệ ổ đĩa; vượt quota/hủy thì không có
+  manifest hoàn tất. Server chết trong capture được phát hiện sớm, tránh client
+  chờ hết RPC timeout. Fresh lifecycle chỉ quản lý server do tác vụ tạo.
+- Replay đo thật chặn partial pilot và metadata boolean dạng chuỗi; đòi protocol
+  hash cùng cờ nghiệm thu catalog/quality/reward. Cờ không thay evidence hoặc review.
+- **197 tests passed (12,50 giây)**; Ruff và git diff --check qua. Frontend không đổi trong lượt này; lint/build
+  frontend ở checkpoint trước vẫn là lần kiểm tra gần nhất. Browser render QA còn
+  bị policy chặn, không có ảnh UI được kiểm tra tự động trong lượt này.
+- Evidence nhẹ: `eval/compact-rig-2026-10-08/`. Raw ngoài Git. Chưa push/merge.
+
+## Chạy lại khi người dùng cho phép
+
+Không append vào capture bị ngắt: session CARLA mới không tiếp tục timeline cũ.
+Chọn thư mục mới, kiểm tra dung lượng và nguồn điện trước; ví dụ từ repo:
+
+```bash
+CARLA_BRIDGE_TIMEOUT_SECONDS=1800 .venv-experiments/bin/python \
+  scripts/collect_active_sensing.py capture --seconds 60 --hz 20 \
+  --map Town01 --vehicles 8 --pedestrians 0 --seed 7 --include-64 \
+  --disk-budget-gib 4 --output data/active-sensing/rig-town01-60s-retry-20261008
+```
+
+Lệnh trên đã được khởi chạy sau yêu cầu tiếp tục; không chạy trùng và không reuse
+output đã tồn tại cho lượt sau. Capture có thể
+abort nếu thiếu reserve, không giảm thời lượng để báo hoàn tất giả. Sau capture
+thành công cần kiểm định GT, nhiều scenario và tổng GPU/window trước catalog
+12–24 validated profiles → BC/PPO; ROS2/CRN/segmentation adapters vẫn còn thiếu.
+
+Hạn mức đọc gần nhất: 62% đã dùng cửa sổ 5 giờ, reset 12:05:33 Việt Nam
+(`resetsAt=1791435933`). Luôn đọc lại khi tiếp tục. Không lưu credential.
+
+---
+
+## Lịch sử checkpoint khoảng 08:07 — trạng thái bên dưới là trước khi dừng
 
 Branch `codex/active-sensing-integration`, không push/merge trong lượt này.
 Yêu cầu đầy đủ vẫn đang làm; automation theo dõi hạn mức còn ACTIVE, chưa được tắt.

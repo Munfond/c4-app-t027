@@ -50,8 +50,8 @@ def capture(scenario, root, pulse):
             # objects out of the long-lived worker when servers are restarted.
             isolated = settings.model_copy(update={"carla_python_executable": Path(sys.executable),
                                                    "carla_client_path": None})
-            with fresh_server(settings, root, pulse):
-                frames, manifest = capture_external(scenario, root, pulse, isolated)
+            with fresh_server(settings, root, pulse) as managed_pulse:
+                frames, manifest = capture_external(scenario, root, managed_pulse, isolated)
             manifest["client_runtime"] = "isolated_matching_worker_python"
             manifest["server_lifecycle"] = "fresh_process_per_capture"
         else:

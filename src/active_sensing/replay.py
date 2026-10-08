@@ -36,6 +36,16 @@ class Replay:
                 raise ValueError("Measured replay needs capture/model/hardware/timing provenance and monitoring cost")
             if self.provenance["timing_scope"] != "total_gpu_work_per_window":
                 raise ValueError("Timing must include ALL inference in each window, not ms per call")
+            if self.provenance['monitoring_cost_included'] is not True:
+                raise ValueError('Monitoring cost must be explicitly measured, not a truthy string')
+            # A successful detector invocation or partial positive geometry audit
+            # must never become RL evidence merely by renaming its provenance.
+            for flag in ('validated_detection_quality', 'usable_for_rl_reward', 'validated_profile_catalog'):
+                if self.provenance.get(flag) is not True:
+                    raise ValueError(f'Measured replay admission requires {flag}=true')
+            protocol_hash = self.provenance.get('evaluation_protocol_sha256', '')
+            if not isinstance(protocol_hash, str) or len(protocol_hash) != 64 or any(c not in '0123456789abcdef' for c in protocol_hash):
+                raise ValueError('Measured replay requires a pinned evaluation protocol SHA256')
         self.window_s = finite(payload["window_s"], "window_s", 0)
         if self.window_s <= 0:
             raise ValueError("window_s must be positive")
@@ -77,6 +87,10 @@ class Replay:
                 for box in step["ground_truth"]:
                     Box(**box)
                 for profile_id, result in step["profile_results"].items():
+                    if kind == 'measured_perception' and (
+                            result.get('validated_detection_quality') is not True
+                            or result.get('usable_for_rl_reward') is not True):
+                        raise ValueError('Partial/unvalidated profile results cannot be used as RL reward')
                     if result["frame_id"] != step["frame_id"]:
                         raise ValueError("Perception result belongs to a different frame")
                     for key in ("gpu_ms", "end_to_end_ms"):

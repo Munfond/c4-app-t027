@@ -44,12 +44,16 @@ def test_radar_coordinates_do_not_fabricate_vector_velocity():
     assert radar_xyz(np.zeros((0, 4))).shape == (0, 3)
 
 
-def make_fixture(root, monkeypatch):
+def make_fixture(root, monkeypatch, storage=None, budget=None):
     import sys
     # No live CARLA dependency. Actor list is empty in this artifact contract fixture.
     monkeypatch.setitem(sys.modules, "carla", SimpleNamespace())
     root.mkdir()
     request = capture_request(args_for(root))
+    if storage:
+        request['rig_options']['storage_encoding'] = storage
+    if budget is not None:
+        request['rig_options']['disk_budget_bytes'] = budget
     recorder = RigRecorder(root, request["rig_options"], 0.05)
     matrix = np.eye(4)
     class Packet:
@@ -87,6 +91,79 @@ def make_fixture(root, monkeypatch):
     scenario = SimpleNamespace(frames=2, model_dump=lambda: request["scenario"])
     recorder.finish(scenario, {"source": "carla", "server_version": "fixture-not-real"})
     return recorder
+
+
+def test_compact_conversion_round_trips_inputs_tags_and_calibration(tmp_path, monkeypatch):
+    from scripts.compact_sensor_episode import compact
+    from src.active_sensing.episode_inputs import RawEpisode
+    from src.simulation.carla_rig import COMPACT_STORAGE, point_arrays
+    source, output = tmp_path / 'old', tmp_path / 'new'
+    make_fixture(source, monkeypatch)
+    result = compact(source, output)
+    assert result['decoded_point_and_semantic_arrays_exact']
+    assert result['rgb_bytes_unchanged']
+    old, new = RawEpisode(source), RawEpisode(output)
+    assert new.storage == COMPACT_STORAGE
+    old_inputs, old_obs = old.inputs(0)
+    new_inputs, new_obs = new.inputs(0)
+    assert old_obs == new_obs
+    assert old_inputs['streams']['lidar'] == new_inputs['streams']['lidar']
+    meta = json.loads((output / 'frame_00000.json').read_text())
+    sensor = meta['sensors']['GT_CAM_FRONT']
+    with Image.open(output / sensor['artifact']['path']) as image:
+        assert image.mode == 'L' and np.all(np.asarray(image) == 1)
+    sensor = meta['sensors']['LIDAR_TOP']
+    path = output / sensor['artifact']['path']
+    with np.load(path) as data:
+        assert data.files == ['raw']
+        raw = data['raw']
+    np.savez_compressed(path, raw=raw, points_ego=np.zeros((1, 3)))
+    with pytest.raises(ValueError, match='raw only'):
+        point_arrays(path, sensor, np.eye(4), COMPACT_STORAGE)
+    assert old.verification['manifest_sha256'] == verify_episode(source)['manifest_sha256']
+
+
+def test_compact_recorder_and_explicit_budget_fail_closed(tmp_path, monkeypatch):
+    from src.simulation.carla_rig import COMPACT_STORAGE
+    root = tmp_path / 'capture'
+    make_fixture(root, monkeypatch, COMPACT_STORAGE)
+    assert verify_episode(root)['frames'] == 2
+    request = capture_request(args_for(tmp_path / 'new', storage_encoding=COMPACT_STORAGE, disk_budget_gib=.1))
+    assert disk_reserve(request) > 1.1 * 1024 ** 3
+    with pytest.raises(ValueError, match='requires compact'):
+        capture_request(args_for(tmp_path / 'bad', disk_budget_gib=.1))
+
+
+def test_quota_exhaustion_never_leaves_a_complete_or_shortened_episode(tmp_path, monkeypatch):
+    from src.simulation.carla_rig import COMPACT_STORAGE
+    root = tmp_path / 'too-small'
+    with pytest.raises(ValueError, match='storage budget/headroom exhausted'):
+        make_fixture(root, monkeypatch, COMPACT_STORAGE, budget=1)
+    assert not (root / 'manifest.json').exists()
+    assert not (root / 'inputs').exists()
+
+
+def test_environment_box_is_world_space_not_multiplied_by_object_transform(tmp_path):
+    from src.simulation.carla_rig import COMPACT_STORAGE
+    root = tmp_path / 'inventory'
+    recorder = RigRecorder(root, capture_request(args_for(root, storage_encoding=COMPACT_STORAGE))['rig_options'], .05)
+    labels = ('Car', 'Truck', 'Bus', 'Motorcycle', 'Bicycle', 'Pedestrians', 'Rider',
+              'Buildings', 'Walls', 'Fences', 'Roads', 'Sidewalks', 'GuardRail')
+    matrix = np.eye(4)
+    matrix[:3, 3] = [3, 4, 5]
+    obj = SimpleNamespace(id=123, name='Parked mesh', type=14,
+                          bounding_box=SimpleNamespace(location=None, rotation=None,
+                                                       extent=SimpleNamespace(x=2, y=1, z=.8)),
+                          transform='must not be applied')
+    world = SimpleNamespace(get_environment_objects=lambda tag: [obj] if tag == 'Car' else [])
+    api = SimpleNamespace(CityObjectLabel=SimpleNamespace(**{name: name for name in labels}),
+                          Transform=lambda *args: SimpleNamespace(get_matrix=lambda: matrix))
+    recorder.record_environment(world, api)
+    value = json.loads((root / recorder.environment_inventory['path']).read_text())
+    assert value['objects'][0]['box_to_world_carla'][0][3] == 3
+    assert value['objects'][0]['size_lwh'] == [4, 2, 1.6]
+    assert not value['scene_precision_ready']
+    assert not value['semantic_lidar_id_mapping_validated']
 
 
 def rewrite_metadata(root, edit):
@@ -150,6 +227,33 @@ def test_request_bounded_and_20hz_without_changing_api_cadence(tmp_path):
 def test_existing_episode_not_overwritten(tmp_path):
     with pytest.raises(ValueError, match="already exists"):
         collect(args_for(tmp_path))
+
+
+@pytest.mark.parametrize('failure', [KeyboardInterrupt, RuntimeError])
+def test_collector_preserves_partial_artifacts_and_records_failure(tmp_path, monkeypatch, failure):
+    from contextlib import nullcontext
+
+    import scripts.collect_active_sensing as collector
+    root = tmp_path / 'partial'
+    monkeypatch.setattr(collector, 'simulator_lock', lambda settings: nullcontext())
+
+    def failed_client(request, work, pulse, settings):
+        (work / 'frame_00000.json').write_text('{}')
+        (work / 'manifest.json').write_text('{"status":"complete"}')
+        (work / 'raw.bin').write_bytes(b'preserved')
+        raise failure()
+
+    monkeypatch.setattr(collector, 'run_client', failed_client)
+    settings = SimpleNamespace(carla_server_executable=None, carla_python_executable=tmp_path / 'mock')
+    with pytest.raises(failure):
+        collect(args_for(root), settings)
+    report = json.loads((root / 'capture-failure.json').read_text())
+    assert report['status'] == ('interrupted' if failure is KeyboardInterrupt else 'failed')
+    assert report['complete'] is False and report['requested_frames'] == 2
+    assert report['recorded_frame_metadata_files'] == 1
+    assert report['partial_artifact_checksums_verified'] is False
+    assert (root / 'raw.bin').read_bytes() == b'preserved'
+    assert (root / 'manifest.failed.json').exists() and not (root / 'manifest.json').exists()
 
 
 def test_sensor_reader_feeds_gate_and_keeps_ground_truth_out(tmp_path, monkeypatch):

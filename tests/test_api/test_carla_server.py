@@ -126,7 +126,7 @@ def test_managed_capture_isolates_native_clients_from_long_lived_worker(managed,
     @contextmanager
     def lifecycle(*args):
         events.append("start_server")
-        yield
+        yield lambda: None
         events.append("stop_server")
 
     def isolated(scenario, root, pulse, child_settings):
@@ -141,3 +141,12 @@ def test_managed_capture_isolates_native_clients_from_long_lived_worker(managed,
     _, manifest = carla_capture.capture(ScenarioSpec(), tmp_path, lambda: None)
     assert events == ["start_server", "isolated_capture", "stop_server"]
     assert manifest["client_runtime"] == "isolated_matching_worker_python"
+
+
+def test_native_crash_after_startup_stops_waiting_for_missing_server(managed, tmp_path):
+    settings, child, _ = managed
+    with pytest.raises(RuntimeError, match='exited during capture'):
+        with carla_server.fresh_server(settings, tmp_path / 'crashed', lambda: None) as pulse:
+            child.returncode = -11
+            pulse()
+    assert not child.terminated  # Already dead; no unrelated process is touched.
