@@ -22,7 +22,7 @@ async def test_actual_bundle_has_traceable_diagnostic_scope(client, archive):
     assert response.status_code == 200
     value = response.json()
     assert value['available']
-    assert len(value['variants']) == 5
+    assert len(value['variants']) == 8
     assert all(row['frames'] == 20 for row in value['variants'])
     assert value['selection'] is None
     assert not value['measured_perception_replay_ready']
@@ -30,6 +30,9 @@ async def test_actual_bundle_has_traceable_diagnostic_scope(client, archive):
     geometry = (await client.get(value['variants'][0]['geometry_url'])).json()
     assert not geometry['validated_detection_quality']
     assert not geometry['usable_for_rl_reward']
+    coverage = (await client.get(value['gt_coverage_url'])).json()
+    assert coverage['reference_visible_instances_without_32_box_returns'] == 12
+    assert coverage['scene_precision_ready'] is False
 
 
 @pytest.mark.asyncio

@@ -179,3 +179,60 @@ Docker context chỉ thêm bundle nhẹ này; raw sensor/weights vẫn ngoài Gi
 
 Frontend lint/build đã qua. Browser automation bị URL policy chặn từ lượt trước;
 chưa kiểm tra render tương tác thực trong trình duyệt và không dùng cách khác để vượt chặn.
+
+## Baseline nhẹ PointPillars — đo thêm cùng capture
+
+Checkpoint nuScenes SECFPN từ [model table chính thức v1.4.0](https://github.com/open-mmlab/mmdetection3d/blob/v1.4.0/configs/pointpillars/README.md),
+19.778.089 bytes, SHA `f19d00a38e6b775f38a45a9a3ca3ecaec20a5585a3caf44622423e2d5f75d5d0`.
+Pin đầy đủ khớp fingerprint tên; strict keys/shapes qua. Không dùng metric nuScenes công bố
+làm metric CARLA; không thay thế checkpoint/metric Lab cũ.
+
+```bash
+.venv-experiments/bin/python scripts/fetch_detector_checkpoint.py pointpillars
+CUDA_HOME="$PWD/data/runtime/cuda-12.1" data/runtime/detector-env/bin/python \
+  scripts/bench_carla_detector.py data/active-sensing/rig-nearby-20261008 \
+  --family pointpillars --frames 20 --output data/active-sensing/pp-pilot-new
+```
+
+| PointPillars | Wall mean ms | CUDA mean ms | Ghép target/frame |
+|---|---:|---:|---:|
+| Full FP32 | 82,27 | 67,36 | 91/152 |
+| Half points FP32 | 71,19 | 56,71 | 57/152 |
+| Full AMP | 57,45 | 42,45 | 91/152 |
+
+Ba variant đều vượt chu kỳ 20 Hz ở 20/20 frame, không vượt chu kỳ 10 Hz trong pilot.
+Chỉ là inference riêng, CARLA dừng; không chứng minh throughput online hay deadline mọi cảnh.
+So với BEVFusion LiDAR AMP, PP AMP ít wall hơn khoảng 42,8%, CUDA activity ít hơn khoảng 48,7%
+trong các phiên đo này. 91 so với 72 cặp ghép không phải so mAP hoặc chứng minh an toàn.
+Các phiên nối tiếp, chưa randomize/lặp benchmark hoặc kiểm định nhiều cảnh.
+
+**Chi tiết adapter quan trọng:** upstream PointPillars nuScenes `LoadPointsFromMultiSweeps`
+chọn `[0,1,2,4]`, HardVFE nhận XYZ + time lag, **không nhận intensity** ở kênh thứ tư.
+Script giữ đúng contract đó nhưng chỉ cung cấp một sweep có lag 0; không giả 10 sweep.
+BEVFusion giữ XYZ/intensity/lag đủ 5 kênh. Config PP range ±50 m, BEVFusion ±54 m;
+diagnostic vẫn dùng ROI XY 54 m chung, không đổi denominator để làm PP trông tốt hơn.
+
+Sampling đã thống nhất gate + replay bằng `numpy-default-rng-sorted-subset-v1`,
+seed gốc + frame_id, subset indices được sort. Artifact pilot trước vẫn giữ nguyên;
+ABI mới cho cùng subset với script đo trước, khác gate stdlib Random cũ.
+Không trộn những bảng replay cũ sinh từ gate cũ vào training mà không xuất lại input SHA.
+
+Archive bot mở rộng thành 8 variant, có `pointpillars-source.json`, `gt-coverage-audit.json`
+và `pilot-comparison-8.png`. `prior-summary.json`/`prior-bundle-manifest.json` giữ provenance
+bộ 5 variant ban đầu; hash snapshot mới thay đổi, review cũ vẫn giữ snapshot riêng.
+
+## Audit GT và điểm trả về thực tế
+
+```bash
+.venv-experiments/bin/python scripts/audit_carla_gt.py \
+  data/active-sensing/rig-nearby-20261008 --output data/active-sensing/gt-audit-new.json
+```
+
+Taxonomy được kiểm từ enum CARLA 0.9.16, không dùng ID nhãn phiên bản cũ.
+Trong capture này không có semantic target ID không được ghi actor GT **trên bề mặt semantic
+LiDAR đã hit**. Điều này không chứng minh toàn scene có annotation đầy đủ.
+Có 12 lượt actor/frame được reference semantic thấy nhưng 32-channel không có điểm nằm
+trong oriented box GT, còn 64-channel có 2 lượt. Điểm trong box là đếm hình học, không phải
+label point-aligned hoặc bảo đảm detectability. Không loại những target này để sửa recall.
+
+Xem [protocol GT đề xuất](DETECTION_GT_PROTOCOL.vi.md) trước khi xuất measured replay/train.

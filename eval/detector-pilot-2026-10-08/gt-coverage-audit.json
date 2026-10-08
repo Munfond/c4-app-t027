@@ -1,0 +1,2112 @@
+{
+  "kind": "CARLA_GT_coverage_and_sensor_return_audit",
+  "capture_manifest_sha256": "c72255c929c32d55c07fa1ec48ba0dc4504cf4142b2316714eabbc8ee7f581b3",
+  "server_version": "0.9.16",
+  "semantic_taxonomy": {
+    "Pedestrians": 12,
+    "Rider": 13,
+    "Car": 14,
+    "Truck": 15,
+    "Bus": 16,
+    "Motorcycle": 18,
+    "Bicycle": 19
+  },
+  "taxonomy_source": "https://carla.readthedocs.io/en/0.9.16/ref_sensors/#semantic-segmentation-camera",
+  "sampling_abi": "numpy-default-rng-sorted-subset-v1",
+  "sampling_seed": 7,
+  "frames": [
+    {
+      "frame_id": 64,
+      "timestamp": 6.339498344808817,
+      "targets": [
+        {
+          "actor_id": 198,
+          "type_id": "vehicle.volkswagen.t2_2021",
+          "radius_xy_m": 4.099471794712978,
+          "reference_semantic_hits": 6201,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 1739,
+            "LIDAR_TOP_keep_50": 873,
+            "LIDAR_TOP_64": 3384,
+            "LIDAR_TOP_64_keep_50": 1653
+          }
+        },
+        {
+          "actor_id": 199,
+          "type_id": "vehicle.dodge.charger_police",
+          "radius_xy_m": 25.099576976340497,
+          "reference_semantic_hits": 56,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 18,
+            "LIDAR_TOP_keep_50": 6,
+            "LIDAR_TOP_64": 29,
+            "LIDAR_TOP_64_keep_50": 17
+          }
+        },
+        {
+          "actor_id": 200,
+          "type_id": "vehicle.ford.crown",
+          "radius_xy_m": 26.928818750198275,
+          "reference_semantic_hits": 46,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 15,
+            "LIDAR_TOP_keep_50": 10,
+            "LIDAR_TOP_64": 32,
+            "LIDAR_TOP_64_keep_50": 16
+          }
+        },
+        {
+          "actor_id": 201,
+          "type_id": "vehicle.mercedes.sprinter",
+          "radius_xy_m": 23.8898039629229,
+          "reference_semantic_hits": 118,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 37,
+            "LIDAR_TOP_keep_50": 17,
+            "LIDAR_TOP_64": 64,
+            "LIDAR_TOP_64_keep_50": 30
+          }
+        },
+        {
+          "actor_id": 202,
+          "type_id": "vehicle.ford.ambulance",
+          "radius_xy_m": 26.34242715725693,
+          "reference_semantic_hits": 125,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 33,
+            "LIDAR_TOP_keep_50": 21,
+            "LIDAR_TOP_64": 69,
+            "LIDAR_TOP_64_keep_50": 26
+          }
+        },
+        {
+          "actor_id": 203,
+          "type_id": "vehicle.dodge.charger_police",
+          "radius_xy_m": 38.656228796588884,
+          "reference_semantic_hits": 9,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 3,
+            "LIDAR_TOP_keep_50": 0,
+            "LIDAR_TOP_64": 7,
+            "LIDAR_TOP_64_keep_50": 6
+          }
+        },
+        {
+          "actor_id": 204,
+          "type_id": "vehicle.seat.leon",
+          "radius_xy_m": 48.403592670986754,
+          "reference_semantic_hits": 4,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 0,
+            "LIDAR_TOP_keep_50": 0,
+            "LIDAR_TOP_64": 3,
+            "LIDAR_TOP_64_keep_50": 2
+          }
+        },
+        {
+          "actor_id": 205,
+          "type_id": "vehicle.nissan.patrol",
+          "radius_xy_m": 48.95287031938077,
+          "reference_semantic_hits": 18,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 8,
+            "LIDAR_TOP_keep_50": 2,
+            "LIDAR_TOP_64": 11,
+            "LIDAR_TOP_64_keep_50": 6
+          }
+        }
+      ],
+      "unannotated_semantic_target_ids": [],
+      "unannotated_semantic_target_returns": 0
+    },
+    {
+      "frame_id": 65,
+      "timestamp": 6.389498345553875,
+      "targets": [
+        {
+          "actor_id": 198,
+          "type_id": "vehicle.volkswagen.t2_2021",
+          "radius_xy_m": 4.280297676904601,
+          "reference_semantic_hits": 5691,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 1642,
+            "LIDAR_TOP_keep_50": 854,
+            "LIDAR_TOP_64": 3181,
+            "LIDAR_TOP_64_keep_50": 1609
+          }
+        },
+        {
+          "actor_id": 199,
+          "type_id": "vehicle.dodge.charger_police",
+          "radius_xy_m": 25.173019574144142,
+          "reference_semantic_hits": 58,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 16,
+            "LIDAR_TOP_keep_50": 9,
+            "LIDAR_TOP_64": 34,
+            "LIDAR_TOP_64_keep_50": 14
+          }
+        },
+        {
+          "actor_id": 200,
+          "type_id": "vehicle.ford.crown",
+          "radius_xy_m": 27.322584075938618,
+          "reference_semantic_hits": 46,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 10,
+            "LIDAR_TOP_keep_50": 4,
+            "LIDAR_TOP_64": 26,
+            "LIDAR_TOP_64_keep_50": 15
+          }
+        },
+        {
+          "actor_id": 201,
+          "type_id": "vehicle.mercedes.sprinter",
+          "radius_xy_m": 23.73612825844253,
+          "reference_semantic_hits": 121,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 34,
+            "LIDAR_TOP_keep_50": 16,
+            "LIDAR_TOP_64": 66,
+            "LIDAR_TOP_64_keep_50": 34
+          }
+        },
+        {
+          "actor_id": 202,
+          "type_id": "vehicle.ford.ambulance",
+          "radius_xy_m": 26.096712287650863,
+          "reference_semantic_hits": 133,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 35,
+            "LIDAR_TOP_keep_50": 13,
+            "LIDAR_TOP_64": 66,
+            "LIDAR_TOP_64_keep_50": 33
+          }
+        },
+        {
+          "actor_id": 203,
+          "type_id": "vehicle.dodge.charger_police",
+          "radius_xy_m": 38.23228924002412,
+          "reference_semantic_hits": 9,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 3,
+            "LIDAR_TOP_keep_50": 2,
+            "LIDAR_TOP_64": 6,
+            "LIDAR_TOP_64_keep_50": 5
+          }
+        },
+        {
+          "actor_id": 204,
+          "type_id": "vehicle.seat.leon",
+          "radius_xy_m": 48.56856122205934,
+          "reference_semantic_hits": 6,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 1,
+            "LIDAR_TOP_keep_50": 1,
+            "LIDAR_TOP_64": 3,
+            "LIDAR_TOP_64_keep_50": 2
+          }
+        },
+        {
+          "actor_id": 205,
+          "type_id": "vehicle.nissan.patrol",
+          "radius_xy_m": 49.243851140311094,
+          "reference_semantic_hits": 20,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 7,
+            "LIDAR_TOP_keep_50": 0,
+            "LIDAR_TOP_64": 13,
+            "LIDAR_TOP_64_keep_50": 6
+          }
+        }
+      ],
+      "unannotated_semantic_target_ids": [],
+      "unannotated_semantic_target_returns": 0
+    },
+    {
+      "frame_id": 66,
+      "timestamp": 6.439498346298933,
+      "targets": [
+        {
+          "actor_id": 198,
+          "type_id": "vehicle.volkswagen.t2_2021",
+          "radius_xy_m": 4.490352148394982,
+          "reference_semantic_hits": 5235,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 1507,
+            "LIDAR_TOP_keep_50": 739,
+            "LIDAR_TOP_64": 3026,
+            "LIDAR_TOP_64_keep_50": 1501
+          }
+        },
+        {
+          "actor_id": 199,
+          "type_id": "vehicle.dodge.charger_police",
+          "radius_xy_m": 25.24420339604698,
+          "reference_semantic_hits": 56,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 20,
+            "LIDAR_TOP_keep_50": 10,
+            "LIDAR_TOP_64": 33,
+            "LIDAR_TOP_64_keep_50": 13
+          }
+        },
+        {
+          "actor_id": 200,
+          "type_id": "vehicle.ford.crown",
+          "radius_xy_m": 27.74054330009375,
+          "reference_semantic_hits": 46,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 12,
+            "LIDAR_TOP_keep_50": 7,
+            "LIDAR_TOP_64": 21,
+            "LIDAR_TOP_64_keep_50": 12
+          }
+        },
+        {
+          "actor_id": 201,
+          "type_id": "vehicle.mercedes.sprinter",
+          "radius_xy_m": 23.576382075595546,
+          "reference_semantic_hits": 125,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 50,
+            "LIDAR_TOP_keep_50": 27,
+            "LIDAR_TOP_64": 63,
+            "LIDAR_TOP_64_keep_50": 31
+          }
+        },
+        {
+          "actor_id": 202,
+          "type_id": "vehicle.ford.ambulance",
+          "radius_xy_m": 25.82991203963442,
+          "reference_semantic_hits": 130,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 33,
+            "LIDAR_TOP_keep_50": 19,
+            "LIDAR_TOP_64": 78,
+            "LIDAR_TOP_64_keep_50": 42
+          }
+        },
+        {
+          "actor_id": 203,
+          "type_id": "vehicle.dodge.charger_police",
+          "radius_xy_m": 37.78019367356619,
+          "reference_semantic_hits": 9,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 3,
+            "LIDAR_TOP_keep_50": 0,
+            "LIDAR_TOP_64": 5,
+            "LIDAR_TOP_64_keep_50": 3
+          }
+        },
+        {
+          "actor_id": 204,
+          "type_id": "vehicle.seat.leon",
+          "radius_xy_m": 48.74179781889332,
+          "reference_semantic_hits": 4,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 0,
+            "LIDAR_TOP_keep_50": 0,
+            "LIDAR_TOP_64": 4,
+            "LIDAR_TOP_64_keep_50": 2
+          }
+        },
+        {
+          "actor_id": 205,
+          "type_id": "vehicle.nissan.patrol",
+          "radius_xy_m": 49.55995371408259,
+          "reference_semantic_hits": 17,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 8,
+            "LIDAR_TOP_keep_50": 4,
+            "LIDAR_TOP_64": 12,
+            "LIDAR_TOP_64_keep_50": 7
+          }
+        }
+      ],
+      "unannotated_semantic_target_ids": [],
+      "unannotated_semantic_target_returns": 0
+    },
+    {
+      "frame_id": 67,
+      "timestamp": 6.489498347043991,
+      "targets": [
+        {
+          "actor_id": 198,
+          "type_id": "vehicle.volkswagen.t2_2021",
+          "radius_xy_m": 4.723768616225036,
+          "reference_semantic_hits": 4783,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 1420,
+            "LIDAR_TOP_keep_50": 703,
+            "LIDAR_TOP_64": 2879,
+            "LIDAR_TOP_64_keep_50": 1426
+          }
+        },
+        {
+          "actor_id": 199,
+          "type_id": "vehicle.dodge.charger_police",
+          "radius_xy_m": 25.305045180992153,
+          "reference_semantic_hits": 57,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 17,
+            "LIDAR_TOP_keep_50": 12,
+            "LIDAR_TOP_64": 35,
+            "LIDAR_TOP_64_keep_50": 18
+          }
+        },
+        {
+          "actor_id": 200,
+          "type_id": "vehicle.ford.crown",
+          "radius_xy_m": 28.173105423540914,
+          "reference_semantic_hits": 45,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 14,
+            "LIDAR_TOP_keep_50": 8,
+            "LIDAR_TOP_64": 23,
+            "LIDAR_TOP_64_keep_50": 13
+          }
+        },
+        {
+          "actor_id": 201,
+          "type_id": "vehicle.mercedes.sprinter",
+          "radius_xy_m": 23.41890260756574,
+          "reference_semantic_hits": 122,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 38,
+            "LIDAR_TOP_keep_50": 17,
+            "LIDAR_TOP_64": 79,
+            "LIDAR_TOP_64_keep_50": 37
+          }
+        },
+        {
+          "actor_id": 202,
+          "type_id": "vehicle.ford.ambulance",
+          "radius_xy_m": 25.53433207475189,
+          "reference_semantic_hits": 131,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 40,
+            "LIDAR_TOP_keep_50": 18,
+            "LIDAR_TOP_64": 86,
+            "LIDAR_TOP_64_keep_50": 45
+          }
+        },
+        {
+          "actor_id": 203,
+          "type_id": "vehicle.dodge.charger_police",
+          "radius_xy_m": 37.31011077387284,
+          "reference_semantic_hits": 10,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 3,
+            "LIDAR_TOP_keep_50": 1,
+            "LIDAR_TOP_64": 7,
+            "LIDAR_TOP_64_keep_50": 3
+          }
+        },
+        {
+          "actor_id": 204,
+          "type_id": "vehicle.seat.leon",
+          "radius_xy_m": 48.913816060614984,
+          "reference_semantic_hits": 4,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 0,
+            "LIDAR_TOP_keep_50": 0,
+            "LIDAR_TOP_64": 0,
+            "LIDAR_TOP_64_keep_50": 0
+          }
+        },
+        {
+          "actor_id": 205,
+          "type_id": "vehicle.nissan.patrol",
+          "radius_xy_m": 49.8947848019184,
+          "reference_semantic_hits": 19,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 7,
+            "LIDAR_TOP_keep_50": 0,
+            "LIDAR_TOP_64": 9,
+            "LIDAR_TOP_64_keep_50": 6
+          }
+        }
+      ],
+      "unannotated_semantic_target_ids": [],
+      "unannotated_semantic_target_returns": 0
+    },
+    {
+      "frame_id": 68,
+      "timestamp": 6.539498347789049,
+      "targets": [
+        {
+          "actor_id": 198,
+          "type_id": "vehicle.volkswagen.t2_2021",
+          "radius_xy_m": 4.978537677925201,
+          "reference_semantic_hits": 4308,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 1329,
+            "LIDAR_TOP_keep_50": 651,
+            "LIDAR_TOP_64": 2678,
+            "LIDAR_TOP_64_keep_50": 1372
+          }
+        },
+        {
+          "actor_id": 199,
+          "type_id": "vehicle.dodge.charger_police",
+          "radius_xy_m": 25.354994375831733,
+          "reference_semantic_hits": 59,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 19,
+            "LIDAR_TOP_keep_50": 11,
+            "LIDAR_TOP_64": 38,
+            "LIDAR_TOP_64_keep_50": 23
+          }
+        },
+        {
+          "actor_id": 200,
+          "type_id": "vehicle.ford.crown",
+          "radius_xy_m": 28.6190748912973,
+          "reference_semantic_hits": 44,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 10,
+            "LIDAR_TOP_keep_50": 6,
+            "LIDAR_TOP_64": 24,
+            "LIDAR_TOP_64_keep_50": 14
+          }
+        },
+        {
+          "actor_id": 201,
+          "type_id": "vehicle.mercedes.sprinter",
+          "radius_xy_m": 23.26523205819454,
+          "reference_semantic_hits": 128,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 36,
+            "LIDAR_TOP_keep_50": 16,
+            "LIDAR_TOP_64": 73,
+            "LIDAR_TOP_64_keep_50": 34
+          }
+        },
+        {
+          "actor_id": 202,
+          "type_id": "vehicle.ford.ambulance",
+          "radius_xy_m": 25.221057833205812,
+          "reference_semantic_hits": 138,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 36,
+            "LIDAR_TOP_keep_50": 14,
+            "LIDAR_TOP_64": 85,
+            "LIDAR_TOP_64_keep_50": 43
+          }
+        },
+        {
+          "actor_id": 203,
+          "type_id": "vehicle.dodge.charger_police",
+          "radius_xy_m": 36.829937486524095,
+          "reference_semantic_hits": 9,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 1,
+            "LIDAR_TOP_keep_50": 1,
+            "LIDAR_TOP_64": 8,
+            "LIDAR_TOP_64_keep_50": 5
+          }
+        },
+        {
+          "actor_id": 204,
+          "type_id": "vehicle.seat.leon",
+          "radius_xy_m": 49.083950533350624,
+          "reference_semantic_hits": 7,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 1,
+            "LIDAR_TOP_keep_50": 0,
+            "LIDAR_TOP_64": 5,
+            "LIDAR_TOP_64_keep_50": 4
+          }
+        },
+        {
+          "actor_id": 205,
+          "type_id": "vehicle.nissan.patrol",
+          "radius_xy_m": 50.25001409798866,
+          "reference_semantic_hits": 19,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 5,
+            "LIDAR_TOP_keep_50": 0,
+            "LIDAR_TOP_64": 12,
+            "LIDAR_TOP_64_keep_50": 8
+          }
+        }
+      ],
+      "unannotated_semantic_target_ids": [],
+      "unannotated_semantic_target_returns": 0
+    },
+    {
+      "frame_id": 69,
+      "timestamp": 6.589498348534107,
+      "targets": [
+        {
+          "actor_id": 198,
+          "type_id": "vehicle.volkswagen.t2_2021",
+          "radius_xy_m": 5.255915329059027,
+          "reference_semantic_hits": 3823,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 1221,
+            "LIDAR_TOP_keep_50": 598,
+            "LIDAR_TOP_64": 2383,
+            "LIDAR_TOP_64_keep_50": 1169
+          }
+        },
+        {
+          "actor_id": 199,
+          "type_id": "vehicle.dodge.charger_police",
+          "radius_xy_m": 25.39776477035462,
+          "reference_semantic_hits": 58,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 17,
+            "LIDAR_TOP_keep_50": 10,
+            "LIDAR_TOP_64": 44,
+            "LIDAR_TOP_64_keep_50": 23
+          }
+        },
+        {
+          "actor_id": 200,
+          "type_id": "vehicle.ford.crown",
+          "radius_xy_m": 29.081502810113214,
+          "reference_semantic_hits": 43,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 9,
+            "LIDAR_TOP_keep_50": 4,
+            "LIDAR_TOP_64": 18,
+            "LIDAR_TOP_64_keep_50": 9
+          }
+        },
+        {
+          "actor_id": 201,
+          "type_id": "vehicle.mercedes.sprinter",
+          "radius_xy_m": 23.11199345840197,
+          "reference_semantic_hits": 134,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 47,
+            "LIDAR_TOP_keep_50": 24,
+            "LIDAR_TOP_64": 83,
+            "LIDAR_TOP_64_keep_50": 33
+          }
+        },
+        {
+          "actor_id": 202,
+          "type_id": "vehicle.ford.ambulance",
+          "radius_xy_m": 24.892395651743477,
+          "reference_semantic_hits": 139,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 32,
+            "LIDAR_TOP_keep_50": 11,
+            "LIDAR_TOP_64": 93,
+            "LIDAR_TOP_64_keep_50": 48
+          }
+        },
+        {
+          "actor_id": 203,
+          "type_id": "vehicle.dodge.charger_police",
+          "radius_xy_m": 36.346145807142115,
+          "reference_semantic_hits": 11,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 4,
+            "LIDAR_TOP_keep_50": 3,
+            "LIDAR_TOP_64": 8,
+            "LIDAR_TOP_64_keep_50": 2
+          }
+        },
+        {
+          "actor_id": 204,
+          "type_id": "vehicle.seat.leon",
+          "radius_xy_m": 49.25524134009009,
+          "reference_semantic_hits": 6,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 1,
+            "LIDAR_TOP_keep_50": 0,
+            "LIDAR_TOP_64": 3,
+            "LIDAR_TOP_64_keep_50": 3
+          }
+        },
+        {
+          "actor_id": 205,
+          "type_id": "vehicle.nissan.patrol",
+          "radius_xy_m": 50.624288783628614,
+          "reference_semantic_hits": 17,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 6,
+            "LIDAR_TOP_keep_50": 2,
+            "LIDAR_TOP_64": 12,
+            "LIDAR_TOP_64_keep_50": 7
+          }
+        }
+      ],
+      "unannotated_semantic_target_ids": [],
+      "unannotated_semantic_target_returns": 0
+    },
+    {
+      "frame_id": 70,
+      "timestamp": 6.639498349279165,
+      "targets": [
+        {
+          "actor_id": 198,
+          "type_id": "vehicle.volkswagen.t2_2021",
+          "radius_xy_m": 5.556295134458224,
+          "reference_semantic_hits": 3375,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 1086,
+            "LIDAR_TOP_keep_50": 523,
+            "LIDAR_TOP_64": 2134,
+            "LIDAR_TOP_64_keep_50": 1022
+          }
+        },
+        {
+          "actor_id": 199,
+          "type_id": "vehicle.dodge.charger_police",
+          "radius_xy_m": 25.43538572495249,
+          "reference_semantic_hits": 56,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 13,
+            "LIDAR_TOP_keep_50": 6,
+            "LIDAR_TOP_64": 39,
+            "LIDAR_TOP_64_keep_50": 27
+          }
+        },
+        {
+          "actor_id": 200,
+          "type_id": "vehicle.ford.crown",
+          "radius_xy_m": 29.56209121052367,
+          "reference_semantic_hits": 44,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 7,
+            "LIDAR_TOP_keep_50": 5,
+            "LIDAR_TOP_64": 20,
+            "LIDAR_TOP_64_keep_50": 10
+          }
+        },
+        {
+          "actor_id": 201,
+          "type_id": "vehicle.mercedes.sprinter",
+          "radius_xy_m": 22.95793919456211,
+          "reference_semantic_hits": 136,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 46,
+            "LIDAR_TOP_keep_50": 21,
+            "LIDAR_TOP_64": 88,
+            "LIDAR_TOP_64_keep_50": 56
+          }
+        },
+        {
+          "actor_id": 202,
+          "type_id": "vehicle.ford.ambulance",
+          "radius_xy_m": 24.549457436208513,
+          "reference_semantic_hits": 145,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 45,
+            "LIDAR_TOP_keep_50": 20,
+            "LIDAR_TOP_64": 88,
+            "LIDAR_TOP_64_keep_50": 52
+          }
+        },
+        {
+          "actor_id": 203,
+          "type_id": "vehicle.dodge.charger_police",
+          "radius_xy_m": 35.862140892858854,
+          "reference_semantic_hits": 9,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 5,
+            "LIDAR_TOP_keep_50": 4,
+            "LIDAR_TOP_64": 6,
+            "LIDAR_TOP_64_keep_50": 1
+          }
+        },
+        {
+          "actor_id": 204,
+          "type_id": "vehicle.seat.leon",
+          "radius_xy_m": 49.42976554864934,
+          "reference_semantic_hits": 4,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 0,
+            "LIDAR_TOP_keep_50": 0,
+            "LIDAR_TOP_64": 2,
+            "LIDAR_TOP_64_keep_50": 1
+          }
+        },
+        {
+          "actor_id": 205,
+          "type_id": "vehicle.nissan.patrol",
+          "radius_xy_m": 51.022021377452646,
+          "reference_semantic_hits": 18,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 5,
+            "LIDAR_TOP_keep_50": 2,
+            "LIDAR_TOP_64": 9,
+            "LIDAR_TOP_64_keep_50": 6
+          }
+        }
+      ],
+      "unannotated_semantic_target_ids": [],
+      "unannotated_semantic_target_returns": 0
+    },
+    {
+      "frame_id": 71,
+      "timestamp": 6.689498350024223,
+      "targets": [
+        {
+          "actor_id": 198,
+          "type_id": "vehicle.volkswagen.t2_2021",
+          "radius_xy_m": 5.880627040147115,
+          "reference_semantic_hits": 2967,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 954,
+            "LIDAR_TOP_keep_50": 451,
+            "LIDAR_TOP_64": 1916,
+            "LIDAR_TOP_64_keep_50": 986
+          }
+        },
+        {
+          "actor_id": 199,
+          "type_id": "vehicle.dodge.charger_police",
+          "radius_xy_m": 25.470950883712653,
+          "reference_semantic_hits": 58,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 18,
+            "LIDAR_TOP_keep_50": 9,
+            "LIDAR_TOP_64": 41,
+            "LIDAR_TOP_64_keep_50": 21
+          }
+        },
+        {
+          "actor_id": 200,
+          "type_id": "vehicle.ford.crown",
+          "radius_xy_m": 30.06281269909734,
+          "reference_semantic_hits": 39,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 11,
+            "LIDAR_TOP_keep_50": 4,
+            "LIDAR_TOP_64": 24,
+            "LIDAR_TOP_64_keep_50": 8
+          }
+        },
+        {
+          "actor_id": 201,
+          "type_id": "vehicle.mercedes.sprinter",
+          "radius_xy_m": 22.800720956441815,
+          "reference_semantic_hits": 138,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 38,
+            "LIDAR_TOP_keep_50": 25,
+            "LIDAR_TOP_64": 93,
+            "LIDAR_TOP_64_keep_50": 45
+          }
+        },
+        {
+          "actor_id": 202,
+          "type_id": "vehicle.ford.ambulance",
+          "radius_xy_m": 24.191448947638772,
+          "reference_semantic_hits": 146,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 45,
+            "LIDAR_TOP_keep_50": 12,
+            "LIDAR_TOP_64": 81,
+            "LIDAR_TOP_64_keep_50": 43
+          }
+        },
+        {
+          "actor_id": 203,
+          "type_id": "vehicle.dodge.charger_police",
+          "radius_xy_m": 35.37784126390429,
+          "reference_semantic_hits": 12,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 3,
+            "LIDAR_TOP_keep_50": 3,
+            "LIDAR_TOP_64": 6,
+            "LIDAR_TOP_64_keep_50": 2
+          }
+        },
+        {
+          "actor_id": 204,
+          "type_id": "vehicle.seat.leon",
+          "radius_xy_m": 49.60960718591372,
+          "reference_semantic_hits": 4,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 1,
+            "LIDAR_TOP_keep_50": 1,
+            "LIDAR_TOP_64": 3,
+            "LIDAR_TOP_64_keep_50": 1
+          }
+        },
+        {
+          "actor_id": 205,
+          "type_id": "vehicle.nissan.patrol",
+          "radius_xy_m": 51.44575960521465,
+          "reference_semantic_hits": 17,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 5,
+            "LIDAR_TOP_keep_50": 0,
+            "LIDAR_TOP_64": 12,
+            "LIDAR_TOP_64_keep_50": 6
+          }
+        }
+      ],
+      "unannotated_semantic_target_ids": [],
+      "unannotated_semantic_target_returns": 0
+    },
+    {
+      "frame_id": 72,
+      "timestamp": 6.739498350769281,
+      "targets": [
+        {
+          "actor_id": 198,
+          "type_id": "vehicle.volkswagen.t2_2021",
+          "radius_xy_m": 6.230383585399826,
+          "reference_semantic_hits": 2581,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 864,
+            "LIDAR_TOP_keep_50": 427,
+            "LIDAR_TOP_64": 1703,
+            "LIDAR_TOP_64_keep_50": 790
+          }
+        },
+        {
+          "actor_id": 199,
+          "type_id": "vehicle.dodge.charger_police",
+          "radius_xy_m": 25.51786017624563,
+          "reference_semantic_hits": 59,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 21,
+            "LIDAR_TOP_keep_50": 5,
+            "LIDAR_TOP_64": 36,
+            "LIDAR_TOP_64_keep_50": 21
+          }
+        },
+        {
+          "actor_id": 200,
+          "type_id": "vehicle.ford.crown",
+          "radius_xy_m": 30.58606792553925,
+          "reference_semantic_hits": 34,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 9,
+            "LIDAR_TOP_keep_50": 5,
+            "LIDAR_TOP_64": 28,
+            "LIDAR_TOP_64_keep_50": 14
+          }
+        },
+        {
+          "actor_id": 201,
+          "type_id": "vehicle.mercedes.sprinter",
+          "radius_xy_m": 22.63876901015501,
+          "reference_semantic_hits": 139,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 47,
+            "LIDAR_TOP_keep_50": 27,
+            "LIDAR_TOP_64": 80,
+            "LIDAR_TOP_64_keep_50": 43
+          }
+        },
+        {
+          "actor_id": 202,
+          "type_id": "vehicle.ford.ambulance",
+          "radius_xy_m": 23.816908169987034,
+          "reference_semantic_hits": 157,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 48,
+            "LIDAR_TOP_keep_50": 21,
+            "LIDAR_TOP_64": 101,
+            "LIDAR_TOP_64_keep_50": 38
+          }
+        },
+        {
+          "actor_id": 203,
+          "type_id": "vehicle.dodge.charger_police",
+          "radius_xy_m": 34.891499850380335,
+          "reference_semantic_hits": 9,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 3,
+            "LIDAR_TOP_keep_50": 2,
+            "LIDAR_TOP_64": 6,
+            "LIDAR_TOP_64_keep_50": 1
+          }
+        },
+        {
+          "actor_id": 204,
+          "type_id": "vehicle.seat.leon",
+          "radius_xy_m": 49.79744356390059,
+          "reference_semantic_hits": 4,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 0,
+            "LIDAR_TOP_keep_50": 0,
+            "LIDAR_TOP_64": 4,
+            "LIDAR_TOP_64_keep_50": 2
+          }
+        },
+        {
+          "actor_id": 205,
+          "type_id": "vehicle.nissan.patrol",
+          "radius_xy_m": 51.895778085995325,
+          "reference_semantic_hits": 15,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 8,
+            "LIDAR_TOP_keep_50": 7,
+            "LIDAR_TOP_64": 6,
+            "LIDAR_TOP_64_keep_50": 4
+          }
+        }
+      ],
+      "unannotated_semantic_target_ids": [],
+      "unannotated_semantic_target_returns": 0
+    },
+    {
+      "frame_id": 73,
+      "timestamp": 6.7894983515143394,
+      "targets": [
+        {
+          "actor_id": 198,
+          "type_id": "vehicle.volkswagen.t2_2021",
+          "radius_xy_m": 6.6070226468596545,
+          "reference_semantic_hits": 2252,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 733,
+            "LIDAR_TOP_keep_50": 384,
+            "LIDAR_TOP_64": 1467,
+            "LIDAR_TOP_64_keep_50": 719
+          }
+        },
+        {
+          "actor_id": 199,
+          "type_id": "vehicle.dodge.charger_police",
+          "radius_xy_m": 25.582153278743597,
+          "reference_semantic_hits": 58,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 17,
+            "LIDAR_TOP_keep_50": 8,
+            "LIDAR_TOP_64": 36,
+            "LIDAR_TOP_64_keep_50": 18
+          }
+        },
+        {
+          "actor_id": 200,
+          "type_id": "vehicle.ford.crown",
+          "radius_xy_m": 31.134433145449403,
+          "reference_semantic_hits": 33,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 12,
+            "LIDAR_TOP_keep_50": 1,
+            "LIDAR_TOP_64": 18,
+            "LIDAR_TOP_64_keep_50": 11
+          }
+        },
+        {
+          "actor_id": 201,
+          "type_id": "vehicle.mercedes.sprinter",
+          "radius_xy_m": 22.46968306523758,
+          "reference_semantic_hits": 146,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 46,
+            "LIDAR_TOP_keep_50": 23,
+            "LIDAR_TOP_64": 90,
+            "LIDAR_TOP_64_keep_50": 53
+          }
+        },
+        {
+          "actor_id": 202,
+          "type_id": "vehicle.ford.ambulance",
+          "radius_xy_m": 23.423914529954498,
+          "reference_semantic_hits": 159,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 53,
+            "LIDAR_TOP_keep_50": 25,
+            "LIDAR_TOP_64": 96,
+            "LIDAR_TOP_64_keep_50": 49
+          }
+        },
+        {
+          "actor_id": 203,
+          "type_id": "vehicle.dodge.charger_police",
+          "radius_xy_m": 34.400694401257674,
+          "reference_semantic_hits": 12,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 4,
+            "LIDAR_TOP_keep_50": 2,
+            "LIDAR_TOP_64": 8,
+            "LIDAR_TOP_64_keep_50": 2
+          }
+        },
+        {
+          "actor_id": 204,
+          "type_id": "vehicle.seat.leon",
+          "radius_xy_m": 49.99566606527022,
+          "reference_semantic_hits": 5,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 0,
+            "LIDAR_TOP_keep_50": 0,
+            "LIDAR_TOP_64": 0,
+            "LIDAR_TOP_64_keep_50": 0
+          }
+        },
+        {
+          "actor_id": 205,
+          "type_id": "vehicle.nissan.patrol",
+          "radius_xy_m": 52.384312747251315,
+          "reference_semantic_hits": 17,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 6,
+            "LIDAR_TOP_keep_50": 3,
+            "LIDAR_TOP_64": 9,
+            "LIDAR_TOP_64_keep_50": 0
+          }
+        }
+      ],
+      "unannotated_semantic_target_ids": [],
+      "unannotated_semantic_target_returns": 0
+    },
+    {
+      "frame_id": 74,
+      "timestamp": 6.8394983522593975,
+      "targets": [
+        {
+          "actor_id": 198,
+          "type_id": "vehicle.volkswagen.t2_2021",
+          "radius_xy_m": 7.005700916550954,
+          "reference_semantic_hits": 1964,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 634,
+            "LIDAR_TOP_keep_50": 315,
+            "LIDAR_TOP_64": 1243,
+            "LIDAR_TOP_64_keep_50": 614
+          }
+        },
+        {
+          "actor_id": 199,
+          "type_id": "vehicle.dodge.charger_police",
+          "radius_xy_m": 25.65438444703562,
+          "reference_semantic_hits": 59,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 19,
+            "LIDAR_TOP_keep_50": 7,
+            "LIDAR_TOP_64": 36,
+            "LIDAR_TOP_64_keep_50": 21
+          }
+        },
+        {
+          "actor_id": 200,
+          "type_id": "vehicle.ford.crown",
+          "radius_xy_m": 31.702928768244213,
+          "reference_semantic_hits": 33,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 13,
+            "LIDAR_TOP_keep_50": 7,
+            "LIDAR_TOP_64": 25,
+            "LIDAR_TOP_64_keep_50": 14
+          }
+        },
+        {
+          "actor_id": 201,
+          "type_id": "vehicle.mercedes.sprinter",
+          "radius_xy_m": 22.298394686701226,
+          "reference_semantic_hits": 144,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 46,
+            "LIDAR_TOP_keep_50": 22,
+            "LIDAR_TOP_64": 99,
+            "LIDAR_TOP_64_keep_50": 54
+          }
+        },
+        {
+          "actor_id": 202,
+          "type_id": "vehicle.ford.ambulance",
+          "radius_xy_m": 23.01762814937912,
+          "reference_semantic_hits": 169,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 52,
+            "LIDAR_TOP_keep_50": 24,
+            "LIDAR_TOP_64": 98,
+            "LIDAR_TOP_64_keep_50": 42
+          }
+        },
+        {
+          "actor_id": 203,
+          "type_id": "vehicle.dodge.charger_police",
+          "radius_xy_m": 33.90904986945669,
+          "reference_semantic_hits": 9,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 4,
+            "LIDAR_TOP_keep_50": 2,
+            "LIDAR_TOP_64": 8,
+            "LIDAR_TOP_64_keep_50": 6
+          }
+        },
+        {
+          "actor_id": 204,
+          "type_id": "vehicle.seat.leon",
+          "radius_xy_m": 50.19947729439692,
+          "reference_semantic_hits": 6,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 1,
+            "LIDAR_TOP_keep_50": 1,
+            "LIDAR_TOP_64": 3,
+            "LIDAR_TOP_64_keep_50": 1
+          }
+        },
+        {
+          "actor_id": 205,
+          "type_id": "vehicle.nissan.patrol",
+          "radius_xy_m": 52.90675433998066,
+          "reference_semantic_hits": 15,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 7,
+            "LIDAR_TOP_keep_50": 6,
+            "LIDAR_TOP_64": 7,
+            "LIDAR_TOP_64_keep_50": 4
+          }
+        }
+      ],
+      "unannotated_semantic_target_ids": [],
+      "unannotated_semantic_target_returns": 0
+    },
+    {
+      "frame_id": 75,
+      "timestamp": 6.889498353004456,
+      "targets": [
+        {
+          "actor_id": 198,
+          "type_id": "vehicle.volkswagen.t2_2021",
+          "radius_xy_m": 7.427105886714679,
+          "reference_semantic_hits": 1698,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 519,
+            "LIDAR_TOP_keep_50": 265,
+            "LIDAR_TOP_64": 1098,
+            "LIDAR_TOP_64_keep_50": 536
+          }
+        },
+        {
+          "actor_id": 199,
+          "type_id": "vehicle.dodge.charger_police",
+          "radius_xy_m": 25.734403228703766,
+          "reference_semantic_hits": 58,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 18,
+            "LIDAR_TOP_keep_50": 9,
+            "LIDAR_TOP_64": 37,
+            "LIDAR_TOP_64_keep_50": 13
+          }
+        },
+        {
+          "actor_id": 200,
+          "type_id": "vehicle.ford.crown",
+          "radius_xy_m": 32.293363366001124,
+          "reference_semantic_hits": 30,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 7,
+            "LIDAR_TOP_keep_50": 4,
+            "LIDAR_TOP_64": 23,
+            "LIDAR_TOP_64_keep_50": 11
+          }
+        },
+        {
+          "actor_id": 201,
+          "type_id": "vehicle.mercedes.sprinter",
+          "radius_xy_m": 22.122817418211078,
+          "reference_semantic_hits": 147,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 49,
+            "LIDAR_TOP_keep_50": 23,
+            "LIDAR_TOP_64": 97,
+            "LIDAR_TOP_64_keep_50": 50
+          }
+        },
+        {
+          "actor_id": 202,
+          "type_id": "vehicle.ford.ambulance",
+          "radius_xy_m": 22.597004747699575,
+          "reference_semantic_hits": 175,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 52,
+            "LIDAR_TOP_keep_50": 23,
+            "LIDAR_TOP_64": 105,
+            "LIDAR_TOP_64_keep_50": 54
+          }
+        },
+        {
+          "actor_id": 203,
+          "type_id": "vehicle.dodge.charger_police",
+          "radius_xy_m": 33.410824776977094,
+          "reference_semantic_hits": 13,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 4,
+            "LIDAR_TOP_keep_50": 3,
+            "LIDAR_TOP_64": 7,
+            "LIDAR_TOP_64_keep_50": 3
+          }
+        },
+        {
+          "actor_id": 204,
+          "type_id": "vehicle.seat.leon",
+          "radius_xy_m": 50.41045082409134,
+          "reference_semantic_hits": 5,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 0,
+            "LIDAR_TOP_keep_50": 0,
+            "LIDAR_TOP_64": 2,
+            "LIDAR_TOP_64_keep_50": 0
+          }
+        },
+        {
+          "actor_id": 205,
+          "type_id": "vehicle.nissan.patrol",
+          "radius_xy_m": 53.45982054135106,
+          "reference_semantic_hits": 15,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 8,
+            "LIDAR_TOP_keep_50": 3,
+            "LIDAR_TOP_64": 11,
+            "LIDAR_TOP_64_keep_50": 8
+          }
+        }
+      ],
+      "unannotated_semantic_target_ids": [],
+      "unannotated_semantic_target_returns": 0
+    },
+    {
+      "frame_id": 76,
+      "timestamp": 6.939498353749514,
+      "targets": [
+        {
+          "actor_id": 198,
+          "type_id": "vehicle.volkswagen.t2_2021",
+          "radius_xy_m": 7.870700749909135,
+          "reference_semantic_hits": 1478,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 454,
+            "LIDAR_TOP_keep_50": 235,
+            "LIDAR_TOP_64": 944,
+            "LIDAR_TOP_64_keep_50": 478
+          }
+        },
+        {
+          "actor_id": 199,
+          "type_id": "vehicle.dodge.charger_police",
+          "radius_xy_m": 25.817984021679514,
+          "reference_semantic_hits": 57,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 17,
+            "LIDAR_TOP_keep_50": 7,
+            "LIDAR_TOP_64": 36,
+            "LIDAR_TOP_64_keep_50": 21
+          }
+        },
+        {
+          "actor_id": 200,
+          "type_id": "vehicle.ford.crown",
+          "radius_xy_m": 32.90608696598064,
+          "reference_semantic_hits": 29,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 12,
+            "LIDAR_TOP_keep_50": 5,
+            "LIDAR_TOP_64": 17,
+            "LIDAR_TOP_64_keep_50": 7
+          }
+        },
+        {
+          "actor_id": 201,
+          "type_id": "vehicle.mercedes.sprinter",
+          "radius_xy_m": 21.942916826870125,
+          "reference_semantic_hits": 147,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 45,
+            "LIDAR_TOP_keep_50": 26,
+            "LIDAR_TOP_64": 99,
+            "LIDAR_TOP_64_keep_50": 57
+          }
+        },
+        {
+          "actor_id": 202,
+          "type_id": "vehicle.ford.ambulance",
+          "radius_xy_m": 22.162054080739356,
+          "reference_semantic_hits": 177,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 59,
+            "LIDAR_TOP_keep_50": 33,
+            "LIDAR_TOP_64": 113,
+            "LIDAR_TOP_64_keep_50": 66
+          }
+        },
+        {
+          "actor_id": 203,
+          "type_id": "vehicle.dodge.charger_police",
+          "radius_xy_m": 32.90244544826505,
+          "reference_semantic_hits": 15,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 4,
+            "LIDAR_TOP_keep_50": 3,
+            "LIDAR_TOP_64": 6,
+            "LIDAR_TOP_64_keep_50": 3
+          }
+        },
+        {
+          "actor_id": 204,
+          "type_id": "vehicle.seat.leon",
+          "radius_xy_m": 50.62874051221869,
+          "reference_semantic_hits": 5,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 1,
+            "LIDAR_TOP_keep_50": 0,
+            "LIDAR_TOP_64": 5,
+            "LIDAR_TOP_64_keep_50": 3
+          }
+        },
+        {
+          "actor_id": 205,
+          "type_id": "vehicle.nissan.patrol",
+          "radius_xy_m": 54.04351454440028,
+          "reference_semantic_hits": 16,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 5,
+            "LIDAR_TOP_keep_50": 3,
+            "LIDAR_TOP_64": 6,
+            "LIDAR_TOP_64_keep_50": 3
+          }
+        }
+      ],
+      "unannotated_semantic_target_ids": [],
+      "unannotated_semantic_target_returns": 0
+    },
+    {
+      "frame_id": 77,
+      "timestamp": 6.989498354494572,
+      "targets": [
+        {
+          "actor_id": 198,
+          "type_id": "vehicle.volkswagen.t2_2021",
+          "radius_xy_m": 8.336798684971983,
+          "reference_semantic_hits": 1283,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 416,
+            "LIDAR_TOP_keep_50": 203,
+            "LIDAR_TOP_64": 850,
+            "LIDAR_TOP_64_keep_50": 424
+          }
+        },
+        {
+          "actor_id": 199,
+          "type_id": "vehicle.dodge.charger_police",
+          "radius_xy_m": 25.914014901135783,
+          "reference_semantic_hits": 58,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 16,
+            "LIDAR_TOP_keep_50": 8,
+            "LIDAR_TOP_64": 28,
+            "LIDAR_TOP_64_keep_50": 15
+          }
+        },
+        {
+          "actor_id": 200,
+          "type_id": "vehicle.ford.crown",
+          "radius_xy_m": 33.541865674539615,
+          "reference_semantic_hits": 30,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 8,
+            "LIDAR_TOP_keep_50": 3,
+            "LIDAR_TOP_64": 20,
+            "LIDAR_TOP_64_keep_50": 11
+          }
+        },
+        {
+          "actor_id": 201,
+          "type_id": "vehicle.mercedes.sprinter",
+          "radius_xy_m": 21.75747728793275,
+          "reference_semantic_hits": 150,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 44,
+            "LIDAR_TOP_keep_50": 22,
+            "LIDAR_TOP_64": 105,
+            "LIDAR_TOP_64_keep_50": 56
+          }
+        },
+        {
+          "actor_id": 202,
+          "type_id": "vehicle.ford.ambulance",
+          "radius_xy_m": 21.71211576570224,
+          "reference_semantic_hits": 188,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 65,
+            "LIDAR_TOP_keep_50": 28,
+            "LIDAR_TOP_64": 125,
+            "LIDAR_TOP_64_keep_50": 57
+          }
+        },
+        {
+          "actor_id": 203,
+          "type_id": "vehicle.dodge.charger_police",
+          "radius_xy_m": 32.379122247064636,
+          "reference_semantic_hits": 14,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 1,
+            "LIDAR_TOP_keep_50": 1,
+            "LIDAR_TOP_64": 8,
+            "LIDAR_TOP_64_keep_50": 3
+          }
+        },
+        {
+          "actor_id": 204,
+          "type_id": "vehicle.seat.leon",
+          "radius_xy_m": 50.85538866223191,
+          "reference_semantic_hits": 5,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 1,
+            "LIDAR_TOP_keep_50": 0,
+            "LIDAR_TOP_64": 1,
+            "LIDAR_TOP_64_keep_50": 1
+          }
+        },
+        {
+          "actor_id": 205,
+          "type_id": "vehicle.nissan.patrol",
+          "radius_xy_m": 54.6570509841043,
+          "reference_semantic_hits": 16,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 6,
+            "LIDAR_TOP_keep_50": 3,
+            "LIDAR_TOP_64": 8,
+            "LIDAR_TOP_64_keep_50": 4
+          }
+        }
+      ],
+      "unannotated_semantic_target_ids": [],
+      "unannotated_semantic_target_returns": 0
+    },
+    {
+      "frame_id": 78,
+      "timestamp": 7.03949835523963,
+      "targets": [
+        {
+          "actor_id": 198,
+          "type_id": "vehicle.volkswagen.t2_2021",
+          "radius_xy_m": 8.823121605316617,
+          "reference_semantic_hits": 1115,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 338,
+            "LIDAR_TOP_keep_50": 180,
+            "LIDAR_TOP_64": 734,
+            "LIDAR_TOP_64_keep_50": 380
+          }
+        },
+        {
+          "actor_id": 199,
+          "type_id": "vehicle.dodge.charger_police",
+          "radius_xy_m": 26.022137489755284,
+          "reference_semantic_hits": 58,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 19,
+            "LIDAR_TOP_keep_50": 13,
+            "LIDAR_TOP_64": 39,
+            "LIDAR_TOP_64_keep_50": 17
+          }
+        },
+        {
+          "actor_id": 200,
+          "type_id": "vehicle.ford.crown",
+          "radius_xy_m": 34.192960111480126,
+          "reference_semantic_hits": 29,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 12,
+            "LIDAR_TOP_keep_50": 6,
+            "LIDAR_TOP_64": 17,
+            "LIDAR_TOP_64_keep_50": 5
+          }
+        },
+        {
+          "actor_id": 201,
+          "type_id": "vehicle.mercedes.sprinter",
+          "radius_xy_m": 21.566782619042907,
+          "reference_semantic_hits": 157,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 50,
+            "LIDAR_TOP_keep_50": 25,
+            "LIDAR_TOP_64": 109,
+            "LIDAR_TOP_64_keep_50": 56
+          }
+        },
+        {
+          "actor_id": 202,
+          "type_id": "vehicle.ford.ambulance",
+          "radius_xy_m": 21.24674475121595,
+          "reference_semantic_hits": 213,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 71,
+            "LIDAR_TOP_keep_50": 38,
+            "LIDAR_TOP_64": 133,
+            "LIDAR_TOP_64_keep_50": 67
+          }
+        },
+        {
+          "actor_id": 203,
+          "type_id": "vehicle.dodge.charger_police",
+          "radius_xy_m": 31.835811626094156,
+          "reference_semantic_hits": 14,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 4,
+            "LIDAR_TOP_keep_50": 4,
+            "LIDAR_TOP_64": 8,
+            "LIDAR_TOP_64_keep_50": 5
+          }
+        },
+        {
+          "actor_id": 204,
+          "type_id": "vehicle.seat.leon",
+          "radius_xy_m": 51.09036930191792,
+          "reference_semantic_hits": 4,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 0,
+            "LIDAR_TOP_keep_50": 0,
+            "LIDAR_TOP_64": 2,
+            "LIDAR_TOP_64_keep_50": 0
+          }
+        },
+        {
+          "actor_id": 205,
+          "type_id": "vehicle.nissan.patrol",
+          "radius_xy_m": 55.28694759283343,
+          "reference_semantic_hits": 15,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 3,
+            "LIDAR_TOP_keep_50": 2,
+            "LIDAR_TOP_64": 15,
+            "LIDAR_TOP_64_keep_50": 9
+          }
+        }
+      ],
+      "unannotated_semantic_target_ids": [],
+      "unannotated_semantic_target_returns": 0
+    },
+    {
+      "frame_id": 79,
+      "timestamp": 7.089498355984688,
+      "targets": [
+        {
+          "actor_id": 198,
+          "type_id": "vehicle.volkswagen.t2_2021",
+          "radius_xy_m": 9.329523513850127,
+          "reference_semantic_hits": 976,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 311,
+            "LIDAR_TOP_keep_50": 156,
+            "LIDAR_TOP_64": 600,
+            "LIDAR_TOP_64_keep_50": 306
+          }
+        },
+        {
+          "actor_id": 199,
+          "type_id": "vehicle.dodge.charger_police",
+          "radius_xy_m": 26.134264497900595,
+          "reference_semantic_hits": 55,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 17,
+            "LIDAR_TOP_keep_50": 8,
+            "LIDAR_TOP_64": 38,
+            "LIDAR_TOP_64_keep_50": 15
+          }
+        },
+        {
+          "actor_id": 200,
+          "type_id": "vehicle.ford.crown",
+          "radius_xy_m": 34.859568121424594,
+          "reference_semantic_hits": 28,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 9,
+            "LIDAR_TOP_keep_50": 5,
+            "LIDAR_TOP_64": 11,
+            "LIDAR_TOP_64_keep_50": 7
+          }
+        },
+        {
+          "actor_id": 201,
+          "type_id": "vehicle.mercedes.sprinter",
+          "radius_xy_m": 21.370430163466633,
+          "reference_semantic_hits": 155,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 55,
+            "LIDAR_TOP_keep_50": 26,
+            "LIDAR_TOP_64": 99,
+            "LIDAR_TOP_64_keep_50": 53
+          }
+        },
+        {
+          "actor_id": 202,
+          "type_id": "vehicle.ford.ambulance",
+          "radius_xy_m": 20.765732963738564,
+          "reference_semantic_hits": 225,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 69,
+            "LIDAR_TOP_keep_50": 37,
+            "LIDAR_TOP_64": 166,
+            "LIDAR_TOP_64_keep_50": 90
+          }
+        },
+        {
+          "actor_id": 203,
+          "type_id": "vehicle.dodge.charger_police",
+          "radius_xy_m": 31.269066579747946,
+          "reference_semantic_hits": 17,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 5,
+            "LIDAR_TOP_keep_50": 3,
+            "LIDAR_TOP_64": 10,
+            "LIDAR_TOP_64_keep_50": 6
+          }
+        },
+        {
+          "actor_id": 204,
+          "type_id": "vehicle.seat.leon",
+          "radius_xy_m": 51.33398440895408,
+          "reference_semantic_hits": 4,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 0,
+            "LIDAR_TOP_keep_50": 0,
+            "LIDAR_TOP_64": 2,
+            "LIDAR_TOP_64_keep_50": 1
+          }
+        },
+        {
+          "actor_id": 205,
+          "type_id": "vehicle.nissan.patrol",
+          "radius_xy_m": 55.93118375728009,
+          "reference_semantic_hits": 13,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 5,
+            "LIDAR_TOP_keep_50": 2,
+            "LIDAR_TOP_64": 10,
+            "LIDAR_TOP_64_keep_50": 6
+          }
+        }
+      ],
+      "unannotated_semantic_target_ids": [],
+      "unannotated_semantic_target_returns": 0
+    },
+    {
+      "frame_id": 80,
+      "timestamp": 7.139498356729746,
+      "targets": [
+        {
+          "actor_id": 198,
+          "type_id": "vehicle.volkswagen.t2_2021",
+          "radius_xy_m": 9.85397172672757,
+          "reference_semantic_hits": 854,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 263,
+            "LIDAR_TOP_keep_50": 123,
+            "LIDAR_TOP_64": 549,
+            "LIDAR_TOP_64_keep_50": 276
+          }
+        },
+        {
+          "actor_id": 199,
+          "type_id": "vehicle.dodge.charger_police",
+          "radius_xy_m": 26.223807140322936,
+          "reference_semantic_hits": 55,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 18,
+            "LIDAR_TOP_keep_50": 10,
+            "LIDAR_TOP_64": 37,
+            "LIDAR_TOP_64_keep_50": 14
+          }
+        },
+        {
+          "actor_id": 200,
+          "type_id": "vehicle.ford.crown",
+          "radius_xy_m": 35.54314040838537,
+          "reference_semantic_hits": 25,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 7,
+            "LIDAR_TOP_keep_50": 1,
+            "LIDAR_TOP_64": 12,
+            "LIDAR_TOP_64_keep_50": 5
+          }
+        },
+        {
+          "actor_id": 201,
+          "type_id": "vehicle.mercedes.sprinter",
+          "radius_xy_m": 21.17146140617391,
+          "reference_semantic_hits": 164,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 47,
+            "LIDAR_TOP_keep_50": 25,
+            "LIDAR_TOP_64": 108,
+            "LIDAR_TOP_64_keep_50": 48
+          }
+        },
+        {
+          "actor_id": 202,
+          "type_id": "vehicle.ford.ambulance",
+          "radius_xy_m": 20.272210621553313,
+          "reference_semantic_hits": 240,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 77,
+            "LIDAR_TOP_keep_50": 43,
+            "LIDAR_TOP_64": 141,
+            "LIDAR_TOP_64_keep_50": 66
+          }
+        },
+        {
+          "actor_id": 203,
+          "type_id": "vehicle.dodge.charger_police",
+          "radius_xy_m": 30.685159220979482,
+          "reference_semantic_hits": 19,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 5,
+            "LIDAR_TOP_keep_50": 4,
+            "LIDAR_TOP_64": 16,
+            "LIDAR_TOP_64_keep_50": 5
+          }
+        },
+        {
+          "actor_id": 204,
+          "type_id": "vehicle.seat.leon",
+          "radius_xy_m": 51.583387496129525,
+          "reference_semantic_hits": 4,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 0,
+            "LIDAR_TOP_keep_50": 0,
+            "LIDAR_TOP_64": 3,
+            "LIDAR_TOP_64_keep_50": 3
+          }
+        },
+        {
+          "actor_id": 205,
+          "type_id": "vehicle.nissan.patrol",
+          "radius_xy_m": 56.610036426076384,
+          "reference_semantic_hits": 15,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 7,
+            "LIDAR_TOP_keep_50": 4,
+            "LIDAR_TOP_64": 11,
+            "LIDAR_TOP_64_keep_50": 2
+          }
+        }
+      ],
+      "unannotated_semantic_target_ids": [],
+      "unannotated_semantic_target_returns": 0
+    },
+    {
+      "frame_id": 81,
+      "timestamp": 7.189498357474804,
+      "targets": [
+        {
+          "actor_id": 198,
+          "type_id": "vehicle.volkswagen.t2_2021",
+          "radius_xy_m": 10.392151415119315,
+          "reference_semantic_hits": 750,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 232,
+            "LIDAR_TOP_keep_50": 114,
+            "LIDAR_TOP_64": 452,
+            "LIDAR_TOP_64_keep_50": 219
+          }
+        },
+        {
+          "actor_id": 199,
+          "type_id": "vehicle.dodge.charger_police",
+          "radius_xy_m": 26.293251410359783,
+          "reference_semantic_hits": 54,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 19,
+            "LIDAR_TOP_keep_50": 13,
+            "LIDAR_TOP_64": 44,
+            "LIDAR_TOP_64_keep_50": 21
+          }
+        },
+        {
+          "actor_id": 200,
+          "type_id": "vehicle.ford.crown",
+          "radius_xy_m": 36.24118273761952,
+          "reference_semantic_hits": 26,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 10,
+            "LIDAR_TOP_keep_50": 7,
+            "LIDAR_TOP_64": 12,
+            "LIDAR_TOP_64_keep_50": 5
+          }
+        },
+        {
+          "actor_id": 201,
+          "type_id": "vehicle.mercedes.sprinter",
+          "radius_xy_m": 20.974185988757455,
+          "reference_semantic_hits": 163,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 44,
+            "LIDAR_TOP_keep_50": 22,
+            "LIDAR_TOP_64": 86,
+            "LIDAR_TOP_64_keep_50": 39
+          }
+        },
+        {
+          "actor_id": 202,
+          "type_id": "vehicle.ford.ambulance",
+          "radius_xy_m": 19.770656411275617,
+          "reference_semantic_hits": 255,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 85,
+            "LIDAR_TOP_keep_50": 43,
+            "LIDAR_TOP_64": 145,
+            "LIDAR_TOP_64_keep_50": 73
+          }
+        },
+        {
+          "actor_id": 203,
+          "type_id": "vehicle.dodge.charger_police",
+          "radius_xy_m": 30.096781764304907,
+          "reference_semantic_hits": 22,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 6,
+            "LIDAR_TOP_keep_50": 2,
+            "LIDAR_TOP_64": 11,
+            "LIDAR_TOP_64_keep_50": 3
+          }
+        },
+        {
+          "actor_id": 204,
+          "type_id": "vehicle.seat.leon",
+          "radius_xy_m": 51.83424218486525,
+          "reference_semantic_hits": 5,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 1,
+            "LIDAR_TOP_keep_50": 1,
+            "LIDAR_TOP_64": 2,
+            "LIDAR_TOP_64_keep_50": 1
+          }
+        },
+        {
+          "actor_id": 205,
+          "type_id": "vehicle.nissan.patrol",
+          "radius_xy_m": 57.321057644033665,
+          "reference_semantic_hits": 14,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 6,
+            "LIDAR_TOP_keep_50": 5,
+            "LIDAR_TOP_64": 8,
+            "LIDAR_TOP_64_keep_50": 2
+          }
+        }
+      ],
+      "unannotated_semantic_target_ids": [],
+      "unannotated_semantic_target_returns": 0
+    },
+    {
+      "frame_id": 82,
+      "timestamp": 7.239498358219862,
+      "targets": [
+        {
+          "actor_id": 198,
+          "type_id": "vehicle.volkswagen.t2_2021",
+          "radius_xy_m": 10.938716530301885,
+          "reference_semantic_hits": 660,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 228,
+            "LIDAR_TOP_keep_50": 117,
+            "LIDAR_TOP_64": 417,
+            "LIDAR_TOP_64_keep_50": 192
+          }
+        },
+        {
+          "actor_id": 199,
+          "type_id": "vehicle.dodge.charger_police",
+          "radius_xy_m": 26.343340823624327,
+          "reference_semantic_hits": 55,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 17,
+            "LIDAR_TOP_keep_50": 11,
+            "LIDAR_TOP_64": 42,
+            "LIDAR_TOP_64_keep_50": 17
+          }
+        },
+        {
+          "actor_id": 200,
+          "type_id": "vehicle.ford.crown",
+          "radius_xy_m": 36.95091925676372,
+          "reference_semantic_hits": 25,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 8,
+            "LIDAR_TOP_keep_50": 2,
+            "LIDAR_TOP_64": 15,
+            "LIDAR_TOP_64_keep_50": 10
+          }
+        },
+        {
+          "actor_id": 201,
+          "type_id": "vehicle.mercedes.sprinter",
+          "radius_xy_m": 20.784374960058468,
+          "reference_semantic_hits": 167,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 47,
+            "LIDAR_TOP_keep_50": 22,
+            "LIDAR_TOP_64": 116,
+            "LIDAR_TOP_64_keep_50": 65
+          }
+        },
+        {
+          "actor_id": 202,
+          "type_id": "vehicle.ford.ambulance",
+          "radius_xy_m": 19.26644957380822,
+          "reference_semantic_hits": 268,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 75,
+            "LIDAR_TOP_keep_50": 34,
+            "LIDAR_TOP_64": 180,
+            "LIDAR_TOP_64_keep_50": 78
+          }
+        },
+        {
+          "actor_id": 203,
+          "type_id": "vehicle.dodge.charger_police",
+          "radius_xy_m": 29.513944753668035,
+          "reference_semantic_hits": 20,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 8,
+            "LIDAR_TOP_keep_50": 3,
+            "LIDAR_TOP_64": 12,
+            "LIDAR_TOP_64_keep_50": 4
+          }
+        },
+        {
+          "actor_id": 204,
+          "type_id": "vehicle.seat.leon",
+          "radius_xy_m": 52.08114237679862,
+          "reference_semantic_hits": 4,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 0,
+            "LIDAR_TOP_keep_50": 0,
+            "LIDAR_TOP_64": 3,
+            "LIDAR_TOP_64_keep_50": 2
+          }
+        },
+        {
+          "actor_id": 205,
+          "type_id": "vehicle.nissan.patrol",
+          "radius_xy_m": 58.03880484580414,
+          "reference_semantic_hits": 13,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 4,
+            "LIDAR_TOP_keep_50": 4,
+            "LIDAR_TOP_64": 9,
+            "LIDAR_TOP_64_keep_50": 6
+          }
+        }
+      ],
+      "unannotated_semantic_target_ids": [],
+      "unannotated_semantic_target_returns": 0
+    },
+    {
+      "frame_id": 83,
+      "timestamp": 7.28949835896492,
+      "targets": [
+        {
+          "actor_id": 198,
+          "type_id": "vehicle.volkswagen.t2_2021",
+          "radius_xy_m": 11.490003187630201,
+          "reference_semantic_hits": 582,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 194,
+            "LIDAR_TOP_keep_50": 108,
+            "LIDAR_TOP_64": 378,
+            "LIDAR_TOP_64_keep_50": 192
+          }
+        },
+        {
+          "actor_id": 199,
+          "type_id": "vehicle.dodge.charger_police",
+          "radius_xy_m": 26.37827286403668,
+          "reference_semantic_hits": 54,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 16,
+            "LIDAR_TOP_keep_50": 7,
+            "LIDAR_TOP_64": 35,
+            "LIDAR_TOP_64_keep_50": 20
+          }
+        },
+        {
+          "actor_id": 200,
+          "type_id": "vehicle.ford.crown",
+          "radius_xy_m": 37.66960240558944,
+          "reference_semantic_hits": 20,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 8,
+            "LIDAR_TOP_keep_50": 8,
+            "LIDAR_TOP_64": 9,
+            "LIDAR_TOP_64_keep_50": 6
+          }
+        },
+        {
+          "actor_id": 201,
+          "type_id": "vehicle.mercedes.sprinter",
+          "radius_xy_m": 20.605325490146896,
+          "reference_semantic_hits": 176,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 51,
+            "LIDAR_TOP_keep_50": 27,
+            "LIDAR_TOP_64": 105,
+            "LIDAR_TOP_64_keep_50": 60
+          }
+        },
+        {
+          "actor_id": 202,
+          "type_id": "vehicle.ford.ambulance",
+          "radius_xy_m": 18.762952961568566,
+          "reference_semantic_hits": 272,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 91,
+            "LIDAR_TOP_keep_50": 48,
+            "LIDAR_TOP_64": 173,
+            "LIDAR_TOP_64_keep_50": 92
+          }
+        },
+        {
+          "actor_id": 203,
+          "type_id": "vehicle.dodge.charger_police",
+          "radius_xy_m": 28.93989299608934,
+          "reference_semantic_hits": 25,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 6,
+            "LIDAR_TOP_keep_50": 5,
+            "LIDAR_TOP_64": 16,
+            "LIDAR_TOP_64_keep_50": 10
+          }
+        },
+        {
+          "actor_id": 204,
+          "type_id": "vehicle.seat.leon",
+          "radius_xy_m": 52.32078233024724,
+          "reference_semantic_hits": 3,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 0,
+            "LIDAR_TOP_keep_50": 0,
+            "LIDAR_TOP_64": 3,
+            "LIDAR_TOP_64_keep_50": 2
+          }
+        },
+        {
+          "actor_id": 205,
+          "type_id": "vehicle.nissan.patrol",
+          "radius_xy_m": 58.75921226954792,
+          "reference_semantic_hits": 13,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 5,
+            "LIDAR_TOP_keep_50": 1,
+            "LIDAR_TOP_64": 7,
+            "LIDAR_TOP_64_keep_50": 3
+          }
+        }
+      ],
+      "unannotated_semantic_target_ids": [],
+      "unannotated_semantic_target_returns": 0
+    }
+  ],
+  "unannotated_semantic_target_ids": [],
+  "reference_visible_instances_without_32_box_returns": 12,
+  "reference_visible_instances_without_64_box_returns": 2,
+  "scene_precision_ready": false,
+  "usable_for_rl_reward": false,
+  "limitations": [
+    "Zero unannotated semantic IDs only covers surfaces hit by the independent semantic reference",
+    "No environment/parked/static inventory or complete scene ontology in this capture",
+    "Input points inside engine boxes are geometric counts, not aligned semantic labels or guaranteed detectability",
+    "Reference visibility does not establish chosen-sensor observability; keep all denominators explicit",
+    "No class-aware metric, new-target latency or complete scene false-positive judgment",
+    "GT audit stays on the evaluator side; never an actor observation feature"
+  ]
+}

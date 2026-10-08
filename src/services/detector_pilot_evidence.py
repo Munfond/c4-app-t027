@@ -13,7 +13,7 @@ BASE = '/api/v1/experiments/detector-pilot'
 def artifact(name):
     manifest = json.loads((ROOT / 'bundle-manifest.json').read_text())
     members = manifest['files']
-    if name not in members or not 1 <= len(members) <= 128:
+    if name not in members or not 1 <= len(members) <= 256:
         raise KeyError('Artifact not in evidence bundle')
     path = (ROOT / name).resolve()
     root = ROOT.resolve()
@@ -46,10 +46,17 @@ def snapshot():
         row['geometry_url'] = BASE + '/artifacts/' + directory + '/geometry.json'
     if len({row['capture_manifest_sha256'] for row in summary['variants']}) != 1:
         raise ValueError('Variants reference different captures')
+    coverage = json.loads(artifact('gt-coverage-audit.json').read_text())
+    if (coverage['capture_manifest_sha256'] != summary['variants'][0]['capture_manifest_sha256']
+            or coverage['scene_precision_ready'] is not False or coverage['usable_for_rl_reward'] is not False):
+        raise ValueError('GT audit must reference this capture and preserve incomplete-quality scope')
     value = dict(summary, available=True, archive_id=ARCHIVE_ID,
                  bundle_manifest_sha256=sha256_file(ROOT / 'bundle-manifest.json'),
+                 gt_coverage_url=BASE + '/artifacts/gt-coverage-audit.json',
+                 gt_coverage=dict(reference_visible_instances_without_32_box_returns=coverage['reference_visible_instances_without_32_box_returns'],
+                                  reference_visible_instances_without_64_box_returns=coverage['reference_visible_instances_without_64_box_returns']),
                  notice='20 frames in one short CARLA scene. Partial class-agnostic target geometry; not mAP, precision, validated profiles or a trained policy.',
-                 conclusion='Chưa chọn cấu hình tối ưu. AMP và Camera+LiDAR cần kiểm định thêm; giảm 50% điểm làm giảm số mục tiêu ghép được trong capture này.')
+                 conclusion='PointPillars AMP là ứng viên kiểm định tiếp: nhanh hơn và ghép được nhiều mục tiêu hơn BEVFusion LiDAR trong capture này. Chưa có cấu hình đạt 20 Hz; chưa chọn profile tối ưu. Giảm 50% điểm làm giảm số mục tiêu ghép được ở cả hai model.')
     return value | {'evidence_sha256': digest(value)}
 
 

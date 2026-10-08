@@ -16,7 +16,7 @@ from scripts.audit_carla_detection import audit  # noqa: E402
 from src.simulation.carla_rig import sha256_file  # noqa: E402
 
 
-def bench(episode, output, frames, include_camera):
+def bench(episode, output, frames, include_camera, family='bevfusion'):
     if not 1 <= frames <= 20:
         raise ValueError('Pilot must contain 1..20 frames')
     if output.exists():
@@ -28,6 +28,14 @@ def bench(episode, output, frames, include_camera):
     if include_camera:
         variants.extend([('cl-full-fp32', 'camera_lidar', 1., False),
                          ('cl-full-amp', 'camera_lidar', 1., True)])
+    if family == 'pointpillars':
+        if include_camera:
+            raise ValueError('PointPillars family is LiDAR-only')
+        variants = [('pp-full-fp32', 'pointpillars', 1., False),
+                    ('pp-half-fp32', 'pointpillars', .5, False),
+                    ('pp-full-amp', 'pointpillars', 1., True)]
+    elif family != 'bevfusion':
+        raise ValueError('Unknown pilot family')
     results = []
     for name, model, keep, amp in variants:
         target = output / name
@@ -86,7 +94,8 @@ if __name__ == '__main__':
     parser.add_argument('--output', required=True, type=Path)
     parser.add_argument('--frames', type=int, default=2)
     parser.add_argument('--include-camera', action='store_true')
+    parser.add_argument('--family', choices=('bevfusion', 'pointpillars'), default='bevfusion')
     args = parser.parse_args()
     os.environ.setdefault('CUDA_HOME', str(PROJECT / 'data/runtime/cuda-12.1'))
     os.environ.setdefault('MPLCONFIGDIR', '/tmp/p027-detector-matplotlib')
-    bench(args.episode.resolve(), args.output.resolve(), args.frames, args.include_camera)
+    bench(args.episode.resolve(), args.output.resolve(), args.frames, args.include_camera, args.family)

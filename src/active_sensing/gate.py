@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from src.active_sensing.core import Profile, gate_points
+from src.active_sensing.sampling import SAMPLING_ABI
 
 CAMERAS = ("front", "front_left", "front_right", "back", "back_left", "back_right")
 RADARS = ("front", "front_left", "front_right", "back_left", "back_right")
@@ -35,7 +36,8 @@ def gate_capture(capture: dict, profile: Profile, *, seed: int = 0) -> dict:
             raise ValueError("Missing or unsynchronized LiDAR variant")
         output["streams"]["lidar"] = {
             "frame_id": frame_id, "channels": profile.lidar_channels,
-            "points": gate_points(lidar["points"], profile.lidar_keep, seed),
+            "points": gate_points(lidar["points"], profile.lidar_keep, seed + frame_id),
+            "sampling_abi": SAMPLING_ABI, "sampling_seed": seed + frame_id,
         }
         for key in ("point_frame", "intensity_policy", "timestamp_s"):
             if key in lidar:

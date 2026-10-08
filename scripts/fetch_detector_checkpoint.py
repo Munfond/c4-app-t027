@@ -14,6 +14,7 @@ SOURCE = "https://github.com/open-mmlab/mmdetection3d/blob/v1.4.0/projects/BEVFu
 MODELS = {
     "lidar": "bevfusion_lidar_voxel0075_second_secfpn_8xb4-cyclic-20e_nus-3d-2628f933.pth",
     "camera_lidar": "bevfusion_lidar-cam_voxel0075_second_secfpn_8xb4-cyclic-20e_nus-3d-5239b1af.pth",
+    "pointpillars": "hv_pointpillars_secfpn_sbn-all_4x8_2x_nus-3d_20210826_225857-f19d00a3.pth",
 }
 # Full content pins from the official HTTPS artifacts. The camera+LiDAR file served
 # by upstream does NOT match its filename suffix; two reads and its Content-MD5
@@ -21,12 +22,18 @@ MODELS = {
 CONTENT_SHA256 = {
     "lidar": "2628f933277774e194932815ea1a5d66a0bd9f69ebc8d9040e8c92760bb6652e",
     "camera_lidar": "e68c6c084d8971f4f879751b0ed3981f575c24ee3cf385a1e39197c26a9bb3ab",
+    "pointpillars": "f19d00a38e6b775f38a45a9a3ca3ecaec20a5585a3caf44622423e2d5f75d5d0",
 }
 BASE = "https://download.openmmlab.com/mmdetection3d/v1.1.0_models/bevfusion/"
+POINTPILLARS_BASE = ("https://download.openmmlab.com/mmdetection3d/v1.0.0_models/pointpillars/"
+                    "hv_pointpillars_secfpn_sbn-all_4x8_2x_nus-3d/")
 
 
 def fetch(model, root):
     name = MODELS[model]
+    url = (POINTPILLARS_BASE if model == 'pointpillars' else BASE) + name
+    source = ("https://github.com/open-mmlab/mmdetection3d/blob/v1.4.0/configs/pointpillars/README.md"
+              if model == 'pointpillars' else SOURCE)
     prefix = name.rsplit("-", 1)[-1].split(".")[0]
     root.mkdir(parents=True, exist_ok=True)
     target = root / name
@@ -36,7 +43,7 @@ def fetch(model, root):
         pending = root / (name + ".part")
         digest = hashlib.sha256()
         count, deadline = 0, time.monotonic() + 600
-        with urllib.request.urlopen(BASE + name, timeout=30) as response, pending.open("wb") as output:
+        with urllib.request.urlopen(url, timeout=30) as response, pending.open("wb") as output:
             length = int(response.headers.get("Content-Length", 0))
             if length > 2 * 1024 ** 3:
                 raise ValueError("Unexpected checkpoint size")
@@ -56,7 +63,7 @@ def fetch(model, root):
     if digest != CONTENT_SHA256[model]:
         raise ValueError("Existing checkpoint content mismatch; file was not replaced")
     metadata = {"model": model, "path": name, "sha256": digest, "bytes": target.stat().st_size,
-                "source": SOURCE, "download_url": BASE + name,
+                "source": source, "download_url": url,
                 "upstream_filename_fingerprint": prefix, "loaded": False,
                 "upstream_filename_fingerprint_matches": digest.startswith(prefix),
                 "identity_basis": "full SHA256 of official URL content; camera_lidar filename discrepancy audited 2026-10-08",

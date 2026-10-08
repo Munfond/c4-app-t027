@@ -146,6 +146,93 @@
       "peak_allocated_bytes": 2204063744,
       "peak_reserved_bytes": 2531262464,
       "evidence_directory": "cl-full-amp"
+    },
+    {
+      "variant": "pp-full-fp32",
+      "configuration": {
+        "model": "pointpillars",
+        "keep_fraction": 1.0,
+        "amp": false
+      },
+      "capture_manifest_sha256": "c72255c929c32d55c07fa1ec48ba0dc4504cf4142b2316714eabbc8ee7f581b3",
+      "checkpoint_sha256": "f19d00a38e6b775f38a45a9a3ca3ecaec20a5585a3caf44622423e2d5f75d5d0",
+      "resolved_config_sha256": "2bee9d77f6c3f65224a355d4c46362c2d9e1eedf8551fdf988c23dded6db8292",
+      "report_sha256": "e849f1841d28f0feb815d449969f445a5367492f09d82b14517fae4c2843f879",
+      "geometry_sha256": "dc01899580518c62194263ea71ab3c172d1f1f51d7a7fcfc29f00fa87d4bf476",
+      "frames": 20,
+      "cli_wall_s": 24.287946407999698,
+      "wall_mean_ms": 82.27306189996852,
+      "wall_p95_ms": 83.2956452495182,
+      "cuda_activity_mean_ms": 67.36344999999999,
+      "period_exceedance_fraction": {
+        "5": 0.0,
+        "10": 0.0,
+        "20": 1.0
+      },
+      "positive_target_geometry_recall": 0.5986842105263158,
+      "matched_target_frame_instances": 91,
+      "target_frame_instances": 152,
+      "peak_allocated_bytes": 519348736,
+      "peak_reserved_bytes": 1658847232,
+      "evidence_directory": "pp-full-fp32"
+    },
+    {
+      "variant": "pp-half-fp32",
+      "configuration": {
+        "model": "pointpillars",
+        "keep_fraction": 0.5,
+        "amp": false
+      },
+      "capture_manifest_sha256": "c72255c929c32d55c07fa1ec48ba0dc4504cf4142b2316714eabbc8ee7f581b3",
+      "checkpoint_sha256": "f19d00a38e6b775f38a45a9a3ca3ecaec20a5585a3caf44622423e2d5f75d5d0",
+      "resolved_config_sha256": "2bee9d77f6c3f65224a355d4c46362c2d9e1eedf8551fdf988c23dded6db8292",
+      "report_sha256": "757fb9a1e54e428ec2623702cbac09a995b8d348e51e0e73c29cd5619f7e1d88",
+      "geometry_sha256": "76b64a4ac3f39dbf9794a52bb383083b0c0dfc64950f04510f2c8a82b4dc77c7",
+      "frames": 20,
+      "cli_wall_s": 21.921309645000292,
+      "wall_mean_ms": 71.18774985005984,
+      "wall_p95_ms": 73.36270879977747,
+      "cuda_activity_mean_ms": 56.7134,
+      "period_exceedance_fraction": {
+        "5": 0.0,
+        "10": 0.0,
+        "20": 1.0
+      },
+      "positive_target_geometry_recall": 0.375,
+      "matched_target_frame_instances": 57,
+      "target_frame_instances": 152,
+      "peak_allocated_bytes": 371725312,
+      "peak_reserved_bytes": 740294656,
+      "evidence_directory": "pp-half-fp32"
+    },
+    {
+      "variant": "pp-full-amp",
+      "configuration": {
+        "model": "pointpillars",
+        "keep_fraction": 1.0,
+        "amp": true
+      },
+      "capture_manifest_sha256": "c72255c929c32d55c07fa1ec48ba0dc4504cf4142b2316714eabbc8ee7f581b3",
+      "checkpoint_sha256": "f19d00a38e6b775f38a45a9a3ca3ecaec20a5585a3caf44622423e2d5f75d5d0",
+      "resolved_config_sha256": "2bee9d77f6c3f65224a355d4c46362c2d9e1eedf8551fdf988c23dded6db8292",
+      "report_sha256": "48b8e1393c386d082cc9e71bd578af9b11025ee6744ae1f596cd8c738eaf8563",
+      "geometry_sha256": "eac16af5334e6eefd5e1ed9bf9b34ffde97d8c90c4c899e4ef1dfcd856b61641",
+      "frames": 20,
+      "cli_wall_s": 21.713585688999956,
+      "wall_mean_ms": 57.45168319995173,
+      "wall_p95_ms": 59.66364264954791,
+      "cuda_activity_mean_ms": 42.45184999999999,
+      "period_exceedance_fraction": {
+        "5": 0.0,
+        "10": 0.0,
+        "20": 1.0
+      },
+      "positive_target_geometry_recall": 0.5986842105263158,
+      "matched_target_frame_instances": 91,
+      "target_frame_instances": 152,
+      "peak_allocated_bytes": 288657920,
+      "peak_reserved_bytes": 610271232,
+      "evidence_directory": "pp-full-amp"
     }
   ],
   "selection": null,
@@ -157,6 +244,7 @@
     "One short correlated scene, no validation/test split or weather robustness",
     "Period exceedance is inference-only arithmetic, not online scheduling measurement",
     "CLI time includes initialization/verification/profiling, not online latency",
-    "CARLA is stopped during inference; not full simulator + model throughput"
+    "CARLA is stopped during inference; not full simulator + model throughput",
+    "PointPillars and BEVFusion measured in sequential separate sessions; no randomized repeated latency benchmark"
   ]
 }

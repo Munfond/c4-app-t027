@@ -2,7 +2,12 @@
 import numpy as np
 import pytest
 
-from src.active_sensing.lidar_adapter import camera_to_lidar_calibration, predicted_boxes_to_ego, single_sweep_points
+from src.active_sensing.lidar_adapter import (
+    camera_to_lidar_calibration,
+    detector_features,
+    predicted_boxes_to_ego,
+    single_sweep_points,
+)
 from src.simulation.carla_rig import FLIP, OPTICAL, camera_intrinsic
 
 
@@ -41,3 +46,11 @@ def test_camera_projection_uses_measured_lidar_mount_and_optical_axes():
     np.testing.assert_allclose(optical[:3], [0, 0, 10], atol=1e-6)
     np.testing.assert_allclose(pixel[:2] / pixel[2], [320, 180])
     np.testing.assert_allclose(np.linalg.det(np.asarray(calib['lidar2cam'])[:3, :3]), 1)
+
+
+def test_pointpillars_uses_lag_not_intensity_in_fourth_channel():
+    points = single_sweep_points([[2, 3, 4, .75]])
+    np.testing.assert_allclose(detector_features(points, 'pointpillars'), [[2, -3, 4, 0]])
+    np.testing.assert_allclose(detector_features(points, 'lidar'), [[2, -3, 4, .75, 0]])
+    with pytest.raises(ValueError, match='feature contract'):
+        detector_features(points, 'unknown')

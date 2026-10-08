@@ -14,9 +14,11 @@ from scripts.fetch_detector_checkpoint import CONTENT_SHA256, MODELS  # noqa: E4
 from src.active_sensing.episode_inputs import RawEpisode  # noqa: E402
 from src.active_sensing.lidar_adapter import (  # noqa: E402
     camera_to_lidar_calibration,
+    detector_features,
     predicted_boxes_to_ego,
     single_sweep_points,
 )
+from src.active_sensing.sampling import SAMPLING_ABI, subset_indices  # noqa: E402
 from src.simulation.carla_rig import sha256_file  # noqa: E402
 
 UPSTREAM_SHA = "fe25f7a51d36e3702f961e198894580d83c4387b"
@@ -55,13 +57,21 @@ def smoke(args):
     if args.frames > len(episode.manifest["frames"]):
         raise ValueError("Insufficient episode frames")
     config_name = ('bevfusion_lidar-cam' if args.model == 'camera_lidar' else 'bevfusion_lidar')
-    config_path = upstream / f"projects/BEVFusion/configs/{config_name}_voxel0075_second_secfpn_8xb4-cyclic-20e_nus-3d.py"
+    config_path = (upstream / 'configs/pointpillars/pointpillars_hv_secfpn_sbn-all_8xb4-2x_nus-3d.py'
+                   if args.model == 'pointpillars' else
+                   upstream / f"projects/BEVFusion/configs/{config_name}_voxel0075_second_secfpn_8xb4-cyclic-20e_nus-3d.py")
     config = Config.fromfile(config_path)
     # Remove multi-sweep padding: this experiment supplies one measured sweep, not 10 copies.
     config.test_dataloader.dataset.pipeline = [step for step in config.test_dataloader.dataset.pipeline
                                               if step["type"] != "LoadPointsFromMultiSweeps"]
     config.test_dataloader.dataset.pipeline[-1]["keys"] = (["img", "points"]
                                                          if args.model == 'camera_lidar' else ["points"])
+    feature_names = ['x', 'y', 'z', 'time_lag'] if args.model == 'pointpillars' else ['x', 'y', 'z', 'intensity', 'time_lag']
+    if args.model == 'pointpillars':
+        # inference_detector replaces the file loader with LoadPointsFromDict.
+        # Feature extraction happens explicitly below, after input gating.
+        config.test_dataloader.dataset.pipeline[0]['load_dim'] = 4
+        config.test_dataloader.dataset.pipeline[0]['use_dim'] = 4
     image_policy = None
     if args.model == 'camera_lidar':
         # All backbone keys are required by strict full-checkpoint loading below;
@@ -99,10 +109,9 @@ def smoke(args):
         with np.load(episode._artifact(sensor["artifact"], "inputs"), allow_pickle=False) as data:
             points = single_sweep_points(data["raw"], args.intensity_policy)
         if args.keep_fraction < 1:
-            count = max(1, int(np.ceil(len(points) * args.keep_fraction)))
-            selected_indices = np.sort(np.random.default_rng(args.seed + ref["frame_id"]).choice(
-                len(points), size=count, replace=False))
+            selected_indices = subset_indices(len(points), args.keep_fraction, args.seed + ref['frame_id'])
             points = points[selected_indices]
+        points = detector_features(points, args.model)
         input_sha = hashlib.sha256(points.tobytes()).hexdigest()
         camera_artifacts = {}
         def infer():
@@ -179,10 +188,12 @@ def smoke(args):
               "capture_manifest_sha256": episode.verification["manifest_sha256"],
               "torch": torch.__version__, "cuda": torch.version.cuda, "gpu": torch.cuda.get_device_name(0),
               "amp": args.amp, "intensity_policy": args.intensity_policy, "sweeps": 1,
+              "input_feature_names": feature_names,
               "image_policy": image_policy,
               "adapter_sha256": sha256_file(PROJECT / 'src/active_sensing/lidar_adapter.py'),
               "strict_checkpoint_loading": True, "keep_fraction": args.keep_fraction, "sampling_seed": args.seed,
               "sampling_algorithm": "numpy.default_rng(seed+frame_id), sorted subset indices",
+              "sampling_abi": SAMPLING_ABI,
               "cuda_activity_measurement": args.measure_kernels,
               "score_threshold": args.threshold, "frames": result_frames,
               "peak_allocated_bytes": torch.cuda.max_memory_allocated(),

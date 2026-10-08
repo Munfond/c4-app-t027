@@ -6,7 +6,6 @@ Only checkpoint-compatible full camera/radar rigs are enabled initially.
 from __future__ import annotations
 
 import math
-import random
 from dataclasses import asdict, dataclass, fields
 from typing import Any
 
@@ -339,8 +338,8 @@ def gate_points(points: list[tuple[float, ...]], keep: float, seed: int) -> list
             raise ValueError("Points require XYZ")
         for value in point:
             finite(value, "point")
-    count = max(1, math.ceil(len(points) * keep)) if points else 0
-    indices = sorted(random.Random(seed).sample(range(len(points)), count))
+    from src.active_sensing.sampling import subset_indices
+    indices = subset_indices(len(points), keep, seed)
     return [points[i] for i in indices]
 
 

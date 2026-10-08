@@ -1,4 +1,4 @@
-# Checkpoint tiếp tục active sensing — 08/10/2026, khoảng 07:48 Việt Nam
+# Checkpoint tiếp tục active sensing — 08/10/2026, khoảng 08:07 Việt Nam
 
 Branch `codex/active-sensing-integration`, không push/merge trong lượt này.
 Yêu cầu đầy đủ vẫn đang làm; automation theo dõi hạn mức còn ACTIVE, chưa được tắt.
@@ -25,7 +25,7 @@ Nguồn plan: `/home/lam/Downloads/active-sensing-rl.vi.md`.
   `eval/detector-pilot-2026-10-08/`, có manifest kiểm checksum toàn bundle.
 - Bot → CARLA → **Detector trên GPU · pilot 20 frame**, archive qua API + review riêng.
   Đây là đọc kết quả đo sẵn, chưa phải thực thi detector hoặc policy online từ bot.
-- 176 tests qua; Ruff, frontend lint, production build qua. HTTP thật health, /carla,
+- 182 tests qua; Ruff, frontend lint, production build qua. HTTP thật health, /carla,
   evidence proxy và reviews trả 200. Không có engineer review người thật tự tạo.
 - Hình calibration/detector/pilot plot đã mở kiểm tra bằng view_image.
   **Không có UI render QA**: browser automation trước đó bị URL policy chặn;
@@ -44,10 +44,35 @@ visibility từ semantic LiDAR GT 64. Không đủ scene precision/class ontolog
 20 Hz chưa đạt ở mọi variant; AMP LiDAR vẫn vượt chu kỳ 10 Hz trong 13/20 frame.
 CL vượt chu kỳ 5 Hz ở mọi frame. Không dùng các run này để train hoặc validate catalog.
 
+## Kết quả mới trong lượt 08:00–08:07
+
+- Official PointPillars nuScenes SECFPN strict load thành công; full SHA khớp filename.
+  Data runtime riêng như BEVFusion. Upstream feature contract XYZ + lag, không XYZI.
+- 3 variant ×20 frame cùng capture: full FP32 wall82,27/CUDA67,36 ms, 91/152;
+  half FP32 wall71,19/CUDA56,71 ms, 57/152; full AMP wall57,45/CUDA42,45 ms, 91/152.
+  Tất cả vẫn vượt chu kỳ 20 Hz; 10 Hz chỉ đủ trong pilot inference độc lập, chưa online.
+- Gate/replay dùng `numpy-default-rng-sorted-subset-v1`, seed+frame_id. Có test đối chiếu
+  đúng indices giữa hai đường chạy; bản gate stdlib Random cũ cần xuất lại bảng/hash.
+- `scripts/audit_carla_gt.py`: geometry return counts từng actor/input32/64/half,
+  taxonomy kiểm enum0.9.16. 12 lượt reference-visible mà input32 không có điểm trong box,
+  input64 có2. Không có unknown semantic target ID trong bề mặt reference đã hit;
+  vẫn không đủ complete GT/precision/reward. Xem docs/DETECTION_GT_PROTOCOL.vi.md (draft).
+- Archive mở rộng8 variant,193 members pin fullSHA, prior-summary/prior-manifest giữ audit
+  bộ5 ban đầu; thêm gt-coverage-audit và pilot-comparison-8.png. Plot đã view_image kiểm tra.
+- Bot có8 variant + GT audit; review hiển thị thuộc snapshot hiện tại hay cũ, không tự duyệt.
+  API/proxy200; checks ở eval/detector-pointpillars-2026-10-08-api-check.json.
+  Snapshot SHA83b712da279ad6998fa95994290fce1815f671e98ae1bfafb3e3ffdff6b1fba9.
+- 182 tests11,66s passed, Ruff/frontendlint/build passed. Chưa browser render QA vì policy.
+- Không có CARLA/detector/train đang chạy; chỉ web/worker idle. Không thêm ROS2 hoặc train
+  policy thật trong lượt này. Không có thêm long-duration capture; free disk khoảng5,3GiB.
+- Bước tiếp: complete GT/static inventory + capture storage (có thể raw-only NPZ/semantic PNG
+  lossless, schema mới và guard), rồi long episode; nhiều scene/pedestrians/events/seg/radar
+  adapters + total GPU/window trước validated profiles và BC/PPO. Không ép train từ pilot.
+
 ## Runtime hiện tại
 
-- Backend local 8000: uvicorn PID 136391, exec session 46468.
-- Frontend local 3111: standalone server, exec session 88179. Static/public assets đã copy
+- Backend local 8000: uvicorn PID 141372, exec session 2548.
+- Frontend local 3111: standalone server; đã restart với build cuối lúc khoảng 08:07. Static/public assets đã copy
   vào `.next/standalone/`; không còn warning dùng next start với output standalone.
 - Worker occupancy PID 9023 vẫn chạy, idle. CARLA và detector đã dừng sau đo.
 - Detector env: `data/runtime/detector-env`; SDK/web/CPU RL: `.venv-experiments`.
@@ -62,12 +87,12 @@ CL vượt chu kỳ 5 Hz ở mọi frame. Không dùng các run này để train
 1. Chốt protocol GT trước: actor + parked/static object coverage, ontology/ignore/ROI,
    semantic visibility không thay observability của sensor được chọn. Positive geometry
    diagnostic đang có **không** được đổi thành metric class-aware hoặc reward của plan.
-2. Xử lý cadence thực trên RTX 2050: khảo sát thêm baseline detector nhẹ có checkpoint chính
-   thức phù hợp (Lab từng có PointPillars). Không bật profile 20 Hz chỉ vì scheduler có 20 slot.
+2. Xử lý cadence thực trên RTX 2050: đã có PointPillars pilot; AMP 57,45 ms, vẫn chưa 20 Hz.
+   Không bật profile 20 Hz chỉ vì scheduler có 20 slot.
    Shield phải báo infeasible nếu cấu hình khả dụng không đáp ứng nhiệm vụ/nhịp yêu cầu.
 3. Chỉ sau protocol đạt, đo 2–3 profile trước; rồi 12–24 **validated discrete** profiles.
    Current catalog 24 là ứng viên; CRN/fused/seg chưa được nghiệm thu. Không mở MultiDiscrete.
-   Sampling pilot dùng NumPy RNG, gate dùng stdlib Random; phải thống nhất trước replay.
+   Sampling gate và detector đã thống nhất ABI NumPy v1; không reuse bảng gate cũ stdlib Random.
 4. Bổ sung tổng GPU work/window gồm monitor + transition + mọi invocation/task, observation
    chỉ dùng dữ liệu đo trước action/kết quả action trước. Không lấy GT hoặc candidate hiện tại
    chưa được chọn làm actor feature. Không dùng delay/cadence số học thay online deadline log.
@@ -87,7 +112,7 @@ CL vượt chu kỳ 5 Hz ở mọi frame. Không dùng các run này để train
 
 ## Hạn mức và automation
 
-Tool gần nhất trong lượt: used 26% cửa sổ 5 giờ; `resetsAt=1791435933`
+Tool gần nhất trong lượt: used 39% cửa sổ 5 giờ; `resetsAt=1791435933`
 (12:05:33 ngày 08/10 Việt Nam). **Luôn query lại**, không dựa vào giá trị lưu này.
 Nếu còn <10% trước reset: lưu tiến độ, hoãn công việc nặng tới reset thực tế.
 Automation id: `ti-p-t-c-p-027-sau-reset-h-n-m-c`. Chỉ tắt khi tất cả yêu cầu hoàn tất.

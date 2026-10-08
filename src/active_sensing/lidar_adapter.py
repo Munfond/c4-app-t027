@@ -22,6 +22,20 @@ def single_sweep_points(raw, intensity_policy="raw"):
     return points
 
 
+def detector_features(points, model):
+    """Preserve the upstream sweep-loader's feature selection without fake history.
+
+    nuScenes PointPillars HardVFE has four input channels: XYZ + time lag,
+    NOT XYZ + intensity. BEVFusion explicitly retains all five channels.
+    """
+    if model not in ('lidar', 'camera_lidar', 'pointpillars'):
+        raise ValueError('Unknown detector feature contract')
+    points = np.asarray(points, dtype=np.float32)
+    if points.ndim != 2 or points.shape[1] != 5 or not np.isfinite(points).all():
+        raise ValueError('Expected finite XYZ/intensity/time-lag points')
+    return points[:, [0, 1, 2, 4]] if model == 'pointpillars' else points
+
+
 def lidar_model_to_ego(sensor):
     # Recorded matrix maps CARLA-local axes; model input already flips y.
     return np.asarray(sensor["sensor_to_ego_lab"]) @ FLIP
