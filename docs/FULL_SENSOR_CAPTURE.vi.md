@@ -100,9 +100,9 @@ capture đồng bộ offline, không phải phép đo latency/age của một d�
 
 ## Cổng tiếp theo
 
-1. Khôi phục/chốt checkpoint detector và runtime CUDA riêng; hiện không có
-   `our_lidar.pth`, `our_bevfusion.pth`, checkpoint detection chính thức hoặc CRN trên máy.
-2. Adapter LiDAR trước, smoke inference và đối chiếu projected GT/canonical box axes.
+1. Runtime CUDA riêng và OpenMMLab BEVFusion LiDAR đã chạy smoke thật;
+   xem DETECTOR_CARLA_SMOKE.vi.md. Trọng số team, Camera+LiDAR và CRN vẫn chưa có trên máy.
+2. Hoàn thiện GT coverage/ontology và đánh giá LiDAR sau smoke/projected GT/canonical box axes.
    Mỗi artifact ghi checkpoint SHA/config SHA; không lấy metric nuScenes cũ cho CARLA mới.
 3. CL/radar/segmentation chỉ mở sau kiểm chứng riêng; giữ profile ứng viên chưa đạt cổng ở trạng thái disabled.
 4. Đo tổng GPU work/window thật cho 2–3 profile trước khi mở 12–24; cùng capture, same task,

@@ -145,7 +145,9 @@ Runtime RL và CARLA 0.9.16 đã cài; NVIDIA driver hoạt động trên RTX 20
 Capture occupancy hai frame thành công. Full rig CLI đã thu thật 20 frame đồng bộ,
 6 RGB + 6 camera GT, LiDAR 32/64 + semantic LiDAR GT, 5 radar và actor GT/calibration.
 Xem FULL_SENSOR_CAPTURE.vi.md và eval/full-rig-2026-10-08/. Reader/gate/scheduler đã qua;
-chưa có detector input adapter/inference hoặc bridge ROS 2. Workaround native reload crash dùng server/client mới mỗi capture,
+Detector LiDAR OpenMMLab đã chạy thật 2 frame với strict checkpoint loading,
+CUDA activity đo bằng CUPTI; xem DETECTOR_CARLA_SMOKE.vi.md. Chưa nghiệm thu quality,
+chưa có measured replay/GPU work toàn window hoặc bridge ROS 2. Workaround native reload crash dùng server/client mới mỗi capture,
 chi tiết tại CARLA_LINUX_SETUP.vi.md. Perception hiện chạy CPU, chưa có GPU work/window đo thật.
 
 ## Cổng nghiệm thu tiếp theo

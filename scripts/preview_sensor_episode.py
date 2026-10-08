@@ -16,7 +16,7 @@ EDGES = [(a, b) for a in range(8) for b in range(a + 1, 8)
          if bin(a ^ b).count("1") == 1]
 
 
-def preview(root, output, index=0):
+def preview(root, output, index=0, prediction_root=None):
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
@@ -24,6 +24,17 @@ def preview(root, output, index=0):
     frame = episode.manifest["frames"][index]
     meta = json.loads((episode.root / frame["metadata"]["path"]).read_text())
     actors = json.loads((episode.root / meta["actor_ground_truth"]["path"]).read_text())["boxes"]
+    predictions = []
+    if prediction_root is not None:
+        from src.simulation.carla_rig import sha256_file
+        report = json.loads((prediction_root / "report.json").read_text())
+        predicted = json.loads((prediction_root / f"frame_{index:05d}.json").read_text())
+        if report["capture_manifest_sha256"] != sha256_file(episode.root / "manifest.json"):
+            raise ValueError("Predictions are from a different capture")
+        if predicted["frame_id"] != frame["frame_id"] or predicted["timestamp"] != frame["timestamp"]:
+            raise ValueError("Prediction frame/timestamp mismatch")
+        predictions = predicted["boxes"]
+    overlays = [(box, "#20ddbc", 1) for box in actors] + [(box, "#269cff", 1.6) for box in predictions]
     fig = plt.figure(figsize=(15, 11), facecolor="#f6f8f9", layout="constrained")
     grid = fig.add_gridspec(4, 3, height_ratios=[.16, 1, 1, 1.25])
     header = fig.add_subplot(grid[0, :])
@@ -39,7 +50,7 @@ def preview(root, output, index=0):
         ax.imshow(image)
         inv = np.linalg.inv(sensor["optical_to_ego_lab"])
         intrinsic = np.asarray(sensor["intrinsic"])
-        for box in actors:
+        for box, color, weight in overlays:
             signs = np.array(list(itertools.product((-1, 1), repeat=3)))
             corners = signs * np.array(box["size_lwh"]) / 2
             corners = corners @ np.array(box["rotation_ego"]).T + box["center_ego"]
@@ -48,7 +59,7 @@ def preview(root, output, index=0):
             uv = pixels[:, :2] / np.maximum(pixels[:, 2:3], 0.01)
             for a, b in EDGES:
                 if min(optical[a, 2], optical[b, 2]) > 0.1:
-                    ax.plot(uv[[a, b], 0], uv[[a, b], 1], color="#20ddbc", linewidth=1)
+                    ax.plot(uv[[a, b], 0], uv[[a, b], 1], color=color, linewidth=weight)
         ax.set_xlim(0, image.width)
         ax.set_ylim(image.height, 0)
         ax.set_title(name.removeprefix("CAM_").replace("_", " "), loc="left", fontsize=10, weight="bold")
@@ -64,11 +75,11 @@ def preview(root, output, index=0):
             with np.load(episode.root / sensor["artifact"]["path"]) as data:
                 xyz = data["points_ego"]
                 ax.scatter(-xyz[:, 1], xyz[:, 0], s=9, c="#ffb256", alpha=0.7)
-    for box in actors:
+    for box, color, weight in overlays:
         signs = np.array([[-1,-1,0], [-1,1,0], [1,1,0], [1,-1,0], [-1,-1,0]])
         corners = signs * np.array(box["size_lwh"]) / 2
         corners = corners @ np.array(box["rotation_ego"]).T + box["center_ego"]
-        ax.plot(-corners[:, 1], corners[:, 0], color="#20ddbc", linewidth=1.4)
+        ax.plot(-corners[:, 1], corners[:, 0], color=color, linewidth=weight + .3)
     ax.scatter([0], [0], s=70, c="white", marker="^")
     ax.set_xlim(-55, 55)
     ax.set_ylim(-55, 55)
@@ -83,8 +94,11 @@ def preview(root, output, index=0):
     info.text(0, .84, f"{episode.manifest['scenario']['map']} · {episode.manifest['scenario']['weather']}\n"
               f"CARLA frame {frame['frame_id']} · t={frame['timestamp']:.3f} s\n"
               f"{len(meta['sensors'])} streams · {len(actors)} engine actors\n"
-              f"{frame['visible_actor_count']} actors observed by semantic LiDAR", size=10, linespacing=1.7, color="#3d5963", va="top")
-    info.text(0, .47, "Green: engine ground truth\nOrange: CARLA radar returns\nCloud: input LiDAR height\n\nGT is a reference, not a prediction.\nNo model accuracy/GPU savings measured.",
+              f"{frame['visible_actor_count']} actors observed by semantic LiDAR"
+              + (f"\n{len(predictions)} predicted boxes above score threshold" if prediction_root else ""), size=10, linespacing=1.7, color="#3d5963", va="top")
+    info.text(0, .42, "Green: engine ground truth\nOrange: CARLA radar returns\nCloud: input LiDAR height\n"
+              + ("Blue: pretrained detector predictions\n" if prediction_root else "")
+              + "\nGT is a reference, not a prediction.\nNo model accuracy/GPU savings measured.",
               size=10, linespacing=1.7, color="#3d5963", va="top")
     output.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(output, dpi=120)
@@ -96,5 +110,6 @@ if __name__ == "__main__":
     parser.add_argument("episode", type=Path)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--frame", type=int, default=0)
+    parser.add_argument("--prediction-root", type=Path)
     args = parser.parse_args()
-    preview(args.episode, args.output, args.frame)
+    preview(args.episode, args.output, args.frame, args.prediction_root)

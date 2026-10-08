@@ -1,0 +1,34 @@
+{
+  "status": "inconclusive_quality_not_validated",
+  "results": [
+    {
+      "configuration": "full",
+      "checkpoint_sha256": "2628f933277774e194932815ea1a5d66a0bd9f69ebc8d9040e8c92760bb6652e",
+      "capture_manifest_sha256": "c72255c929c32d55c07fa1ec48ba0dc4504cf4142b2316714eabbc8ee7f581b3",
+      "keep_fraction": 1,
+      "mean_cuda_activity_ms": 100.239,
+      "mean_wall_inference_ms": 118.0044714997166,
+      "boxes_above_threshold": [
+        3,
+        3
+      ],
+      "quality_score": null,
+      "accepted_for_policy_training": false
+    },
+    {
+      "configuration": "half",
+      "checkpoint_sha256": "2628f933277774e194932815ea1a5d66a0bd9f69ebc8d9040e8c92760bb6652e",
+      "capture_manifest_sha256": "c72255c929c32d55c07fa1ec48ba0dc4504cf4142b2316714eabbc8ee7f581b3",
+      "keep_fraction": 0.5,
+      "mean_cuda_activity_ms": 92.219,
+      "mean_wall_inference_ms": 110.10030199986431,
+      "boxes_above_threshold": [
+        1,
+        2
+      ],
+      "quality_score": null,
+      "accepted_for_policy_training": false
+    }
+  ],
+  "note": "Two-frame detector-only smoke. No profile winner; no system GPU savings claim."
+}
