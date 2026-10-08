@@ -57,7 +57,12 @@ Không push/merge trong lượt này. Commit phần compact64edf65; baseline/str
 GUI/evidence đã commit0d3831c; guard thiếu member trong bundle đi kèm checkpoint này.
 9 focused tests qua sau guard: missing artifact→409, optional absent archive→available=false.
 AutomationPAUSED, không bật lại.
-Hạn mức mới nhất85%used/15%remaining, reset12:05:33VN; query lại trước công việc dài.
+Hạn mức mới nhất90%used/10%remaining, reset12:05:33VN (resetsAt1791435933).
+Đã chốt checkpoint ở ngưỡng gần10%, không khởi chạy công việc nặng mới. CARLA,
+collector, detector và trainingGPU của chat không còn chạy; app web giữ lại để xem.
+Không tự bật automation hoặc tiếp tục sau reset; chờ yêu cầu của người dùng.
+Code/evidence guard commit174ed46; working tree được lưu cùng checkpoint này.
+Phương án dung lượng15–20GiB vẫn đang chờ trả lời qua câu hỏi đã gửi.
 - Metadata ngắt cũ đã kiểm kê 517 frame, mỗi frame 20 stream; file tham chiếu
   hiện diện, chưa verify checksum toàn bộ. Không gắn manifest complete cho lượt cũ.
 
