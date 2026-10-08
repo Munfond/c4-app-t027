@@ -8,9 +8,21 @@
 - Lượt retry ban đầu bị reserve guard chặn: cần 5,01 GiB, còn 4,96 GiB. Đã dọn
   232.815.987 bytes của hai archive cài CUDA có thể tải lại, giữ SDK đã cài và
   toàn bộ raw/model. Hash cache cũ ở eval/compact-rig-2026-10-08/cache-cleanup.json.
-- Đang thu **episode mới** tại data/active-sensing/rig-town01-60s-retry-20261008,
-  exec session 34261, mục tiêu 1.200 frame/60 giây, quota 4 GiB + headroom 1 GiB.
-  Không chạy detector đồng thời trên GPU 4 GB. GPU đo gần nhất 54°C/3.110 MiB.
+- Episode mới data/active-sensing/rig-town01-60s-retry-20261008 đã hoàn tất và
+  **verify 1.200 frame/20 streams**, timestamp span59,9500009 giây, artifacts3,819GiB.
+  ManifestSHA599e7e41d05bc119e28cf764a4690f683ed0ac93133f7a07601218bda8d0e645.
+  Evidence nhẹ eval/full-rig-60s-2026-10-08/, raw ngoài Git. Session34261 đã thoát0,
+  CARLA server đã dừng; không phải episode đã nghiệm thu perception/reward.
+- Đang chạy PointPillars sparse pilot3variants,20frame cách60index (span57giây),
+  exec session43452, data/active-sensing/pp-pilot-60s-20261008. Mỗi variant process
+  riêng, timeout240s. Không chạy CARLA đồng thời. Chưa có kết luận trước report.
+  `--frame-stride` chỉ chọn diagnostic; không thay cadence hoặc replay sequential.
+- Smoke native2frame mới có1 lượt reference-visible nhưng input32 không có điểm
+  trong engine box; input64 có. Evidence compact-world-gt-audit.json giữ scope world
+  và reference inventory. Không đồng nhất reference visibility với observability.
+- Sau phần mềm stride/audit, 10 focused tests qua; Ruff qua. Suite197 trước đó đã qua.
+- Ổ đĩa còn khoảng1,25GiB sau capture. Không bắt đầu full-rig60s mới khi thiếu reserve;
+  cần phương án thêm dung lượng/offload giữ checksum, không xóa raw hay checkpoint.
 - Metadata ngắt cũ đã kiểm kê 517 frame, mỗi frame 20 stream; file tham chiếu
   hiện diện, chưa verify checksum toàn bộ. Không gắn manifest complete cho lượt cũ.
 

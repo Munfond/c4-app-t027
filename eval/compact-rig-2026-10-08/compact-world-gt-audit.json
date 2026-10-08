@@ -1,0 +1,246 @@
+{
+  "kind": "CARLA_GT_coverage_and_sensor_return_audit",
+  "capture_manifest_sha256": "442f30ed0ec265c572b5dff0a8b6d9d28668f2ec64a3b9eeddc07915dcc890e8",
+  "actor_annotation_scope": "world_vehicle_walker_actors",
+  "environment_inventory_reference": {
+    "path": "ground_truth/environment-inventory.json",
+    "bytes": 3052891,
+    "sha256": "82b5414493255d5bf91b16417312b9c5d128cd5014cfaa1294a55d1c25b86a29"
+  },
+  "server_version": "0.9.16",
+  "semantic_taxonomy": {
+    "Pedestrians": 12,
+    "Rider": 13,
+    "Car": 14,
+    "Truck": 15,
+    "Bus": 16,
+    "Motorcycle": 18,
+    "Bicycle": 19
+  },
+  "taxonomy_source": "https://carla.readthedocs.io/en/0.9.16/ref_sensors/#semantic-segmentation-camera",
+  "sampling_abi": "numpy-default-rng-sorted-subset-v1",
+  "sampling_seed": 7,
+  "frames": [
+    {
+      "frame_id": 62,
+      "timestamp": 6.08463080227375,
+      "targets": [
+        {
+          "actor_id": 205,
+          "type_id": "vehicle.nissan.patrol",
+          "radius_xy_m": 48.95287031938077,
+          "reference_semantic_hits": 18,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 8,
+            "LIDAR_TOP_keep_50": 5,
+            "LIDAR_TOP_64": 11,
+            "LIDAR_TOP_64_keep_50": 3
+          }
+        },
+        {
+          "actor_id": 204,
+          "type_id": "vehicle.seat.leon",
+          "radius_xy_m": 48.403592670986754,
+          "reference_semantic_hits": 4,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 0,
+            "LIDAR_TOP_keep_50": 0,
+            "LIDAR_TOP_64": 3,
+            "LIDAR_TOP_64_keep_50": 0
+          }
+        },
+        {
+          "actor_id": 203,
+          "type_id": "vehicle.dodge.charger_police",
+          "radius_xy_m": 38.656228796588884,
+          "reference_semantic_hits": 9,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 3,
+            "LIDAR_TOP_keep_50": 1,
+            "LIDAR_TOP_64": 7,
+            "LIDAR_TOP_64_keep_50": 2
+          }
+        },
+        {
+          "actor_id": 202,
+          "type_id": "vehicle.ford.ambulance",
+          "radius_xy_m": 26.34242715725693,
+          "reference_semantic_hits": 125,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 33,
+            "LIDAR_TOP_keep_50": 19,
+            "LIDAR_TOP_64": 69,
+            "LIDAR_TOP_64_keep_50": 34
+          }
+        },
+        {
+          "actor_id": 201,
+          "type_id": "vehicle.mercedes.sprinter",
+          "radius_xy_m": 23.8898039629229,
+          "reference_semantic_hits": 118,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 37,
+            "LIDAR_TOP_keep_50": 19,
+            "LIDAR_TOP_64": 64,
+            "LIDAR_TOP_64_keep_50": 34
+          }
+        },
+        {
+          "actor_id": 200,
+          "type_id": "vehicle.ford.crown",
+          "radius_xy_m": 26.928818750198275,
+          "reference_semantic_hits": 46,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 15,
+            "LIDAR_TOP_keep_50": 7,
+            "LIDAR_TOP_64": 32,
+            "LIDAR_TOP_64_keep_50": 22
+          }
+        },
+        {
+          "actor_id": 199,
+          "type_id": "vehicle.dodge.charger_police",
+          "radius_xy_m": 25.099576976340497,
+          "reference_semantic_hits": 56,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 18,
+            "LIDAR_TOP_keep_50": 7,
+            "LIDAR_TOP_64": 29,
+            "LIDAR_TOP_64_keep_50": 15
+          }
+        },
+        {
+          "actor_id": 198,
+          "type_id": "vehicle.volkswagen.t2_2021",
+          "radius_xy_m": 4.099471794712978,
+          "reference_semantic_hits": 6201,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 1739,
+            "LIDAR_TOP_keep_50": 851,
+            "LIDAR_TOP_64": 3384,
+            "LIDAR_TOP_64_keep_50": 1700
+          }
+        }
+      ],
+      "unannotated_semantic_target_ids": [],
+      "unannotated_semantic_target_returns": 0
+    },
+    {
+      "frame_id": 63,
+      "timestamp": 6.134630803018808,
+      "targets": [
+        {
+          "actor_id": 205,
+          "type_id": "vehicle.nissan.patrol",
+          "radius_xy_m": 49.243851140311094,
+          "reference_semantic_hits": 20,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 7,
+            "LIDAR_TOP_keep_50": 5,
+            "LIDAR_TOP_64": 13,
+            "LIDAR_TOP_64_keep_50": 6
+          }
+        },
+        {
+          "actor_id": 204,
+          "type_id": "vehicle.seat.leon",
+          "radius_xy_m": 48.56856122205934,
+          "reference_semantic_hits": 6,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 1,
+            "LIDAR_TOP_keep_50": 0,
+            "LIDAR_TOP_64": 3,
+            "LIDAR_TOP_64_keep_50": 0
+          }
+        },
+        {
+          "actor_id": 203,
+          "type_id": "vehicle.dodge.charger_police",
+          "radius_xy_m": 38.23228924002412,
+          "reference_semantic_hits": 9,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 3,
+            "LIDAR_TOP_keep_50": 3,
+            "LIDAR_TOP_64": 6,
+            "LIDAR_TOP_64_keep_50": 4
+          }
+        },
+        {
+          "actor_id": 202,
+          "type_id": "vehicle.ford.ambulance",
+          "radius_xy_m": 26.096712287650863,
+          "reference_semantic_hits": 133,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 35,
+            "LIDAR_TOP_keep_50": 17,
+            "LIDAR_TOP_64": 66,
+            "LIDAR_TOP_64_keep_50": 29
+          }
+        },
+        {
+          "actor_id": 201,
+          "type_id": "vehicle.mercedes.sprinter",
+          "radius_xy_m": 23.73612825844253,
+          "reference_semantic_hits": 121,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 34,
+            "LIDAR_TOP_keep_50": 18,
+            "LIDAR_TOP_64": 66,
+            "LIDAR_TOP_64_keep_50": 32
+          }
+        },
+        {
+          "actor_id": 200,
+          "type_id": "vehicle.ford.crown",
+          "radius_xy_m": 27.322584075938618,
+          "reference_semantic_hits": 46,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 10,
+            "LIDAR_TOP_keep_50": 7,
+            "LIDAR_TOP_64": 26,
+            "LIDAR_TOP_64_keep_50": 14
+          }
+        },
+        {
+          "actor_id": 199,
+          "type_id": "vehicle.dodge.charger_police",
+          "radius_xy_m": 25.173019574144142,
+          "reference_semantic_hits": 58,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 16,
+            "LIDAR_TOP_keep_50": 9,
+            "LIDAR_TOP_64": 34,
+            "LIDAR_TOP_64_keep_50": 15
+          }
+        },
+        {
+          "actor_id": 198,
+          "type_id": "vehicle.volkswagen.t2_2021",
+          "radius_xy_m": 4.280297676904601,
+          "reference_semantic_hits": 5691,
+          "input_box_return_counts": {
+            "LIDAR_TOP": 1642,
+            "LIDAR_TOP_keep_50": 826,
+            "LIDAR_TOP_64": 3181,
+            "LIDAR_TOP_64_keep_50": 1584
+          }
+        }
+      ],
+      "unannotated_semantic_target_ids": [],
+      "unannotated_semantic_target_returns": 0
+    }
+  ],
+  "unannotated_semantic_target_ids": [],
+  "reference_visible_instances_without_32_box_returns": 1,
+  "reference_visible_instances_without_64_box_returns": 0,
+  "scene_precision_ready": false,
+  "usable_for_rl_reward": false,
+  "limitations": [
+    "Zero unannotated semantic IDs only covers surfaces hit by the independent semantic reference",
+    "Environment mesh inventory, if present, still requires semantic ID mapping and deduplication; actor boxes do not establish complete scene ontology",
+    "Input points inside engine boxes are geometric counts, not aligned semantic labels or guaranteed detectability",
+    "Reference visibility does not establish chosen-sensor observability; keep all denominators explicit",
+    "No class-aware metric, new-target latency or complete scene false-positive judgment",
+    "GT audit stays on the evaluator side; never an actor observation feature"
+  ]
+}

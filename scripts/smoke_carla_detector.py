@@ -24,6 +24,17 @@ from src.simulation.carla_rig import sha256_file  # noqa: E402
 UPSTREAM_SHA = "fe25f7a51d36e3702f961e198894580d83c4387b"
 
 
+def pilot_frame_indices(total, frames, stride=1):
+    if not 1 <= frames <= 20:
+        raise ValueError('Smoke is bounded to 1..20 frames')
+    if type(stride) is not int or stride < 1:
+        raise ValueError('Frame stride must be a positive integer')
+    indices = list(range(0, frames * stride, stride))
+    if indices[-1] >= total:
+        raise ValueError('Insufficient episode frames for the requested stride; no truncated sample')
+    return indices
+
+
 def smoke(args):
     import numpy as np
     import torch
@@ -54,8 +65,8 @@ def smoke(args):
     if sha256_file(checkpoint) != checkpoint_sha:
         raise ValueError("Checkpoint SHA mismatch")
     episode = RawEpisode(args.episode)
-    if args.frames > len(episode.manifest["frames"]):
-        raise ValueError("Insufficient episode frames")
+    stride = getattr(args, 'frame_stride', 1)
+    indices = pilot_frame_indices(len(episode.manifest['frames']), args.frames, stride)
     config_name = ('bevfusion_lidar-cam' if args.model == 'camera_lidar' else 'bevfusion_lidar')
     config_path = (upstream / 'configs/pointpillars/pointpillars_hv_secfpn_sbn-all_8xb4-2x_nus-3d.py'
                    if args.model == 'pointpillars' else
@@ -102,7 +113,7 @@ def smoke(args):
     args.output.mkdir(parents=True)
     torch.cuda.reset_peak_memory_stats()
     result_frames = []
-    for index in range(args.frames):
+    for index in indices:
         ref = episode.manifest["frames"][index]
         meta = json.loads(episode._artifact(ref["metadata"], "").read_text())
         sensor = meta["sensors"]["LIDAR_TOP"]
@@ -194,6 +205,9 @@ def smoke(args):
               "strict_checkpoint_loading": True, "keep_fraction": args.keep_fraction, "sampling_seed": args.seed,
               "sampling_algorithm": "numpy.default_rng(seed+frame_id), sorted subset indices",
               "sampling_abi": SAMPLING_ABI,
+              'frame_selection': {'kind': 'fixed_index_stride', 'stride': stride, 'indices': indices,
+                                  'sim_timestamp_span_s': episode.manifest['frames'][indices[-1]]['timestamp']
+                                  - episode.manifest['frames'][indices[0]]['timestamp']},
               "cuda_activity_measurement": args.measure_kernels,
               "score_threshold": args.threshold, "frames": result_frames,
               "peak_allocated_bytes": torch.cuda.max_memory_allocated(),
@@ -215,6 +229,8 @@ if __name__ == "__main__":
     parser.add_argument('--model', choices=MODELS, default='lidar')
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--frames", type=int, default=1)
+    parser.add_argument('--frame-stride', type=int, default=1,
+                        help='Fixed index stride for a sparse diagnostic, not model cadence or sequential replay')
     parser.add_argument("--amp", action="store_true")
     parser.add_argument("--measure-kernels", action="store_true")
     parser.add_argument("--keep-fraction", type=float, default=1)

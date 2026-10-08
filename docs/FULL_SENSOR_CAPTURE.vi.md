@@ -6,6 +6,35 @@ Không đổi cadence 0.5 s của các checkpoint occupancy đang dùng trên we
 
 ## Đã chạy thật
 
+### Baseline 60 giây, schema compact
+
+Lượt thu lại sau khi người dùng cho phép tiếp tục đã ghi và verify **1.200 frame**,
+20 streams, Town01/clear/seed7/8 xe/không pedestrian. Khoảng cách timestamp đầu/cuối
+59,9500009 giây (1.200 mẫu cách nhau 0,05 giây). Raw artifacts 3,819 GiB, quota 4 GiB
+và headroom 1 GiB. Source `data/active-sensing/rig-town01-60s-retry-20261008`;
+manifest SHA `599e7e41d05bc119e28cf764a4690f683ed0ac93133f7a07601218bda8d0e645`.
+Evidence nhẹ ở [`eval/full-rig-60s-2026-10-08/summary.json`](../eval/full-rig-60s-2026-10-08/summary.json).
+
+Đây là một baseline đã verify raw/calibration, chưa có held-out split, pedestrian
+events, complete static ontology hoặc measured GPU/window. `perception_ready=false`,
+`usable_for_rl_reward=false`. Lượt 517 frame bị ngắt trước đó giữ riêng, không append
+và không tính thành episode hoàn chỉnh.
+
+Pilot sparse có thể chọn 20 frame cách 60 index (0,60,…,1140), trải 57 giây:
+
+```bash
+data/runtime/detector-env/bin/python scripts/bench_carla_detector.py \
+  data/active-sensing/rig-town01-60s-retry-20261008 --family pointpillars \
+  --frames 20 --frame-stride 60 --output data/active-sensing/pp-pilot-60s-new
+```
+
+`frame-stride` là lấy mẫu chẩn đoán, **không phải** tần số chạy model, replay liên tục
+hoặc chính sách chọn sensor. Mọi variant dùng cùng source/hash/indices; không âm thầm
+cắt bớt khi index vượt capture. Archive pilot cũ trên bot vẫn thuộc capture 20 frame
+ban đầu, không được đổi label thành benchmark 60 giây.
+
+### Lịch sử smoke 20 frame ban đầu
+
 - CARLA 0.9.16, RTX 2050 4 GB, Town01/clear, seed 7, 8 xe, không người đi bộ.
 - 20 frame liên tiếp, dt = 0.05 s; khoảng cách frame đầu/cuối 0.95 s.
 - 6 RGB 640×360, 6 semantic camera GT, LiDAR 32, LiDAR 64, semantic LiDAR GT 64,

@@ -79,6 +79,8 @@ def audit(episode_root, seed=7):
                      'unannotated_semantic_target_returns': sum(semantic_counts[i] for i in unannotated)})
     return {'kind': 'CARLA_GT_coverage_and_sensor_return_audit',
             'capture_manifest_sha256': episode.verification['manifest_sha256'],
+            'actor_annotation_scope': episode.manifest.get('actor_annotation_scope', 'episode_spawned_actors'),
+            'environment_inventory_reference': episode.manifest.get('environment_inventory'),
             'server_version': episode.manifest['server_version'], 'semantic_taxonomy': TARGET_TAGS,
             'taxonomy_source': 'https://carla.readthedocs.io/en/0.9.16/ref_sensors/#semantic-segmentation-camera',
             'sampling_abi': SAMPLING_ABI, 'sampling_seed': seed, 'frames': rows,
@@ -88,7 +90,7 @@ def audit(episode_root, seed=7):
             'scene_precision_ready': False, 'usable_for_rl_reward': False,
             'limitations': [
                 'Zero unannotated semantic IDs only covers surfaces hit by the independent semantic reference',
-                'No environment/parked/static inventory or complete scene ontology in this capture',
+                'Environment mesh inventory, if present, still requires semantic ID mapping and deduplication; actor boxes do not establish complete scene ontology',
                 'Input points inside engine boxes are geometric counts, not aligned semantic labels or guaranteed detectability',
                 'Reference visibility does not establish chosen-sensor observability; keep all denominators explicit',
                 'No class-aware metric, new-target latency or complete scene false-positive judgment',
