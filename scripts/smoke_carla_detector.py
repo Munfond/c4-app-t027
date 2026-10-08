@@ -67,6 +67,10 @@ def smoke(args):
     episode = RawEpisode(args.episode)
     stride = getattr(args, 'frame_stride', 1)
     indices = pilot_frame_indices(len(episode.manifest['frames']), args.frames, stride)
+    channels = getattr(args, 'lidar_channels', 32)
+    if channels not in (32, 64):
+        raise ValueError('LiDAR channels must select the measured 32 or 64 stream')
+    lidar_name = 'LIDAR_TOP_64' if channels == 64 else 'LIDAR_TOP'
     config_name = ('bevfusion_lidar-cam' if args.model == 'camera_lidar' else 'bevfusion_lidar')
     config_path = (upstream / 'configs/pointpillars/pointpillars_hv_secfpn_sbn-all_8xb4-2x_nus-3d.py'
                    if args.model == 'pointpillars' else
@@ -116,7 +120,9 @@ def smoke(args):
     for index in indices:
         ref = episode.manifest["frames"][index]
         meta = json.loads(episode._artifact(ref["metadata"], "").read_text())
-        sensor = meta["sensors"]["LIDAR_TOP"]
+        if lidar_name not in meta['sensors']:
+            raise ValueError('Requested measured LiDAR stream is missing; no synthetic channel upsampling')
+        sensor = meta['sensors'][lidar_name]
         with np.load(episode._artifact(sensor["artifact"], "inputs"), allow_pickle=False) as data:
             points = single_sweep_points(data["raw"], args.intensity_policy)
         if args.keep_fraction < 1:
@@ -183,6 +189,7 @@ def smoke(args):
             if float(score) >= args.threshold:
                 selected.append(dict(box, score=float(score), class_name=config.class_names[int(label)]))
         row = {"index": index, "frame_id": ref["frame_id"], "timestamp": ref["timestamp"],
+               'input_lidar_sensor': lidar_name, 'input_lidar_artifact': sensor['artifact'],
                "input_points": len(points), "input_sha256": input_sha, "cuda_work": kernel_work, "boxes": selected, "gpu_event_elapsed_ms": start.elapsed_time(end),
                "camera_artifacts": camera_artifacts,
                "wall_inference_ms": elapsed, "warmup_excluded": True}
@@ -200,6 +207,8 @@ def smoke(args):
               "torch": torch.__version__, "cuda": torch.version.cuda, "gpu": torch.cuda.get_device_name(0),
               "amp": args.amp, "intensity_policy": args.intensity_policy, "sweeps": 1,
               "input_feature_names": feature_names,
+              'input_lidar_channels': channels, 'input_lidar_sensor': lidar_name,
+              'smoke_script_sha256': sha256_file(Path(__file__)),
               "image_policy": image_policy,
               "adapter_sha256": sha256_file(PROJECT / 'src/active_sensing/lidar_adapter.py'),
               "strict_checkpoint_loading": True, "keep_fraction": args.keep_fraction, "sampling_seed": args.seed,
@@ -231,6 +240,8 @@ if __name__ == "__main__":
     parser.add_argument("--frames", type=int, default=1)
     parser.add_argument('--frame-stride', type=int, default=1,
                         help='Fixed index stride for a sparse diagnostic, not model cadence or sequential replay')
+    parser.add_argument('--lidar-channels', type=int, choices=(32, 64), default=32,
+                        help='Choose the actually recorded stream; channel count does not establish checkpoint compatibility')
     parser.add_argument("--amp", action="store_true")
     parser.add_argument("--measure-kernels", action="store_true")
     parser.add_argument("--keep-fraction", type=float, default=1)

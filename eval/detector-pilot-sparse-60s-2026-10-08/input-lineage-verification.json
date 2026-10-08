@@ -1,0 +1,30 @@
+{
+  "kind": "CPU_input_integrity_check",
+  "model_forward_rerun": false,
+  "variants": [
+    {
+      "variant": "pp-full-fp32",
+      "channels": 32,
+      "samples_verified": 20,
+      "raw_artifact_and_model_tensor_sha_match": true
+    },
+    {
+      "variant": "pp-half-fp32",
+      "channels": 32,
+      "samples_verified": 20,
+      "raw_artifact_and_model_tensor_sha_match": true
+    },
+    {
+      "variant": "pp-full-amp",
+      "channels": 32,
+      "samples_verified": 20,
+      "raw_artifact_and_model_tensor_sha_match": true
+    },
+    {
+      "variant": "pp64-amp-60s-20261008",
+      "channels": 64,
+      "samples_verified": 20,
+      "raw_artifact_and_model_tensor_sha_match": true
+    }
+  ]
+}

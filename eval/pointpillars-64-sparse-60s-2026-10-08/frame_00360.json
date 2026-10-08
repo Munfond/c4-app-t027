@@ -1,0 +1,55 @@
+{
+  "index": 360,
+  "frame_id": 423,
+  "timestamp": 23.4482553685084,
+  "input_lidar_sensor": "LIDAR_TOP_64",
+  "input_lidar_artifact": {
+    "path": "inputs/frame_00360/LIDAR_TOP_64.npz",
+    "bytes": 369543,
+    "sha256": "db70f18232cf1124c08da7be3543cc45bbef531de1e6d137ad2cf033e1ff8e1c"
+  },
+  "input_points": 29053,
+  "input_sha256": "f363a3a3201bb26a419f5b181fcae265ecd8c65e6b139403c636de5a25ae0ebd",
+  "cuda_work": {
+    "cuda_activity_sum_ms": 54.624,
+    "cuda_activity_count": 1138,
+    "scope": "detector forward pipeline kernels/copies only; separate profiled pass"
+  },
+  "boxes": [
+    {
+      "center_ego": [
+        -10.372266171702847,
+        -0.08051633943460955,
+        0.8107574531985993
+      ],
+      "size_lwh": [
+        4.622920513153076,
+        1.9700967073440552,
+        1.5777608156204224
+      ],
+      "rotation_ego": [
+        [
+          0.9964702725410461,
+          -0.08394650369882584,
+          -3.421323057330745e-20
+        ],
+        [
+          0.08394650369882582,
+          0.996470272541046,
+          -1.999977722207954e-22
+        ],
+        [
+          2.2036048046673387e-20,
+          -2.095124331887025e-21,
+          1.0
+        ]
+      ],
+      "score": 0.85205078125,
+      "class_name": "car"
+    }
+  ],
+  "gpu_event_elapsed_ms": 67.73446655273438,
+  "camera_artifacts": {},
+  "wall_inference_ms": 67.78295000003709,
+  "warmup_excluded": true
+}

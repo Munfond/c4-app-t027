@@ -12,8 +12,49 @@ def archive(tmp_path, monkeypatch):
     root = tmp_path / 'bundle'
     shutil.copytree(pilot.ROOT, root)
     monkeypatch.setattr(pilot, 'ROOT', root)
+    sparse = tmp_path / 'sparse'
+    shutil.copytree(pilot.SPARSE_ROOT, sparse)
+    monkeypatch.setattr(pilot, 'SPARSE_ROOT', sparse)
     monkeypatch.setattr(store, 'get_settings', lambda: Settings(_env_file=None, experiment_root=tmp_path / 'reviews'))
     return root
+
+
+@pytest.mark.asyncio
+async def test_sparse_archive_preserves_input_lineage_and_full_capture_scope(client, archive):
+    value = (await client.get(pilot.BASE + '?pilot=sparse60')).json()
+    assert value['available'] and len(value['variants']) == 4
+    assert value['gt_audit_frames'] == 1200
+    assert value['selection'] is None and value['measured_perception_replay_ready'] is False
+    assert {tuple(r['frame_selection']['indices']) for r in value['variants']} == {tuple(range(0, 1200, 60))}
+    row = value['variants'][-1]
+    report = (await client.get(row['report_url'])).json()
+    assert report['input_lidar_channels'] == 64
+    assert all(f['input_lidar_sensor'] == 'LIDAR_TOP_64' for f in report['frames'])
+    assert row['matched_target_frame_instances'] == 29 and row['target_frame_instances'] == 62
+    detailed = await client.get(value['gt_detail_url'])
+    assert detailed.status_code == 200 and detailed.content.startswith(b'PK')
+
+
+@pytest.mark.asyncio
+async def test_review_cannot_cross_pilot_snapshot_namespace(client, archive):
+    short = (await client.get(pilot.BASE)).json()
+    sparse = (await client.get(pilot.BASE + '?pilot=sparse60')).json()
+    payload = {'reviewer': 'Software fixture', 'verdict': 'needs_evidence',
+               'notes': 'Need actual held-out scenes and complete GT', 'evidence_sha256': short['evidence_sha256']}
+    assert (await client.post(pilot.BASE + '/reviews?pilot=sparse60', json=payload)).status_code == 409
+    response = await client.post(pilot.BASE + '/reviews?pilot=sparse60', json=payload | {'evidence_sha256': sparse['evidence_sha256']})
+    assert response.status_code == 201 and response.json()['used_for_training'] is False
+    assert (await client.get(pilot.BASE + '/reviews')).json()['items'] == []
+    assert len((await client.get(pilot.BASE + '/reviews?pilot=sparse60')).json()['items']) == 1
+
+
+@pytest.mark.asyncio
+async def test_sparse_tamper_is_not_silently_replaced_by_old_pilot(client, archive):
+    with (pilot.SPARSE_ROOT / 'pp-64-full-amp/report.json').open('a') as file:
+        file.write(' ')
+    assert (await client.get(pilot.BASE + '?pilot=sparse60')).status_code == 409
+    assert (await client.get(pilot.BASE)).status_code == 200
+    assert (await client.get(pilot.BASE + '?pilot=../../.env')).status_code == 422
 
 
 @pytest.mark.asyncio

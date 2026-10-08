@@ -1,6 +1,6 @@
 import importlib.util
 import json
-from typing import Annotated
+from typing import Annotated, Literal
 
 import httpx
 from fastapi import APIRouter, Depends, Header, HTTPException, Path, Query, Request
@@ -154,10 +154,10 @@ def replay_catalog():
 
 
 @router.get('/detector-pilot')
-def detector_pilot():
+def detector_pilot(pilot: Literal['short', 'sparse60'] = 'short'):
     from src.services.detector_pilot_evidence import snapshot
     try:
-        return snapshot()
+        return snapshot(pilot)
     except FileNotFoundError:
         return {'available': False, 'notice': 'Detector pilot evidence is not packaged on this server'}
     except (ValueError, KeyError) as exc:
@@ -165,10 +165,10 @@ def detector_pilot():
 
 
 @router.get('/detector-pilot/artifacts/{name:path}')
-def detector_pilot_artifact(name: str):
+def detector_pilot_artifact(name: str, pilot: Literal['short', 'sparse60'] = 'short'):
     from src.services.detector_pilot_evidence import artifact
     try:
-        return FileResponse(artifact(name), filename=name.rsplit('/', 1)[-1])
+        return FileResponse(artifact(name, pilot), filename=name.rsplit('/', 1)[-1])
     except (FileNotFoundError, KeyError) as exc:
         raise HTTPException(404, 'Evidence artifact not found') from exc
     except ValueError as exc:
@@ -176,10 +176,10 @@ def detector_pilot_artifact(name: str):
 
 
 @router.get('/detector-pilot/reviews')
-def detector_pilot_reviews():
+def detector_pilot_reviews(pilot: Literal['short', 'sparse60'] = 'short'):
     from src.services.detector_pilot_evidence import reviews
     try:
-        return {'items': reviews()}
+        return {'items': reviews(pilot)}
     except FileNotFoundError as exc:
         raise HTTPException(404, 'Detector evidence is unavailable') from exc
     except (ValueError, KeyError) as exc:
@@ -187,10 +187,10 @@ def detector_pilot_reviews():
 
 
 @router.post('/detector-pilot/reviews', status_code=201)
-def review_detector_pilot(request: EngineerReview):
+def review_detector_pilot(request: EngineerReview, pilot: Literal['short', 'sparse60'] = 'short'):
     from src.services.detector_pilot_evidence import save_review
     try:
-        return save_review(request)
+        return save_review(request, pilot)
     except FileNotFoundError as exc:
         raise HTTPException(404, 'Detector evidence is unavailable') from exc
     except (ValueError, KeyError) as exc:

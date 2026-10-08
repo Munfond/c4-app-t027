@@ -102,6 +102,28 @@ Fixtures chỉ chứa số giả có chủ đích để kiểm tra phần mềm;
 
 ## Định dạng dữ liệu đo thật
 
+### Evidence hiện tại trên bot
+
+Ở bot cạnh map, chọn CARLA rồi mở **Detector trên GPU · evidence đã đo**. Bộ mới
+so bốn cấu hình trên 20 mẫu trải 57 giây từ baseline 1.200 frame; bộ tám cấu hình
+ban đầu giữ riêng. Không đổi nhãn pilot cũ thành kết quả mới.
+
+API đọc: `GET /api/v1/experiments/detector-pilot?pilot=sparse60` hoặc `pilot=short`.
+Reviews dùng cùng query trên `/reviews`, tách namespace và pin snapshot SHA; review
+không tự train hoặc áp cấu hình. API vẫn chịu access scope experiments hiện có.
+
+- [Baseline đầy đủ](../eval/full-rig-60s-2026-10-08/summary.json).
+- [So sánh bốn cấu hình](../eval/detector-pilot-sparse-60s-2026-10-08/summary.json).
+- [Audit observability toàn phút](../eval/full-rig-60s-2026-10-08/gt-observability-summary.json).
+- [Kiểm tra HTTP thật](../eval/detector-sparse-60s-api-check.json).
+
+AMP32 giữ 30/62 lượt ghép và giảm wall mean30,37% so với FP32. AMP64 chỉ29/62,
+chậm hơn; nhiều returns hơn không bảo đảm detector tốt hơn. Đây là geometry
+diagnostic một cảnh, không phải mAP/IoU/độ tin cậy ngoài thực tế. Chưa có profile
+được nghiệm thu; chưa đủ dữ liệu chất lượng/cost-window để train RL thật.
+
+### Schema replay để training sau kiểm định
+
 Dùng fixture để xem schema, rồi thay bằng kết quả **inference và timing thật**:
 
 - schema_version=1, window_s=0.5.

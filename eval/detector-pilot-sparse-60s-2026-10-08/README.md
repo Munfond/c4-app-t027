@@ -1,0 +1,1 @@
+Four same-capture sparse diagnostics: 20 samples spanning57s from a verified1200-frame capture. Original3 reports preserved. No validated selection, real RL reward or human review. Full engine-GT audit ZIP contains evaluator-only counts, not aligned sensor labels. See adjacent PointPillars README and FULL_SENSOR_CAPTURE.vi.md.

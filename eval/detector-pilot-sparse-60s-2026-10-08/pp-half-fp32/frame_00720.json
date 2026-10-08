@@ -1,0 +1,49 @@
+{
+  "index": 720,
+  "frame_id": 783,
+  "timestamp": 41.4482556367293,
+  "input_points": 6979,
+  "input_sha256": "5c9b6543c2a747a53ab5567770c9cc039489f7e2dbad62668d41bc2ba32e36f3",
+  "cuda_work": {
+    "cuda_activity_sum_ms": 49.605,
+    "cuda_activity_count": 1085,
+    "scope": "detector forward pipeline kernels/copies only; separate profiled pass"
+  },
+  "boxes": [
+    {
+      "center_ego": [
+        -25.951418386510767,
+        -2.018233169923292,
+        0.832294726267913
+      ],
+      "size_lwh": [
+        6.080811977386475,
+        2.357424259185791,
+        2.225027084350586
+      ],
+      "rotation_ego": [
+        [
+          0.14354828000068665,
+          -0.9896433353424072,
+          0.0
+        ],
+        [
+          0.9896433353424072,
+          0.14354828000068665,
+          -2.117582368135751e-22
+        ],
+        [
+          -1.254671148555729e-22,
+          3.4681223914370805e-23,
+          1.0
+        ]
+      ],
+      "score": 0.3552129566669464,
+      "class_name": "truck"
+    }
+  ],
+  "gpu_event_elapsed_ms": 62.513057708740234,
+  "camera_artifacts": {},
+  "wall_inference_ms": 62.56804799886595,
+  "warmup_excluded": true
+}

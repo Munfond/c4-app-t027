@@ -1,0 +1,51 @@
+{
+  "recorded_at": "2026-10-08T02:32:13.052913+00:00",
+  "checks": [
+    {
+      "url": "http://127.0.0.1:8000/health",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:3111/carla",
+      "status": 200,
+      "SSR_contains_evidence_picker": false
+    },
+    {
+      "url": "http://127.0.0.1:3111/api/v1/experiments/detector-pilot?pilot=sparse60",
+      "status": 200,
+      "variants": 4,
+      "evidence_sha256": "2469b20de1d9e001ac0a9e7e98d08368d5f2f8216ca8a34face2f037e3a28f92",
+      "ready_for_rl": false
+    },
+    {
+      "url": "http://127.0.0.1:3111/api/v1/experiments/detector-pilot?pilot=short",
+      "status": 200,
+      "variants": 8,
+      "evidence_sha256": "1c4603354ddb87d998ece7ca560e2ceb1ca10e5ea40e29c2141203fb6155c6c6",
+      "ready_for_rl": false
+    },
+    {
+      "url": "http://127.0.0.1:3111/api/v1/experiments/detector-pilot/reviews?pilot=sparse60",
+      "status": 200,
+      "reviews": 0
+    },
+    {
+      "artifact": "64_report",
+      "status": 200,
+      "bytes": 19390
+    },
+    {
+      "artifact": "gt_summary",
+      "status": 200,
+      "bytes": 2128
+    },
+    {
+      "artifact": "gt_zip",
+      "status": 200,
+      "bytes": 166289
+    }
+  ],
+  "full_gt_zip_matches_source_audit_sha256": true,
+  "actual_human_review_created": false,
+  "browser_render_qa": false
+}
