@@ -153,6 +153,50 @@ def replay_catalog():
     return catalog() | {"cameras": CAMERAS, "radars": RADARS, "models": OCCUPANCY_MODELS}
 
 
+@router.get('/detector-pilot')
+def detector_pilot():
+    from src.services.detector_pilot_evidence import snapshot
+    try:
+        return snapshot()
+    except FileNotFoundError:
+        return {'available': False, 'notice': 'Detector pilot evidence is not packaged on this server'}
+    except (ValueError, KeyError) as exc:
+        raise HTTPException(409, 'Detector evidence integrity check failed') from exc
+
+
+@router.get('/detector-pilot/artifacts/{name:path}')
+def detector_pilot_artifact(name: str):
+    from src.services.detector_pilot_evidence import artifact
+    try:
+        return FileResponse(artifact(name), filename=name.rsplit('/', 1)[-1])
+    except (FileNotFoundError, KeyError) as exc:
+        raise HTTPException(404, 'Evidence artifact not found') from exc
+    except ValueError as exc:
+        raise HTTPException(409, 'Detector evidence integrity check failed') from exc
+
+
+@router.get('/detector-pilot/reviews')
+def detector_pilot_reviews():
+    from src.services.detector_pilot_evidence import reviews
+    try:
+        return {'items': reviews()}
+    except FileNotFoundError as exc:
+        raise HTTPException(404, 'Detector evidence is unavailable') from exc
+    except (ValueError, KeyError) as exc:
+        raise HTTPException(409, 'Detector evidence integrity check failed') from exc
+
+
+@router.post('/detector-pilot/reviews', status_code=201)
+def review_detector_pilot(request: EngineerReview):
+    from src.services.detector_pilot_evidence import save_review
+    try:
+        return save_review(request)
+    except FileNotFoundError as exc:
+        raise HTTPException(404, 'Detector evidence is unavailable') from exc
+    except (ValueError, KeyError) as exc:
+        raise HTTPException(409, str(exc)) from exc
+
+
 @router.post("/replay/studies", status_code=201)
 def create_replay_study(spec: ReplayStudySpec):
     try:

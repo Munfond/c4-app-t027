@@ -133,6 +133,11 @@ def connection():
 
 def reviews(ident):
     studies.get(ident)
+    return archived_reviews(ident)
+
+
+def archived_reviews(ident):
+    """Internal archive read; callers must validate access to their evidence source."""
     with connection() as db:
         return [json.loads(row[0]) for row in db.execute(
             "SELECT payload FROM agent_reviews WHERE study_id=? ORDER BY created DESC LIMIT 100", (ident,)
@@ -141,6 +146,11 @@ def reviews(ident):
 
 def save_review(ident, request):
     snapshot = evidence(ident)
+    return save_snapshot_review(ident, request, snapshot)
+
+
+def save_snapshot_review(ident, request, snapshot):
+    """Persist an already verified evidence snapshot. Never mutates measured data."""
     if request.evidence_sha256 != snapshot["evidence_sha256"]:
         raise ValueError("Evidence changed; reload before reviewing")
     value = request.model_dump() | {"id": uuid.uuid4().hex, "study_id": ident,

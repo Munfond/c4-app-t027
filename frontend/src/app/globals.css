@@ -95,6 +95,12 @@ button, a, select { -webkit-tap-highlight-color: transparent; }
 .agent-trial-actions :where(a, button), .agent-text-button { text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
 .agent-text-button { color: var(--accent-strong); font-size: 12px; }
 .agent-panel-body button:disabled { opacity: .5; cursor: not-allowed; }
+.agent-pilot-table { overflow-x: auto; margin: 12px 0; }
+.agent-pilot-table table { width: 100%; border-collapse: collapse; font-size: 11px; font-variant-numeric: tabular-nums; }
+.agent-pilot-table caption { text-align: left; padding-bottom: 8px; color: var(--muted); }
+.agent-pilot-table th, .agent-pilot-table td { padding: 9px 6px; border-bottom: 1px solid var(--line); text-align: right; white-space: nowrap; }
+.agent-pilot-table th:first-child { text-align: left; font-weight: 500; }
+.agent-hash { overflow-wrap: anywhere; font-family: monospace; }
 .agent-panel-body ul { list-style: disc; padding-left: 18px; color: var(--muted); font-size: 11px; }
 .agent-review { border-top: 1px solid var(--line); padding-top: 18px; }
 .evidence-viewport > header { display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; }

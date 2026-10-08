@@ -1,0 +1,66 @@
+{
+  "kind": "CARLA_single_sweep_detector_smoke",
+  "status": "succeeded",
+  "source_sha": "fe25f7a51d36e3702f961e198894580d83c4387b",
+  "checkpoint_sha256": "2628f933277774e194932815ea1a5d66a0bd9f69ebc8d9040e8c92760bb6652e",
+  "source_config_sha256": "a08b4a124f1b71bf63f81199f7f5c4f0478c9e2b3eed4bca618495dda887873f",
+  "resolved_config_sha256": "42ed3fbb419ef179b3aabe6faa315ecf8b35466f36a388c893644b4e82feffaf",
+  "capture_manifest_sha256": "c72255c929c32d55c07fa1ec48ba0dc4504cf4142b2316714eabbc8ee7f581b3",
+  "torch": "2.1.0+cu121",
+  "cuda": "12.1",
+  "gpu": "NVIDIA GeForce RTX 2050",
+  "amp": true,
+  "intensity_policy": "raw",
+  "sweeps": 1,
+  "strict_checkpoint_loading": true,
+  "keep_fraction": 1,
+  "sampling_seed": 7,
+  "sampling_algorithm": "numpy.default_rng(seed+frame_id), sorted subset indices",
+  "cuda_activity_measurement": true,
+  "score_threshold": 0.3,
+  "frames": [
+    {
+      "index": 0,
+      "frame_id": 64,
+      "timestamp": 6.339498344808817,
+      "input_points": 15358,
+      "input_sha256": "d3646911b2d584985bc6e4449f1472717221824683073b13bd9be58e0db07d06",
+      "cuda_work": {
+        "cuda_activity_sum_ms": 82.164,
+        "cuda_activity_count": 1132,
+        "scope": "detector forward pipeline kernels/copies only; separate profiled pass"
+      },
+      "gpu_event_elapsed_ms": 98.58726501464844,
+      "wall_inference_ms": 100.1348070003587,
+      "warmup_excluded": true,
+      "boxes_above_threshold": 3
+    },
+    {
+      "index": 1,
+      "frame_id": 65,
+      "timestamp": 6.389498345553875,
+      "input_points": 15478,
+      "input_sha256": "123b7e458438c400000964e5e17abef3a55af35b97470d6ac91c9094dc3b4da5",
+      "cuda_work": {
+        "cuda_activity_sum_ms": 82.45,
+        "cuda_activity_count": 1132,
+        "scope": "detector forward pipeline kernels/copies only; separate profiled pass"
+      },
+      "gpu_event_elapsed_ms": 100.76876831054688,
+      "wall_inference_ms": 100.88200599966513,
+      "warmup_excluded": true,
+      "boxes_above_threshold": 3
+    }
+  ],
+  "peak_allocated_bytes": 457726464,
+  "peak_reserved_bytes": 549453824,
+  "measured_perception_replay_ready": false,
+  "limitations": [
+    "No detection quality score: GT coverage/class mapping not validated",
+    "Single-sweep distribution differs from training; no fake padded history",
+    "CARLA intensity is not calibrated to nuScenes",
+    "CUDA event elapsed includes stream idle gaps/CPU dispatch; not total GPU work/window",
+    "Monitoring/profile switching/other tasks not timed; cannot claim agent GPU savings",
+    "Simulator stopped before inference to release VRAM; not closed-loop real-time performance"
+  ]
+}

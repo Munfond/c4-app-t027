@@ -1,0 +1,49 @@
+{
+  "index": 13,
+  "frame_id": 77,
+  "timestamp": 6.989498354494572,
+  "input_points": 7630,
+  "input_sha256": "9ad8789d480c60ceba68f738e421f65aa37835a20498bcd69c0948f4bdeb3187",
+  "cuda_work": {
+    "cuda_activity_sum_ms": 93.043,
+    "cuda_activity_count": 979,
+    "scope": "detector forward pipeline kernels/copies only; separate profiled pass"
+  },
+  "boxes": [
+    {
+      "center_ego": [
+        -7.792639294608136,
+        3.3471596327235034,
+        1.1358926188294234
+      ],
+      "size_lwh": [
+        5.009706020355225,
+        2.168201208114624,
+        2.0713202953338623
+      ],
+      "rotation_ego": [
+        [
+          -0.9991999864578247,
+          0.039993021637201316,
+          1.176032920657786e-19
+        ],
+        [
+          -0.039993021637201316,
+          -0.9991999864578247,
+          -8.207510604362752e-21
+        ],
+        [
+          3.930903282554053e-20,
+          -3.776679200072208e-21,
+          1.0
+        ]
+      ],
+      "score": 0.7428255677223206,
+      "class_name": "car"
+    }
+  ],
+  "gpu_event_elapsed_ms": 112.37964630126953,
+  "camera_artifacts": {},
+  "wall_inference_ms": 112.43998000009015,
+  "warmup_excluded": true
+}

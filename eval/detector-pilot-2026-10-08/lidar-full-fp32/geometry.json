@@ -1,0 +1,1516 @@
+{
+  "kind": "CARLA_partial_GT_positive_geometry_diagnostic",
+  "capture_manifest_sha256": "c72255c929c32d55c07fa1ec48ba0dc4504cf4142b2316714eabbc8ee7f581b3",
+  "detector_report_sha256": "9721ef3bc9ad9487a88dbcea2f018c59ebb4cb189f674266bb80d9b89ea0cb5a",
+  "frames": [
+    {
+      "required_targets": 8,
+      "matched_targets": 3,
+      "positive_target_geometry_recall": 0.375,
+      "matches": [
+        {
+          "actor_id": 198,
+          "reference_type": "vehicle.volkswagen.t2_2021",
+          "prediction_index": 0,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.07356118612463526,
+          "height_center_error_m": 0.0530207059411818,
+          "size_absolute_error_lwh_m": [
+            0.46703243255615234,
+            0.35383427143096924,
+            0.032692909240722656
+          ]
+        },
+        {
+          "actor_id": 199,
+          "reference_type": "vehicle.dodge.charger_police",
+          "prediction_index": 2,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.13032423142091415,
+          "height_center_error_m": 0.19474358494701582,
+          "size_absolute_error_lwh_m": [
+            0.01777505874633789,
+            0.1279163360595703,
+            0.2473517656326294
+          ]
+        },
+        {
+          "actor_id": 200,
+          "reference_type": "vehicle.ford.crown",
+          "prediction_index": 1,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.47878136055360004,
+          "height_center_error_m": 0.21407721469377128,
+          "size_absolute_error_lwh_m": [
+            0.413327693939209,
+            0.4036334753036499,
+            0.34448397159576416
+          ]
+        }
+      ],
+      "unmatched_actor_ids": [
+        201,
+        202,
+        203,
+        204,
+        205
+      ],
+      "unmatched_predictions_unclassified": 0,
+      "false_positives": null,
+      "precision": null,
+      "matching": "class-agnostic maximum-cardinality 1:1 XY center-distance",
+      "radius_m": 54.0,
+      "center_gate_m": 2.0,
+      "threshold": 0.3,
+      "reference_scope": "visible spawned vehicle/person actors only; incomplete scene GT",
+      "validated_detection_quality": false,
+      "usable_for_rl_reward": false,
+      "index": 0,
+      "frame_id": 64,
+      "timestamp": 6.339498344808817,
+      "prediction_sha256": "527963b9818a29b58d72f5c100b46b5099d1856099b395d557cc439db82bd502",
+      "actor_gt_sha256": "cc5e2857a0838b125ae4f801ded7671be8d0b0fc3768077d2624a2cf1072199d"
+    },
+    {
+      "required_targets": 8,
+      "matched_targets": 3,
+      "positive_target_geometry_recall": 0.375,
+      "matches": [
+        {
+          "actor_id": 198,
+          "reference_type": "vehicle.volkswagen.t2_2021",
+          "prediction_index": 1,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.1005733246118335,
+          "height_center_error_m": 0.018526430294313556,
+          "size_absolute_error_lwh_m": [
+            0.6169705390930176,
+            0.4125477075576782,
+            0.03898811340332031
+          ]
+        },
+        {
+          "actor_id": 199,
+          "reference_type": "vehicle.dodge.charger_police",
+          "prediction_index": 2,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.06472190328627443,
+          "height_center_error_m": 0.19656747262284413,
+          "size_absolute_error_lwh_m": [
+            0.07061529159545898,
+            0.1815171241760254,
+            0.30511999130249023
+          ]
+        },
+        {
+          "actor_id": 200,
+          "reference_type": "vehicle.ford.crown",
+          "prediction_index": 0,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.4230093782760477,
+          "height_center_error_m": 0.22026128115135601,
+          "size_absolute_error_lwh_m": [
+            0.3601226806640625,
+            0.40150558948516846,
+            0.31505751609802246
+          ]
+        }
+      ],
+      "unmatched_actor_ids": [
+        201,
+        202,
+        203,
+        204,
+        205
+      ],
+      "unmatched_predictions_unclassified": 0,
+      "false_positives": null,
+      "precision": null,
+      "matching": "class-agnostic maximum-cardinality 1:1 XY center-distance",
+      "radius_m": 54.0,
+      "center_gate_m": 2.0,
+      "threshold": 0.3,
+      "reference_scope": "visible spawned vehicle/person actors only; incomplete scene GT",
+      "validated_detection_quality": false,
+      "usable_for_rl_reward": false,
+      "index": 1,
+      "frame_id": 65,
+      "timestamp": 6.389498345553875,
+      "prediction_sha256": "93143337ad25eb0577a5292c88e17d0425cb7711081c62ee0a8f7e544b908968",
+      "actor_gt_sha256": "abc7ae3539b0ca7359c20bf3e7ab3f47015b7a0067973af80fed2450337fd49d"
+    },
+    {
+      "required_targets": 8,
+      "matched_targets": 3,
+      "positive_target_geometry_recall": 0.375,
+      "matches": [
+        {
+          "actor_id": 198,
+          "reference_type": "vehicle.volkswagen.t2_2021",
+          "prediction_index": 0,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.12575594517022445,
+          "height_center_error_m": 0.08172992820039626,
+          "size_absolute_error_lwh_m": [
+            0.42220544815063477,
+            0.34442412853240967,
+            0.08825063705444336
+          ]
+        },
+        {
+          "actor_id": 199,
+          "reference_type": "vehicle.dodge.charger_police",
+          "prediction_index": 1,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.06461254827628055,
+          "height_center_error_m": 0.10288678517997729,
+          "size_absolute_error_lwh_m": [
+            0.0812978744506836,
+            0.09793996810913086,
+            0.20329320430755615
+          ]
+        },
+        {
+          "actor_id": 200,
+          "reference_type": "vehicle.ford.crown",
+          "prediction_index": 2,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.4010873159460698,
+          "height_center_error_m": 0.22738022770263155,
+          "size_absolute_error_lwh_m": [
+            0.5116324424743652,
+            0.32978785037994385,
+            0.25334346294403076
+          ]
+        }
+      ],
+      "unmatched_actor_ids": [
+        201,
+        202,
+        203,
+        204,
+        205
+      ],
+      "unmatched_predictions_unclassified": 0,
+      "false_positives": null,
+      "precision": null,
+      "matching": "class-agnostic maximum-cardinality 1:1 XY center-distance",
+      "radius_m": 54.0,
+      "center_gate_m": 2.0,
+      "threshold": 0.3,
+      "reference_scope": "visible spawned vehicle/person actors only; incomplete scene GT",
+      "validated_detection_quality": false,
+      "usable_for_rl_reward": false,
+      "index": 2,
+      "frame_id": 66,
+      "timestamp": 6.439498346298933,
+      "prediction_sha256": "11b89ff26c036adf1a94334467332f2896fa7359465ab874ac47a2b49711ea76",
+      "actor_gt_sha256": "e424d3306ac237c82a2c6d1565a137ee2d25a624a6a1a906525aa3efcabd6ec7"
+    },
+    {
+      "required_targets": 8,
+      "matched_targets": 3,
+      "positive_target_geometry_recall": 0.375,
+      "matches": [
+        {
+          "actor_id": 198,
+          "reference_type": "vehicle.volkswagen.t2_2021",
+          "prediction_index": 0,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.0891971539008705,
+          "height_center_error_m": 0.11237956638357605,
+          "size_absolute_error_lwh_m": [
+            0.49129295349121094,
+            0.36206376552581787,
+            0.05401444435119629
+          ]
+        },
+        {
+          "actor_id": 199,
+          "reference_type": "vehicle.dodge.charger_police",
+          "prediction_index": 1,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.05877199576733822,
+          "height_center_error_m": 0.24014309082324314,
+          "size_absolute_error_lwh_m": [
+            0.01049041748046875,
+            0.14397215843200684,
+            0.24615955352783203
+          ]
+        },
+        {
+          "actor_id": 200,
+          "reference_type": "vehicle.ford.crown",
+          "prediction_index": 2,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.47266757779477414,
+          "height_center_error_m": 0.3018981591019734,
+          "size_absolute_error_lwh_m": [
+            0.36438941955566406,
+            0.4110962152481079,
+            0.31405365467071533
+          ]
+        }
+      ],
+      "unmatched_actor_ids": [
+        201,
+        202,
+        203,
+        204,
+        205
+      ],
+      "unmatched_predictions_unclassified": 1,
+      "false_positives": null,
+      "precision": null,
+      "matching": "class-agnostic maximum-cardinality 1:1 XY center-distance",
+      "radius_m": 54.0,
+      "center_gate_m": 2.0,
+      "threshold": 0.3,
+      "reference_scope": "visible spawned vehicle/person actors only; incomplete scene GT",
+      "validated_detection_quality": false,
+      "usable_for_rl_reward": false,
+      "index": 3,
+      "frame_id": 67,
+      "timestamp": 6.489498347043991,
+      "prediction_sha256": "bd4cf009564163dfc8c81ddef5f5b14d1eec29185ed7e18485d168d309d32000",
+      "actor_gt_sha256": "533091314a0bdcae7a43da529f4c8f26ad574257fcea58c604f5c4d6a1c5e76e"
+    },
+    {
+      "required_targets": 8,
+      "matched_targets": 3,
+      "positive_target_geometry_recall": 0.375,
+      "matches": [
+        {
+          "actor_id": 198,
+          "reference_type": "vehicle.volkswagen.t2_2021",
+          "prediction_index": 1,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.22860338430338414,
+          "height_center_error_m": 0.10229041872624034,
+          "size_absolute_error_lwh_m": [
+            0.6109027862548828,
+            0.4055708646774292,
+            0.09988236427307129
+          ]
+        },
+        {
+          "actor_id": 199,
+          "reference_type": "vehicle.dodge.charger_police",
+          "prediction_index": 2,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.28322132989876225,
+          "height_center_error_m": 0.41212957169704934,
+          "size_absolute_error_lwh_m": [
+            0.01442861557006836,
+            0.16097211837768555,
+            0.30447280406951904
+          ]
+        },
+        {
+          "actor_id": 200,
+          "reference_type": "vehicle.ford.crown",
+          "prediction_index": 0,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.5771927552131196,
+          "height_center_error_m": 0.3367206252695829,
+          "size_absolute_error_lwh_m": [
+            0.47130823135375977,
+            0.38983213901519775,
+            0.28562283515930176
+          ]
+        }
+      ],
+      "unmatched_actor_ids": [
+        201,
+        202,
+        203,
+        204,
+        205
+      ],
+      "unmatched_predictions_unclassified": 1,
+      "false_positives": null,
+      "precision": null,
+      "matching": "class-agnostic maximum-cardinality 1:1 XY center-distance",
+      "radius_m": 54.0,
+      "center_gate_m": 2.0,
+      "threshold": 0.3,
+      "reference_scope": "visible spawned vehicle/person actors only; incomplete scene GT",
+      "validated_detection_quality": false,
+      "usable_for_rl_reward": false,
+      "index": 4,
+      "frame_id": 68,
+      "timestamp": 6.539498347789049,
+      "prediction_sha256": "6f9bb1f324bcf9742665ba2952816ae632c7059780c11c83187e244a54f6cb93",
+      "actor_gt_sha256": "d03ed6478c7b8f2c91d63a4ad5aceb957293f2ea371e79d4d7c7d92195f58962"
+    },
+    {
+      "required_targets": 8,
+      "matched_targets": 4,
+      "positive_target_geometry_recall": 0.5,
+      "matches": [
+        {
+          "actor_id": 198,
+          "reference_type": "vehicle.volkswagen.t2_2021",
+          "prediction_index": 0,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.1431038412208939,
+          "height_center_error_m": 0.10369123493294241,
+          "size_absolute_error_lwh_m": [
+            0.4923572540283203,
+            0.3774012327194214,
+            0.10528349876403809
+          ]
+        },
+        {
+          "actor_id": 199,
+          "reference_type": "vehicle.dodge.charger_police",
+          "prediction_index": 2,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.21212347292682673,
+          "height_center_error_m": 0.2926121983986635,
+          "size_absolute_error_lwh_m": [
+            0.050710201263427734,
+            0.1449108123779297,
+            0.27096986770629883
+          ]
+        },
+        {
+          "actor_id": 200,
+          "reference_type": "vehicle.ford.crown",
+          "prediction_index": 1,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.5513265910971915,
+          "height_center_error_m": 0.31793865506626817,
+          "size_absolute_error_lwh_m": [
+            0.5659761428833008,
+            0.3455137014389038,
+            0.24296414852142334
+          ]
+        },
+        {
+          "actor_id": 203,
+          "reference_type": "vehicle.dodge.charger_police",
+          "prediction_index": 4,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.34913356082201796,
+          "height_center_error_m": 0.27318261088690166,
+          "size_absolute_error_lwh_m": [
+            0.004972934722900391,
+            0.15269207954406738,
+            0.34500277042388916
+          ]
+        }
+      ],
+      "unmatched_actor_ids": [
+        201,
+        202,
+        204,
+        205
+      ],
+      "unmatched_predictions_unclassified": 1,
+      "false_positives": null,
+      "precision": null,
+      "matching": "class-agnostic maximum-cardinality 1:1 XY center-distance",
+      "radius_m": 54.0,
+      "center_gate_m": 2.0,
+      "threshold": 0.3,
+      "reference_scope": "visible spawned vehicle/person actors only; incomplete scene GT",
+      "validated_detection_quality": false,
+      "usable_for_rl_reward": false,
+      "index": 5,
+      "frame_id": 69,
+      "timestamp": 6.589498348534107,
+      "prediction_sha256": "28735e1e26487b1b92a70c7e4aeb3b8bb986e702462342a08d53b5c16954d29f",
+      "actor_gt_sha256": "fca9a9ebbafb364a83049890760baad569916f12060da439fd0beadf1cdcf7b5"
+    },
+    {
+      "required_targets": 8,
+      "matched_targets": 4,
+      "positive_target_geometry_recall": 0.5,
+      "matches": [
+        {
+          "actor_id": 198,
+          "reference_type": "vehicle.volkswagen.t2_2021",
+          "prediction_index": 0,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.055638453279434924,
+          "height_center_error_m": 0.11848952714504746,
+          "size_absolute_error_lwh_m": [
+            0.5320367813110352,
+            0.39025938510894775,
+            0.05826139450073242
+          ]
+        },
+        {
+          "actor_id": 199,
+          "reference_type": "vehicle.dodge.charger_police",
+          "prediction_index": 1,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.1961602411493239,
+          "height_center_error_m": 0.2838341862848952,
+          "size_absolute_error_lwh_m": [
+            0.0717320442199707,
+            0.12801671028137207,
+            0.24555468559265137
+          ]
+        },
+        {
+          "actor_id": 201,
+          "reference_type": "vehicle.mercedes.sprinter",
+          "prediction_index": 4,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.5595349884167676,
+          "height_center_error_m": 0.24711486127979398,
+          "size_absolute_error_lwh_m": [
+            0.597501277923584,
+            0.2651519775390625,
+            0.2753293514251709
+          ]
+        },
+        {
+          "actor_id": 202,
+          "reference_type": "vehicle.ford.ambulance",
+          "prediction_index": 2,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.1516789418832938,
+          "height_center_error_m": 0.12837230617532147,
+          "size_absolute_error_lwh_m": [
+            0.4692516326904297,
+            0.1435084342956543,
+            0.003082752227783203
+          ]
+        }
+      ],
+      "unmatched_actor_ids": [
+        200,
+        203,
+        204,
+        205
+      ],
+      "unmatched_predictions_unclassified": 1,
+      "false_positives": null,
+      "precision": null,
+      "matching": "class-agnostic maximum-cardinality 1:1 XY center-distance",
+      "radius_m": 54.0,
+      "center_gate_m": 2.0,
+      "threshold": 0.3,
+      "reference_scope": "visible spawned vehicle/person actors only; incomplete scene GT",
+      "validated_detection_quality": false,
+      "usable_for_rl_reward": false,
+      "index": 6,
+      "frame_id": 70,
+      "timestamp": 6.639498349279165,
+      "prediction_sha256": "59c311d4a366ddfab01081be136b87b5c40d49fca4536490d73d3e581e597b29",
+      "actor_gt_sha256": "8a0f419def35dde700e8bc0330f648ff930103ca6bcd690683838d149bc08f7d"
+    },
+    {
+      "required_targets": 8,
+      "matched_targets": 4,
+      "positive_target_geometry_recall": 0.5,
+      "matches": [
+        {
+          "actor_id": 198,
+          "reference_type": "vehicle.volkswagen.t2_2021",
+          "prediction_index": 0,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.21133966014711722,
+          "height_center_error_m": 0.13737610852370175,
+          "size_absolute_error_lwh_m": [
+            0.66448974609375,
+            0.441003680229187,
+            0.08366751670837402
+          ]
+        },
+        {
+          "actor_id": 199,
+          "reference_type": "vehicle.dodge.charger_police",
+          "prediction_index": 1,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.24619064223111864,
+          "height_center_error_m": 0.321968899150436,
+          "size_absolute_error_lwh_m": [
+            0.12979745864868164,
+            0.09795475006103516,
+            0.2442246675491333
+          ]
+        },
+        {
+          "actor_id": 200,
+          "reference_type": "vehicle.ford.crown",
+          "prediction_index": 3,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.5945091169900385,
+          "height_center_error_m": 0.23869481198784226,
+          "size_absolute_error_lwh_m": [
+            0.48662614822387695,
+            0.3448094129562378,
+            0.18931126594543457
+          ]
+        },
+        {
+          "actor_id": 201,
+          "reference_type": "vehicle.mercedes.sprinter",
+          "prediction_index": 5,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.37528547346309404,
+          "height_center_error_m": 0.06513552533565004,
+          "size_absolute_error_lwh_m": [
+            0.5060877799987793,
+            0.2874574661254883,
+            0.3671419620513916
+          ]
+        }
+      ],
+      "unmatched_actor_ids": [
+        202,
+        203,
+        204,
+        205
+      ],
+      "unmatched_predictions_unclassified": 2,
+      "false_positives": null,
+      "precision": null,
+      "matching": "class-agnostic maximum-cardinality 1:1 XY center-distance",
+      "radius_m": 54.0,
+      "center_gate_m": 2.0,
+      "threshold": 0.3,
+      "reference_scope": "visible spawned vehicle/person actors only; incomplete scene GT",
+      "validated_detection_quality": false,
+      "usable_for_rl_reward": false,
+      "index": 7,
+      "frame_id": 71,
+      "timestamp": 6.689498350024223,
+      "prediction_sha256": "0ade061808144ba21b8162c6210078c3e8b136a48b9557c35aee6822e8c67570",
+      "actor_gt_sha256": "31f9f29769f7bcbe2afbf1a6a7bbf871c7d8cd5eaade32b2dd12615d5ee47013"
+    },
+    {
+      "required_targets": 8,
+      "matched_targets": 3,
+      "positive_target_geometry_recall": 0.375,
+      "matches": [
+        {
+          "actor_id": 198,
+          "reference_type": "vehicle.volkswagen.t2_2021",
+          "prediction_index": 0,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.09507334022316312,
+          "height_center_error_m": 0.07909267971012712,
+          "size_absolute_error_lwh_m": [
+            0.42392587661743164,
+            0.34985411167144775,
+            0.0739142894744873
+          ]
+        },
+        {
+          "actor_id": 199,
+          "reference_type": "vehicle.dodge.charger_police",
+          "prediction_index": 1,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.24347248098238422,
+          "height_center_error_m": 0.1918677119371499,
+          "size_absolute_error_lwh_m": [
+            0.17251205444335938,
+            0.08562493324279785,
+            0.23642873764038086
+          ]
+        },
+        {
+          "actor_id": 200,
+          "reference_type": "vehicle.ford.crown",
+          "prediction_index": 2,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.7548512170448981,
+          "height_center_error_m": 0.2029462141632571,
+          "size_absolute_error_lwh_m": [
+            0.647101879119873,
+            0.3128706216812134,
+            0.19580447673797607
+          ]
+        }
+      ],
+      "unmatched_actor_ids": [
+        201,
+        202,
+        203,
+        204,
+        205
+      ],
+      "unmatched_predictions_unclassified": 2,
+      "false_positives": null,
+      "precision": null,
+      "matching": "class-agnostic maximum-cardinality 1:1 XY center-distance",
+      "radius_m": 54.0,
+      "center_gate_m": 2.0,
+      "threshold": 0.3,
+      "reference_scope": "visible spawned vehicle/person actors only; incomplete scene GT",
+      "validated_detection_quality": false,
+      "usable_for_rl_reward": false,
+      "index": 8,
+      "frame_id": 72,
+      "timestamp": 6.739498350769281,
+      "prediction_sha256": "20144216d69842408f566f62b8cc8fc30cd8b973d883c5ed66990a8029836048",
+      "actor_gt_sha256": "d8f942ea7337fd56af8255d5151d393fdd6e049ed60d5046728dba6facfb6f7a"
+    },
+    {
+      "required_targets": 8,
+      "matched_targets": 4,
+      "positive_target_geometry_recall": 0.5,
+      "matches": [
+        {
+          "actor_id": 198,
+          "reference_type": "vehicle.volkswagen.t2_2021",
+          "prediction_index": 0,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.08946205469298481,
+          "height_center_error_m": 0.05523848418355759,
+          "size_absolute_error_lwh_m": [
+            0.4406423568725586,
+            0.33999717235565186,
+            0.06702089309692383
+          ]
+        },
+        {
+          "actor_id": 199,
+          "reference_type": "vehicle.dodge.charger_police",
+          "prediction_index": 1,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.13965596695992813,
+          "height_center_error_m": 0.17788304613252492,
+          "size_absolute_error_lwh_m": [
+            0.12242364883422852,
+            0.0824437141418457,
+            0.207564115524292
+          ]
+        },
+        {
+          "actor_id": 200,
+          "reference_type": "vehicle.ford.crown",
+          "prediction_index": 2,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.8010474135182953,
+          "height_center_error_m": 0.2754511977826761,
+          "size_absolute_error_lwh_m": [
+            0.5910396575927734,
+            0.2876642942428589,
+            0.1489650011062622
+          ]
+        },
+        {
+          "actor_id": 201,
+          "reference_type": "vehicle.mercedes.sprinter",
+          "prediction_index": 4,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.48493173195255035,
+          "height_center_error_m": 0.07540848262010624,
+          "size_absolute_error_lwh_m": [
+            0.7851638793945312,
+            0.21953725814819336,
+            0.5423774719238281
+          ]
+        }
+      ],
+      "unmatched_actor_ids": [
+        202,
+        203,
+        204,
+        205
+      ],
+      "unmatched_predictions_unclassified": 1,
+      "false_positives": null,
+      "precision": null,
+      "matching": "class-agnostic maximum-cardinality 1:1 XY center-distance",
+      "radius_m": 54.0,
+      "center_gate_m": 2.0,
+      "threshold": 0.3,
+      "reference_scope": "visible spawned vehicle/person actors only; incomplete scene GT",
+      "validated_detection_quality": false,
+      "usable_for_rl_reward": false,
+      "index": 9,
+      "frame_id": 73,
+      "timestamp": 6.7894983515143394,
+      "prediction_sha256": "771f12382771cef0ce7efc591efaa1f60f5228e6282e2db06d38038ffe5f1e2d",
+      "actor_gt_sha256": "0e940812c4520b72f4c63ab9e6578c366e907209458e0663ceca111977ed959d"
+    },
+    {
+      "required_targets": 8,
+      "matched_targets": 4,
+      "positive_target_geometry_recall": 0.5,
+      "matches": [
+        {
+          "actor_id": 198,
+          "reference_type": "vehicle.volkswagen.t2_2021",
+          "prediction_index": 0,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.13861395399657908,
+          "height_center_error_m": 0.11725219049085878,
+          "size_absolute_error_lwh_m": [
+            0.5608334541320801,
+            0.38636648654937744,
+            0.07424283027648926
+          ]
+        },
+        {
+          "actor_id": 199,
+          "reference_type": "vehicle.dodge.charger_police",
+          "prediction_index": 1,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.16236365209186548,
+          "height_center_error_m": 0.13865553594571567,
+          "size_absolute_error_lwh_m": [
+            0.08581304550170898,
+            0.11198949813842773,
+            0.23381853103637695
+          ]
+        },
+        {
+          "actor_id": 200,
+          "reference_type": "vehicle.ford.crown",
+          "prediction_index": 2,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.48217372397188213,
+          "height_center_error_m": 0.3038790258607308,
+          "size_absolute_error_lwh_m": [
+            0.5564684867858887,
+            0.3359311819076538,
+            0.20324993133544922
+          ]
+        },
+        {
+          "actor_id": 201,
+          "reference_type": "vehicle.mercedes.sprinter",
+          "prediction_index": 3,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.48788205864908135,
+          "height_center_error_m": 0.020772870477654415,
+          "size_absolute_error_lwh_m": [
+            0.35117578506469727,
+            0.326552152633667,
+            0.28757619857788086
+          ]
+        }
+      ],
+      "unmatched_actor_ids": [
+        202,
+        203,
+        204,
+        205
+      ],
+      "unmatched_predictions_unclassified": 0,
+      "false_positives": null,
+      "precision": null,
+      "matching": "class-agnostic maximum-cardinality 1:1 XY center-distance",
+      "radius_m": 54.0,
+      "center_gate_m": 2.0,
+      "threshold": 0.3,
+      "reference_scope": "visible spawned vehicle/person actors only; incomplete scene GT",
+      "validated_detection_quality": false,
+      "usable_for_rl_reward": false,
+      "index": 10,
+      "frame_id": 74,
+      "timestamp": 6.8394983522593975,
+      "prediction_sha256": "d3a1b47dfdc7d89b673b8537f10434616759ec6a58fb990b8f90c4cf3a173d33",
+      "actor_gt_sha256": "50a7346d48b8b32eed25f5ca45e3de211a12f58c97fbee22025fd42210b2a027"
+    },
+    {
+      "required_targets": 8,
+      "matched_targets": 4,
+      "positive_target_geometry_recall": 0.5,
+      "matches": [
+        {
+          "actor_id": 198,
+          "reference_type": "vehicle.volkswagen.t2_2021",
+          "prediction_index": 0,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.12313787422569493,
+          "height_center_error_m": 0.09880421718423982,
+          "size_absolute_error_lwh_m": [
+            0.5159783363342285,
+            0.352084755897522,
+            0.036469459533691406
+          ]
+        },
+        {
+          "actor_id": 199,
+          "reference_type": "vehicle.dodge.charger_police",
+          "prediction_index": 5,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.19727649153433058,
+          "height_center_error_m": 0.298025143329816,
+          "size_absolute_error_lwh_m": [
+            0.0741267204284668,
+            0.10537528991699219,
+            0.2360631227493286
+          ]
+        },
+        {
+          "actor_id": 200,
+          "reference_type": "vehicle.ford.crown",
+          "prediction_index": 2,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.40662354585299265,
+          "height_center_error_m": 0.3852432099460251,
+          "size_absolute_error_lwh_m": [
+            0.4845767021179199,
+            0.36134350299835205,
+            0.22354257106781006
+          ]
+        },
+        {
+          "actor_id": 201,
+          "reference_type": "vehicle.mercedes.sprinter",
+          "prediction_index": 4,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.38730625310111555,
+          "height_center_error_m": 0.09587152363690077,
+          "size_absolute_error_lwh_m": [
+            0.6117367744445801,
+            0.2539520263671875,
+            0.44080328941345215
+          ]
+        }
+      ],
+      "unmatched_actor_ids": [
+        202,
+        203,
+        204,
+        205
+      ],
+      "unmatched_predictions_unclassified": 2,
+      "false_positives": null,
+      "precision": null,
+      "matching": "class-agnostic maximum-cardinality 1:1 XY center-distance",
+      "radius_m": 54.0,
+      "center_gate_m": 2.0,
+      "threshold": 0.3,
+      "reference_scope": "visible spawned vehicle/person actors only; incomplete scene GT",
+      "validated_detection_quality": false,
+      "usable_for_rl_reward": false,
+      "index": 11,
+      "frame_id": 75,
+      "timestamp": 6.889498353004456,
+      "prediction_sha256": "1b5f071bb69c336487f20fe8c7809902c394d5b3aed056e8fc9f6521b8478360",
+      "actor_gt_sha256": "a2c8be05d2ae83092c7868385b37e2251e15eef11e9bfb449867d1750cd922c5"
+    },
+    {
+      "required_targets": 7,
+      "matched_targets": 4,
+      "positive_target_geometry_recall": 0.5714285714285714,
+      "matches": [
+        {
+          "actor_id": 198,
+          "reference_type": "vehicle.volkswagen.t2_2021",
+          "prediction_index": 0,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.11746165986718783,
+          "height_center_error_m": 0.1386101167548004,
+          "size_absolute_error_lwh_m": [
+            0.44823551177978516,
+            0.35148346424102783,
+            0.09122109413146973
+          ]
+        },
+        {
+          "actor_id": 199,
+          "reference_type": "vehicle.dodge.charger_police",
+          "prediction_index": 3,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.10981796761994496,
+          "height_center_error_m": 0.24051041489669656,
+          "size_absolute_error_lwh_m": [
+            0.07520675659179688,
+            0.1462550163269043,
+            0.2409682273864746
+          ]
+        },
+        {
+          "actor_id": 200,
+          "reference_type": "vehicle.ford.crown",
+          "prediction_index": 2,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.5178553757100651,
+          "height_center_error_m": 0.23409161794520128,
+          "size_absolute_error_lwh_m": [
+            0.5121960639953613,
+            0.32492029666900635,
+            0.1775667667388916
+          ]
+        },
+        {
+          "actor_id": 202,
+          "reference_type": "vehicle.ford.ambulance",
+          "prediction_index": 4,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.20493079772447645,
+          "height_center_error_m": 0.08943052978266275,
+          "size_absolute_error_lwh_m": [
+            0.5938224792480469,
+            0.07459378242492676,
+            0.08875560760498047
+          ]
+        }
+      ],
+      "unmatched_actor_ids": [
+        201,
+        203,
+        204
+      ],
+      "unmatched_predictions_unclassified": 2,
+      "false_positives": null,
+      "precision": null,
+      "matching": "class-agnostic maximum-cardinality 1:1 XY center-distance",
+      "radius_m": 54.0,
+      "center_gate_m": 2.0,
+      "threshold": 0.3,
+      "reference_scope": "visible spawned vehicle/person actors only; incomplete scene GT",
+      "validated_detection_quality": false,
+      "usable_for_rl_reward": false,
+      "index": 12,
+      "frame_id": 76,
+      "timestamp": 6.939498353749514,
+      "prediction_sha256": "b7191b42bfe61f7d4fdf8395cbd0a35fb73befec140b262aa7cec441405ea31e",
+      "actor_gt_sha256": "aaeba37a9266acbd8f8511a8e098df0b61c55b3bf32aa8a57a5fdf341e5bd86e"
+    },
+    {
+      "required_targets": 7,
+      "matched_targets": 3,
+      "positive_target_geometry_recall": 0.42857142857142855,
+      "matches": [
+        {
+          "actor_id": 198,
+          "reference_type": "vehicle.volkswagen.t2_2021",
+          "prediction_index": 0,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.15704262686695208,
+          "height_center_error_m": 0.0993968493160462,
+          "size_absolute_error_lwh_m": [
+            0.5441169738769531,
+            0.3903728723526001,
+            0.0962376594543457
+          ]
+        },
+        {
+          "actor_id": 199,
+          "reference_type": "vehicle.dodge.charger_police",
+          "prediction_index": 1,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.03218917635010777,
+          "height_center_error_m": 0.29123396127690315,
+          "size_absolute_error_lwh_m": [
+            0.14232778549194336,
+            0.07888936996459961,
+            0.17769742012023926
+          ]
+        },
+        {
+          "actor_id": 201,
+          "reference_type": "vehicle.mercedes.sprinter",
+          "prediction_index": 2,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.32439906967173726,
+          "height_center_error_m": 0.02619389296621999,
+          "size_absolute_error_lwh_m": [
+            0.666938304901123,
+            0.2545783519744873,
+            0.4619479179382324
+          ]
+        }
+      ],
+      "unmatched_actor_ids": [
+        200,
+        202,
+        203,
+        204
+      ],
+      "unmatched_predictions_unclassified": 1,
+      "false_positives": null,
+      "precision": null,
+      "matching": "class-agnostic maximum-cardinality 1:1 XY center-distance",
+      "radius_m": 54.0,
+      "center_gate_m": 2.0,
+      "threshold": 0.3,
+      "reference_scope": "visible spawned vehicle/person actors only; incomplete scene GT",
+      "validated_detection_quality": false,
+      "usable_for_rl_reward": false,
+      "index": 13,
+      "frame_id": 77,
+      "timestamp": 6.989498354494572,
+      "prediction_sha256": "6028f7e46231d3047220327ef5f8694de09bd815b74593ddc71b3903a5bd5fed",
+      "actor_gt_sha256": "3ffd6ef3fa0adeca5cc2177d6ef7974afa847c787f99c6407c395bf2d25e4305"
+    },
+    {
+      "required_targets": 7,
+      "matched_targets": 5,
+      "positive_target_geometry_recall": 0.7142857142857143,
+      "matches": [
+        {
+          "actor_id": 198,
+          "reference_type": "vehicle.volkswagen.t2_2021",
+          "prediction_index": 0,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.13261114192697007,
+          "height_center_error_m": 0.08037070893514642,
+          "size_absolute_error_lwh_m": [
+            0.43532609939575195,
+            0.3387068510055542,
+            0.05904221534729004
+          ]
+        },
+        {
+          "actor_id": 199,
+          "reference_type": "vehicle.dodge.charger_police",
+          "prediction_index": 1,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.15906250938621228,
+          "height_center_error_m": 0.16118941661138964,
+          "size_absolute_error_lwh_m": [
+            0.10587882995605469,
+            0.12033653259277344,
+            0.255379319190979
+          ]
+        },
+        {
+          "actor_id": 200,
+          "reference_type": "vehicle.ford.crown",
+          "prediction_index": 3,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.22095459019030325,
+          "height_center_error_m": 0.1811535708442611,
+          "size_absolute_error_lwh_m": [
+            0.5577740669250488,
+            0.36128437519073486,
+            0.2811332941055298
+          ]
+        },
+        {
+          "actor_id": 201,
+          "reference_type": "vehicle.mercedes.sprinter",
+          "prediction_index": 2,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.33360404892992224,
+          "height_center_error_m": 0.002455259321174852,
+          "size_absolute_error_lwh_m": [
+            0.17212533950805664,
+            0.37247443199157715,
+            0.16683220863342285
+          ]
+        },
+        {
+          "actor_id": 202,
+          "reference_type": "vehicle.ford.ambulance",
+          "prediction_index": 4,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.08003376413942406,
+          "height_center_error_m": 0.025125361574216853,
+          "size_absolute_error_lwh_m": [
+            0.47306108474731445,
+            0.06042146682739258,
+            0.026733875274658203
+          ]
+        }
+      ],
+      "unmatched_actor_ids": [
+        203,
+        204
+      ],
+      "unmatched_predictions_unclassified": 0,
+      "false_positives": null,
+      "precision": null,
+      "matching": "class-agnostic maximum-cardinality 1:1 XY center-distance",
+      "radius_m": 54.0,
+      "center_gate_m": 2.0,
+      "threshold": 0.3,
+      "reference_scope": "visible spawned vehicle/person actors only; incomplete scene GT",
+      "validated_detection_quality": false,
+      "usable_for_rl_reward": false,
+      "index": 14,
+      "frame_id": 78,
+      "timestamp": 7.03949835523963,
+      "prediction_sha256": "62f0c592fca5f2ffcae5a49c9e4875ffb49a0057cb59cd1b5af5b7857e9ff641",
+      "actor_gt_sha256": "6bff11cae617a5ad2c3d2857f22325eba69c8d0b8a071c3f4f74168658936df0"
+    },
+    {
+      "required_targets": 7,
+      "matched_targets": 4,
+      "positive_target_geometry_recall": 0.5714285714285714,
+      "matches": [
+        {
+          "actor_id": 198,
+          "reference_type": "vehicle.volkswagen.t2_2021",
+          "prediction_index": 0,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.11443113673554613,
+          "height_center_error_m": 0.08734739482390164,
+          "size_absolute_error_lwh_m": [
+            0.45998096466064453,
+            0.36053216457366943,
+            0.06477808952331543
+          ]
+        },
+        {
+          "actor_id": 199,
+          "reference_type": "vehicle.dodge.charger_police",
+          "prediction_index": 1,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.22389803593953858,
+          "height_center_error_m": 0.1623299718708171,
+          "size_absolute_error_lwh_m": [
+            0.18115997314453125,
+            0.05190730094909668,
+            0.20623266696929932
+          ]
+        },
+        {
+          "actor_id": 201,
+          "reference_type": "vehicle.mercedes.sprinter",
+          "prediction_index": 4,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.3207005156266205,
+          "height_center_error_m": 0.24028769615090217,
+          "size_absolute_error_lwh_m": [
+            0.16246271133422852,
+            0.5273187160491943,
+            0.04683423042297363
+          ]
+        },
+        {
+          "actor_id": 202,
+          "reference_type": "vehicle.ford.ambulance",
+          "prediction_index": 3,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.11872219725325538,
+          "height_center_error_m": 0.10985992791495658,
+          "size_absolute_error_lwh_m": [
+            0.3875608444213867,
+            0.15273427963256836,
+            0.0876009464263916
+          ]
+        }
+      ],
+      "unmatched_actor_ids": [
+        200,
+        203,
+        204
+      ],
+      "unmatched_predictions_unclassified": 1,
+      "false_positives": null,
+      "precision": null,
+      "matching": "class-agnostic maximum-cardinality 1:1 XY center-distance",
+      "radius_m": 54.0,
+      "center_gate_m": 2.0,
+      "threshold": 0.3,
+      "reference_scope": "visible spawned vehicle/person actors only; incomplete scene GT",
+      "validated_detection_quality": false,
+      "usable_for_rl_reward": false,
+      "index": 15,
+      "frame_id": 79,
+      "timestamp": 7.089498355984688,
+      "prediction_sha256": "d8e29cb3033643c506f56b91967b29842faae41fe58655423718e2b74eb46fc0",
+      "actor_gt_sha256": "145ba74e8deaadd63abc519d9db40d9e02a2dd30bad9330f7cc62988919a2324"
+    },
+    {
+      "required_targets": 7,
+      "matched_targets": 4,
+      "positive_target_geometry_recall": 0.5714285714285714,
+      "matches": [
+        {
+          "actor_id": 198,
+          "reference_type": "vehicle.volkswagen.t2_2021",
+          "prediction_index": 0,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.19106313055153,
+          "height_center_error_m": 0.055330874251770634,
+          "size_absolute_error_lwh_m": [
+            0.5529441833496094,
+            0.3849567174911499,
+            0.04669809341430664
+          ]
+        },
+        {
+          "actor_id": 199,
+          "reference_type": "vehicle.dodge.charger_police",
+          "prediction_index": 1,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.14079935353875306,
+          "height_center_error_m": 0.10693518690891346,
+          "size_absolute_error_lwh_m": [
+            0.02944326400756836,
+            0.11746525764465332,
+            0.2549322843551636
+          ]
+        },
+        {
+          "actor_id": 201,
+          "reference_type": "vehicle.mercedes.sprinter",
+          "prediction_index": 4,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.322453954518062,
+          "height_center_error_m": 0.04360765296687785,
+          "size_absolute_error_lwh_m": [
+            0.521153450012207,
+            0.34052109718322754,
+            0.3470313549041748
+          ]
+        },
+        {
+          "actor_id": 202,
+          "reference_type": "vehicle.ford.ambulance",
+          "prediction_index": 2,
+          "predicted_class": "truck",
+          "center_xy_error_m": 0.049017064419114506,
+          "height_center_error_m": 0.11548766021548618,
+          "size_absolute_error_lwh_m": [
+            0.2628316879272461,
+            0.32048726081848145,
+            0.20753979682922363
+          ]
+        }
+      ],
+      "unmatched_actor_ids": [
+        200,
+        203,
+        204
+      ],
+      "unmatched_predictions_unclassified": 1,
+      "false_positives": null,
+      "precision": null,
+      "matching": "class-agnostic maximum-cardinality 1:1 XY center-distance",
+      "radius_m": 54.0,
+      "center_gate_m": 2.0,
+      "threshold": 0.3,
+      "reference_scope": "visible spawned vehicle/person actors only; incomplete scene GT",
+      "validated_detection_quality": false,
+      "usable_for_rl_reward": false,
+      "index": 16,
+      "frame_id": 80,
+      "timestamp": 7.139498356729746,
+      "prediction_sha256": "949f184cd222d5801f983106bb4ffff7aa966a1cb12b992a3f49f0d3643b51ed",
+      "actor_gt_sha256": "17d087c5993b9b7cc326ea02f644dcda07d35f7b5ad364619dfdaa9cf5d53597"
+    },
+    {
+      "required_targets": 7,
+      "matched_targets": 3,
+      "positive_target_geometry_recall": 0.42857142857142855,
+      "matches": [
+        {
+          "actor_id": 198,
+          "reference_type": "vehicle.volkswagen.t2_2021",
+          "prediction_index": 0,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.13200125873730412,
+          "height_center_error_m": 0.08700905634024969,
+          "size_absolute_error_lwh_m": [
+            0.5393457412719727,
+            0.37973010540008545,
+            0.04737567901611328
+          ]
+        },
+        {
+          "actor_id": 199,
+          "reference_type": "vehicle.dodge.charger_police",
+          "prediction_index": 1,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.18744720307967175,
+          "height_center_error_m": 0.09041388942633888,
+          "size_absolute_error_lwh_m": [
+            0.019093036651611328,
+            0.1663682460784912,
+            0.259141206741333
+          ]
+        },
+        {
+          "actor_id": 201,
+          "reference_type": "vehicle.mercedes.sprinter",
+          "prediction_index": 2,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.430962212087418,
+          "height_center_error_m": 0.052634024970431126,
+          "size_absolute_error_lwh_m": [
+            0.30272579193115234,
+            0.381089448928833,
+            0.24643278121948242
+          ]
+        }
+      ],
+      "unmatched_actor_ids": [
+        200,
+        202,
+        203,
+        204
+      ],
+      "unmatched_predictions_unclassified": 1,
+      "false_positives": null,
+      "precision": null,
+      "matching": "class-agnostic maximum-cardinality 1:1 XY center-distance",
+      "radius_m": 54.0,
+      "center_gate_m": 2.0,
+      "threshold": 0.3,
+      "reference_scope": "visible spawned vehicle/person actors only; incomplete scene GT",
+      "validated_detection_quality": false,
+      "usable_for_rl_reward": false,
+      "index": 17,
+      "frame_id": 81,
+      "timestamp": 7.189498357474804,
+      "prediction_sha256": "0db9127bb176f1b8d755f228adfb9afa91afd3791ea5f10ab2521e9f88e1286f",
+      "actor_gt_sha256": "8dcd07a6bc7c04a4afa6006230cafa5b619fa598fb62a4d7799905743385298a"
+    },
+    {
+      "required_targets": 7,
+      "matched_targets": 4,
+      "positive_target_geometry_recall": 0.5714285714285714,
+      "matches": [
+        {
+          "actor_id": 198,
+          "reference_type": "vehicle.volkswagen.t2_2021",
+          "prediction_index": 0,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.17464623856647185,
+          "height_center_error_m": 0.09207091617088792,
+          "size_absolute_error_lwh_m": [
+            0.5915493965148926,
+            0.38750994205474854,
+            0.0466921329498291
+          ]
+        },
+        {
+          "actor_id": 199,
+          "reference_type": "vehicle.dodge.charger_police",
+          "prediction_index": 2,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.09842457157388315,
+          "height_center_error_m": 0.17001383322465724,
+          "size_absolute_error_lwh_m": [
+            0.012619495391845703,
+            0.12105059623718262,
+            0.26268649101257324
+          ]
+        },
+        {
+          "actor_id": 201,
+          "reference_type": "vehicle.mercedes.sprinter",
+          "prediction_index": 3,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.5538736892805627,
+          "height_center_error_m": 0.06411467109204438,
+          "size_absolute_error_lwh_m": [
+            0.7667636871337891,
+            0.2399585247039795,
+            0.446535587310791
+          ]
+        },
+        {
+          "actor_id": 202,
+          "reference_type": "vehicle.ford.ambulance",
+          "prediction_index": 1,
+          "predicted_class": "truck",
+          "center_xy_error_m": 0.19789113817686152,
+          "height_center_error_m": 0.021789921494484332,
+          "size_absolute_error_lwh_m": [
+            0.09610414505004883,
+            0.15971899032592773,
+            0.03921341896057129
+          ]
+        }
+      ],
+      "unmatched_actor_ids": [
+        200,
+        203,
+        204
+      ],
+      "unmatched_predictions_unclassified": 0,
+      "false_positives": null,
+      "precision": null,
+      "matching": "class-agnostic maximum-cardinality 1:1 XY center-distance",
+      "radius_m": 54.0,
+      "center_gate_m": 2.0,
+      "threshold": 0.3,
+      "reference_scope": "visible spawned vehicle/person actors only; incomplete scene GT",
+      "validated_detection_quality": false,
+      "usable_for_rl_reward": false,
+      "index": 18,
+      "frame_id": 82,
+      "timestamp": 7.239498358219862,
+      "prediction_sha256": "42424fabb7c6f3e6f64502df2ed8d56e980ab7e6283df32f6ee6c6f66a2265b8",
+      "actor_gt_sha256": "ce4904030a5c94ed19edb87ce2973f484427616512c749e392e62094e1799157"
+    },
+    {
+      "required_targets": 7,
+      "matched_targets": 3,
+      "positive_target_geometry_recall": 0.42857142857142855,
+      "matches": [
+        {
+          "actor_id": 198,
+          "reference_type": "vehicle.volkswagen.t2_2021",
+          "prediction_index": 0,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.13268950530597393,
+          "height_center_error_m": 0.10473868219961457,
+          "size_absolute_error_lwh_m": [
+            0.6065607070922852,
+            0.4100407361984253,
+            0.03294777870178223
+          ]
+        },
+        {
+          "actor_id": 199,
+          "reference_type": "vehicle.dodge.charger_police",
+          "prediction_index": 2,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.0934287677323431,
+          "height_center_error_m": 0.2508533111374738,
+          "size_absolute_error_lwh_m": [
+            0.007636070251464844,
+            0.14723634719848633,
+            0.26266419887542725
+          ]
+        },
+        {
+          "actor_id": 201,
+          "reference_type": "vehicle.mercedes.sprinter",
+          "prediction_index": 4,
+          "predicted_class": "car",
+          "center_xy_error_m": 0.4375576592510291,
+          "height_center_error_m": 0.03191788533372231,
+          "size_absolute_error_lwh_m": [
+            0.5237951278686523,
+            0.35965657234191895,
+            0.342876672744751
+          ]
+        }
+      ],
+      "unmatched_actor_ids": [
+        200,
+        202,
+        203,
+        204
+      ],
+      "unmatched_predictions_unclassified": 2,
+      "false_positives": null,
+      "precision": null,
+      "matching": "class-agnostic maximum-cardinality 1:1 XY center-distance",
+      "radius_m": 54.0,
+      "center_gate_m": 2.0,
+      "threshold": 0.3,
+      "reference_scope": "visible spawned vehicle/person actors only; incomplete scene GT",
+      "validated_detection_quality": false,
+      "usable_for_rl_reward": false,
+      "index": 19,
+      "frame_id": 83,
+      "timestamp": 7.28949835896492,
+      "prediction_sha256": "7749ba826557d3e581a8b4dc65132dd7a7eb8f51e1ed921bbeedc844d28d8ffe",
+      "actor_gt_sha256": "07d7c3c0104ffff8e4b6b815d76fd1d406e4e1acd8d991a978f12a43d3c08783"
+    }
+  ],
+  "target_frame_instances": 152,
+  "matched_target_frame_instances": 72,
+  "positive_target_geometry_recall": 0.47368421052631576,
+  "independent_scenes": 1,
+  "validated_detection_quality": false,
+  "usable_for_rl_reward": false,
+  "limitations": [
+    "Partial spawned-actor GT cannot establish scene precision/false positives",
+    "Class-agnostic geometry, not official class-aware detection quality",
+    "Semantic visibility from separate 64-channel reference is not 32-channel observability",
+    "Target/frame instances are correlated; no confidence interval or population generalization",
+    "Reference actor geometry is engine GT; ontology and coverage still need engineer review"
+  ]
+}

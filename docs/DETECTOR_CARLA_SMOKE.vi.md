@@ -26,7 +26,7 @@ không có quality score đã nghiệm thu để khẳng định hộp mất là
 Không chọn winner hoặc chấp nhận cấu hình half là tối ưu. Cả hai sample wall latency
 đều vượt một chu kỳ 20 Hz = 50 ms; chưa gọi là real-time 20 FPS.
 
-Checkpoint load strict thành công, không key/shape mismatch. Smoke không AMP.
+Checkpoint load strict thành công, không key/shape mismatch. Hai run đầu không AMP; các run AMP được tách riêng bên dưới.
 Full run peak allocation khoảng 605 MiB, reserved khoảng 882 MiB; gồm warmup/profiling.
 Đây không phải dự đoán VRAM cho full rig + nhiều model đồng thời.
 
@@ -75,7 +75,7 @@ MPLCONFIGDIR=/tmp/p027-matplotlib .venv-experiments/bin/python \
 ```
 
 Thư mục output phải mới. `--keep-fraction 0.5` là subset xác định, không mô phỏng mưa/sương.
-`--amp` chỉ bật precision mode khác, chưa được nghiệm thu trong các run trên.
+`--amp` bật precision mode khác; pilot có số đo riêng, chưa nghiệm thu chất lượng tổng quát.
 `--intensity-policy scale_255_approximation` được chuẩn bị nhưng chưa phải calibration;
 run trên dùng intensity CARLA raw 0..1, khác phân phối intensity nuScenes.
 
@@ -88,7 +88,7 @@ Không đưa GT label/box vào forward. Có input SHA và resolved config SHA ch
 ## Chưa hoàn tất
 
 - GT coverage cho xe đỗ/prop tĩnh, mapping ontology/ignore và protocol visibility/ROI.
-- Camera+LiDAR/radar/segmentation adapter và smoke. CRN thiếu contract RCS/full compensated
+- Camera+LiDAR đã có adapter calibration + smoke riêng. Radar/segmentation còn thiếu; CRN thiếu contract RCS/full compensated
   velocity trên CARLA, không tự điền giả. Trọng số team chưa có trên máy.
 - 12–24 profile **validated**; catalog hiện vẫn là ứng viên.
 - Episode dài, timeline thời tiết, nhiều map/seed, held-out split; corruption vật lý cảm biến.
@@ -96,3 +96,86 @@ Không đưa GT label/box vào forward. Có input SHA và resolved config SHA ch
 - BC/PPO bằng measured replay và so sánh full/min/rule/RL; bridge ROS/online.
 
 Do đó `measured_perception_replay_ready=false`; không dùng report smoke để train RL.
+
+## Pilot mở rộng: 20 frame, 5 cấu hình
+
+Dữ liệu cùng capture Town01/clear/seed 7, 20 frame liên tiếp; một cảnh khoảng 1 giây,
+không phải 20 cảnh độc lập. Evidence đầy đủ ở `eval/detector-pilot-2026-10-08/`.
+
+| Cấu hình | Wall TB | Wall p95 | CUDA activity TB | Ghép mục tiêu/frame |
+|---|---:|---:|---:|---:|
+| LiDAR full FP32 | 118,46 ms | 119,65 ms | 100,51 ms | 72/152 |
+| LiDAR half FP32 | 111,21 ms | 113,75 ms | 92,67 ms | 30/152 |
+| LiDAR full AMP | 100,44 ms | 102,24 ms | 82,76 ms | 72/152 |
+| Camera + LiDAR full FP32 | 545,09 ms | 549,58 ms | 441,74 ms | 89/152 |
+| Camera + LiDAR full AMP | 449,64 ms | 458,92 ms | 345,69 ms | 89/152 |
+
+**Ghép mục tiêu** là chẩn đoán hình học class-agnostic: actor vehicle/person đã spawn,
+có ít nhất một hit semantic LiDAR GT, tâm nằm trong bán kính 54 m; prediction score ≥ 0,3,
+ghép một-một khoảng cách XY ≤ 2 m, tối đa số cặp bằng augmenting paths. Lưu actor ID,
+prediction index, sai số tâm và sai số kích thước cho từng cặp. GT visibility lấy từ
+semantic LiDAR 64, không chứng minh input LiDAR 32 quan sát đủ vật đó.
+Chưa ánh xạ ontology class; không thay metric class-aware của plan bằng metric này.
+GT không đầy đủ nên precision/false positives để **null**, không ép thành 0.
+152 là số lượt mục tiêu/frame, không phải 152 vật độc lập. Không có confidence interval.
+
+Nhận xét có căn cứ trong capture này:
+
+- Half points giảm khoảng 7,8% CUDA activity nhưng ghép được 30 thay vì 72 mục tiêu/frame.
+  Chưa có lý do chấp nhận cấu hình này để đổi lấy mức giảm compute nhỏ đó.
+- AMP LiDAR giảm khoảng 17,7% CUDA activity, giữ cùng số cặp ghép trong pilot. Đây là ứng viên
+  để kiểm định tiếp; chưa chứng minh mọi prediction/shape/điều kiện đều tương đương.
+- Camera+LiDAR ghép được nhiều hơn trên 20 frame, dù hai frame đầu từng bằng LiDAR-only.
+  Đổi lại CUDA activity FP32 cao khoảng 4,4 lần và wall ~545 ms. Không kết luận camera vô ích.
+- 20 Hz (50 ms) không cấu hình nào đáp ứng. AMP LiDAR vượt chu kỳ 10 Hz ở 13/20 frame,
+  nên không gọi là 10 FPS ổn định. LiDAR-only đủ một chu kỳ 5 Hz trong pilot; cả hai CL đều
+  vượt 200 ms ở mọi frame. Đây chỉ là inference, chưa cộng monitoring/sync/chuyển model.
+
+Không chọn winner, chưa validate 12–24 profile, `measured_perception_replay_ready=false`.
+
+Chạy lại với output mới, simulator dừng:
+
+```bash
+data/runtime/detector-env/bin/python scripts/bench_carla_detector.py \
+  data/active-sensing/rig-nearby-20261008 --frames 20 --include-camera \
+  --output data/active-sensing/detector-pilot-new
+```
+
+## Camera + LiDAR: calibration và artifact identity
+
+Artifact nguồn [model table chính thức](https://github.com/open-mmlab/mmdetection3d/blob/v1.4.0/projects/BEVFusion/README.md):
+`bevfusion_lidar-cam_voxel0075_second_secfpn_8xb4-cyclic-20e_nus-3d-5239b1af.pth`.
+Nội dung HTTPS hiện tại 167.113.973 byte có SHA256
+`e68c6c084d8971f4f879751b0ed3981f575c24ee3cf385a1e39197c26a9bb3ab`,
+**không khớp suffix 5239b1af**. Lượt tải đầu bị guard từ chối; hai lần đọc độc lập trùng
+full SHA, ZIP CRC không lỗi, MD5 `5873a41fa1ee29b4cdea346be177019a` khớp Content-MD5/ETag
+của server chính thức. Sau xác minh, pin nội dung bằng **full SHA** riêng trong downloader;
+không cho phép mismatch tùy ý. Provenance giữ `upstream_filename_fingerprint_matches=false`.
+Điều này xác định file hiện được phục vụ tại URL, không chứng minh fingerprint release ban đầu.
+Không gán metric công bố nuScenes vào run CARLA. Xem camera-lidar-source.json và
+camera-lidar-identity-audit.json; trạng thái blocked trong audit là trạng thái lúc kiểm tra
+ban đầu, trước khi pin nội dung đã xác minh. Không deserialize file chưa khớp full pin.
+
+Sáu RGB theo thứ tự ghi trong report, extrinsic optical camera ↔ LiDAR từ cùng frame đo thật.
+Input 640×360 resize đồng đều 1,1, bottom/center crop về 704×256 bằng ImageAug3D của upstream;
+img_aug_matrix được dùng trong projection. Không dùng fixed resize 0,48 của ảnh nuScenes
+1600×900 lên ảnh CARLA nhỏ để rồi pad đen phần lớn input. Mọi thay đổi nằm trong resolved config.
+Không dùng camera semantic GT vào forward. Strict full checkpoint gồm backbone; script mới
+bỏ init ImageNet dư thừa. Peak memory đo CL >2 GiB; không bảo đảm chạy cùng CARLA trên GPU 4 GiB.
+
+## Evidence và engineer review ngay trong bot
+
+Bot → CARLA → mở **Detector trên GPU · pilot 20 frame**. Bảng phân biệt wall, CUDA activity,
+số cặp geometry; từng cấu hình có run JSON, GT matching, checkpoint/config hash và chu kỳ vượt hạn.
+Đây là archive đọc kết quả, **chưa phải nút thực thi detector từ bot** hoặc policy chọn sensor.
+
+API: `GET /api/v1/experiments/detector-pilot`,
+`GET /api/v1/experiments/detector-pilot/artifacts/<member>`,
+`GET|POST /api/v1/experiments/detector-pilot/reviews`.
+Archive allowlist/checksum toàn bundle; sửa file đo thì trả 409. Review stale hash trả 409.
+Review append-only cùng snapshot, không đổi metric/không tự train, danh tính engineer tự khai.
+Không có review của người thật được tạo tự động. Production vẫn tuân thủ opt-in Experiments.
+Docker context chỉ thêm bundle nhẹ này; raw sensor/weights vẫn ngoài Git/image context.
+
+Frontend lint/build đã qua. Browser automation bị URL policy chặn từ lượt trước;
+chưa kiểm tra render tương tác thực trong trình duyệt và không dùng cách khác để vượt chặn.

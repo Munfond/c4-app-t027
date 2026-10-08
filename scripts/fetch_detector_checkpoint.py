@@ -15,6 +15,13 @@ MODELS = {
     "lidar": "bevfusion_lidar_voxel0075_second_secfpn_8xb4-cyclic-20e_nus-3d-2628f933.pth",
     "camera_lidar": "bevfusion_lidar-cam_voxel0075_second_secfpn_8xb4-cyclic-20e_nus-3d-5239b1af.pth",
 }
+# Full content pins from the official HTTPS artifacts. The camera+LiDAR file served
+# by upstream does NOT match its filename suffix; two reads and its Content-MD5
+# agreed. Preserve that discrepancy in provenance rather than silently relabel it.
+CONTENT_SHA256 = {
+    "lidar": "2628f933277774e194932815ea1a5d66a0bd9f69ebc8d9040e8c92760bb6652e",
+    "camera_lidar": "e68c6c084d8971f4f879751b0ed3981f575c24ee3cf385a1e39197c26a9bb3ab",
+}
 BASE = "https://download.openmmlab.com/mmdetection3d/v1.1.0_models/bevfusion/"
 
 
@@ -43,14 +50,16 @@ def fetch(model, root):
                 output.write(block)
                 digest.update(block)
         digest = digest.hexdigest()
-        if not digest.startswith(prefix):
-            raise ValueError("Checkpoint SHA256 does not match upstream filename fingerprint; partial retained")
+        if digest != CONTENT_SHA256[model]:
+            raise ValueError("Checkpoint SHA256 does not match pinned content; partial retained")
         pending.replace(target)
-    if not digest.startswith(prefix):
-        raise ValueError("Existing checkpoint fingerprint mismatch; file was not replaced")
+    if digest != CONTENT_SHA256[model]:
+        raise ValueError("Existing checkpoint content mismatch; file was not replaced")
     metadata = {"model": model, "path": name, "sha256": digest, "bytes": target.stat().st_size,
                 "source": SOURCE, "download_url": BASE + name,
                 "upstream_filename_fingerprint": prefix, "loaded": False,
+                "upstream_filename_fingerprint_matches": digest.startswith(prefix),
+                "identity_basis": "full SHA256 of official URL content; camera_lidar filename discrepancy audited 2026-10-08",
                 "note": "OpenMMLab implementation weights, not restored team/MIT weights; old metrics do not apply"}
     (root / (model + "-checkpoint.json")).write_text(json.dumps(metadata, indent=2), encoding="utf-8")
     return metadata

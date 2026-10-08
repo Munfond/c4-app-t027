@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { apiJson } from "@/lib/lab-api";
 import { Button } from "@/components/ui/button";
 import { useExperimentSession } from "./use-experiment-session";
+import DetectorPilotEvidence from "./detector-pilot-evidence";
 
 const base = "/api/v1/experiments";
 type Source = "carla" | "dataset_replay";
@@ -203,5 +204,6 @@ export default function AgentPanel({ initialSource, onInspect }: { initialSource
         {reviews.map(review => <details key={review.id}><summary>{review.reviewer} · {({ accept: "Đồng ý", reject: "Không đồng ý", needs_evidence: "Cần bằng chứng" } as Record<string, string>)[review.verdict]}</summary><p>{review.notes}</p><p className="agent-small">{new Date(review.created_at * 1000).toLocaleString("vi-VN")}</p></details>)}
       </>}
     </section>
+    {source === "carla" && <DetectorPilotEvidence />}
   </div>;
 }

@@ -10,12 +10,16 @@ from pathlib import Path
 PROJECT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT))
 
+from scripts.fetch_detector_checkpoint import CONTENT_SHA256, MODELS  # noqa: E402
 from src.active_sensing.episode_inputs import RawEpisode  # noqa: E402
-from src.active_sensing.lidar_adapter import predicted_boxes_to_ego, single_sweep_points  # noqa: E402
+from src.active_sensing.lidar_adapter import (  # noqa: E402
+    camera_to_lidar_calibration,
+    predicted_boxes_to_ego,
+    single_sweep_points,
+)
 from src.simulation.carla_rig import sha256_file  # noqa: E402
 
 UPSTREAM_SHA = "fe25f7a51d36e3702f961e198894580d83c4387b"
-CHECKPOINT_SHA = "2628f933277774e194932815ea1a5d66a0bd9f69ebc8d9040e8c92760bb6652e"
 
 
 def smoke(args):
@@ -40,19 +44,46 @@ def smoke(args):
     revision = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=upstream, text=True).strip()
     if revision != UPSTREAM_SHA:
         raise ValueError("Unexpected detector source revision")
+    if subprocess.run(['git', 'diff', '--quiet', 'HEAD'], cwd=upstream).returncode:
+        raise ValueError('Detector tracked source has changed from the pinned revision')
     sys.path.insert(0, str(upstream))
-    checkpoint = PROJECT / "data/runtime/detector-checkpoints/bevfusion_lidar_voxel0075_second_secfpn_8xb4-cyclic-20e_nus-3d-2628f933.pth"
-    if sha256_file(checkpoint) != CHECKPOINT_SHA:
+    checkpoint = PROJECT / "data/runtime/detector-checkpoints" / MODELS[args.model]
+    checkpoint_sha = CONTENT_SHA256[args.model]
+    if sha256_file(checkpoint) != checkpoint_sha:
         raise ValueError("Checkpoint SHA mismatch")
     episode = RawEpisode(args.episode)
     if args.frames > len(episode.manifest["frames"]):
         raise ValueError("Insufficient episode frames")
-    config_path = upstream / "projects/BEVFusion/configs/bevfusion_lidar_voxel0075_second_secfpn_8xb4-cyclic-20e_nus-3d.py"
+    config_name = ('bevfusion_lidar-cam' if args.model == 'camera_lidar' else 'bevfusion_lidar')
+    config_path = upstream / f"projects/BEVFusion/configs/{config_name}_voxel0075_second_secfpn_8xb4-cyclic-20e_nus-3d.py"
     config = Config.fromfile(config_path)
     # Remove multi-sweep padding: this experiment supplies one measured sweep, not 10 copies.
     config.test_dataloader.dataset.pipeline = [step for step in config.test_dataloader.dataset.pipeline
                                               if step["type"] != "LoadPointsFromMultiSweeps"]
-    config.test_dataloader.dataset.pipeline[-1]["keys"] = ["points"]
+    config.test_dataloader.dataset.pipeline[-1]["keys"] = (["img", "points"]
+                                                         if args.model == 'camera_lidar' else ["points"])
+    image_policy = None
+    if args.model == 'camera_lidar':
+        # All backbone keys are required by strict full-checkpoint loading below;
+        # downloading an ImageNet initializer would be redundant and unmeasured.
+        config.model.img_backbone.init_cfg = None
+        # Upstream's fixed .48 resize assumes 1600x900 nuScenes images. Applied to
+        # 640x360 it black-pads most of the input. Preserve measured K/extrinsics,
+        # resize uniformly to cover 704x256, and record the same bottom/center crop.
+        options = episode.manifest['rig_options']
+        resize = max(704 / options['width'], 256 / options['height'])
+        for step in config.test_dataloader.dataset.pipeline:
+            if step['type'] == 'ImageAug3D':
+                step['resize_lim'] = [resize, resize]
+            elif step['type'] == 'BEVLoadMultiViewImageFromFiles':
+                step['num_views'] = 6
+            elif step['type'] == 'LoadPointsFromFile':
+                step['type'] = 'LoadPointsFromDict'
+        image_policy = {'resize': resize, 'final_hw': [256, 704],
+                        'policy': 'uniform cover + bottom/center crop; upstream ImageAug3D updates img_aug_matrix',
+                        'input_wh': [options['width'], options['height']],
+                        'camera_order': ['CAM_FRONT', 'CAM_FRONT_RIGHT', 'CAM_FRONT_LEFT',
+                                         'CAM_BACK', 'CAM_BACK_LEFT', 'CAM_BACK_RIGHT']}
     register_all_modules(init_default_scope=False)
     model = init_model(config, str(checkpoint), device="cuda:0")
     # Upstream init is permissive; require exact keys/shapes before collecting any evidence.
@@ -73,17 +104,37 @@ def smoke(args):
                 len(points), size=count, replace=False))
             points = points[selected_indices]
         input_sha = hashlib.sha256(points.tobytes()).hexdigest()
+        camera_artifacts = {}
+        def infer():
+            return inference_detector(model, points)[0]
+        if args.model == 'camera_lidar':
+            from mmdet3d.structures import get_box_type
+            from mmengine.dataset import Compose, pseudo_collate
+            images = {}
+            for name in image_policy['camera_order']:
+                camera = meta['sensors'][name]
+                path = episode._artifact(camera['artifact'], 'inputs')
+                images[name] = dict(camera_to_lidar_calibration(sensor, camera), img_path=str(path))
+                camera_artifacts[name] = camera['artifact']
+            pipeline = Compose(config.test_dataloader.dataset.pipeline)
+            box_type, box_mode = get_box_type(config.test_dataloader.dataset.box_type_3d)
+
+            def infer():
+                data = pipeline(dict(points=points.copy(), images=images, timestamp=ref['timestamp'],
+                                     box_type_3d=box_type, box_mode_3d=box_mode))
+                return model.test_step(pseudo_collate([data]))[0]
+
         # First frame warmup is logged, not reused as timing/quality evidence.
         if index == 0:
             with torch.inference_mode(), torch.autocast("cuda", enabled=args.amp):
-                inference_detector(model, points)
+                infer()
             torch.cuda.synchronize()
         start, end = torch.cuda.Event(enable_timing=True), torch.cuda.Event(enable_timing=True)
         torch.cuda.synchronize()
         wall = time.perf_counter()
         start.record()
         with torch.inference_mode(), torch.autocast("cuda", enabled=args.amp):
-            prediction, _ = inference_detector(model, points)
+            prediction = infer()
         end.record()
         torch.cuda.synchronize()
         elapsed = (time.perf_counter() - wall) * 1000
@@ -93,7 +144,7 @@ def smoke(args):
             with torch.profiler.profile(activities=[torch.profiler.ProfilerActivity.CPU,
                                                      torch.profiler.ProfilerActivity.CUDA]) as prof:
                 with torch.inference_mode(), torch.autocast("cuda", enabled=args.amp):
-                    inference_detector(model, points)
+                    infer()
                 torch.cuda.synchronize()
             activities = [event for event in prof.events() if event.device_type == torch.autograd.DeviceType.CUDA]
             if not activities:
@@ -113,17 +164,23 @@ def smoke(args):
                 selected.append(dict(box, score=float(score), class_name=config.class_names[int(label)]))
         row = {"index": index, "frame_id": ref["frame_id"], "timestamp": ref["timestamp"],
                "input_points": len(points), "input_sha256": input_sha, "cuda_work": kernel_work, "boxes": selected, "gpu_event_elapsed_ms": start.elapsed_time(end),
+               "camera_artifacts": camera_artifacts,
                "wall_inference_ms": elapsed, "warmup_excluded": True}
         (args.output / f"frame_{index:05d}.json").write_text(json.dumps(row, indent=2, allow_nan=False))
         result_frames.append({k: v for k, v in row.items() if k != "boxes"} | {"boxes_above_threshold": len(selected)})
     resolved = config.pretty_text
     (args.output / "resolved-config.py").write_text(resolved)
     report = {"kind": "CARLA_single_sweep_detector_smoke", "status": "succeeded", "source_sha": revision,
-              "checkpoint_sha256": CHECKPOINT_SHA, "source_config_sha256": sha256_file(config_path),
+              "model_variant": args.model, "checkpoint_sha256": checkpoint_sha,
+              "tracked_upstream_source_clean": True,
+              "upstream_filename_fingerprint_matches": checkpoint_sha.startswith(checkpoint.stem.rsplit('-', 1)[-1]),
+              "source_config_sha256": sha256_file(config_path),
               "resolved_config_sha256": hashlib.sha256(resolved.encode()).hexdigest(),
               "capture_manifest_sha256": episode.verification["manifest_sha256"],
               "torch": torch.__version__, "cuda": torch.version.cuda, "gpu": torch.cuda.get_device_name(0),
               "amp": args.amp, "intensity_policy": args.intensity_policy, "sweeps": 1,
+              "image_policy": image_policy,
+              "adapter_sha256": sha256_file(PROJECT / 'src/active_sensing/lidar_adapter.py'),
               "strict_checkpoint_loading": True, "keep_fraction": args.keep_fraction, "sampling_seed": args.seed,
               "sampling_algorithm": "numpy.default_rng(seed+frame_id), sorted subset indices",
               "cuda_activity_measurement": args.measure_kernels,
@@ -144,6 +201,7 @@ def smoke(args):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("episode", type=Path)
+    parser.add_argument('--model', choices=MODELS, default='lidar')
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--frames", type=int, default=1)
     parser.add_argument("--amp", action="store_true")

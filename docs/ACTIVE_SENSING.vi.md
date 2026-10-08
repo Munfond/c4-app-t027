@@ -35,7 +35,8 @@ sensor health/brightness/contrast/return ratio; chưa port toàn bộ bảng lu�
    tại src/simulation/carla_capture_core.py. Đường legacy 0.9.11 vẫn được giữ;
    chưa có bridge ROS 2 native và không coi nó là implementation ROS của plan.
 2. Checkpoint chưa được xác nhận hỗ trợ rig thiếu camera/radar. Bản đầu chỉ cho 0/6 camera
-   và 0/5 radar với đúng model tương ứng. **Profile là ứng viên**, chưa smoke inference CARLA.
+   và 0/5 radar với đúng model tương ứng. **Profile là ứng viên**, chưa nghiệm thu catalog.
+   Detector LiDAR và Camera+LiDAR riêng đã smoke CARLA; chưa nối vào worker/bot/ROS.
    Không giả định camera_weight thay được trọng số học bên trong BEVFusion/CRN.
 3. 24 profile = 4 nhánh detection × 3 Hz × 2 lựa chọn segmentation.
    LiDAR-only có thể thêm lidar_seg; CRN có thể thêm camera_seg;
@@ -145,10 +146,11 @@ Runtime RL và CARLA 0.9.16 đã cài; NVIDIA driver hoạt động trên RTX 20
 Capture occupancy hai frame thành công. Full rig CLI đã thu thật 20 frame đồng bộ,
 6 RGB + 6 camera GT, LiDAR 32/64 + semantic LiDAR GT, 5 radar và actor GT/calibration.
 Xem FULL_SENSOR_CAPTURE.vi.md và eval/full-rig-2026-10-08/. Reader/gate/scheduler đã qua;
-Detector LiDAR OpenMMLab đã chạy thật 2 frame với strict checkpoint loading,
+Detector LiDAR và Camera+LiDAR OpenMMLab đã chạy thật với strict checkpoint loading,
 CUDA activity đo bằng CUPTI; xem DETECTOR_CARLA_SMOKE.vi.md. Chưa nghiệm thu quality,
 chưa có measured replay/GPU work toàn window hoặc bridge ROS 2. Workaround native reload crash dùng server/client mới mỗi capture,
-chi tiết tại CARLA_LINUX_SETUP.vi.md. Perception hiện chạy CPU, chưa có GPU work/window đo thật.
+chi tiết tại CARLA_LINUX_SETUP.vi.md. Worker occupancy của web vẫn chạy CPU;
+detector riêng đã đo CUDA activity/invocation, chưa có GPU work/window đầy đủ cho agent.
 
 ## Cổng nghiệm thu tiếp theo
 

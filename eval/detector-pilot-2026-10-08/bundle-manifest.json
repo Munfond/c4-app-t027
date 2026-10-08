@@ -1,0 +1,481 @@
+{
+  "schema_version": 1,
+  "files": {
+    "camera-lidar-identity-audit.json": {
+      "sha256": "686a368fc540554259293edc31c06480f6bde8a06931bfccfb76a969196f3349",
+      "bytes": 1521
+    },
+    "camera-lidar-source.json": {
+      "sha256": "fcf7fb46569c260636e09e0fca89dd5aa70de36b2abbb4cfd538c278b94f1259",
+      "bytes": 826
+    },
+    "cl-full-amp/frame_00000.json": {
+      "sha256": "94c33c92f89abe536ee5955bd6fd834837b0bf3d3692b02e47ccf322cdd64ede",
+      "bytes": 4237
+    },
+    "cl-full-amp/frame_00001.json": {
+      "sha256": "c8a1dace252ab9b7b4139ce0961238404426221ee2072ad7df0ef016a010573a",
+      "bytes": 4219
+    },
+    "cl-full-amp/frame_00002.json": {
+      "sha256": "703f19a2cfab3df6299bb06de3d4044d167395bbb5df05a131f1afb6f9dafb5e",
+      "bytes": 3622
+    },
+    "cl-full-amp/frame_00003.json": {
+      "sha256": "6532efcefac4ff99bfd216bd91901bc7701b7b9abf1208e402271f3e38fcd2a6",
+      "bytes": 4937
+    },
+    "cl-full-amp/frame_00004.json": {
+      "sha256": "203cc7672cd144ef2f09f17f3c6a06b56587fc292a9dadc3da77b5fd7ae9884f",
+      "bytes": 4280
+    },
+    "cl-full-amp/frame_00005.json": {
+      "sha256": "697383b2db0f966224ee7368d895e9334ac8a9e819da5b10da1a5ae3f0131a2e",
+      "bytes": 4862
+    },
+    "cl-full-amp/frame_00006.json": {
+      "sha256": "965872c91c2b37d19fb7115816641a0e47799dca063cc9bf3cbfee31e0de2063",
+      "bytes": 4243
+    },
+    "cl-full-amp/frame_00007.json": {
+      "sha256": "b14e96f44f92e18a85e6811edd3574f6f86923ac39059e41f68a8dbc904a355b",
+      "bytes": 4856
+    },
+    "cl-full-amp/frame_00008.json": {
+      "sha256": "c65c546f19a31a1622f406f18e1e9dc559d148ef0e673fc9099e61e282fa3223",
+      "bytes": 4858
+    },
+    "cl-full-amp/frame_00009.json": {
+      "sha256": "d0a1746ed6e28623009d0d33d4230f4e28dd5d47b2cd1e45987462922f98ad2f",
+      "bytes": 4862
+    },
+    "cl-full-amp/frame_00010.json": {
+      "sha256": "f859bd20b4b4ce03dd280641c4bf2b4b131a47ee40d6c95757bbb4ab135d7e33",
+      "bytes": 4219
+    },
+    "cl-full-amp/frame_00011.json": {
+      "sha256": "c4befbaa973fc56e8bc42fc97310fca27bd1d45a5c8afb7c21cefeeb9b744063",
+      "bytes": 4837
+    },
+    "cl-full-amp/frame_00012.json": {
+      "sha256": "d8786e6908f732b345679e8d21b9faa3df738641df0b48afd1670de0c60639b1",
+      "bytes": 4954
+    },
+    "cl-full-amp/frame_00013.json": {
+      "sha256": "9581d23159d9244af2763f0c3f12cccec53bab4efb0764155b5afbf5ff4ea0e3",
+      "bytes": 4864
+    },
+    "cl-full-amp/frame_00014.json": {
+      "sha256": "03a4f754df10e01a667b4605497d269f1a302ee09f02f8645e283a4bba1ee39c",
+      "bytes": 4850
+    },
+    "cl-full-amp/frame_00015.json": {
+      "sha256": "b5eb69c3362e307449da4697c68e9c53455715b27b3934476e67d5f6810c6185",
+      "bytes": 4847
+    },
+    "cl-full-amp/frame_00016.json": {
+      "sha256": "37c04ebffe25cbef645704104fecb1cc8bdf8425f45d8aa3c57b3ccac5d9f850",
+      "bytes": 4842
+    },
+    "cl-full-amp/frame_00017.json": {
+      "sha256": "d690c617d337c17da33b0ffe4409c9e98d750cab0102016711ce575cbfd759e2",
+      "bytes": 4850
+    },
+    "cl-full-amp/frame_00018.json": {
+      "sha256": "3becea0fe36cbb2d26e05203093d50fe1f53c9cd1b5acf1ea8f20f9c973a5c14",
+      "bytes": 4223
+    },
+    "cl-full-amp/frame_00019.json": {
+      "sha256": "69c15ade5df9ae15dc323068f1e50e0f524a398525f2e68ac197ede92443dd65",
+      "bytes": 4870
+    },
+    "cl-full-amp/geometry.json": {
+      "sha256": "1e79c1244f832c4421e32342cefd2ab671d181a779ae86680ce6938de55e3f8b",
+      "bytes": 57850
+    },
+    "cl-full-amp/report.json": {
+      "sha256": "80848c13d59497a090ed6aeefcb8ba5bd0435f5797785c04d11a5005467fef6e",
+      "bytes": 39154
+    },
+    "cl-full-amp/resolved-config.py": {
+      "sha256": "c9c073495becd7297c68c7e2be3d9ed99d5c413c6a1840c5deb84c95c9c731e7",
+      "bytes": 28854
+    },
+    "cl-full-fp32/frame_00000.json": {
+      "sha256": "9dee582a1442f673fa59c87aa139bffc5ce8a2c5dadd211f4f35873b4c879173",
+      "bytes": 4317
+    },
+    "cl-full-fp32/frame_00001.json": {
+      "sha256": "a528cfe4d96cce865faa280ab5ef79ba56754a9303b080c82a21b0a5687389a3",
+      "bytes": 4320
+    },
+    "cl-full-fp32/frame_00002.json": {
+      "sha256": "f0aee70c3754c80e97821d5390019c956fcedbd5e7c292c8599a0db043ef1eae",
+      "bytes": 3693
+    },
+    "cl-full-fp32/frame_00003.json": {
+      "sha256": "111ff8a4ebcc659aa7861624f28badd6663549e59671353c9c9f17298dc31607",
+      "bytes": 5055
+    },
+    "cl-full-fp32/frame_00004.json": {
+      "sha256": "7c84bdf92dcf98cab7518f64ce15a8dc9049858f8dbe8bce9763a9558bf2f175",
+      "bytes": 4367
+    },
+    "cl-full-fp32/frame_00005.json": {
+      "sha256": "7f4e41b805571089c4ab971bf0cb65fc8812b92ce5919517b203df3a7f492fff",
+      "bytes": 4970
+    },
+    "cl-full-fp32/frame_00006.json": {
+      "sha256": "8b4b3dbd0721a8864d199b1683b6c420eb7c304ad7b7d446247d5cfca8a6785a",
+      "bytes": 4328
+    },
+    "cl-full-fp32/frame_00007.json": {
+      "sha256": "7a95005d3dbf58c313d4a2a1f90deb47d9a9500bf7d91ee2a94df61f38797590",
+      "bytes": 4961
+    },
+    "cl-full-fp32/frame_00008.json": {
+      "sha256": "0bf0b87f4d0c565b6b50b392cf53a1cf9d848ee807d46d011a5253fdf47137ab",
+      "bytes": 4954
+    },
+    "cl-full-fp32/frame_00009.json": {
+      "sha256": "733c6555be9326bec37a058e6d577a2622324a597a39994fcc1259f1dffed575",
+      "bytes": 4972
+    },
+    "cl-full-fp32/frame_00010.json": {
+      "sha256": "6d4193b138e1b308cd755ed2d09adf8558bae3e581b23025400afb7cd7e66ecc",
+      "bytes": 4298
+    },
+    "cl-full-fp32/frame_00011.json": {
+      "sha256": "e555c217be32cae908f03caba80b4f221070a04902968a2bf9b5c0fbb5398280",
+      "bytes": 4953
+    },
+    "cl-full-fp32/frame_00012.json": {
+      "sha256": "ed9703cd6137891771fb7ceef2a4ad8cf2ac92c26a5ed1f0918789fd85370327",
+      "bytes": 5067
+    },
+    "cl-full-fp32/frame_00013.json": {
+      "sha256": "ab5a9d453bf4a37504b84be5a60a0c9c8619c30ac400026849cb825af6f5c81a",
+      "bytes": 4974
+    },
+    "cl-full-fp32/frame_00014.json": {
+      "sha256": "f81c7affffa2d0cbda420616eceae361809b5aa88f75cdd811220a2d19a2c6b5",
+      "bytes": 4946
+    },
+    "cl-full-fp32/frame_00015.json": {
+      "sha256": "782c61b6ae16dbdd6462de724f690d5348ec269020353cf432dbee73bce7a3d9",
+      "bytes": 4961
+    },
+    "cl-full-fp32/frame_00016.json": {
+      "sha256": "f1bbd96dc62333ff85f63f737d8d0adb6b4ec161da5ae81bb904f13672922b44",
+      "bytes": 4955
+    },
+    "cl-full-fp32/frame_00017.json": {
+      "sha256": "0ade2955304eebe41b8e2a9b1817d6f57377036de0e3ef0700e03df35efe98a9",
+      "bytes": 4957
+    },
+    "cl-full-fp32/frame_00018.json": {
+      "sha256": "711488401cf195f8799e0cfc1622570968e5d044109cf7403735c384d2c8b7f5",
+      "bytes": 4309
+    },
+    "cl-full-fp32/frame_00019.json": {
+      "sha256": "34b2d932a4bcdf07c56e769060f113017d3ea2156e7699fb84bbc118e2600d24",
+      "bytes": 4974
+    },
+    "cl-full-fp32/geometry.json": {
+      "sha256": "6cd54116c6019bc50c1b7420a9b6f686b65808a490c7956e835c57f43485b832",
+      "bytes": 57864
+    },
+    "cl-full-fp32/report.json": {
+      "sha256": "aa7efeea34dac575263f0dc5086822b04a891fe0748c11597dd6607e244ed80a",
+      "bytes": 39133
+    },
+    "cl-full-fp32/resolved-config.py": {
+      "sha256": "c9c073495becd7297c68c7e2be3d9ed99d5c413c6a1840c5deb84c95c9c731e7",
+      "bytes": 28854
+    },
+    "lidar-full-amp/frame_00000.json": {
+      "sha256": "a76a8ad92f2734afbc6a6a9c1e54f3d8da0d0583ccb059ca1140040d0e3d2656",
+      "bytes": 2437
+    },
+    "lidar-full-amp/frame_00001.json": {
+      "sha256": "189adde78e03d67c509335df76b5bf33f0b014120ef9eb86e13c455ff56187db",
+      "bytes": 2429
+    },
+    "lidar-full-amp/frame_00002.json": {
+      "sha256": "32656831f20b512a5a7ee22547732c752f1c8389ffd29e4a4acd24ae53df60d6",
+      "bytes": 2493
+    },
+    "lidar-full-amp/frame_00003.json": {
+      "sha256": "1de54e89f8df4a3e7d736925fd854b789af25c8813b126886a26fc7c5869b446",
+      "bytes": 3137
+    },
+    "lidar-full-amp/frame_00004.json": {
+      "sha256": "30472f7de0cf03a2313e8e1d1a6c92f8e3060899d869ded058818d5d9ee5652f",
+      "bytes": 3148
+    },
+    "lidar-full-amp/frame_00005.json": {
+      "sha256": "c83cc070d9f1ef1ae9768427fe1e3ed0038d3c63391414681678a5940a9e29f8",
+      "bytes": 3707
+    },
+    "lidar-full-amp/frame_00006.json": {
+      "sha256": "6401de334b5e93409c3d443723fc0d294e4c0a68dddbd60fd5b53e237cdaebef",
+      "bytes": 3721
+    },
+    "lidar-full-amp/frame_00007.json": {
+      "sha256": "fcaefbbff24aace1234c29c0b7aede9e977805a129b387f7744d56a53ebed9c0",
+      "bytes": 4374
+    },
+    "lidar-full-amp/frame_00008.json": {
+      "sha256": "d654d31504b2c2fd850f0b784c85414fa4ce1587ab5db05571a24f061926e0b8",
+      "bytes": 3721
+    },
+    "lidar-full-amp/frame_00009.json": {
+      "sha256": "f09bfbc3b2b7e2557f0eb8739985d7c8ba5483cab6b9382a66ede92565dd8df2",
+      "bytes": 3728
+    },
+    "lidar-full-amp/frame_00010.json": {
+      "sha256": "1269d22d045c343f07bac3ce42a74436b255be1fdd110e1441cd719eb1dac626",
+      "bytes": 3077
+    },
+    "lidar-full-amp/frame_00011.json": {
+      "sha256": "5a87d4200b6f368cfacd54210b0f1da64c595cefb51c45d5f82955c92778794c",
+      "bytes": 4333
+    },
+    "lidar-full-amp/frame_00012.json": {
+      "sha256": "dfeb2723568605716f0b3120f44cc1fcf26b7f08a708c67f50e48157ccc4ca72",
+      "bytes": 4467
+    },
+    "lidar-full-amp/frame_00013.json": {
+      "sha256": "5d6d9fc12f8dc2a1c8bd1538674e1282e8520d6fb24ecef98700cf829ec8847d",
+      "bytes": 3076
+    },
+    "lidar-full-amp/frame_00014.json": {
+      "sha256": "d65e8033d6954e0d8571ef614273e824cc18dc18dc907d3d0c92a6695a33a669",
+      "bytes": 3704
+    },
+    "lidar-full-amp/frame_00015.json": {
+      "sha256": "b61ee4deb528f77a59552646ebb39ab3438621864865e87d68dd43c18c57d91c",
+      "bytes": 3720
+    },
+    "lidar-full-amp/frame_00016.json": {
+      "sha256": "8d5f0c0c51e95e7b1eea7f53f86baf0d9a9dcf0e7b0c97d8c0187f2293f16585",
+      "bytes": 3701
+    },
+    "lidar-full-amp/frame_00017.json": {
+      "sha256": "bbd642b64323d848dddf4f982458e3eb587d58445c4504eed97368b350af6434",
+      "bytes": 3081
+    },
+    "lidar-full-amp/frame_00018.json": {
+      "sha256": "05df0d817b5286b8ec709c9bb52b86e580bbb0d1c2a125238fc126e03b8a4fda",
+      "bytes": 3099
+    },
+    "lidar-full-amp/frame_00019.json": {
+      "sha256": "474c71ba660761a04f28ffb44ffe44d721f069e62c25ae1efc9fb87005510d30",
+      "bytes": 3735
+    },
+    "lidar-full-amp/geometry.json": {
+      "sha256": "5a1fa9d1c0a699c747e8830338d859a6af93fc64bdbcb7467fbd4188299b594b",
+      "bytes": 50720
+    },
+    "lidar-full-amp/report.json": {
+      "sha256": "dcf620d644bc1b2bab1627be4e84b739721f41e48b88b1acfe8dff9bfdf40aa1",
+      "bytes": 13638
+    },
+    "lidar-full-amp/resolved-config.py": {
+      "sha256": "42ed3fbb419ef179b3aabe6faa315ecf8b35466f36a388c893644b4e82feffaf",
+      "bytes": 27307
+    },
+    "lidar-full-fp32/frame_00000.json": {
+      "sha256": "527963b9818a29b58d72f5c100b46b5099d1856099b395d557cc439db82bd502",
+      "bytes": 2504
+    },
+    "lidar-full-fp32/frame_00001.json": {
+      "sha256": "93143337ad25eb0577a5292c88e17d0425cb7711081c62ee0a8f7e544b908968",
+      "bytes": 2507
+    },
+    "lidar-full-fp32/frame_00002.json": {
+      "sha256": "11b89ff26c036adf1a94334467332f2896fa7359465ab874ac47a2b49711ea76",
+      "bytes": 2560
+    },
+    "lidar-full-fp32/frame_00003.json": {
+      "sha256": "bd4cf009564163dfc8c81ddef5f5b14d1eec29185ed7e18485d168d309d32000",
+      "bytes": 3232
+    },
+    "lidar-full-fp32/frame_00004.json": {
+      "sha256": "6f9bb1f324bcf9742665ba2952816ae632c7059780c11c83187e244a54f6cb93",
+      "bytes": 3231
+    },
+    "lidar-full-fp32/frame_00005.json": {
+      "sha256": "28735e1e26487b1b92a70c7e4aeb3b8bb986e702462342a08d53b5c16954d29f",
+      "bytes": 3830
+    },
+    "lidar-full-fp32/frame_00006.json": {
+      "sha256": "59c311d4a366ddfab01081be136b87b5c40d49fca4536490d73d3e581e597b29",
+      "bytes": 3845
+    },
+    "lidar-full-fp32/frame_00007.json": {
+      "sha256": "0ade061808144ba21b8162c6210078c3e8b136a48b9557c35aee6822e8c67570",
+      "bytes": 4498
+    },
+    "lidar-full-fp32/frame_00008.json": {
+      "sha256": "20144216d69842408f566f62b8cc8fc30cd8b973d883c5ed66990a8029836048",
+      "bytes": 3820
+    },
+    "lidar-full-fp32/frame_00009.json": {
+      "sha256": "771f12382771cef0ce7efc591efaa1f60f5228e6282e2db06d38038ffe5f1e2d",
+      "bytes": 3839
+    },
+    "lidar-full-fp32/frame_00010.json": {
+      "sha256": "d3a1b47dfdc7d89b673b8537f10434616759ec6a58fb990b8f90c4cf3a173d33",
+      "bytes": 3172
+    },
+    "lidar-full-fp32/frame_00011.json": {
+      "sha256": "1b5f071bb69c336487f20fe8c7809902c394d5b3aed056e8fc9f6521b8478360",
+      "bytes": 4472
+    },
+    "lidar-full-fp32/frame_00012.json": {
+      "sha256": "b7191b42bfe61f7d4fdf8395cbd0a35fb73befec140b262aa7cec441405ea31e",
+      "bytes": 4609
+    },
+    "lidar-full-fp32/frame_00013.json": {
+      "sha256": "6028f7e46231d3047220327ef5f8694de09bd815b74593ddc71b3903a5bd5fed",
+      "bytes": 3166
+    },
+    "lidar-full-fp32/frame_00014.json": {
+      "sha256": "62f0c592fca5f2ffcae5a49c9e4875ffb49a0057cb59cd1b5af5b7857e9ff641",
+      "bytes": 3825
+    },
+    "lidar-full-fp32/frame_00015.json": {
+      "sha256": "d8e29cb3033643c506f56b91967b29842faae41fe58655423718e2b74eb46fc0",
+      "bytes": 3832
+    },
+    "lidar-full-fp32/frame_00016.json": {
+      "sha256": "949f184cd222d5801f983106bb4ffff7aa966a1cb12b992a3f49f0d3643b51ed",
+      "bytes": 3826
+    },
+    "lidar-full-fp32/frame_00017.json": {
+      "sha256": "0db9127bb176f1b8d755f228adfb9afa91afd3791ea5f10ab2521e9f88e1286f",
+      "bytes": 3172
+    },
+    "lidar-full-fp32/frame_00018.json": {
+      "sha256": "42424fabb7c6f3e6f64502df2ed8d56e980ab7e6283df32f6ee6c6f66a2265b8",
+      "bytes": 3177
+    },
+    "lidar-full-fp32/frame_00019.json": {
+      "sha256": "7749ba826557d3e581a8b4dc65132dd7a7eb8f51e1ed921bbeedc844d28d8ffe",
+      "bytes": 3845
+    },
+    "lidar-full-fp32/geometry.json": {
+      "sha256": "4303c367dd6e490c97e62fb3c5c402335d1829850c988da8610f550f6684e0c8",
+      "bytes": 50735
+    },
+    "lidar-full-fp32/report.json": {
+      "sha256": "9721ef3bc9ad9487a88dbcea2f018c59ebb4cb189f674266bb80d9b89ea0cb5a",
+      "bytes": 13677
+    },
+    "lidar-full-fp32/resolved-config.py": {
+      "sha256": "42ed3fbb419ef179b3aabe6faa315ecf8b35466f36a388c893644b4e82feffaf",
+      "bytes": 27307
+    },
+    "lidar-half-fp32/frame_00000.json": {
+      "sha256": "b4eb6114d7943f3e80818634523d74286bb8ad6c37a20c35c105acd0b92f8be3",
+      "bytes": 1181
+    },
+    "lidar-half-fp32/frame_00001.json": {
+      "sha256": "942971182603de9f1e7c65c40f321f57af89aeaf38a04af6a766ce84b06a6543",
+      "bytes": 1837
+    },
+    "lidar-half-fp32/frame_00002.json": {
+      "sha256": "fe74e9c4af2ae516c8326555abbc9a527002c11705d54f1418318da844b7f7ee",
+      "bytes": 1192
+    },
+    "lidar-half-fp32/frame_00003.json": {
+      "sha256": "4696d2441a0a64335207349abaab57671c4e22fb4afc9137c492e37261237436",
+      "bytes": 2551
+    },
+    "lidar-half-fp32/frame_00004.json": {
+      "sha256": "b1e0566adc4ef3818641303dd4c7a2628665fa19df46a05fe656c42576c17811",
+      "bytes": 2547
+    },
+    "lidar-half-fp32/frame_00005.json": {
+      "sha256": "4ec826ad6e32b0d223c154810a4794d568a76c674cb1da2768b56c8269f6ba9e",
+      "bytes": 1177
+    },
+    "lidar-half-fp32/frame_00006.json": {
+      "sha256": "09614ae57de2a572fb8d9042751f28ee33320ad834c978c948e4984e1730f9e5",
+      "bytes": 1180
+    },
+    "lidar-half-fp32/frame_00007.json": {
+      "sha256": "91b96e4a3343ebacb5f486b7db07449aac910a10cf7ae7fd99c5f78aa15c09fa",
+      "bytes": 1178
+    },
+    "lidar-half-fp32/frame_00008.json": {
+      "sha256": "c69c6f2b8fbf0b302dc7ca45acbfe1c6d3d0f53daad017bd0fa8d84d5e7e5bce",
+      "bytes": 1179
+    },
+    "lidar-half-fp32/frame_00009.json": {
+      "sha256": "74a3b90340ac5fc6f67ad26fd1b2b35d00b4f6c6bde1fd2c565d95e74f3dd924",
+      "bytes": 1180
+    },
+    "lidar-half-fp32/frame_00010.json": {
+      "sha256": "7ada455e9b9c22848f42edb3dee02bbe33ce2d3994e3f7df59541e6a86d89839",
+      "bytes": 1848
+    },
+    "lidar-half-fp32/frame_00011.json": {
+      "sha256": "f4025dad5e981724582a6547efd1cf46ab0f82514814056680c2c9ada61779af",
+      "bytes": 1831
+    },
+    "lidar-half-fp32/frame_00012.json": {
+      "sha256": "80a630aead88716d805bfb0d26a475f60a2484cf6b3b4624bdd4606f5af88634",
+      "bytes": 1881
+    },
+    "lidar-half-fp32/frame_00013.json": {
+      "sha256": "fb113e2b25adfde4400e98e387999afb0bed3c750f2deeec301ec5edbae179c8",
+      "bytes": 1179
+    },
+    "lidar-half-fp32/frame_00014.json": {
+      "sha256": "de08f07496631925e015965dd5b9011bf5e9efacdced72de9e3348e7d70be636",
+      "bytes": 2502
+    },
+    "lidar-half-fp32/frame_00015.json": {
+      "sha256": "8955083093ac72a4cfb8ef0523f99f4b0371dfe139877d3290bbdbae089579b9",
+      "bytes": 1178
+    },
+    "lidar-half-fp32/frame_00016.json": {
+      "sha256": "97393f89daae9e6e922c29c98183a8535f6cd69cb9e6bb742c8043679fbbd464",
+      "bytes": 2503
+    },
+    "lidar-half-fp32/frame_00017.json": {
+      "sha256": "b0d3cc61b35e96089a57ab4d9fa30474fc7f1d38d0aee0972dabdb569b105bdd",
+      "bytes": 1180
+    },
+    "lidar-half-fp32/frame_00018.json": {
+      "sha256": "dc0785543099fb6365646f25310ae672803aa10e1fa08136d90868c65405ec65",
+      "bytes": 1851
+    },
+    "lidar-half-fp32/frame_00019.json": {
+      "sha256": "49c7e9b854b8f37538a965c971b24578001a64d5fc09e6832634ff45510acf16",
+      "bytes": 1850
+    },
+    "lidar-half-fp32/geometry.json": {
+      "sha256": "814aa2496634e9649406e6ee3ec8162488a32b0aab96b6b4ca2498d8e7a95c20",
+      "bytes": 33232
+    },
+    "lidar-half-fp32/report.json": {
+      "sha256": "1cb7c0bfdf418ff4b5011406998fcf2865dd8d9f1b87aef03e2f6323079bb85b",
+      "bytes": 13618
+    },
+    "lidar-half-fp32/resolved-config.py": {
+      "sha256": "42ed3fbb419ef179b3aabe6faa315ecf8b35466f36a388c893644b4e82feffaf",
+      "bytes": 27307
+    },
+    "summary.json": {
+      "sha256": "6e6e01014e595d132f06b638210667a9d169ce3084b2f828e4978023466a8e1e",
+      "bytes": 6767
+    },
+    "pilot-comparison.png": {
+      "bytes": 160323,
+      "sha256": "59c5c69aa290664f649b1cf4eaf057d1e973632334bf1372bc83b0f7cc595eb9"
+    }
+  }
+}

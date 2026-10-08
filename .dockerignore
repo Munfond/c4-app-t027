@@ -27,7 +27,8 @@ __pycache__
 .ruff_cache
 docs/
 presentation/
-eval/
+eval/*
+!eval/detector-pilot-2026-10-08/
 *.md
 !requirements.txt
 .dockerignore

@@ -1,0 +1,142 @@
+{
+  "index": 2,
+  "frame_id": 66,
+  "timestamp": 6.439498346298933,
+  "input_points": 15231,
+  "input_sha256": "ddfb9bc4e7e44def788c655f9fb8e092726391065c8e79df6da5f6f219c04509",
+  "cuda_work": {
+    "cuda_activity_sum_ms": 344.516,
+    "cuda_activity_count": 2226,
+    "scope": "detector forward pipeline kernels/copies only; separate profiled pass"
+  },
+  "boxes": [
+    {
+      "center_ego": [
+        -25.068316783603162,
+        -1.3409312429932927,
+        0.8517194399940642
+      ],
+      "size_lwh": [
+        4.6953125,
+        1.9794921875,
+        1.703125
+      ],
+      "rotation_ego": [
+        [
+          0.9998473525047301,
+          -0.017470424994826313,
+          -1.0947027133739823e-19
+        ],
+        [
+          0.017470424994826317,
+          0.9998473525047304,
+          5.3699224429621426e-21
+        ],
+        [
+          1.2898735294427623e-19,
+          -5.916069132767803e-21,
+          0.9999999999999999
+        ]
+      ],
+      "score": 0.7385426759719849,
+      "class_name": "car"
+    },
+    {
+      "center_ego": [
+        -2.938334788974259,
+        3.478549653002802,
+        1.111485064994064
+      ],
+      "size_lwh": [
+        4.734375,
+        2.015625,
+        2.005859375
+      ],
+      "rotation_ego": [
+        [
+          -0.9995420575141906,
+          0.030259909108281132,
+          -1.0947027133739823e-19
+        ],
+        [
+          -0.03025990910828114,
+          -0.9995420575141909,
+          5.3699224429621426e-21
+        ],
+        [
+          -1.2890111692182766e-19,
+          7.565703080267532e-21,
+          0.9999999999999999
+        ]
+      ],
+      "score": 0.7474966049194336,
+      "class_name": "car"
+    },
+    {
+      "center_ego": [
+        -27.27426084488246,
+        2.0698124703856142,
+        0.9073835024940642
+      ],
+      "size_lwh": [
+        4.72265625,
+        1.9775390625,
+        1.744140625
+      ],
+      "rotation_ego": [
+        [
+          0.9998444318771361,
+          -0.017638245597481724,
+          -1.0947027133739823e-19
+        ],
+        [
+          0.017638245597481728,
+          0.9998444318771365,
+          5.3699224429621426e-21
+        ],
+        [
+          1.28986361466772e-19,
+          -5.9377192158034e-21,
+          0.9999999999999999
+        ]
+      ],
+      "score": 0.5648407340049744,
+      "class_name": "car"
+    }
+  ],
+  "gpu_event_elapsed_ms": 442.4860534667969,
+  "camera_artifacts": {
+    "CAM_FRONT": {
+      "path": "inputs/frame_00002/CAM_FRONT.png",
+      "bytes": 341055,
+      "sha256": "995da03c4ecb47fac55c566e3d4762002d5f6af4fd95be10ae2e6250debd0463"
+    },
+    "CAM_FRONT_RIGHT": {
+      "path": "inputs/frame_00002/CAM_FRONT_RIGHT.png",
+      "bytes": 296398,
+      "sha256": "cee1e2eacdc8aaffb04844b1e8d528db0891ee4dea36b2becef8a2b83165badf"
+    },
+    "CAM_FRONT_LEFT": {
+      "path": "inputs/frame_00002/CAM_FRONT_LEFT.png",
+      "bytes": 415053,
+      "sha256": "dcd8d827d8f8a2edb6397804b98237417a756f643a50611d66725cc51c846b05"
+    },
+    "CAM_BACK": {
+      "path": "inputs/frame_00002/CAM_BACK.png",
+      "bytes": 369553,
+      "sha256": "9926017596200681a21f60db11c636b9e1c2819e6b9306e4e3c293293360580a"
+    },
+    "CAM_BACK_LEFT": {
+      "path": "inputs/frame_00002/CAM_BACK_LEFT.png",
+      "bytes": 435012,
+      "sha256": "4569412dc607d1d33bbda0844698c889f97b745711021d5f9c3cdbaa78672804"
+    },
+    "CAM_BACK_RIGHT": {
+      "path": "inputs/frame_00002/CAM_BACK_RIGHT.png",
+      "bytes": 298271,
+      "sha256": "bcf710fbb7843934b50d8b73a4ea0e765e131beebd42f69474386efe169e3082"
+    }
+  },
+  "wall_inference_ms": 442.54537699998764,
+  "warmup_excluded": true
+}

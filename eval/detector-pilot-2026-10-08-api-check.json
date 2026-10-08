@@ -1,0 +1,36 @@
+{
+  "kind": "actual_local_HTTP_smoke",
+  "frontend_entry": "Next standalone server",
+  "ui_render_reviewed": false,
+  "results": [
+    {
+      "url": "http://127.0.0.1:8000/health",
+      "status": 200,
+      "bytes": 35
+    },
+    {
+      "url": "http://127.0.0.1:3111/carla",
+      "status": 200,
+      "bytes": 17944
+    },
+    {
+      "url": "http://127.0.0.1:3111/api/v1/experiments/detector-pilot",
+      "status": 200,
+      "bytes": 6971,
+      "variants": 5,
+      "measured_perception_replay_ready": false,
+      "evidence_sha256": "41265f0790d8408ea8be0ce105f1d373ad0f7d478b5d32360919f1d61181131f"
+    },
+    {
+      "url": "http://127.0.0.1:3111/api/v1/experiments/detector-pilot/reviews",
+      "status": 200,
+      "bytes": 12,
+      "engineer_reviews": 0
+    },
+    {
+      "url": "http://127.0.0.1:3111/api/v1/experiments/detector-pilot/artifacts/pilot-comparison.png",
+      "status": 200,
+      "bytes": 160323
+    }
+  ]
+}

@@ -27,6 +27,14 @@ def lidar_model_to_ego(sensor):
     return np.asarray(sensor["sensor_to_ego_lab"]) @ FLIP
 
 
+def camera_to_lidar_calibration(lidar_sensor, camera_sensor):
+    """Recorded optical camera extrinsic, expressed in model LiDAR-local axes."""
+    camera_to_lidar = np.linalg.inv(lidar_model_to_ego(lidar_sensor)) @ np.asarray(
+        camera_sensor['optical_to_ego_lab'])
+    return {'cam2img': np.asarray(camera_sensor['intrinsic']).tolist(),
+            'lidar2cam': np.linalg.inv(camera_to_lidar).tolist()}
+
+
 def predicted_boxes_to_ego(centers, sizes, yaws, sensor):
     matrix = lidar_model_to_ego(sensor)
     centers = np.asarray(centers)
