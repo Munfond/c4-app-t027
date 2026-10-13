@@ -1,3 +1,5 @@
+> Trạng thái hiện tại14/10: hai lượt nativePPO/đối chứng20frame đã hoàn tất, source và evidence đã lưu. Các ghi chú chờGPU/RAM/4frame bên dưới là lịch sử. Xem [nghiệm thu MVP](MVP_ACCEPTANCE_20261014.vi.md) và [đối chiếu native](NATIVE_ONLINE_SELECTOR.vi.md).
+
 # MVP phục hồi — 13/10/2026
 
 ## Khởi động local

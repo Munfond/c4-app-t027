@@ -36,7 +36,7 @@ export function PerceptionWorkspace({ token, task, unavailable = false, onReady,
       <div className="seg-class-controls">{data.classes?.map(c => <label key={c.id}><input type="checkbox" checked={!hiddenClasses.includes(c.id)} onChange={event => setHiddenClasses(previous => event.target.checked ? previous.filter(id => id !== c.id) : [...previous, c.id])} />{c.name}</label>)}</div>
       <PointCloudCanvas layers={layers} token={token} onReady={onReady} />
     </> : <PerceptionGrid data={data} />}
-    {data.limitations?.length ? <p className="perception-limits">{task === "occupancy" ? "Occupancy BEV 2D · Lớp tĩnh học từ pseudo-GT; lớp free gồm cả vùng chưa quan sát. Không phải bản đồ 3D đầy đủ." : "Flow thử nghiệm · Chất lượng còn hạn chế; mũi tên không phải chuyển động đã xác nhận."}</p> : null}
+    {data.limitations?.length ? <p className="perception-limits">{task === "occupancy" ? "Occupancy BEV 2D · Lớp tĩnh học từ pseudo-GT; lớp free gồm cả vùng chưa quan sát. Không phải bản đồ 3D đầy đủ." : task === "seg3d" ? (data.kind === "ground_truth" ? "Seg3D tham chiếu · Nhãn trên từng điểm, không phải dự đoán của model." : "Seg3D thử nghiệm · Model chuyển từ dataset khác; chưa kiểm định độ chính xác trên nuScenes.") : "Flow thử nghiệm · Chất lượng còn hạn chế; mũi tên không phải chuyển động đã xác nhận."}</p> : null}
     <details className="perception-source"><summary>Nguồn kết quả</summary><p>{data.source}</p></details>
   </div>;
 }

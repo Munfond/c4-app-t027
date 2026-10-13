@@ -21,7 +21,7 @@ Cùng Town01/clear/route110/seed210; reference SHA giống hệt. Checkpoint/pol
 
 Bản diagnostic đầu tiên chỉ lưu thời gian feature+model. Báo cáo gốc được giữ nguyên; snapshot UI không hiển thị trường cũ bị đặt nhãn model-only sai. Lượt PPO đo riêng feature+model và chọn profile; frame0 đo440,6ms +68,6ms, các frame sau feature+model khoảng84–89ms. Vì vậy nhịp0,5 giây **sim-time** không chứng minh real-time wall-clock. Không xóa frame đầu để làm đẹp số đo.
 
-Kế hoạch đối chiếu20 frame đã đăng ký **trước chạy** trên route112/seed212. Baseline đầu bị chặn trước launch bởi guard RAM10 GiB, xử lý0 frame; giữ output `data/native-online-full20-20261014`. PPO20 chưa chạy, không có kết quả giả. Khi đủ RAM/GPU khỏe, chạy baseline trong output retry riêng và PPO theo plan đã seal, rồi chỉ so chất lượng nếu reference SHA khớp.
+Kế hoạch đối chiếu20 frame đã đăng ký **trước chạy** trên route112/seed212. Baseline đầu bị chặn trước launch bởi guard RAM10 GiB, xử lý0 frame; giữ output `data/native-online-full20-20261014`. Sau reboot, baseline retry và PPO20 đã hoàn tất; xem phần đối chiếu20frame bên dưới. Lượt bị chặn0frame vẫn được giữ.
 
 ## Xem trên Lab
 
@@ -38,6 +38,7 @@ Trước reboot, GPU trả `Unknown Error / No devices were found` từ nvidia-s
 Sau khởi động lại, kiểm tra `nvidia-smi` và `free -h`; mount Windows read-only nếu cần raw nuScenes. Dịch vụ web không cần GPU để xem bản ghi.
 
 ```bash
+# Lịch sử lệnh đã chạy thành công. KHÔNG chạy lại vào output này.
 # Tại root repo. Không chạy hai collector cạnh tranh.
 # Output retry phải mới; giữ lần bị chặn trước đó.
 .venv-recovery312/bin/python -m scripts.run_native_online_ppo \

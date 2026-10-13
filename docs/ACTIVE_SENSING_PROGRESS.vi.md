@@ -1,3 +1,5 @@
+> Trạng thái hiện tại14/10: hai lượt nativePPO/đối chứng20frame đã hoàn tất, source và evidence đã lưu. Các ghi chú chờGPU/RAM/4frame bên dưới là lịch sử. Xem [nghiệm thu MVP](MVP_ACCEPTANCE_20261014.vi.md) và [đối chiếu native](NATIVE_ONLINE_SELECTOR.vi.md).
+
 > Cập nhật14/10 tiếp theo: đã thêm Hướng dẫn trên header, preflight GPU/RAM cho form và bot; phục hồi CSS bị thiếu bằng clean build, có guard publish.277tests/TS/lint/build pass; guide mobile/desktop và PPO4frame preview đã kiểm tra browser thật. CARLA20frame vẫn chờ GPU/RAM, chưa hạ guard10GiB.
 
 > Cập nhật14/10/2026: inference PPO đã nối vào capture CARLA trực tiếp và hoàn tất4frame; diagnostic chuyển stream vật lý7→0→11→7 giữ riêng. UI có preview/Play/trace cạnh bot và artifact audit. Lượt20frame còn incomplete/planned; RAM chưa đủ và NVIDIA lỗi sau suspend, không ép chạy. Xem [luồng online và evidence](NATIVE_ONLINE_SELECTOR.vi.md). PPO chưa cải thiện baseline, chưa có online training/weather/radar/MultiDiscrete. Các nội dung dưới là lịch sử.

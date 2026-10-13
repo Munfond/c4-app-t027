@@ -1,3 +1,19 @@
+# Demo hiện tại — 14/10/2026
+
+1. Lab→Cảm biến: bật Camera360 và LiDAR/Radar, ẩn từng sensor, Play/Pause.
+2. Kết quả mô hình: xem Detection3D, occupancy, flow và Seg3D; đọc đúng nhãn prediction/reference.
+3. Compare: cùng scene/frame, chọn hai model. Benchmarks: đọc metrics kèm giới hạn dữ liệu.
+4. Bot→CARLA→PPO trong CARLA: bảng đối chiếu20frame, mở PPO, Play tới20/20; bật Reference, chọn actor và đối chiếu camera.
+5. Tải trace/report và đọc giới hạn. Engineer thật có thể ghi review; không tự tạo đánh giá.
+
+Lời nói: “Nhóm đã train agent bằng học tăng cường, dùng thuật toán PPO. Bộ native có12cấu hình LiDAR,48capture và960outcome, chia train/validation/test theo route. Policy được giữ nguyên khi chạy trực tiếp trong CARLA, quan sát dữ liệu hiện tại và chọn input cho frame kế tiếp. Hai lượt20frame có reference khớp. Agent giữ32kênh/600k và chất lượng bằng đối chứng: occupiedIoU78,93%, objectIoU30,60%. Nhóm báo chưa cải thiện thay vì đổi sensor cho có vẻ thông minh. Preview giữ camera, model và reference đồng bộ. Đây chưa phải online training, tắt phần cứng, thử thời tiết vật lý hay chứng minh an toàn ngoài đời.”
+
+Town03 bị native Vulkan crash, không dùng cho demo đã nghiệm thu. Hội thoại LLM chưa bật khi thiếu API key; evidence/preview không cần LLM.
+
+---
+
+## Lời trình bày lịch sử trước đối chiếu20frame
+
 # Lời trình bày nhanh trên Lab
 
 “Đây là Lab trực quan dữ liệu cảm biến và kết quả mô hình ADAS. Em chọn scene và frame; ảnh camera giúp nhìn bối cảnh, còn LiDAR và Radar hiển thị vị trí và chuyển động trong hệ tọa độ của xe. Các lớp cảm biến có thể bật hoặc tắt trên cùng một viewer.

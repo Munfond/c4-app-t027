@@ -189,7 +189,15 @@ export function ExperimentWorkspace({ source = "carla", initialSpec, initialJobI
         <progress id="capture-progress" max={chosen.capture_progress.total} value={chosen.capture_progress.completed} className="h-2 w-full accent-[var(--accent)]" />
       </div>}
       {chosen?.status === "running" && chosen.stage === "capture" && !chosen.capture_progress && <p role="status" className="text-xs text-[var(--muted)]">Đang chuẩn bị simulator/cảm biến; chưa có frame đã ghi.</p>}
-      {chosen?.error ? <p role="alert" className="text-sm text-red-700">{chosen.error}</p> : null}
+      {chosen?.error ? <div role="alert" className="grid gap-3 border-l-2 border-red-700 pl-4 text-sm">
+        <p>{chosen.error.includes("(-11)") ? "CARLA đã dừng bất thường khi chạy mô phỏng (Signal 11). Lượt này chưa hoàn tất; các bản ghi thành công vẫn được giữ." : chosen.error}</p>
+        {chosen.error.includes("(-11)") && <><p className="text-[var(--muted)]">Preset đã kiểm chứng trên máy này là Town01, 2 xe, 0 người. Không tự đổi map hoặc chạy lại lượt lỗi.</p>
+          <details><summary className="cursor-pointer text-xs">Chi tiết cho kỹ sư</summary><p className="mt-2 break-words text-xs">{chosen.error}</p></details></>}
+        {visibleJobs.some(job => job.status === "succeeded" && job.result?.manifest.frames.length) && <Button variant="secondary" onClick={() => {
+          const completed = visibleJobs.find(job => job.status === "succeeded" && job.result?.manifest.frames.length);
+          if (completed) { setSelectedId(completed.id); setSelectedModel(completed.spec.request.model_ids[0] ?? ""); }
+        }}>Xem bản ghi đã hoàn tất</Button>}
+      </div> : null}
       {chosen?.result ? <>
         <p className="text-xs text-[var(--muted)]">Đầu vào: {chosen.result.manifest.native_input_adapter?.id ?? "raw"}{chosen.result.manifest.native_input_adapter?.manifest_sha256 && <span className="ml-2 break-all font-mono">SHA {chosen.result.manifest.native_input_adapter.manifest_sha256}</span>}</p>
         {chosen.spec.request.source === "carla" && frameCount === chosen.spec.request.scenario.frames && registry?.native_input_adapters?.some(adapter => adapter.id === "intensity_mean_experimental" && adapter.available) && <div className="flex flex-wrap items-center gap-3">
