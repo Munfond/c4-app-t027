@@ -415,6 +415,7 @@ def capture_camera(
 @router.get("/{ident}/reference/{index}")
 def capture_reference(ident: ExperimentId, index: int = Path(ge=0, le=80)):
     import math
+
     import numpy as np
 
     job = experiment(ident)
