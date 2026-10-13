@@ -22,8 +22,8 @@ Mức trung bình kênh intensity trên ô có điểm: nuScenes **training spli
 | Cùng capture | Căn chỉnh thử nghiệm | 76,6% | 16,9% | 85,1% |
 | Town01 route 31, seed 97 · 4 frame | Gốc | 33,1% | 0% | 0% |
 | Cùng capture | Căn chỉnh thử nghiệm | 80,6% | 55,6% | 88,1% |
-| Fog / Rain · mỗi capture 2 frame | Gốc | 38,2% | xem report | 0% |
-| Cùng capture | Căn chỉnh thử nghiệm | 82,5% | xem report | 92,6% |
+| Fog / Rain · mỗi capture 2 frame | Gốc | 38,2% | 0% | 0% |
+| Cùng capture | Căn chỉnh thử nghiệm | 82,5% | 45,5% | 92,6% |
 
 **Recall cao không đồng nghĩa segmentation hoàn thiện.** Object IoU 16,9% ở route 17 cho thấy vẫn có nhiều ô dự đoán sai. Chỉ 8 frame đánh giá cùng một map; cần map/route/sensor held-out lớn hơn. Reference gồm ô LiDAR quan sát được, proxy static theo chiều cao và footprint actor; không là semantic ground truth toàn cảnh.
 
