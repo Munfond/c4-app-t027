@@ -414,6 +414,7 @@ def capture_camera(
 
 @router.get("/{ident}/reference/{index}")
 def capture_reference(ident: ExperimentId, index: int = Path(ge=0, le=80)):
+    import math
     import numpy as np
 
     job = experiment(ident)
@@ -424,6 +425,29 @@ def capture_reference(ident: ExperimentId, index: int = Path(ge=0, le=80)):
         raise HTTPException(404, "Reference frame not available")
     capture_id = spec.get("capture_id") or ident
     path = store.root() / capture_id / "capture" / f"frame_{index:04d}.npz"
+    actors = []
+    try:
+        geometry = json.loads(path.with_suffix(".json").read_text())["boxes"]
+        if not isinstance(geometry, list) or len(geometry) > 80:
+            raise ValueError("Invalid actor catalog")
+        for actor in geometry:
+            item = {key: actor[key] for key in ("id", "x", "y", "l", "w", "h", "yaw")}
+            if (
+                type(item["id"]) is not int
+                or item["id"] < 0
+                or any(
+                    type(item[key]) not in (int, float) or not math.isfinite(item[key])
+                    for key in ("x", "y", "l", "w", "h", "yaw")
+                )
+                or any(not 0 < item[key] <= 100 for key in ("l", "w", "h"))
+                or any(abs(item[key]) > 1000 for key in ("x", "y"))
+            ):
+                raise ValueError("Invalid actor geometry")
+            actors.append(item)
+        if len({item["id"] for item in actors}) != len(actors):
+            raise ValueError("Duplicate actor IDs")
+    except (OSError, ValueError, KeyError, TypeError):
+        actors = []  # Optional geometry must not replace or invent reference cells.
     try:
         with np.load(path, allow_pickle=False) as data:
             labels, valid = data["labels"], data["valid"]
@@ -435,6 +459,7 @@ def capture_reference(ident: ExperimentId, index: int = Path(ge=0, le=80)):
             ):
                 raise ValueError("Invalid reference grid")
             return {
+                "actors": actors,
                 "cells": labels.reshape(-1).tolist(),
                 "valid": valid.reshape(-1).tolist(),
                 "kind": "reference",

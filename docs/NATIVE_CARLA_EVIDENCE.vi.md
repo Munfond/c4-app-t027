@@ -31,7 +31,7 @@ Mức trung bình kênh intensity trên ô có điểm: nuScenes **training spli
 
 ## Đối chiếu và chạy lại
 
-Trong `/lab`, mở bot → công cụ thí nghiệm. Danh sách có các capture FOV/mưa/sương mù đã chạy; chọn model hoặc Reference, Play/Pause, kéo thanh frame. Bản căn chỉnh là một job khác tái sử dụng đúng capture camera/reference, có adapter SHA riêng.
+Trong `/lab`, mở bot → công cụ thí nghiệm. Danh sách có các capture FOV/mưa/sương mù đã chạy; chọn model hoặc Reference, Play/Pause, kéo thanh frame. Bản căn chỉnh là một job khác tái sử dụng đúng capture camera/reference, có adapter SHA riêng. Nút “Chuẩn bị đối chiếu cùng capture” điền cấu hình trước khi bạn tạo lượt đo. Ở Reference, chọn một trong tối đa sáu actor gần nhất để xem viền footprint, khoảng cách 2D tới tâm, phía trước/sau/trái/phải và kích thước. Đây là metadata simulator; không ghép danh tính của actor với pixel camera hoặc gọi footprint là detection của model.
 
 Nguồn evidence nằm ở `eval/recovery-mvp-2026-10-13`:
 

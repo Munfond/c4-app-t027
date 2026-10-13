@@ -275,3 +275,24 @@ async def test_native_reference_preserves_mask_and_rejects_invalid_grid(client, 
     labels[0, 0] = 99
     np.savez_compressed(path, labels=labels, valid=valid)
     assert (await client.get(endpoint)).status_code == 503
+
+
+@pytest.mark.asyncio
+async def test_native_actor_geometry_is_reference_only_and_invalid_metadata_is_optional(client, experiment_settings):
+    job = store.create(ExperimentSpec())
+    store.claim("actor-test")
+    store.finish(job["id"], "actor-test", "succeeded", result={"manifest": {"frames": [{"id": "frame_0000"}]}})
+    path = experiment_settings.experiment_root / job["id"] / "capture/frame_0000.npz"
+    path.parent.mkdir(parents=True)
+    np.savez_compressed(path, labels=np.zeros((200, 200), np.uint8), valid=np.ones((200, 200), bool))
+    actor = dict(id=42, x=10, y=-2, l=4, w=2, h=1.5, yaw=0, **{"class": "vehicle.test"})
+    path.with_suffix(".json").write_text(json.dumps({"boxes": [actor]}))
+    endpoint = f"/api/v1/experiments/{job['id']}/reference/0"
+    response = await client.get(endpoint)
+    assert response.status_code == 200 and response.json()["actors"][0]["x"] == 10
+    assert "class" not in response.json()["actors"][0]
+    actor["x"] = float("nan")
+    path.with_suffix(".json").write_text(json.dumps({"boxes": [actor]}))
+    response = await client.get(endpoint)
+    assert response.status_code == 200 and response.json()["actors"] == []
+    assert len(response.json()["cells"]) == 40000

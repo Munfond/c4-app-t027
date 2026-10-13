@@ -4,13 +4,15 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { apiJson } from "@/lib/lab-api";
 
-type Reference = { cells: number[]; valid: boolean[] };
+type Actor = {id:number; x:number; y:number; l:number; w:number; h:number; yaw:number};
+type Reference = { cells: number[]; valid: boolean[]; actors?: Actor[] };
 type Frame = { index: number; cells: number[]; image: string | null; reference: Reference | null };
 export function CapturePlayback({ job, model, count, interval, camera, active, timestamps }: {
   job: string; model: string; count: number; interval: number; camera: boolean; active: boolean; timestamps?: number[];
 }) {
   const [index, setIndex] = useState(0);
   const [referenceMode, setReferenceMode] = useState(false);
+  const [selectedActorId, setSelectedActorId] = useState<number | null>(null);
   const [frame, setFrame] = useState<Frame | null>(null);
   const [playing, setPlaying] = useState(false);
   const [speed, setSpeed] = useState(1);
@@ -81,6 +83,8 @@ export function CapturePlayback({ job, model, count, interval, camera, active, t
     return () => clearTimeout(timer);
   }, [playing, active, error, frame, index, count, playbackGap, speed]);
   const isReference = referenceMode && !!frame?.reference;
+  const visibleActors = [...(frame?.reference?.actors ?? [])].filter(actor => Math.abs(actor.x) <= 50 && Math.abs(actor.y) <= 50).sort((a,b) => Math.hypot(a.x,a.y) - Math.hypot(b.x,b.y)).slice(0,6);
+  const selectedActor = visibleActors.find(actor => actor.id === selectedActorId);
   useLayoutEffect(() => {
     const ctx = canvas.current?.getContext("2d");
     if (!ctx || !frame) return;
@@ -95,7 +99,19 @@ export function CapturePlayback({ job, model, count, interval, camera, active, t
     }
     ctx.strokeStyle = "#ffffff"; ctx.lineWidth = .8;
     ctx.beginPath(); ctx.moveTo(96,100);ctx.lineTo(104,100);ctx.moveTo(100,96);ctx.lineTo(100,104);ctx.stroke();
-  }, [frame, isReference]);
+    if (isReference && selectedActor) {
+      const actor = selectedActor;
+      ctx.strokeStyle = "#ffffff"; ctx.lineWidth = 1;
+      ctx.beginPath();
+      [[-1,-1],[1,-1],[1,1],[-1,1]].forEach(([a,b],i) => {
+        const dx=a*actor.l/2, dy=b*actor.w/2;
+        const x=actor.x+Math.cos(actor.yaw)*dx-Math.sin(actor.yaw)*dy;
+        const y=actor.y+Math.sin(actor.yaw)*dx+Math.cos(actor.yaw)*dy;
+        if (!i) ctx.moveTo(100-2*y,100-2*x); else ctx.lineTo(100-2*y,100-2*x);
+      });
+      ctx.closePath();ctx.stroke();
+    }
+  }, [frame, isReference, selectedActor]);
   const end = index === count - 1;
   const elapsed = frame && timestamps && Number.isFinite(timestamps[frame.index]) && Number.isFinite(timestamps[0]) ? timestamps[frame.index] - timestamps[0] : (frame?.index ?? 0) * interval;
   return <section className="grid gap-4" aria-label="Phát lại capture đồng bộ">
@@ -115,6 +131,12 @@ export function CapturePlayback({ job, model, count, interval, camera, active, t
       <Button variant="secondary" aria-pressed={isReference} disabled={!frame?.reference} onClick={() => setReferenceMode(true)}>Reference</Button>
       <span className="text-xs text-[var(--muted)]">{isReference ? "Xám: ô chưa được reference quan sát. Tĩnh là proxy theo độ cao, vật thể từ footprint actor." : frame?.reference ? "Chuyển Reference để xem vùng/vật thể model bỏ sót." : "Reference chưa sẵn sàng cho capture này."}</span>
     </div>
+    {isReference && visibleActors.length > 0 && <div className="grid gap-2">
+      <div className="flex flex-wrap gap-2" aria-label="Chọn footprint actor tham chiếu gần ego">{visibleActors.map(actor => <Button key={actor.id} variant="secondary" aria-pressed={selectedActorId === actor.id} onClick={() => {setSelectedActorId(actor.id);setPlaying(false);}}>
+        #{actor.id} · {Math.hypot(actor.x,actor.y).toFixed(1)} m
+      </Button>)}</div>
+      <p className="text-xs text-[var(--muted)]">{selectedActor ? `#${selectedActor.id}: ${Math.abs(selectedActor.x).toFixed(1)} m ${selectedActor.x >= 0 ? "phía trước" : "phía sau"}, ${Math.abs(selectedActor.y).toFixed(1)} m bên ${selectedActor.y >= 0 ? "trái" : "phải"}; dài × rộng × cao ${selectedActor.l.toFixed(1)} × ${selectedActor.w.toFixed(1)} × ${selectedActor.h.toFixed(1)} m. Viền trắng là footprint reference.` : "Chọn actor để xem vị trí và kích thước, không cần tên lớp."} Đây là metadata CARLA, không phải detection của model hoặc phép ghép danh tính trên ảnh camera.</p>
+    </div>}
     <div className="grid gap-4 lg:grid-cols-2">
       <figure className="grid content-start gap-2"><div className="relative overflow-hidden rounded-lg bg-[var(--navy)]">
         <canvas ref={canvas} width={200} height={200} className="aspect-square w-full [image-rendering:pixelated]" aria-label="Occupancy: trước lên trên, trái sang trái; dấu cộng là gốc ego" />
