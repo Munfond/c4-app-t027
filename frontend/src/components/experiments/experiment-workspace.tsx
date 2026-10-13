@@ -1,5 +1,6 @@
 "use client";
 
+import { CarlaRuntimeNotice, type RuntimeStatus } from "./carla-runtime-notice";
 import { CapturePlayback } from "./capture-playback";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -59,6 +60,7 @@ export function ExperimentWorkspace({ source = "carla", initialSpec, initialJobI
   const [registry, setRegistry] = useState<Registry | null>(null);
   const [spec, setSpec] = useState<Spec>(() => initialSpec ?? { ...initial, source, scene_id: source === "nuscenes" ? "scene-0103" : null });
   const [jobs, setJobs] = useState<Job[]>([]);
+  const [runtime, setRuntime] = useState<RuntimeStatus | null>(null);
   const [capturePreview, setCapturePreview] = useState<Job | null>(null);
   const [selectedId, setSelectedId] = useState("");
   const [selectedModel, setSelectedModel] = useState("");
@@ -139,6 +141,7 @@ export function ExperimentWorkspace({ source = "carla", initialSpec, initialJobI
 
   return <div className="grid gap-6">
     <PageHeader title="CARLA Experiments" description="Tạo capture, chạy checkpoint thật và so sánh BEV occupancy. Mở bot cạnh workspace để trao đổi và đối chiếu evidence; form này tạo thí nghiệm thủ công." />
+    {spec.source === "carla" && <CarlaRuntimeNotice active={active} onStatus={setRuntime} />}
     <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
       CARLA dùng occupancy LiDAR; camera giúp đối chiếu bối cảnh, chưa là input của model.
       <details className="mt-2"><summary className="cursor-pointer">Phạm vi môi trường và preset</summary><p className="mt-2">Mưa/sương mù mới đổi RGB, chưa đo độ bền sensor. Bảy checkpoint chạy trên nuScenes; radar CARLA chưa có adapter phù hợp. Preset MVP: Town01, 2 xe, 0 người. Map/traffic khác cần kiểm chứng riêng.</p></details>
@@ -173,7 +176,7 @@ export function ExperimentWorkspace({ source = "carla", initialSpec, initialJobI
         {spec.native_input_adapter === "intensity_mean_experimental" && <p className="text-xs text-amber-800">Chỉ căn chỉnh kênh intensity, giữ nguyên checkpoint và dữ liệu gốc. Kiểm chứng còn nhỏ trên Town01; không chứng minh an toàn ngoài thực tế hoặc độ bền thời tiết.</p>}
       </div>}
       <fieldset><legend className="mb-2 text-xs font-semibold">Checkpoint</legend><div className="flex flex-wrap gap-4">{models.map(model => <label key={model.id} className="flex items-center gap-2 text-sm"><input type="checkbox" checked={spec.model_ids.includes(model.id)} onChange={event => setSpec(previous => ({ ...previous, model_ids: event.target.checked ? [...previous.model_ids, model.id] : previous.model_ids.filter(id => id !== model.id) }))} />{model.id}</label>)}</div></fieldset>
-      <div className="flex flex-wrap items-center gap-3"><Button loading={busy} disabled={openingPreview || !spec.model_ids.length} onClick={submit}>Tạo thí nghiệm</Button><Button variant="secondary" onClick={() => window.dispatchEvent(new Event("p027-open-agent"))}>Trao đổi với agent ↗</Button><span className="text-xs text-[var(--muted)]">Agent mở cạnh kết quả, không cần đổi trang.</span></div>
+      <div className="flex flex-wrap items-center gap-3"><Button loading={busy} disabled={openingPreview || !spec.model_ids.length || (spec.source === "carla" && !spec.capture_id && runtime?.hardware_ready === false)} onClick={submit}>Tạo thí nghiệm</Button><Button variant="secondary" onClick={() => window.dispatchEvent(new Event("p027-open-agent"))}>Trao đổi với agent ↗</Button><span className="text-xs text-[var(--muted)]">Agent mở cạnh kết quả, không cần đổi trang.</span></div>
       <details><summary className="cursor-pointer text-xs text-[var(--muted)]">Cấu hình sẽ chạy</summary><pre className="mt-3 overflow-auto text-xs">{JSON.stringify(spec, null, 2)}</pre></details>
     </section>
     <section className="grid gap-4 rounded-xl border border-[var(--line)] bg-white p-5">

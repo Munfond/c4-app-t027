@@ -84,6 +84,13 @@ def end_session(ident: ExperimentId):
     return {"ended": True}
 
 
+@router.get("/runtime")
+def experiment_runtime():
+    from src.services.carla_runtime import snapshot
+
+    return snapshot()
+
+
 @router.get("/registry")
 def experiment_registry():
     from src.inference.native_input import catalog

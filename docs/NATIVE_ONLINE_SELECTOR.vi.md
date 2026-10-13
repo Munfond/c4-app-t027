@@ -1,3 +1,5 @@
+> Cập nhật14/10: browser QA đã thực hiện trên tab Lab do người dùng mở, gồm guide desktop/mobile, PPO4frame Play/Reference/actor geometry và hardware gate. HTTP checks bên dưới vẫn giữ như evidence ban đầu. Playback3D nuScenes có thao tác automation timeout khi đang phát; Space dừng được. Chưa khẳng định frame3D mượt trên runtime GPU đang lỗi. Xem `eval/ux-help-2026-10-14/manual-checks.json`.
+
 # PPO chọn LiDAR trong capture CARLA — 14/10/2026
 
 Policy native đã được train trước đó được giữ nguyên và gọi **trong lúc CARLA đang capture**. Không chạy optimizer trong lượt này: đây là inference online của policy đã học, không phải online RL training.

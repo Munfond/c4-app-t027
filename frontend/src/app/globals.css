@@ -612,3 +612,49 @@ button, a, select { -webkit-tap-highlight-color: transparent; }
 }
 
 .sensor-semantics { max-height:240px; overflow:auto; flex-shrink:0; }
+
+/* Help sits outside the primary workflow and opens without changing the frame. */
+.usage-guide-trigger { display: inline-flex; align-items: center; gap: 7px; padding: 7px 0; white-space: nowrap; font-size: 12px; color: var(--foreground); }
+.usage-guide-trigger > span { display: grid; place-items: center; width: 18px; height: 18px; border: 1px solid var(--muted); border-radius: 50%; font-size: 11px; }
+.usage-guide-trigger:hover { color: var(--accent); }
+.usage-guide { margin: auto; width: min(720px, calc(100vw - 32px)); max-height: calc(100dvh - 48px); padding: 0; border: 1px solid var(--line); border-radius: 12px; background: var(--background); color: var(--foreground); }
+.usage-guide::backdrop { background: rgb(7 24 31 / .55); }
+.usage-guide[open] { display: flex; flex-direction: column; }
+.usage-guide-header { padding: 28px 32px 16px; display: flex; justify-content: space-between; align-items: start; gap: 16px; }
+.usage-guide-header h2 { margin: 9px 0 0; font-size: clamp(25px, 4vw, 34px); line-height: 1.12; font-weight: 500; letter-spacing: -.04em; }
+.usage-guide-close { width: 36px; height: 36px; font-size: 26px; line-height: 1; color: var(--muted); border-radius: 6px; }
+.usage-guide-close:hover { background: var(--surface); color: var(--foreground); }
+.usage-guide-intro { padding: 0 32px 20px; font-size: 13px; line-height: 1.6; color: var(--muted); }
+.usage-guide-sections { display: flex; flex-shrink: 0; gap: 22px; padding: 0 32px; border-block: 1px solid var(--line); }
+.usage-guide-sections button { padding: 12px 0; border-bottom: 2px solid transparent; font-size: 13px; color: var(--muted); }
+.usage-guide-sections button[aria-pressed="true"] { border-bottom-color: var(--accent); color: var(--foreground); font-weight: 600; }
+.usage-guide-content { overflow-y: auto; overscroll-behavior: contain; min-height: 0; padding: 24px 32px; }
+.usage-guide-lead { font-size: 15px; margin-bottom: 22px; }
+.usage-guide-steps { list-style: none; counter-reset: guide-step; display: grid; gap: 22px; }
+.usage-guide-steps li { position: relative; counter-increment: guide-step; padding-left: 36px; }
+.usage-guide-steps li::before { content: "0" counter(guide-step); position: absolute; left: 0; top: 1px; font-family: var(--font-mono), monospace; font-size: 11px; color: var(--accent); }
+.usage-guide-steps strong { display: block; font-size: 14px; font-weight: 600; }
+.usage-guide-steps p, .usage-guide-definitions dd, .usage-guide-troubleshooting p { margin-top: 6px; font-size: 13px; line-height: 1.7; color: var(--muted); }
+.usage-guide b { font-weight: 600; color: var(--foreground); }
+.usage-guide-actions { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 24px; }
+.usage-guide-actions a, .usage-guide-actions button { font-size: 13px; font-weight: 600; color: var(--accent); text-decoration: underline; text-underline-offset: 4px; }
+.usage-guide-definitions { display: grid; gap: 16px; }
+.usage-guide-definitions > div { display: grid; grid-template-columns: 138px 1fr; gap: 12px; padding-bottom: 16px; border-bottom: 1px solid var(--line); }
+.usage-guide-definitions dt { font-size: 13px; font-weight: 600; }
+.usage-guide-definitions dd { margin-top: 0; }
+.usage-guide-note { margin-top: 24px; padding-left: 14px; border-left: 2px solid var(--accent); color: var(--muted); font-size: 12px; line-height: 1.7; }
+.usage-guide-small { margin-top: 16px; font-size: 12px; line-height: 1.7; color: var(--muted); }
+.usage-guide-troubleshooting { margin-top: 22px; font-size: 13px; }
+.usage-guide-troubleshooting summary { cursor: pointer; }
+.usage-guide-footer { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-shrink: 0; padding: 16px 32px; border-top: 1px solid var(--line); font-size: 11px; color: var(--muted); }
+.usage-guide-footer button { padding: 9px 16px; border-radius: 6px; color: var(--background); background: var(--foreground); font-size: 12px; }
+@media (max-width: 760px) { .product-edition { gap: 12px; } .usage-guide-trigger { font-size: 11px; } }
+@media (max-width: 480px) {
+  .usage-guide { max-height: calc(100dvh - 24px); width: calc(100vw - 24px); }
+  .usage-guide-header, .usage-guide-content { padding: 20px; }
+  .usage-guide-intro { padding: 0 20px 16px; }
+  .usage-guide-sections { padding-inline: 20px; gap: 16px; }
+  .usage-guide-sections button { font-size: 12px; }
+  .usage-guide-footer { padding: 14px 20px; }
+  .usage-guide-definitions > div { grid-template-columns: 1fr; gap: 4px; }
+}

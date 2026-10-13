@@ -6,6 +6,17 @@ NODE_DIR="$ROOT/data/recovery-runtime/node-v22.23.3-linux-x64/bin"
 RELEASE_ROOT="$ROOT/data/runtime/frontend-releases"
 RELEASE_POINTER="$ROOT/data/runtime/frontend-current"
 publish_frontend_release() {
+  # A cached webpack output once omitted restored sensor/help CSS. Refuse that
+  # release instead of replacing a healthy running frontend with unstyled UI.
+  "$NODE_DIR/node" -e '
+    const fs = require("node:fs");
+    const css = fs.readdirSync(".next/static/css").filter(f => f.endsWith(".css"))
+      .map(f => fs.readFileSync(".next/static/css/" + f, "utf8")).join("\n");
+    for (const selector of [".product-header", ".sensor-view-toolbar", ".usage-guide"]) {
+      if (!css.includes(selector)) throw new Error("Build CSS thiếu " + selector + "; hãy rebuild với cache sạch trước khi publish release.");
+    }
+  '
+
   IFS= read -r BUILD_ID < .next/BUILD_ID || test -n "$BUILD_ID"
   [[ "$BUILD_ID" =~ ^[a-zA-Z0-9_-]+$ ]] || { echo 'Build ID không hợp lệ.' >&2; exit 1; }
   RELEASE_DIR="$RELEASE_ROOT/$BUILD_ID"

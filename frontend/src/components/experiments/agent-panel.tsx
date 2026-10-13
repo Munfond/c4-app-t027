@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import type { ExperimentSessionState } from "./use-experiment-session";
 import type { ExperimentSpec } from "./experiment-workspace";
 import OccupancyRlEvidence from "./occupancy-rl-evidence";
+import { CarlaRuntimeNotice, type RuntimeStatus } from "./carla-runtime-notice";
 import { NativeOnlineEvidence } from "./native-online-evidence";
 import { NativeRlEvidence } from "./native-rl-evidence";
 import { NativeProfileEvidence } from "./native-profile-evidence";
@@ -41,11 +42,13 @@ const outcomes: Record<string, string> = { improved: "Có phương án giảm d�
 const statuses: Record<string, string> = { running: "Đang đo", completed: "Hoàn tất", cancelled: "Đã hủy" };
 const pct = (value: number | null) => value == null ? "Chưa đo" : `${(value * 100).toFixed(1)}%`;
 
-export default function AgentPanel({ source, onSourceChange, onOpenTools, toolsOpen, sessionState, onInspect, onOpenCapture, onOpenOnline }: {
-  source: Source; onSourceChange: (source: Source) => void; onOpenTools: (draft?: ExperimentSpec, mode?: "manual" | "history") => void;
+export default function AgentPanel({ source, onSourceChange, onOpenTools, toolsOpen, sessionState, onInspect, onOpenCapture, onOpenOnline, active }: {
+  active: boolean; source: Source; onSourceChange: (source: Source) => void; onOpenTools: (draft?: ExperimentSpec, mode?: "manual" | "history") => void;
   onOpenOnline: (run: string) => void; onOpenCapture: (job: string) => void; toolsOpen: boolean; sessionState: ExperimentSessionState; onInspect: (inspection: Inspection) => void;
 }) {
   const { session, error: sessionError, start: startSession, loading: sessionLoading } = sessionState;
+  const [runtime, setRuntime] = useState<RuntimeStatus | null>(null);
+  const captureBlocked = source === "carla" && runtime?.hardware_ready === false;
   const [enabled, setEnabled] = useState(false);
   const [nativeAdapterAvailable, setNativeAdapterAvailable] = useState(false);
   const [message, setMessage] = useState("");
@@ -163,6 +166,7 @@ export default function AgentPanel({ source, onSourceChange, onOpenTools, toolsO
       }}>{value === "carla" ? "CARLA" : "nuScenes replay"}</button>)}
     </div>
     <p className="agent-small">{source === "carla" ? "Mô phỏng CARLA · hiện hỗ trợ occupancy LiDAR." : "Dữ liệu ghi sẵn · LiDAR, radar và chất lượng ảnh."} PPO đã có lượt thử chọn LiDAR trong capture trực tiếp; yêu cầu chat vẫn chạy study riêng.</p>
+    {source === "carla" && <CarlaRuntimeNotice active={active} onStatus={setRuntime} compact />}
     {!enabled && <p className="agent-notice" role="status">Chưa bật LLM hoặc chưa cấu hình API key. Bạn vẫn xem evidence và mở cấu hình nâng cao để chạy thủ công được.</p>}
     {source === "dataset_replay" && sessionError && <p role="alert" className="agent-notice">{sessionError}{!session && <Button loading={sessionLoading} onClick={() => void startSession()}>Mở phiên replay mới</Button>}</p>}
     {error && <p role="alert" className="agent-error">{error.replace(/^Error: /, "")}</p>}
@@ -172,7 +176,7 @@ export default function AgentPanel({ source, onSourceChange, onOpenTools, toolsO
     <form className="agent-compose" onSubmit={event => { event.preventDefault(); void send(); }}>
       <label htmlFor="dock-message">Bạn muốn kiểm chứng điều gì?</label>
       <textarea id="dock-message" rows={3} maxLength={2000} value={message} onChange={event => setMessage(event.target.value)} placeholder={source === "carla" ? "So sánh baseline với LiDAR 300.000 và 150.000 điểm/s ở Town01, 2 frame…" : "Thử giữ 50% điểm LiDAR/radar ở scene-0103, 2 frame; IoU giảm tối đa 0.02…"} />
-      <Button type="submit" loading={busy} disabled={!enabled || !message.trim() || running || (source === "dataset_replay" && !session)}>Gửi & kiểm chứng</Button>
+      <Button type="submit" loading={busy} disabled={captureBlocked || !enabled || !message.trim() || running || (source === "dataset_replay" && !session)}>Gửi & kiểm chứng</Button>
       {source === "carla" && <button type="button" className="agent-text-button" disabled={busy || !enabled || !message.trim()} onClick={() => void send(true)}>Chỉ lập cấu hình để tôi kiểm tra trước</button>}
       <p className="agent-small">Gửi yêu cầu sẽ tạo lượt đo mới và dùng token LLM. Đọc evidence không gọi LLM.</p>
     </form>
@@ -195,7 +199,7 @@ export default function AgentPanel({ source, onSourceChange, onOpenTools, toolsO
       <p className="agent-small">Nút preset chỉ điền cấu hình, chưa tạo capture mới. FOV không ảnh hưởng prediction occupancy LiDAR; chưa có evidence chọn preset tốt nhất.</p>
     </section>}
     {source === "carla" && <section className="agent-panel-body" aria-label="Kiểm chứng cấu hình có số đo">
-      <Button disabled={busy || running || !nativeAdapterAvailable} loading={busy} onClick={async () => {
+      <Button disabled={captureBlocked || busy || running || !nativeAdapterAvailable} loading={busy} onClick={async () => {
         setBusy(true);setError("");
         try {
           const fresh = await post<Study>("/sensor-agent/studies", {

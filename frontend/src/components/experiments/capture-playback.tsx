@@ -26,6 +26,11 @@ export function CapturePlayback({ job, model, count, interval, camera, active, t
   const pending = useRef(new Map<number, Promise<Frame>>());
   const alive = useRef(true);
   useEffect(() => {
+    const pause = () => setPlaying(false);
+    window.addEventListener("p027-pause-lab", pause);
+    return () => window.removeEventListener("p027-pause-lab", pause);
+  }, []);
+  useEffect(() => {
     alive.current = true;
     const entries = cache.current;
     return () => { alive.current = false; entries.forEach(f => { if (f.image) URL.revokeObjectURL(f.image); }); entries.clear(); };

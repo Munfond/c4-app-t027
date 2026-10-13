@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { UsageGuide } from "@/components/help/usage-guide";
 import dynamic from "next/dynamic";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Suspense, useCallback, useEffect, useRef, useState, type ReactNode } from "react";
@@ -97,7 +98,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           <span className="nav-index">{item.number}</span>{item.label}<span className="nav-active-dot" />
         </Link>)}
       </nav>
-      <div className="product-edition"><span className="edition-label">ADAS RESEARCH</span><span className="team-stamp">T/27</span></div>
+      <div className="product-edition"><UsageGuide onShowLab={() => { setToolsOpen(false); setInspection(null); }} onShowAgent={() => { setToolsOpen(false); setInspection(null); openEntry("carla", false); }} /><span className="edition-label">ADAS RESEARCH</span><span className="team-stamp">T/27</span></div>
     </header>
     <div className="agent-workspace-layout">
       <main ref={main} id="main-content" className="product-main" tabIndex={-1}>
@@ -114,7 +115,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       </main>
       <aside id="perception-agent" aria-label="Perception agent" className="agent-dock" hidden={!open}>
         <header className="agent-dock-header"><div><span className="eyebrow">PERCEPTION ASSISTANT</span><h2>Hỏi. Đo. Đối chiếu.</h2></div><button ref={closeButton} onClick={close} aria-label="Thu gọn agent">×</button></header>
-        {mounted && <AgentPanel key={source === "dataset_replay" ? `replay:${sessionState.session}` : "carla"} source={source} sessionState={sessionState} toolsOpen={toolsOpen && !visibleInspection} onOpenTools={openTools} onOpenOnline={run => { setSource("carla"); setDraft(null); setCapturePreview(undefined); setOnlinePreview(run); setToolMode("online"); setToolsVisited(true); setToolsOpen(true); setInspection(null); window.dispatchEvent(new Event("p027-pause-lab")); requestAnimationFrame(() => main.current?.focus()); }} onOpenCapture={job => { setSource("carla"); setDraft(null); setCapturePreview(job); setOnlinePreview(undefined); setToolMode("manual"); setToolsVisited(true); setToolsOpen(true); setInspection(null); window.dispatchEvent(new Event("p027-pause-lab")); requestAnimationFrame(() => main.current?.focus()); }} onSourceChange={value => { setSource(value); setCapturePreview(undefined); setOnlinePreview(undefined); setInspection(null); setDraft(null); setToolMode(value === "carla" ? "manual" : "history"); }} onInspect={value => { setInspection(value); window.dispatchEvent(new Event("p027-pause-lab")); requestAnimationFrame(() => main.current?.focus()); }} />}
+        {mounted && <AgentPanel key={source === "dataset_replay" ? `replay:${sessionState.session}` : "carla"} source={source} active={open} sessionState={sessionState} toolsOpen={toolsOpen && !visibleInspection} onOpenTools={openTools} onOpenOnline={run => { setSource("carla"); setDraft(null); setCapturePreview(undefined); setOnlinePreview(run); setToolMode("online"); setToolsVisited(true); setToolsOpen(true); setInspection(null); window.dispatchEvent(new Event("p027-pause-lab")); requestAnimationFrame(() => main.current?.focus()); }} onOpenCapture={job => { setSource("carla"); setDraft(null); setCapturePreview(job); setOnlinePreview(undefined); setToolMode("manual"); setToolsVisited(true); setToolsOpen(true); setInspection(null); window.dispatchEvent(new Event("p027-pause-lab")); requestAnimationFrame(() => main.current?.focus()); }} onSourceChange={value => { setSource(value); setCapturePreview(undefined); setOnlinePreview(undefined); setInspection(null); setDraft(null); setToolMode(value === "carla" ? "manual" : "history"); }} onInspect={value => { setInspection(value); window.dispatchEvent(new Event("p027-pause-lab")); requestAnimationFrame(() => main.current?.focus()); }} />}
       </aside>
     </div>
     <button ref={launcher} className="agent-launcher" aria-expanded={open} aria-controls="perception-agent" aria-label={open ? "Thu gọn Perception agent" : "Mở Perception agent"} onClick={open ? close : show}>
