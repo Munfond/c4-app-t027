@@ -372,6 +372,24 @@ def native_rl_download():
     return FileResponse(report_path(), media_type="application/json", filename="native-occupancy-ppo-report.json")
 
 
+@router.get("/native-rl/reviews")
+def native_rl_reviews():
+    from src.services.occupancy_rl_evidence import list_reviews
+
+    return {"items": list_reviews(evidence=native_rl_report(), root=get_settings().native_rl_root)}
+
+
+@router.post("/native-rl/reviews")
+def review_native_rl(body: EngineerReview):
+    from src.services.occupancy_rl_evidence import add_review
+
+    snapshot = native_rl_report()
+    try:
+        return add_review(body, evidence=snapshot, root=get_settings().native_rl_root)
+    except ValueError as exc:
+        raise HTTPException(409, str(exc)) from exc
+
+
 @router.get("/occupancy-rl")
 def occupancy_rl_report():
     from src.services.occupancy_rl_evidence import read_report

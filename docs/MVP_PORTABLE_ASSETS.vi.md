@@ -41,3 +41,20 @@ Cài dependencies theo README cho nền tảng đích rồi build frontend. Runt
 - Đường dẫn raw nuScenes và cache/exports của deployment cũ vẫn phải được kiểm tra riêng. Không sử dụng connection string database như địa chỉ backend.
 
 Evidence kiểm tra gói: `eval/recovery-mvp-2026-10-13/portable-assets-check.json`. Bộ đầy đủ của repo phục hồi hiện **245 test passed**, TypeScript/ESLint và production build đã qua. Browser QA bản cuối vẫn cần mở tab Lab hợp lệ; HTTP 200 không thay thế kiểm tra thao tác UI.
+
+
+## Native RL 12 action đã hoàn tất — gói bổ sung 13/10
+
+`native-rl-completed-20261013-assets.zip` (845.710.286bytes / 6.880member, CRCpassed, SHA256 `10a0312965d382053cc68bdb59b32839b8cb071155c1c23c50f93ef56b10dc3c`) chứa snapshot experiment SQLite/capture, capture-plan/state (giữ SIG11 và retry), bộ đo960outcome + audit, policy PPO12action/report/traces/seals. Giải nén vào root source mới. Bảy trọng số perception vẫn lấy từ `native-rl-model-assets-2bc259e.zip`; gói mới không tự tải nuScenes hoặc runtime. Đối chiếu archive SHA/CRC ở `native-rl-assets-proof.json` trước khi restore.
+
+Các root có thể đặt theo máy đích:
+
+```dotenv
+NATIVE_RL_MATRIX_ROOT=/absolute/path/P-027-restored/data/native-rl-matrix-v1-20261013
+NATIVE_RL_REPLAY_ROOT=/absolute/path/P-027-restored/data/native-rl-measured-v1-20261013
+NATIVE_RL_ROOT=/absolute/path/P-027-restored/data/native-rl-ppo-v1-20261013
+```
+
+Source pipeline mới đã commit tại `875932c`, bundle `native-rl-pipeline-875932c.bundle` đã verify; source bản chốt evidence/UX tiếp theo được ghi trong checkpoint phục hồi. Gói này không biến offline replay thành online CARLA-control. Reader kiểm tra dataset/audit/plan/policy khớp report trước khi hiện kết quả.
+
+Bản chốt native có260test passed, TypeScript/ESLint và build release `9a2jtUZvvDqOisuohyL9p` thành công. API/report/review/capture20frame qua frontend proxy đã kiểm tra. Gói mới có đủ960NPZcapture và960artifactđo; reader report/policy/audit/dataset từ giải nén mới đã qua. Kiểm tra chi tiết ở `native-rl-portable-reader-check.json` và `native-rl-final-flow-checks.json`; chưa có browser render QA.

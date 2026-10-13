@@ -1,6 +1,6 @@
 # Học tăng cường trên cấu hình LiDAR CARLA — bản nghiên cứu
 
-Bản PPO nuScenes đã chạy đủ 12.288 bước vẫn giữ nguyên. Bộ mới dưới đây dùng **12 cấu hình LiDAR vật lý**, không phải giảm điểm sau khi đã thu LiDAR đầy đủ. Chưa có kết quả huấn luyện native cho đến khi `report.json` được tạo thành công. Không dùng pilot một route trước đó để thay thế tập train/validation/test.
+Bản PPO nuScenes đã chạy đủ 12.288 bước vẫn giữ nguyên. Bộ mới dưới đây dùng **12 cấu hình LiDAR vật lý**, không phải giảm điểm sau khi đã thu LiDAR đầy đủ. Bản ngày 13/10 đã hoàn tất 48 capture, kiểm định 960 outcome và chạy PPO native đủ 8.192 bước / 256 cập nhật optimizer. Checkpoint chọn bằng validation tại bước 4.096. Report và policy đã được kiểm tra toàn vẹn. Không dùng pilot một route trước đó để thay thế tập train/validation/test.
 
 ## Giao thức đã chốt trước khi huấn luyện
 
@@ -42,3 +42,22 @@ Collector giữ lock, hỗ trợ SIGTERM và đánh dấu capture bị ngắt. M
 ## Giới hạn phải nói khi trình bày
 
 Đây là RL offline trên bảng outcome đã đo từ mô phỏng, **chưa phải điều khiển sensor online**. Chưa đo thời gian đổi sensor thực tế. Chỉ có hai route train và một route test cùng Town01: đủ cho minh họa nghiên cứu nhỏ, không chứng minh ổn định ngoài thực tế. Reference là ô semantic LiDAR quan sát được và proxy chiều cao/footprint; ô chưa quan sát không được coi là free để tăng điểm. Gain intensity còn thử nghiệm. Không suy ra độ bền trước sương mù/mưa từ ảnh RGB; không có cam–radar–LiDAR fusion hay sensor-failure policy trong lần train này.
+
+## Kết quả thực tế ngày 13/10/2026
+
+| Chiến lược | Occupied IoU | Object IoU | p95 CPU | Quyết định test |
+| --- | --- | --- | --- | --- |
+| Mặc định 32 kênh / 600k điểm/s | 81,39% | 6,02% | 83,95 ms | 19 |
+| PPO được chọn bằng validation | 81,39% | 6,02% | 83,95 ms | 19 |
+
+PPO chọn action 7 ở cả 19 frame và không đổi cấu hình. Cấu hình cố định tốt nhất trên test cũng là action 7. Không tìm thấy cấu hình tốt hơn trong 12 action đã đo; giữ baseline là kết luận thực nghiệm, không phải lời LLM. Test chỉ có một route và object IoU thấp: không gọi agent/model là an toàn hoặc đủ tốt ngoài đời. Cần kiểm tra sâu reference/domain gap và bổ sung route chưa thấy; đổi mật độ sensor không thay thế huấn luyện/kiểm định perception.
+
+Một lượt CARLA bị SIG11 trước khi có frame được thử lại đúng một lần, cùng cấu hình; lỗi gốc `724dbd7839944c7ca6c9852eb7e5346e` được giữ. Không loại frame test để tăng điểm. Audit tách train/validation/test theo route/seed và từ chối pose trùng. Source summary và report thật nằm ở `eval/recovery-mvp-2026-10-13/native-rl-matrix-audit-summary.json` và `native-rl-ppo-report.json`, có seal SHA256.
+
+API mới: `GET /api/v1/experiments/native-rl` và `/native-rl/report`. Mở bot cạnh Lab → **Học tăng cường · 12 cấu hình LiDAR CARLA**. Chỉ mở mục này mới tải/poll evidence; không chạy simulator/training từ việc mở UI. Bảng chính so baseline/PPO; mở rộng để xem đủ 12 cấu hình, SHA và giới hạn.
+
+Reference coverage được đo riêng: trên route test, mỗi frame chỉ có4–9 ô object và2.868–3.231 ô quan sát trong tổng40.000 ô. Chất lượng object vì vậy rất nhạy với sai số vài ô; không suy rộng6,02% hay81,39% thành kết luận cho toàn bộ môi trường. Chi tiết bốn route: `native-rl-reference-coverage.json`. Không lấy điểm pilot một route khác để thay điểm test.
+
+Engineer review native được lưu riêng khỏi nuScenes, gắn hash báo cáo, có ba verdict accept/reject/needs_evidence. Phản hồi chưa tự cập nhật model hoặc tự train policy.
+
+Nút “Xem capture mặc định của test” mở job `bc3ff6b1b0c047dba472ed86b770092e` theo ID đã liên kết với audit, trên workspace cạnh bot. Lịch sử mặc định vẫn ẩn hàng loạt job nghiên cứu; capture được mở cụ thể không bị polling lịch sử làm biến mất. Không tạo capture/inference khi bấm xem.

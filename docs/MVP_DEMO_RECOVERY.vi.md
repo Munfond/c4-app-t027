@@ -21,7 +21,7 @@ CARLA sạch đã tạo capture FOV và preview mưa/sương mù. Căn chỉnh i
 5. Mở nguồn/split/giới hạn, tải report. Chỉ engineer thật mới ghi review.
 6. Camera preset 60/90/110: chọn các capture smoke đã chạy; đọc FOV và giới hạn. Chọn capture căn chỉnh thử nghiệm để so Model/Reference, chỉ rõ đây chưa là native RL.
 
-Ba profile thinning là phạm vi MVP phục hồi. Đã có pilot 12 profile LiDAR vật lý, nhưng training PPO hiện vẫn là ba action trên nuScenes; split native và MultiDiscrete chưa hoàn thành; không gọi ba profile này là triển khai đầy đủ kế hoạch.
+Ba profile thinning nuScenes là một thí nghiệm riêng. Native PPO tiếp theo đã train 12 action từ 48 capture độc lập, chia route 2/1/1. Cả hai đều là replay offline; CARLA online switching và MultiDiscrete chưa hoàn thành.
 
 ## Đoạn nói thêm khi mở bot
 
@@ -30,3 +30,13 @@ Ba profile thinning là phạm vi MVP phục hồi. Đã có pilot 12 profile Li
 ## Demo clip dài và reference
 
 Trong công cụ CARLA, chọn clip clear route17 seed73 (20 frame): bật Reference, chọn actor phía trước để xem footprint trên BEV và viền geometry trên camera. Bật Lặp capture để chạy liên tục. Clip fog route31 seed97 có 20 frame để review môi trường, không chứng minh độ bền LiDAR trong sương mù. Ở matrix 12 profile, chọn ứng viên rồi “Đối chiếu trên map” để xem đồng bộ với baseline.
+
+## Native RL mới — lời nói khoảng 30 giây
+
+“Nhóm đã thu 12 cấu hình LiDAR thật trong CARLA, tổng 48 lượt và 960 outcome. Dữ liệu chia route train, validation và test riêng, kiểm tra reference khớp trước khi train. Agent quan sát frame hiện tại và chọn cấu hình cho frame kế tiếp, không được nhìn đáp án của cấu hình chưa chọn.
+
+PPO chạy 8.192 bước; checkpoint chọn bằng validation ở bước 4.096. Trên route test, agent giữ 32 kênh và 600 nghìn điểm mỗi giây ở cả 19 quyết định. Occupied IoU là 81,4%, nhưng Object IoU chỉ 6%; nhóm báo đúng giới hạn đó. Không có cấu hình tốt hơn thì agent giữ mặc định và cung cấp evidence, thay vì đổi sensor cho có vẻ thông minh. Đây chưa là sensor-control online.”
+
+Mở bot → “Học tăng cường · 12 cấu hình LiDAR CARLA” → baseline/PPO → bảng đủ 12 cấu hình → nguồn/split → tải report. Không ghi engineer review giả.
+
+Từ mục native PPO, bấm “Xem capture mặc định của test · 20frame” để mở chính capture route72 ở workspace cạnh bot. Bật Play/Reference, xem camera và occupancy theo cùng frame; đây là đọc kết quả đã ghi, không tạo job CARLA mới. Policy giữ mặc định ở19/19 quyết định, nên clip này minh họa baseline đã chấm, không giả lập agent đang đổi sensor.

@@ -71,8 +71,8 @@ def read_report():
     return {"ready": True, "evidence_sha256": digest, "policy_file_sha256": policy_hash, "report": data}
 
 
-def reviews():
-    path = get_settings().occupancy_rl_root / "engineer-reviews.sqlite3"
+def reviews(root=None):
+    path = (root or get_settings().occupancy_rl_root) / "engineer-reviews.sqlite3"
     path.parent.mkdir(parents=True, exist_ok=True)
     db = sqlite3.connect(path)
     db.execute(
@@ -81,8 +81,8 @@ def reviews():
     return db
 
 
-def add_review(review):
-    evidence = read_report()
+def add_review(review, *, evidence=None, root=None):
+    evidence = evidence if evidence is not None else read_report()
     if not evidence["ready"] or review.evidence_sha256 != evidence["evidence_sha256"]:
         raise ValueError("Review refers to another report")
     value = {
@@ -93,7 +93,7 @@ def add_review(review):
         "notes": review.notes,
         "created_at": time.time(),
     }
-    db = reviews()
+    db = reviews(root)
     try:
         with db:
             db.execute(
@@ -112,11 +112,11 @@ def add_review(review):
     return value
 
 
-def list_reviews():
-    evidence = read_report()
+def list_reviews(*, evidence=None, root=None):
+    evidence = evidence if evidence is not None else read_report()
     if not evidence["ready"]:
         return []
-    db = reviews()
+    db = reviews(root)
     try:
         return [
             dict(zip(("id", "evidence_sha256", "reviewer", "verdict", "notes", "created_at"), row, strict=True))

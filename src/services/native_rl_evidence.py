@@ -45,7 +45,33 @@ def progress():
         if active["status"] in ("running", "queued"):
             phase = "capturing"  # Also reconciles a resumed older collector's persisted interrupted state.
             frames = active["capture_progress"]
+    extra = {}
+    measured = get_settings().native_rl_replay_root / "measurement-progress.json"
+    audit = get_settings().native_rl_replay_root / "audit.json"
+    training = get_settings().native_rl_root / "training-progress.json"
+    if state["status"] == "capture_completed" and measured.is_file():
+        record = bounded_json(measured)
+        phase = "measuring" if record["status"] == "measuring" else "measurement_incomplete"
+        count = record.get("completed_outcomes", 0)
+        if type(count) is not int or not 0 <= count <= 960:
+            raise ValueError("Invalid measured-outcome progress")
+        extra["measured_outcomes"] = count
+    admitted = False
+    if state["status"] == "capture_completed" and audit.is_file():
+        record, _ = read_sealed(audit)
+        if record.get("status") == "passed_research_audit" and record.get("capture_plan_sha256") == plan_hash:
+            admitted = True
+            phase = "audited"
+    if admitted and training.is_file():
+        record = bounded_json(training)
+        phase = "training" if record["status"] == "training" else "training_incomplete"
+        trace = record.get("validation", [])
+        steps = trace[-1]["actual_steps"] if trace else 0
+        if type(steps) is not int or not 0 <= steps <= 8192:
+            raise ValueError("Invalid PPO step progress")
+        extra["training_steps"] = steps
     return {
+        **extra,
         "ready": False,
         "phase": phase,
         "completed": completed,
@@ -142,4 +168,20 @@ def read_report():
         policy_hash = hashlib.file_digest(stream, "sha256").hexdigest()
     if policy_hash != report.get("selected_policy_sha256"):
         raise ValueError("Changed selected native policy")
-    return {"ready": True, "evidence_sha256": digest, "policy_file_sha256": policy_hash, "report": report}
+    preview = next(
+        (row["job_id"] for row in audit.get("captures", []) if row["split"] == "test" and row["action"] == BASELINE),
+        None,
+    )
+    try:
+        job = store.get(preview) if preview else None
+        if not job or job["status"] != "succeeded" or job["spec"]["request"]["source"] != "carla":
+            preview = None
+    except KeyError:
+        preview = None
+    return {
+        "ready": True,
+        "preview_job_id": preview,
+        "evidence_sha256": digest,
+        "policy_file_sha256": policy_hash,
+        "report": report,
+    }

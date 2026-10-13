@@ -40,3 +40,12 @@ Các nhận định “native chưa chạy” ở phần checkpoint phía trên 
 141 test API/Active Sensing/projection đã qua; ESLint và TypeScript đã qua, production build/release thành công. 10 HTTP check đều 200, gồm frontend proxy, PPO report, profile audit, camera/reference và prediction frame cuối của clip 20 frame: `final-live-api-checks.json`. Projection math có test hướng trục, FOV, world transform chung; API từ chối liên hệ camera/BEV sai pose/frame trong fixture. Raw ảnh native đầu clip đã được view_image xem, khung chiếu geometry khớp vùng actor phía trước. Đây không thay cho visual QA thao tác trên ứng dụng; browser hiện vẫn ở error page bị policy chặn.
 
 Toàn bộ suite của repo phục hồi: **245 passed trong 15,62 s**. Các assets model/policy đã giải nén vào folder mới, xác minh hash và đọc được cả native pilot/PPO report: `portable-assets-check.json`. Source/data/model archive được kiểm CRC và Git bundle verify; không đổi dữ liệu đo hoặc review engineer.
+
+
+## Native PPO 12 cấu hình — hoàn tất sau pilot
+
+Đủ 48 capture / 960 outcome, audit reference/raw feature/split pose thành công. Hai route train, một validation, một test; checkpoint perception và experimental adapter không thay. 8.192 bước PPO thật / 256 optimizer updates, weights trước/sau khác; policy được chọn bằng validation tại 4.096 bước trước khi chấm test. PPO và fixed32/600k cùng occupied IoU0.813908, object IoU0.060159, CPU p95 83.9485ms, cả19 quyết định action7. Không tốt hơn full/best fixed; không deploy-ready.
+
+Giữ một native SIG11 và provenance retry đúng một lần. Report và audit-summary có seal. Toàn bộ259test đã qua tại `/tmp/p027-native-research-full-regression.log`; reader native service được kiểm tra bổ sung sau cải tiến progress. TypeScript/ESLint và production build release `2KCsFJNP462_mO0_t1mPL` thành công. Đây là API/build verification; browser render QA vẫn chờ tab HTTP hợp lệ, chưa được ghi nhận là đã kiểm tra UI trực tiếp.
+
+Chốt sau review/preview:260test passed (`/tmp/p027-native-mvp-final-tests.log`), release frontend `9a2jtUZvvDqOisuohyL9p`. Native preview đọc đúng20 cặp camera/prediction/reference qua frontend proxy; hash review không khớp trả409, không ghi feedback giả. API/report/photo contract được kiểm tra; browser QA vẫn chưa thực hiện. Archive845,7MB đã CRC+SHA; đủ960rawcaptureNPZ và960artifactđo, reader chạy thành công từ report/policy/plan/audit/dataset giải nén mới.

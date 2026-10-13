@@ -131,3 +131,25 @@ def test_unfinished_capture_never_appears_as_trained(native_report, monkeypatch)
     (root / "capture-state.json").write_text(json.dumps(state))
     with pytest.raises(ValueError, match="Invalid native capture progress"):
         service.read_report()
+
+
+def test_review_is_hash_bound_and_kept_separate_from_nuscenes(native_report, tmp_path):
+    from src.models.experiments import EngineerReview
+    from src.services.occupancy_rl_evidence import add_review, list_reviews
+
+    snapshot = service.read_report()
+    native_root = service.get_settings().native_rl_root
+    other_root = tmp_path / "other-research-report"
+    review = EngineerReview(
+        evidence_sha256=snapshot["evidence_sha256"],
+        reviewer="Synthetic test reviewer",
+        verdict="needs_evidence",
+        notes="Synthetic test only: require unseen routes.",
+    )
+    saved = add_review(review, evidence=snapshot, root=native_root)
+    assert saved["evidence_sha256"] == snapshot["evidence_sha256"]
+    assert len(list_reviews(evidence=snapshot, root=native_root)) == 1
+    assert list_reviews(evidence=snapshot, root=other_root) == []
+    review.evidence_sha256 = "0" * 64
+    with pytest.raises(ValueError, match="another report"):
+        add_review(review, evidence=snapshot, root=native_root)

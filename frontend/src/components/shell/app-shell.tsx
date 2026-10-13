@@ -47,6 +47,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   const [toolsOpen, setToolsOpen] = useState(false);
   const [toolsVisited, setToolsVisited] = useState(false);
   const [toolMode, setToolMode] = useState<"manual" | "history">("history");
+  const [capturePreview, setCapturePreview] = useState<string | undefined>();
   const [draft, setDraft] = useState<{ spec: ExperimentSpec; revision: number } | null>(null);
   const sessionState = useExperimentSession(mounted);
   const visibleInspection = inspection && (!inspection.session || inspection.session === sessionState.session) ? inspection : null;
@@ -58,6 +59,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   const close = () => { setOpen(false); launcher.current?.focus(); };
   const show = () => { setMounted(true); setOpen(true); };
   const openTools = (spec?: ExperimentSpec, mode?: "manual" | "history") => {
+    setCapturePreview(undefined);
     setToolMode(source === "carla" || spec || mode === "manual" ? "manual" : "history");
     setToolsVisited(true); setToolsOpen(true); setInspection(null);
     if (spec) {
@@ -101,14 +103,14 @@ export function AppShell({ children }: { children: ReactNode }) {
         <section id="agent-tools" hidden={!toolsOpen || !!visibleInspection} aria-label="Công cụ thí nghiệm">
           <div className="experiment-toolbar"><button ref={toolsBack} type="button" onClick={returnToLab}>← Quay lại bản đồ</button><span>{source === "carla" ? "CARLA / Cấu hình nâng cao" : toolMode === "manual" ? "nuScenes / Cấu hình nâng cao" : "nuScenes / Lịch sử & kết quả"}</span></div>
           {toolsVisited && (toolMode === "manual"
-            ? <ManualWorkspace key={`${source}:${draft?.revision ?? 0}`} source={source === "carla" ? "carla" : "nuscenes"} initialSpec={draft?.spec} active={toolsOpen && !visibleInspection} />
+            ? <ManualWorkspace key={`${source}:${draft?.revision ?? 0}:${capturePreview ?? ""}`} source={source === "carla" ? "carla" : "nuscenes"} initialSpec={draft?.spec} initialJobId={capturePreview} active={toolsOpen && !visibleInspection} />
             : <ReplayWorkspace sessionState={sessionState} active={toolsOpen && !visibleInspection} />)}
         </section>
         <div hidden={!!visibleInspection || toolsOpen}>{children}</div>
       </main>
       <aside id="perception-agent" aria-label="Perception agent" className="agent-dock" hidden={!open}>
         <header className="agent-dock-header"><div><span className="eyebrow">PERCEPTION ASSISTANT</span><h2>Hỏi. Đo. Đối chiếu.</h2></div><button ref={closeButton} onClick={close} aria-label="Thu gọn agent">×</button></header>
-        {mounted && <AgentPanel key={source === "dataset_replay" ? `replay:${sessionState.session}` : "carla"} source={source} sessionState={sessionState} toolsOpen={toolsOpen && !visibleInspection} onOpenTools={openTools} onSourceChange={value => { setSource(value); setInspection(null); setDraft(null); setToolMode(value === "carla" ? "manual" : "history"); }} onInspect={value => { setInspection(value); window.dispatchEvent(new Event("p027-pause-lab")); requestAnimationFrame(() => main.current?.focus()); }} />}
+        {mounted && <AgentPanel key={source === "dataset_replay" ? `replay:${sessionState.session}` : "carla"} source={source} sessionState={sessionState} toolsOpen={toolsOpen && !visibleInspection} onOpenTools={openTools} onOpenCapture={job => { setSource("carla"); setDraft(null); setCapturePreview(job); setToolMode("manual"); setToolsVisited(true); setToolsOpen(true); setInspection(null); window.dispatchEvent(new Event("p027-pause-lab")); requestAnimationFrame(() => main.current?.focus()); }} onSourceChange={value => { setSource(value); setCapturePreview(undefined); setInspection(null); setDraft(null); setToolMode(value === "carla" ? "manual" : "history"); }} onInspect={value => { setInspection(value); window.dispatchEvent(new Event("p027-pause-lab")); requestAnimationFrame(() => main.current?.focus()); }} />}
       </aside>
     </div>
     <button ref={launcher} className="agent-launcher" aria-expanded={open} aria-controls="perception-agent" aria-label={open ? "Thu gọn Perception agent" : "Mở Perception agent"} onClick={open ? close : show}>

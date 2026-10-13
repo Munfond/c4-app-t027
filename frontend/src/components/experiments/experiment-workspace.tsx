@@ -55,10 +55,11 @@ function metric(value: number | null | undefined, percent = false) {
 }
 
 
-export function ExperimentWorkspace({ source = "carla", initialSpec, active = true }: { source?: Spec["source"]; initialSpec?: Spec; active?: boolean }) {
+export function ExperimentWorkspace({ source = "carla", initialSpec, initialJobId, active = true }: { source?: Spec["source"]; initialSpec?: Spec; initialJobId?: string; active?: boolean }) {
   const [registry, setRegistry] = useState<Registry | null>(null);
   const [spec, setSpec] = useState<Spec>(() => initialSpec ?? { ...initial, source, scene_id: source === "nuscenes" ? "scene-0103" : null });
   const [jobs, setJobs] = useState<Job[]>([]);
+  const [capturePreview, setCapturePreview] = useState<Job | null>(null);
   const [selectedId, setSelectedId] = useState("");
   const [selectedModel, setSelectedModel] = useState("");
 
@@ -95,8 +96,20 @@ export function ExperimentWorkspace({ source = "carla", initialSpec, active = tr
     return () => window.removeEventListener("p027-agent-plan", receive);
   }, []);
 
-  const visibleJobs = jobs.filter(job => job.spec.request.source === spec.source);
-  const chosen = visibleJobs.find(job => job.id === selectedId) ?? visibleJobs[0];
+  useEffect(() => {
+    if (!initialJobId || !/^[a-f0-9]{32}$/.test(initialJobId)) return;
+    const controller = new AbortController();
+    void apiJson<Job>(`/api/v1/experiments/${initialJobId}`, controller.signal).then(job => {
+      if (controller.signal.aborted) return;
+      if (job.status !== "succeeded" || job.spec.request.source !== "carla") throw new Error("Capture test chưa sẵn sàng.");
+      setCapturePreview(job); setSelectedId(job.id); setSpec(job.spec.request); setError("");
+    }).catch(cause => {if (!controller.signal.aborted) setError(String(cause));});
+    return () => controller.abort();
+  }, [initialJobId]);
+
+  const visibleJobs = [...(capturePreview && capturePreview.spec.request.source === spec.source ? [capturePreview] : []), ...jobs.filter(job => job.spec.request.source === spec.source && job.id !== capturePreview?.id)];
+  const openingPreview = !!initialJobId && !capturePreview;
+  const chosen = openingPreview ? undefined : visibleJobs.find(job => job.id === selectedId) ?? visibleJobs[0];
   const models = registry?.models.filter(model => model.available && model.sources.includes(spec.source)) ?? [];
   const previewModel = chosen?.spec.request.model_ids.includes(selectedModel) ? selectedModel : chosen?.spec.request.model_ids[0] ?? "";
   const frameCount = chosen?.result?.manifest.frames.length ?? 0;
@@ -160,10 +173,11 @@ export function ExperimentWorkspace({ source = "carla", initialSpec, active = tr
         {spec.native_input_adapter === "intensity_mean_experimental" && <p className="text-xs text-amber-800">Chỉ căn chỉnh kênh intensity, giữ nguyên checkpoint và dữ liệu gốc. Kiểm chứng còn nhỏ trên Town01; không chứng minh an toàn ngoài thực tế hoặc độ bền thời tiết.</p>}
       </div>}
       <fieldset><legend className="mb-2 text-xs font-semibold">Checkpoint</legend><div className="flex flex-wrap gap-4">{models.map(model => <label key={model.id} className="flex items-center gap-2 text-sm"><input type="checkbox" checked={spec.model_ids.includes(model.id)} onChange={event => setSpec(previous => ({ ...previous, model_ids: event.target.checked ? [...previous.model_ids, model.id] : previous.model_ids.filter(id => id !== model.id) }))} />{model.id}</label>)}</div></fieldset>
-      <div className="flex flex-wrap items-center gap-3"><Button loading={busy} disabled={!spec.model_ids.length} onClick={submit}>Tạo thí nghiệm</Button><Button variant="secondary" onClick={() => window.dispatchEvent(new Event("p027-open-agent"))}>Trao đổi với agent ↗</Button><span className="text-xs text-[var(--muted)]">Agent mở cạnh kết quả, không cần đổi trang.</span></div>
+      <div className="flex flex-wrap items-center gap-3"><Button loading={busy} disabled={openingPreview || !spec.model_ids.length} onClick={submit}>Tạo thí nghiệm</Button><Button variant="secondary" onClick={() => window.dispatchEvent(new Event("p027-open-agent"))}>Trao đổi với agent ↗</Button><span className="text-xs text-[var(--muted)]">Agent mở cạnh kết quả, không cần đổi trang.</span></div>
       <details><summary className="cursor-pointer text-xs text-[var(--muted)]">Cấu hình sẽ chạy</summary><pre className="mt-3 overflow-auto text-xs">{JSON.stringify(spec, null, 2)}</pre></details>
     </section>
     <section className="grid gap-4 rounded-xl border border-[var(--line)] bg-white p-5">
+      {openingPreview && !error && <p role="status" className="agent-small">Đang mở capture test đã ghi…</p>}
       <div className="flex flex-wrap items-center justify-between gap-3"><h2 className="font-semibold">Thí nghiệm gần đây</h2>{chosen && ["queued", "running"].includes(chosen.status) ? <Button variant="secondary" loading={busy} onClick={cancel}>Hủy job</Button> : null}</div>
       <Select label="Experiment" value={chosen?.id ?? ""} onChange={event => { setSelectedId(event.target.value);  }}>{visibleJobs.map(job => <option key={job.id} value={job.id}>{job.id.slice(0, 8)} · {job.spec.request.source === "carla" ? `${job.spec.request.scenario.map} · ${weatherLabels[job.spec.request.scenario.weather] ?? job.spec.request.scenario.weather} · FOV ${job.spec.request.scenario.camera?.fov ?? 90}°` : job.spec.request.scene_id ?? job.spec.request.source} · {job.result?.manifest.frames.length ?? job.spec.request.scenario.frames} frame · {job.spec.request.native_input_adapter === "intensity_mean_experimental" ? "Căn chỉnh thử nghiệm · " : ""}{job.status}</option>)}</Select>
       {chosen ? <p className="text-sm">Trạng thái: <b>{chosen.status}</b> · {chosen.stage}{chosen.status === "queued" ? " · Chờ worker chạy" : ""}</p> : <p className="text-sm text-[var(--muted)]">Chưa có thí nghiệm.</p>}

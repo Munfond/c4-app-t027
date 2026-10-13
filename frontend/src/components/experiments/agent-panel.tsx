@@ -40,9 +40,9 @@ const outcomes: Record<string, string> = { improved: "Có phương án giảm d�
 const statuses: Record<string, string> = { running: "Đang đo", completed: "Hoàn tất", cancelled: "Đã hủy" };
 const pct = (value: number | null) => value == null ? "Chưa đo" : `${(value * 100).toFixed(1)}%`;
 
-export default function AgentPanel({ source, onSourceChange, onOpenTools, toolsOpen, sessionState, onInspect }: {
+export default function AgentPanel({ source, onSourceChange, onOpenTools, toolsOpen, sessionState, onInspect, onOpenCapture }: {
   source: Source; onSourceChange: (source: Source) => void; onOpenTools: (draft?: ExperimentSpec, mode?: "manual" | "history") => void;
-  toolsOpen: boolean; sessionState: ExperimentSessionState; onInspect: (inspection: Inspection) => void;
+  onOpenCapture: (job: string) => void; toolsOpen: boolean; sessionState: ExperimentSessionState; onInspect: (inspection: Inspection) => void;
 }) {
   const { session, error: sessionError, start: startSession, loading: sessionLoading } = sessionState;
   const [enabled, setEnabled] = useState(false);
@@ -176,7 +176,7 @@ export default function AgentPanel({ source, onSourceChange, onOpenTools, toolsO
       <p className="agent-small">Gửi yêu cầu sẽ tạo lượt đo mới và dùng token LLM. Đọc evidence không gọi LLM.</p>
     </form>
     <OccupancyRlEvidence />
-    {source === "carla" && <NativeRlEvidence />}
+    {source === "carla" && <NativeRlEvidence onPreview={onOpenCapture} />}
     {source === "carla" && <NativeProfileEvidence onInspect={onInspect} />}
     {source === "carla" && <section className="agent-panel-body" aria-label="Cấu hình camera nhanh">
       <label className="agent-small" htmlFor="agent-camera-fov">Preset camera · không dùng token LLM</label>

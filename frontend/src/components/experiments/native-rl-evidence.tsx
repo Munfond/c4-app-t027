@@ -7,20 +7,29 @@ import { Button } from "@/components/ui/button";
 type Metrics = { occupied_iou: number | null; object_iou: number | null; latency_p95_ms: number;
   decisions: number; action_counts: Record<string, number>; switches: number };
 type Evidence = { ready: false; notice: string; phase: string; completed?: number; total?: number;
-  frame_progress?: { completed: number; total: number } | null; failed_retries?: number } |
-  { ready: true; evidence_sha256: string; report: { actual_steps: number; selected_policy_trained_steps: number;
+  measured_outcomes?: number; training_steps?: number; frame_progress?: { completed: number; total: number } | null; failed_retries?: number } |
+  { ready: true; preview_job_id?: string | null; evidence_sha256: string; report: { actual_steps: number; selected_policy_trained_steps: number;
     no_improvement_over_full: boolean; no_improvement_over_best_fixed: boolean; profiles: { channels: number; points_per_second: number }[];
     test_results: Record<string, Metrics>; dataset_sha256: string; checkpoint_sha256: string; limitations: string[] } };
+type Review = { id: string; reviewer: string; verdict: string; notes: string };
 const base = "/api/v1/experiments/native-rl";
 const pct = (v: number | null) => v == null ? "—" : `${(100 * v).toFixed(1)}%`;
 const phases: Record<string, string> = { capturing: "Đang thu dữ liệu", capture_completed: "Capture đủ · chờ kiểm định và training",
+  measuring: "Đang đo feature + model trên CPU", audited: "Dữ liệu qua kiểm định · chờ training", training: "PPO đang học cấu hình sensor",
+  measurement_incomplete: "Bộ đo chưa hoàn tất", training_incomplete: "Training chưa hoàn tất",
   incomplete_failed: "Capture chưa hoàn tất · cần xử lý lỗi", incomplete_interrupted: "Capture bị ngắt · giữ dữ liệu", unavailable: "Chưa có dữ liệu native" };
 
-export function NativeRlEvidence() {
+export function NativeRlEvidence({ onPreview }: { onPreview: (job: string) => void }) {
   const [open, setOpen] = useState(false);
   const [data, setData] = useState<Evidence | null>(null);
   const [error, setError] = useState("");
   const [attempt, setAttempt] = useState(0);
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [reviewer, setReviewer] = useState("");
+  const [notes, setNotes] = useState("");
+  const [verdict, setVerdict] = useState("needs_evidence");
+  const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
   useEffect(() => {
     if (!open) return;
     const controller = new AbortController();
@@ -31,6 +40,10 @@ export function NativeRlEvidence() {
         if (controller.signal.aborted) return;
         setData(value); setError("");
         if (!value.ready) timer = setTimeout(load, 5000);
+        else {
+          const response = await apiJson<{items: Review[]}>(`${base}/reviews`, controller.signal);
+          if (!controller.signal.aborted) setReviews(response.items);
+        }
       } catch (cause) {
         if (!controller.signal.aborted) setError(cause instanceof Error ? cause.message : String(cause));
       }
@@ -64,6 +77,8 @@ export function NativeRlEvidence() {
         <progress className="h-2 w-full accent-[var(--accent)]" value={data.completed} max={data.total} aria-label="Tiến độ capture native RL" />
         <p className="agent-small">{data.completed}/{data.total} capture thành công{data.frame_progress ? ` · lượt hiện tại ${data.frame_progress.completed}/${data.frame_progress.total} frame` : ""}</p>
       </>}
+      {data.measured_outcomes != null && <p className="agent-small">Đã đo {data.measured_outcomes}/960 outcome</p>}
+      {data.training_steps != null && <p className="agent-small">Đã cập nhật {data.training_steps.toLocaleString("vi-VN")}/8.192 bước PPO</p>}
       {!!data.failed_retries && <p className="agent-small">Đã thử lại một lỗi native; lượt lỗi gốc được giữ trong evidence.</p>}
       <p className="agent-small">{data.notice} Không dùng pilot một route để thay tập train/test.</p>
     </div>}
@@ -80,7 +95,30 @@ export function NativeRlEvidence() {
         {data?.ready && <code className="block break-all text-[10px]">Report: {data.evidence_sha256}</code>}
         <ul className="list-disc pl-4 text-xs">{report.limitations.map(item => <li key={item}>{item}</li>)}</ul>
       </details>
+      {data?.ready && data.preview_job_id && <Button variant="secondary" onClick={() => onPreview((data as Extract<Evidence, {ready: true}>).preview_job_id!)}>Xem capture mặc định của test · 20 frame →</Button>}
       <a className="agent-tools-button" href={`${base}/report`} download>Tải báo cáo native PPO ↓</a>
+      <details><summary className="cursor-pointer py-2 text-xs">Engineer đánh giá kết luận native RL</summary>
+        <p className="agent-small">Phản hồi gắn với SHA báo cáo này, chưa tự train lại policy. Tên người đánh giá là tự khai báo.</p>
+        <form className="grid gap-2" onSubmit={async event => {
+          event.preventDefault(); if (!data?.ready) return;
+          setSaving(true); setSaved(false); setError("");
+          try {
+            const response = await fetch(`${base}/reviews`, {method: "POST", headers: {"Content-Type": "application/json"},
+              body: JSON.stringify({evidence_sha256: data.evidence_sha256, reviewer, verdict, notes})});
+            const result = await response.json();
+            if (!response.ok) throw new Error(typeof result.detail === "string" ? result.detail : "Không lưu được đánh giá.");
+            setReviews(previous => [result, ...previous]); setNotes(""); setSaved(true);
+          } catch (cause) { setError(cause instanceof Error ? cause.message : String(cause)); }
+          finally { setSaving(false); }
+        }}>
+          <label className="agent-small">Người đánh giá<input disabled={saving} required maxLength={80} value={reviewer} onChange={e => setReviewer(e.target.value)} /></label>
+          <label className="agent-small">Kết luận<select disabled={saving} value={verdict} onChange={e => setVerdict(e.target.value)}><option value="needs_evidence">Cần thêm bằng chứng</option><option value="accept">Đồng ý với kết luận</option><option value="reject">Không đồng ý</option></select></label>
+          <label className="agent-small">Lý do<textarea disabled={saving} required minLength={10} maxLength={2000} rows={3} value={notes} onChange={e => setNotes(e.target.value)} /></label>
+          <Button type="submit" loading={saving}>Lưu đánh giá</Button>
+          {saved && <p className="agent-small" role="status">Đã lưu cùng snapshot báo cáo.</p>}
+        </form>
+        {reviews.map(review => <details key={review.id}><summary className="cursor-pointer py-2 text-xs">{review.reviewer} · {({accept: "Đồng ý", reject: "Không đồng ý", needs_evidence: "Cần bằng chứng"} as Record<string,string>)[review.verdict]}</summary><p className="agent-small">{review.notes}</p></details>)}
+      </details>
     </div>}
   </details>;
 }

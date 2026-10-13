@@ -1,0 +1,55 @@
+{
+  "kind": "native_reference_coverage_actual_v1",
+  "dataset_sha256": "a2cc487aeb83fcde63f20b8a4d1cd92afe4eaf2f26cec6e97998c6689460cd6b",
+  "episodes": [
+    {
+      "episode": "train-route05-seed105",
+      "split": "train",
+      "frames": 20,
+      "scored_frames": 19,
+      "observed_cells_min": 3949,
+      "observed_cells_max": 4712,
+      "object_reference_cells_min": 4,
+      "object_reference_cells_max": 48,
+      "scored_frames_with_object_reference": 19,
+      "reference_objects_observed_not_requested_population": true
+    },
+    {
+      "episode": "train-route22-seed122",
+      "split": "train",
+      "frames": 20,
+      "scored_frames": 19,
+      "observed_cells_min": 2258,
+      "observed_cells_max": 2744,
+      "object_reference_cells_min": 6,
+      "object_reference_cells_max": 20,
+      "scored_frames_with_object_reference": 19,
+      "reference_objects_observed_not_requested_population": true
+    },
+    {
+      "episode": "validation-route48-seed148",
+      "split": "validation",
+      "frames": 20,
+      "scored_frames": 19,
+      "observed_cells_min": 2517,
+      "observed_cells_max": 3756,
+      "object_reference_cells_min": 0,
+      "object_reference_cells_max": 88,
+      "scored_frames_with_object_reference": 11,
+      "reference_objects_observed_not_requested_population": true
+    },
+    {
+      "episode": "test-route72-seed172",
+      "split": "test",
+      "frames": 20,
+      "scored_frames": 19,
+      "observed_cells_min": 2868,
+      "observed_cells_max": 3231,
+      "object_reference_cells_min": 4,
+      "object_reference_cells_max": 9,
+      "scored_frames_with_object_reference": 19,
+      "reference_objects_observed_not_requested_population": true
+    }
+  ],
+  "scope": "Observed-cell semantic-LiDAR reference, not complete semantic occupancy ground truth"
+}

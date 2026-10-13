@@ -1,0 +1,11 @@
+{
+  "archive": "/home/lam/WorkSpace/vinuni-buildphase/P-027-local-rescue-20261013/native-rl-completed-20261013-assets.zip",
+  "bytes": 845710286,
+  "members": 6880,
+  "sha256": "10a0312965d382053cc68bdb59b32839b8cb071155c1c23c50f93ef56b10dc3c",
+  "crc_passed": true,
+  "sqlite_consistent_backup": true,
+  "contains_env_or_credentials": false,
+  "requires_base_model_assets": "native-rl-model-assets-2bc259e.zip",
+  "scope": "Native48 capture/960 measured outcomes and completed PPO; raw nuScenes and runtimes excluded"
+}
