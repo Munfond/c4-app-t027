@@ -38,3 +38,5 @@ Các nhận định “native chưa chạy” ở phần checkpoint phía trên 
 ### Bản phục vụ cuối
 
 141 test API/Active Sensing/projection đã qua; ESLint và TypeScript đã qua, production build/release thành công. 10 HTTP check đều 200, gồm frontend proxy, PPO report, profile audit, camera/reference và prediction frame cuối của clip 20 frame: `final-live-api-checks.json`. Projection math có test hướng trục, FOV, world transform chung; API từ chối liên hệ camera/BEV sai pose/frame trong fixture. Raw ảnh native đầu clip đã được view_image xem, khung chiếu geometry khớp vùng actor phía trước. Đây không thay cho visual QA thao tác trên ứng dụng; browser hiện vẫn ở error page bị policy chặn.
+
+Toàn bộ suite của repo phục hồi: **245 passed trong 15,62 s**. Các assets model/policy đã giải nén vào folder mới, xác minh hash và đọc được cả native pilot/PPO report: `portable-assets-check.json`. Source/data/model archive được kiểm CRC và Git bundle verify; không đổi dữ liệu đo hoặc review engineer.

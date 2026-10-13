@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "archive": "native-rl-model-assets-2bc259e.zip",
+  "verified_models": [
+    "occupancy_lidar",
+    "occupancy_radar",
+    "occupancy_lidar_radar",
+    "flow_t1",
+    "flow_t2",
+    "flow_t4",
+    "flow_t4_nowarp"
+  ],
+  "native_pilot_ready": true,
+  "occupancy_ppo_ready": true,
+  "fresh_extraction": true,
+  "scope": "Model/policy artifacts only; full nuScenes Lab still needs existing dataset/cache assets"
+}

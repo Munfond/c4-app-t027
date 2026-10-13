@@ -5,6 +5,7 @@ Agent mở dưới dạng bot cạnh Lab; công cụ CARLA/nuScenes nằm trong 
 Bản phục hồi có PPO offline thực tế trên ba mức giữ điểm LiDAR 100/50/25%. Kết quả test hiện chưa tốt hơn baseline đầy đủ; UI báo đúng điều đó và cho tải evidence, lưu engineer review. Đây là occupancy proxy research, chưa phải CARLA online. CARLA đã có pilot 12 cấu hình LiDAR vật lý (16/32/64 kênh × bốn mức điểm/s), cùng reference và audit input; pilot một route chưa được dùng để train PPO native.
 
 - [Khởi động local, phạm vi phục hồi và giới hạn](docs/MVP_RECOVERY_SCOPE.vi.md)
+- [Chuyển assets native/PPO sang máy khác](docs/MVP_PORTABLE_ASSETS.vi.md)
 - [CARLA native, 12 profile và evidence](docs/NATIVE_CARLA_EVIDENCE.vi.md)
 - [Lời trình bày nhanh theo giao diện](docs/MVP_DEMO_RECOVERY.vi.md)
 - [Evidence kiểm tra thực tế](eval/recovery-mvp-2026-10-13/EVIDENCE.vi.md)
