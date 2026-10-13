@@ -71,6 +71,51 @@ def test_study_only_enqueues_one_trial_and_advance_is_idempotent(sensor_settings
     assert len(studies.advance(study["id"])["jobs"]) == 2
 
 
+def test_object_constraints_apply_to_baseline_and_candidate(sensor_settings):
+    measured_spec = spec().model_copy(update={"min_object_iou": 0.1, "min_object_recall": 0.5})
+    study = studies.create(measured_spec)
+    base = result()
+    base["models"]["occupancy_lidar"]["metrics"].update(class_iou={"object": 0.2}, object_recall=0.8)
+    finish_trial(base)
+    studies.advance(study["id"])
+    candidate = result(iou=0.49, rate=500)
+    candidate["models"]["occupancy_lidar"]["metrics"].update(class_iou={"object": 0.0}, object_recall=0.0)
+    finish_trial(candidate)
+    report = studies.comparison(study["id"])["environments"][0]
+    assert report["provisional_selected"] == "baseline"
+    assert report["trials"][1]["object_quality_reasons"] == ["below_minimum_object_iou", "below_minimum_object_recall"]
+    from src.services.agent_evidence import evidence
+
+    decision = evidence(study["id"])["environments"][0]["decisions"][0]
+    assert decision["selected"] == "baseline" and not decision["trials"][1]["eligible"]
+    assert decision["trials"][1]["object_recall"] == 0
+    assert studies.object_quality_reasons(measured_spec.model_dump(), {}) == ["missing_object_measurement"]
+
+
+def test_native_study_binds_same_adapter_to_every_trial(sensor_settings, monkeypatch):
+    from src.inference import native_input
+
+    measured_spec = spec().model_copy(update={"native_input_adapter": "intensity_mean_experimental"})
+    monkeypatch.setattr(native_input, "fingerprint", lambda adapter: {"id": adapter, "gain": 0.1})
+    first = studies.checkpoint_identity(measured_spec)
+    assert all(
+        trial["spec"].native_input_adapter == "intensity_mean_experimental" for trial in studies.trials(measured_spec)
+    )
+    monkeypatch.setattr(native_input, "fingerprint", lambda adapter: {"id": adapter, "gain": 0.2})
+    assert studies.checkpoint_identity(measured_spec) != first
+
+
+@pytest.mark.asyncio
+async def test_manual_sensor_study_needs_no_llm_and_only_queues_first_trial(client, sensor_settings):
+    sensor_settings.experiment_agent_enabled = False
+    sensor_settings.openai_api_key = ""
+    response = await client.post("/api/v1/experiments/sensor-agent/studies", json=spec().model_dump())
+    assert response.status_code == 201
+    study = response.json()
+    assert study["metadata"]["llm_called"] is False and len(study["jobs"]) == 1
+    assert len(store.recent()) == 1 and store.recent()[0]["status"] == "queued"
+
+
 def test_cancellation_prevents_further_trials(sensor_settings):
     study = studies.create(spec())
     assert studies.cancel(study["id"])["status"] == "cancelled"
@@ -153,16 +198,21 @@ async def test_real_tool_dispatch_and_summary_cache(sensor_settings, monkeypatch
         assert [item["role"] for item in messages].count("tool") == 2
         assert payload["max_tokens"] == 1400
         assert "180 từ" in messages[0]["content"]
-        return httpx.Response(200, json={
-            "model": "mock-provider",
-            "usage": {},
-            "choices": [
-                {
-                    "finish_reason": "stop",
-                    "message": {"content": "Kết quả thử nghiệm: giảm lượng dữ liệu, chưa chứng minh tiết kiệm điện."},
-                }
-            ],
-        })
+        return httpx.Response(
+            200,
+            json={
+                "model": "mock-provider",
+                "usage": {},
+                "choices": [
+                    {
+                        "finish_reason": "stop",
+                        "message": {
+                            "content": "Kết quả thử nghiệm: giảm lượng dữ liệu, chưa chứng minh tiết kiệm điện."
+                        },
+                    }
+                ],
+            },
+        )
 
     real_client = httpx.AsyncClient
     monkeypatch.setattr(
@@ -219,9 +269,14 @@ async def test_explicit_quality_controls_override_llm(client, sensor_settings, m
         return tool_response("create_sensor_study", spec().model_dump())
 
     monkeypatch.setattr(sensor_agent, "completion", fake_completion)
-    response = await client.post("/api/v1/experiments/sensor-agent/start", json={
-        "message": "Find a lower data rate", "max_iou_drop": 0.01, "frames": 20,
-    })
+    response = await client.post(
+        "/api/v1/experiments/sensor-agent/start",
+        json={
+            "message": "Find a lower data rate",
+            "max_iou_drop": 0.01,
+            "frames": 20,
+        },
+    )
     assert response.status_code == 201
     study = response.json()
     assert study["spec"]["max_iou_drop"] == 0.01
@@ -231,8 +286,12 @@ async def test_explicit_quality_controls_override_llm(client, sensor_settings, m
     assert pending.status_code == 409
     history = await client.get("/api/v1/experiments/sensor-agent")
     assert history.json()["items"][0]["id"] == study["id"]
-    invalid = await client.post("/api/v1/experiments/sensor-agent/start", json={
-        "message": "Invalid limit", "max_iou_drop": -0.1,
-    })
+    invalid = await client.post(
+        "/api/v1/experiments/sensor-agent/start",
+        json={
+            "message": "Invalid limit",
+            "max_iou_drop": -0.1,
+        },
+    )
     assert invalid.status_code == 422
     assert len(store.recent()) == 1

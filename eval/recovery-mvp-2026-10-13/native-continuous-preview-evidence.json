@@ -1,0 +1,472 @@
+[
+  {
+    "job_id": "33443fbf2b254d60a62f9f456565b63c",
+    "status": "succeeded",
+    "request": {
+      "source": "carla",
+      "replay": null,
+      "model_ids": [
+        "occupancy_lidar"
+      ],
+      "native_input_adapter": "intensity_mean_experimental",
+      "scenario": {
+        "map": "Town01",
+        "weather": "fog",
+        "vehicles": 2,
+        "pedestrians": 0,
+        "seed": 97,
+        "frames": 20,
+        "capture_interval": 0.5,
+        "timestep": 0.05,
+        "traffic_placement": "nearest_spawn",
+        "route_spawn_index": 31,
+        "route_kind": "spawn",
+        "lane_change_interval_seconds": null,
+        "lidar": {
+          "channels": 32,
+          "points_per_second": 600000,
+          "range_m": 100,
+          "upper_fov": 10,
+          "lower_fov": -30,
+          "mount_z": 2,
+          "pitch": 0
+        },
+        "camera": {
+          "fov": 90
+        }
+      },
+      "scene_id": null,
+      "capture_id": null,
+      "max_latency_ms": null
+    },
+    "models": {
+      "occupancy_lidar": {
+        "metrics": {
+          "frame_count": 20,
+          "evaluated_cells": 49354,
+          "confusion": [
+            [
+              34229,
+              965,
+              67
+            ],
+            [
+              1809,
+              11452,
+              424
+            ],
+            [
+              42,
+              7,
+              359
+            ]
+          ],
+          "class_iou": {
+            "free": 0.9223162319465402,
+            "static": 0.7813331513952377,
+            "object": 0.39933259176863184
+          },
+          "miou_supported_classes": 0.7009939917034699,
+          "occupied_iou": 0.8093884297520662,
+          "object_recall": 0.8799019607843137,
+          "flow_epe_m_s": null,
+          "flow_valid_cells": 0,
+          "latency_model_only_ms": {
+            "p50": 81.1418524972396,
+            "p95": 85.12574680535181
+          },
+          "timed_frames": 20
+        },
+        "cache_hits": 0,
+        "checkpoint_sha256": "8d6c7155534906a50ca2f52b039696700072ff200768f0d91ead33c828e9f878",
+        "device": "cpu",
+        "torch": "2.7.1+cpu",
+        "hardware": "Linux-6.8.0-138-generic-x86_64-with-glibc2.35",
+        "timing_note": "Fresh inference frames only; no latency claim for cached predictions"
+      }
+    },
+    "input_sha256": "62cad42a9319e56960eeaea6996d1d2216f7c33010b5d92d2f8ead71e4c00464",
+    "reference_sha256": "2fd9929de56c25dfddfa815a4f1d0d0b00e3b2bc0b08de8ecb6b616ada052832",
+    "frames": [
+      {
+        "index": 0,
+        "png_sha256": "396be63053c8ad1dec77d0d05a47d3007c9b5452f597d9f50ba8a7c83e580e14",
+        "camera_frame_id": null,
+        "simulation_frame_id": null,
+        "projected_actors": []
+      },
+      {
+        "index": 1,
+        "png_sha256": "1dd8e3ee7b5af1171d45ad7cc277bce8bf7a7b26251666aa7b7556a0b995580f",
+        "camera_frame_id": null,
+        "simulation_frame_id": null,
+        "projected_actors": []
+      },
+      {
+        "index": 2,
+        "png_sha256": "f56d49a0c84789ba1085c1a3ee207c16fef63b5cfa86b99d612644e8686b09a6",
+        "camera_frame_id": null,
+        "simulation_frame_id": null,
+        "projected_actors": []
+      },
+      {
+        "index": 3,
+        "png_sha256": "e8a3568daab5dfc6522d2e9e35d6103cc3c34c3404f2d7df155cdc25f9c47d45",
+        "camera_frame_id": null,
+        "simulation_frame_id": null,
+        "projected_actors": []
+      },
+      {
+        "index": 4,
+        "png_sha256": "d8915f096c385d92a8d896302c1a9b286150940b37ce81b213845cb5b857fa1d",
+        "camera_frame_id": null,
+        "simulation_frame_id": null,
+        "projected_actors": []
+      },
+      {
+        "index": 5,
+        "png_sha256": "b05e5e94bffc51148286a1699ac083b63216ee02bd9d1a98b188bfb408630a08",
+        "camera_frame_id": null,
+        "simulation_frame_id": null,
+        "projected_actors": []
+      },
+      {
+        "index": 6,
+        "png_sha256": "ac1524c5cb6237df7fd35ec9ae3e519277e4fb3bd32dc9358901d2956e99dbdd",
+        "camera_frame_id": null,
+        "simulation_frame_id": null,
+        "projected_actors": []
+      },
+      {
+        "index": 7,
+        "png_sha256": "c36afff14dad2e65685f18ee0bcbdf78bfc637c0ac620df35256ed07548a6b2a",
+        "camera_frame_id": null,
+        "simulation_frame_id": null,
+        "projected_actors": []
+      },
+      {
+        "index": 8,
+        "png_sha256": "209b79fc0c69c92a247af93cde3090d3babfd7614f287e3ea5814d678f235722",
+        "camera_frame_id": null,
+        "simulation_frame_id": null,
+        "projected_actors": []
+      },
+      {
+        "index": 9,
+        "png_sha256": "482bb4416e003ffb6a4eb65e4a3496ef16507dc5195827c20e2c1919559f3e97",
+        "camera_frame_id": null,
+        "simulation_frame_id": null,
+        "projected_actors": []
+      },
+      {
+        "index": 10,
+        "png_sha256": "ed129067b589b8cfa306d1aafab4f71631106e372671fb5957b8e47dc2072b7f",
+        "camera_frame_id": null,
+        "simulation_frame_id": null,
+        "projected_actors": []
+      },
+      {
+        "index": 11,
+        "png_sha256": "19def04ea01d9f9ff7fd838a9b587137e840a4e68e73b54fcacc96f630e4e7f3",
+        "camera_frame_id": null,
+        "simulation_frame_id": null,
+        "projected_actors": []
+      },
+      {
+        "index": 12,
+        "png_sha256": "41c87d24663846e89911f4bc3fca70636d4da683a6460a2c055aa862cc095848",
+        "camera_frame_id": null,
+        "simulation_frame_id": null,
+        "projected_actors": []
+      },
+      {
+        "index": 13,
+        "png_sha256": "caef28ad4b99824b63792e1b5fdb86a293a1be9baa48a42e3c61824734518366",
+        "camera_frame_id": null,
+        "simulation_frame_id": null,
+        "projected_actors": []
+      },
+      {
+        "index": 14,
+        "png_sha256": "b3b0e0a231cc676b6e6c6f02cda73c73add13987466ab4fb39d5e0370d9aaabf",
+        "camera_frame_id": null,
+        "simulation_frame_id": null,
+        "projected_actors": []
+      },
+      {
+        "index": 15,
+        "png_sha256": "d2502b064ca4d439f89f637e02b3fdf52096928791663f9f174369144b5aab8d",
+        "camera_frame_id": null,
+        "simulation_frame_id": null,
+        "projected_actors": []
+      },
+      {
+        "index": 16,
+        "png_sha256": "86ed82f67d88f374e227418d6e3159d0fa2d10d171f5e51f31e76e778964fbd0",
+        "camera_frame_id": null,
+        "simulation_frame_id": null,
+        "projected_actors": []
+      },
+      {
+        "index": 17,
+        "png_sha256": "de6e59507ed0626445a22f6d4378273fbb1bb66a856a820ade0e4176405f4a96",
+        "camera_frame_id": null,
+        "simulation_frame_id": null,
+        "projected_actors": []
+      },
+      {
+        "index": 18,
+        "png_sha256": "429fbcd95a5053d37ac0f7fa9eb7e7bf786a69c0064a65e5216ff7476d8aa7f2",
+        "camera_frame_id": null,
+        "simulation_frame_id": null,
+        "projected_actors": []
+      },
+      {
+        "index": 19,
+        "png_sha256": "3bd2434f0dd03714ecbcfe50727c25b8fa0293f0877ff6771b11e3c3c2170787",
+        "camera_frame_id": null,
+        "simulation_frame_id": null,
+        "projected_actors": []
+      }
+    ],
+    "native_rl_admitted": false,
+    "notice": "Native preview integration only; camera projections are geometry reference, not image detection or visibility proof"
+  },
+  {
+    "job_id": "5e811b1fc4154003bcb34a371b90d83f",
+    "status": "succeeded",
+    "request": {
+      "source": "carla",
+      "replay": null,
+      "model_ids": [
+        "occupancy_lidar"
+      ],
+      "native_input_adapter": "intensity_mean_experimental",
+      "scenario": {
+        "map": "Town01",
+        "weather": "clear",
+        "vehicles": 2,
+        "pedestrians": 0,
+        "seed": 73,
+        "frames": 20,
+        "capture_interval": 0.5,
+        "timestep": 0.05,
+        "traffic_placement": "nearest_spawn",
+        "route_spawn_index": 17,
+        "route_kind": "spawn",
+        "lane_change_interval_seconds": null,
+        "lidar": {
+          "channels": 32,
+          "points_per_second": 600000,
+          "range_m": 100,
+          "upper_fov": 10,
+          "lower_fov": -30,
+          "mount_z": 2,
+          "pitch": 0
+        },
+        "camera": {
+          "fov": 90
+        }
+      },
+      "scene_id": null,
+      "capture_id": null,
+      "max_latency_ms": null
+    },
+    "models": {
+      "occupancy_lidar": {
+        "metrics": {
+          "frame_count": 20,
+          "evaluated_cells": 62361,
+          "confusion": [
+            [
+              49432,
+              267,
+              148
+            ],
+            [
+              2898,
+              6487,
+              2592
+            ],
+            [
+              28,
+              37,
+              472
+            ]
+          ],
+          "class_iou": {
+            "free": 0.9366911109847839,
+            "static": 0.5282143147952121,
+            "object": 0.14403417760146475
+          },
+          "miou_supported_classes": 0.5363132011271535,
+          "occupied_iou": 0.7415886766184546,
+          "object_recall": 0.8789571694599627,
+          "flow_epe_m_s": null,
+          "flow_valid_cells": 0,
+          "latency_model_only_ms": {
+            "p50": 81.2255089986138,
+            "p95": 84.33394219864567
+          },
+          "timed_frames": 20
+        },
+        "cache_hits": 0,
+        "checkpoint_sha256": "8d6c7155534906a50ca2f52b039696700072ff200768f0d91ead33c828e9f878",
+        "device": "cpu",
+        "torch": "2.7.1+cpu",
+        "hardware": "Linux-6.8.0-138-generic-x86_64-with-glibc2.35",
+        "timing_note": "Fresh inference frames only; no latency claim for cached predictions"
+      }
+    },
+    "input_sha256": "4fc3b7aec716dcfd6697e8ddd83ecfc0474bb17cb7db61f77fae493c9533f82f",
+    "reference_sha256": "3b0a09d5fab148f25c314f48a61624b938b09548b115ea08abf06a36375f11eb",
+    "frames": [
+      {
+        "index": 0,
+        "png_sha256": "265765be6f0935b8872425582892dfe7086e7180b6cf7c32ad20bdef25057152",
+        "camera_frame_id": 66,
+        "simulation_frame_id": 66,
+        "projected_actors": [
+          199
+        ]
+      },
+      {
+        "index": 1,
+        "png_sha256": "899c3e1b8a6df157686772b360f8fa02c1694378ca09974f8a82dca7fc823cba",
+        "camera_frame_id": 76,
+        "simulation_frame_id": 76,
+        "projected_actors": [
+          199
+        ]
+      },
+      {
+        "index": 2,
+        "png_sha256": "011dbfff51cebe6849bbeab8656598d81cd005da879ddaaef2d452eb338fd573",
+        "camera_frame_id": 86,
+        "simulation_frame_id": 86,
+        "projected_actors": []
+      },
+      {
+        "index": 3,
+        "png_sha256": "cbbc80f1c6776a498e9c16d661017f0cea84c9bf114d0dbc6827a73cac1c4d63",
+        "camera_frame_id": 96,
+        "simulation_frame_id": 96,
+        "projected_actors": []
+      },
+      {
+        "index": 4,
+        "png_sha256": "e0f8dea123930700c958a0f3e0c70d90ff24318b86325f3c5fcec044c7bfe663",
+        "camera_frame_id": 106,
+        "simulation_frame_id": 106,
+        "projected_actors": []
+      },
+      {
+        "index": 5,
+        "png_sha256": "98e959a5bb3d4fdc35c708e9c52153d899b292e7f18e23a73d1549b2c02da8b6",
+        "camera_frame_id": 116,
+        "simulation_frame_id": 116,
+        "projected_actors": []
+      },
+      {
+        "index": 6,
+        "png_sha256": "7fdaaac4b35d302502b18619ff4908b401b39a295972d927bc97bd65dfc377a7",
+        "camera_frame_id": 126,
+        "simulation_frame_id": 126,
+        "projected_actors": []
+      },
+      {
+        "index": 7,
+        "png_sha256": "0ffcf9750e6761d0a471581c47dd29cf8aea40832f6ef8c390f69496ba5d7d72",
+        "camera_frame_id": 136,
+        "simulation_frame_id": 136,
+        "projected_actors": []
+      },
+      {
+        "index": 8,
+        "png_sha256": "d2665d6bdcd932a92c059bcecb32cb5c8ab488691e5efaf92982d7286bc2814e",
+        "camera_frame_id": 146,
+        "simulation_frame_id": 146,
+        "projected_actors": []
+      },
+      {
+        "index": 9,
+        "png_sha256": "ef76a17215213fe39431aa4e30c3a5007a5bb87474304453b4250602d3fd466a",
+        "camera_frame_id": 156,
+        "simulation_frame_id": 156,
+        "projected_actors": []
+      },
+      {
+        "index": 10,
+        "png_sha256": "8574787c6c4df4df6556993505004a680f206f63cc2e4d85c42d1279342abde1",
+        "camera_frame_id": 166,
+        "simulation_frame_id": 166,
+        "projected_actors": []
+      },
+      {
+        "index": 11,
+        "png_sha256": "f9807b309c0482acd663aa9f35375dd32df66e37335f2c5d1098a68c0285eae9",
+        "camera_frame_id": 176,
+        "simulation_frame_id": 176,
+        "projected_actors": []
+      },
+      {
+        "index": 12,
+        "png_sha256": "ed279e2577592fa3a0e121951996dba8747c477864118cb004b8f5a851ff60ae",
+        "camera_frame_id": 186,
+        "simulation_frame_id": 186,
+        "projected_actors": []
+      },
+      {
+        "index": 13,
+        "png_sha256": "c53677982fe47527b4d1c971d87e991fbdea848fbe0e48ca8bf47fd16637edde",
+        "camera_frame_id": 196,
+        "simulation_frame_id": 196,
+        "projected_actors": []
+      },
+      {
+        "index": 14,
+        "png_sha256": "7d394dd9f15526f08abf5986a9c63b672e7f3d7b30aaa16fa36ec5df6e3c5cae",
+        "camera_frame_id": 206,
+        "simulation_frame_id": 206,
+        "projected_actors": []
+      },
+      {
+        "index": 15,
+        "png_sha256": "1d526791ab691c4dddf4b4d54d52e42a80dc0aa4316c687541354a29dfb4cf66",
+        "camera_frame_id": 216,
+        "simulation_frame_id": 216,
+        "projected_actors": []
+      },
+      {
+        "index": 16,
+        "png_sha256": "04423d743f911387d3164ed4748a65a92ac096263fd4f0db014912074321e3cb",
+        "camera_frame_id": 226,
+        "simulation_frame_id": 226,
+        "projected_actors": []
+      },
+      {
+        "index": 17,
+        "png_sha256": "e450775e324bbccd614fefc2604de0c6bcc255b1c2ad17d6d1477408d6a3d922",
+        "camera_frame_id": 236,
+        "simulation_frame_id": 236,
+        "projected_actors": []
+      },
+      {
+        "index": 18,
+        "png_sha256": "30bd06a75d75f785e103c02f7e6c77a1d58888713a2d1425414eea3aa2aa2ce8",
+        "camera_frame_id": 246,
+        "simulation_frame_id": 246,
+        "projected_actors": []
+      },
+      {
+        "index": 19,
+        "png_sha256": "2d37a86082850941712c4772a2871f394e92b9d6394ee36190ae231fd62e8f75",
+        "camera_frame_id": 256,
+        "simulation_frame_id": 256,
+        "projected_actors": []
+      }
+    ],
+    "native_rl_admitted": false,
+    "notice": "Native preview integration only; camera projections are geometry reference, not image detection or visibility proof"
+  }
+]

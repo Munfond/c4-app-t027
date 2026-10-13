@@ -331,6 +331,11 @@ def capture(scenario, root, pulse, settings, rig_options=None):
             r, c, _ = cells(sem_points[static])
             labels[r, c] = 1
             boxes = []
+            from src.simulation.camera_projection import camera_box
+
+            camera_matrix = np.asarray(packets["camera"].transform.get_matrix(), dtype=float)
+            camera_size = (int(packets["camera"].width), int(packets["camera"].height))
+            camera_fov = float(sensor_specs["camera"][1]["fov"])
             visible = set(int(value) for value in semantic["object"])
             for actor in actors[1:]:
                 if actor.id not in visible:
@@ -350,6 +355,15 @@ def capture(scenario, root, pulse, settings, rig_options=None):
                     "w": float(bb.extent.y * 2),
                     "h": float(bb.extent.z * 2),
                     "yaw": float(math.atan2(-box_matrix[1, 0], box_matrix[0, 0])),
+                    "camera_box_uv": camera_box(
+                        world_matrix @ local_matrix,
+                        (bb.extent.x, bb.extent.y, bb.extent.z),
+                        camera_matrix,
+                        camera_size,
+                        camera_fov,
+                    ),
+                    "camera_projection_status": "geometry_recorded",
+                    "world_box_matrix": (world_matrix @ local_matrix).tolist(),
                 }
                 labels[footprint(box) & valid] = 2
                 boxes.append(box)
@@ -373,6 +387,12 @@ def capture(scenario, root, pulse, settings, rig_options=None):
                     {
                         "boxes": boxes,
                         "ego_matrix": ego_matrix.tolist(),
+                        "camera_matrix": camera_matrix.tolist(),
+                        "camera_size": list(camera_size),
+                        "camera_fov": camera_fov,
+                        "camera_projection_policy": "geometry reference; no pixel visibility/occlusion test",
+                        "camera_frame_id": int(packets["camera"].frame),
+                        "simulation_frame_id": int(snapshot.frame),
                         "ego_lane": road_map.get_waypoint(ego.get_location()).lane_id,
                         "ego_road": road_map.get_waypoint(ego.get_location()).road_id,
                     }

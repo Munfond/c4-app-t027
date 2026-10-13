@@ -4,7 +4,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { apiJson } from "@/lib/lab-api";
 
-type Actor = {id:number; x:number; y:number; l:number; w:number; h:number; yaw:number};
+type Actor = {id:number; x:number; y:number; l:number; w:number; h:number; yaw:number; camera_box_uv?: [number,number,number,number] | null; camera_projection_status?: string};
 type Reference = { cells: number[]; valid: boolean[]; actors?: Actor[] };
 type Frame = { index: number; cells: number[]; image: string | null; reference: Reference | null };
 export function CapturePlayback({ job, model, count, interval, camera, active, timestamps }: {
@@ -15,6 +15,7 @@ export function CapturePlayback({ job, model, count, interval, camera, active, t
   const [selectedActorId, setSelectedActorId] = useState<number | null>(null);
   const [frame, setFrame] = useState<Frame | null>(null);
   const [playing, setPlaying] = useState(false);
+  const [loop, setLoop] = useState(false);
   const [speed, setSpeed] = useState(1);
   const [skipGaps, setSkipGaps] = useState(true);
   const [error, setError] = useState("");
@@ -44,7 +45,7 @@ export function CapturePlayback({ job, model, count, interval, camera, active, t
           }) : Promise.resolve(null),
           camera ? apiJson<Reference>(`/api/v1/experiments/${job}/reference/${target}`).catch(() => null) : Promise.resolve(null),
         ]);
-        if (data.cells.length !== 40000) throw new Error("Lưới occupancy không hợp lệ");
+        if (data.cells.length !== 40000 || data.cells.some(value => !Number.isInteger(value) || value < 0 || value > 2)) throw new Error("Lưới occupancy không hợp lệ");
         const image = blob ? URL.createObjectURL(blob) : null;
         if (image) {
           try { const img = new window.Image(); img.src = image; await img.decode(); }
@@ -78,10 +79,10 @@ export function CapturePlayback({ job, model, count, interval, camera, active, t
   const nextGap = measuredGap && Number.isFinite(measuredGap) && measuredGap > 0 ? measuredGap : interval;
   const playbackGap = skipGaps ? Math.min(nextGap, interval) : nextGap;
   useEffect(() => {
-    if (!playing || !active || error || frame?.index !== index || index === count - 1) return;
-    const timer = setTimeout(() => setIndex(index + 1), Math.max(80, playbackGap * 1000 / speed));
+    if (!playing || !active || error || frame?.index !== index || (index === count - 1 && !loop) || count < 2) return;
+    const timer = setTimeout(() => setIndex(index === count - 1 ? 0 : index + 1), Math.max(80, playbackGap * 1000 / speed));
     return () => clearTimeout(timer);
-  }, [playing, active, error, frame, index, count, playbackGap, speed]);
+  }, [playing, active, error, frame, index, count, playbackGap, speed, loop]);
   const isReference = referenceMode && !!frame?.reference;
   const visibleActors = [...(frame?.reference?.actors ?? [])].filter(actor => Math.abs(actor.x) <= 50 && Math.abs(actor.y) <= 50).sort((a,b) => Math.hypot(a.x,a.y) - Math.hypot(b.x,b.y)).slice(0,6);
   const selectedActor = visibleActors.find(actor => actor.id === selectedActorId);
@@ -113,18 +114,20 @@ export function CapturePlayback({ job, model, count, interval, camera, active, t
     }
   }, [frame, isReference, selectedActor]);
   const end = index === count - 1;
+  const hasGaps = timestamps?.some((time,i) => i > 0 && Number.isFinite(time) && Number.isFinite(timestamps[i-1]) && time - timestamps[i-1] > interval + 0.01);
   const elapsed = frame && timestamps && Number.isFinite(timestamps[frame.index]) && Number.isFinite(timestamps[0]) ? timestamps[frame.index] - timestamps[0] : (frame?.index ?? 0) * interval;
   return <section className="grid gap-4" aria-label="Phát lại capture đồng bộ">
     <div className="flex flex-wrap items-center gap-3 border-y border-[var(--line)] py-3">
-      <Button disabled={!frame || !!error} onClick={() => { if (end) { setIndex(0); setPlaying(true); } else setPlaying(v => !v); }}>{end ? "Phát lại" : playing ? "Tạm dừng" : "Phát"}</Button>
+      <Button disabled={!frame || !!error || count < 2} onClick={() => { if (playing && (!end || loop)) setPlaying(false); else { if(end)setIndex(0);setPlaying(true); } }}>{count < 2 ? "Một frame" : playing && (!end || loop) ? "Tạm dừng" : end ? "Phát lại" : "Phát"}</Button>
       <Button variant="secondary" disabled={!index} onClick={() => {setPlaying(false);setIndex(index-1);}}>← Trước</Button>
       <Button variant="secondary" disabled={end} onClick={() => {setPlaying(false);setIndex(index+1);}}>Sau →</Button>
       <label className="text-sm">Tốc độ <select className="ml-2 rounded border p-2" value={speed} onChange={e => setSpeed(Number(e.target.value))}>{[.5,1,2].map(v => <option key={v} value={v}>{v}×</option>)}</select></label>
-      <label className="flex items-center gap-2 text-xs"><input type="checkbox" checked={skipGaps} onChange={e => setSkipGaps(e.target.checked)} />Rút ngắn khoảng trống</label>
+      <label className="flex items-center gap-2 text-xs"><input type="checkbox" checked={loop} disabled={count < 2} onChange={e => setLoop(e.target.checked)} />Lặp capture</label>
+      {hasGaps && <label className="flex items-center gap-2 text-xs"><input type="checkbox" checked={skipGaps} onChange={e => setSkipGaps(e.target.checked)} />Rút ngắn khoảng trống</label>}
       <span role="status" className="ml-auto text-xs tabular-nums text-[var(--muted)]">{frame ? `${frame.index+1}/${count} · ${elapsed.toFixed(1)} s` : "Chuẩn bị frame đầu"}{frame && frame.index !== index ? " · Đồng bộ frame tiếp" : ""}</span>
       <input aria-label="Chọn frame phát lại" type="range" min={0} max={count-1} value={index} className="w-full" onChange={e => {setPlaying(false);setIndex(Number(e.target.value));}} />
     </div>
-    <p className="text-xs text-[var(--muted)]">Thời gian hiển thị lấy từ capture gốc. Rút ngắn khoảng trống chỉ đổi tốc độ xem, không tạo thêm frame.</p>
+    <p className="text-xs text-[var(--muted)]">Phát lại dữ liệu đã ghi, thời gian từ capture gốc.{loop ? " Lặp sẽ trở về frame đầu, không phải mô phỏng trực tiếp." : ""}{hasGaps ? " Rút ngắn khoảng trống chỉ đổi tốc độ xem, không tạo thêm frame." : ""}</p>
     {error && <div role="alert" className="text-sm text-red-700">{error} · Giữ frame trước.<Button variant="secondary" onClick={() => setRetry(v=>v+1)}>Thử lại</Button></div>}
     <div className="flex flex-wrap items-center gap-2" aria-label="Đối chiếu output với reference">
       <Button variant="secondary" aria-pressed={!isReference} onClick={() => setReferenceMode(false)}>Model</Button>
@@ -142,10 +145,13 @@ export function CapturePlayback({ job, model, count, interval, camera, active, t
         <canvas ref={canvas} width={200} height={200} className="aspect-square w-full [image-rendering:pixelated]" aria-label="Occupancy: trước lên trên, trái sang trái; dấu cộng là gốc ego" />
         <span className="absolute left-3 top-3 text-xs text-white">PHÍA TRƯỚC ↑</span><span className="absolute bottom-3 left-3 text-xs text-white">← TRÁI</span><span className="absolute bottom-3 right-3 text-xs text-white">PHẢI →</span>
       </div><figcaption className="text-xs text-[var(--muted)]">{isReference ? "REFERENCE" : "MODEL"} · 100 × 100 m · 0,5 m/ô · + gốc ego · vòng 10/25 m · xanh: tĩnh · cam: vật thể</figcaption></figure>
-      {camera && <figure className="grid content-start gap-2"><div className="aspect-video overflow-hidden rounded-lg bg-[var(--navy)]">
+      {camera && <figure className="grid content-start gap-2"><div className="relative aspect-video overflow-hidden rounded-lg bg-[var(--navy)]">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         {frame?.image && <img src={frame.image} className="h-full w-full object-contain" alt={`Camera cùng frame ${frame.index+1} với occupancy`} />}
-      </div><figcaption className="text-xs text-[var(--muted)]">Camera phía trước · Cùng frame BEV. Ô cam chưa xác định danh tính từng vật thể.</figcaption></figure>}
+        {isReference && selectedActor?.camera_box_uv && <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="pointer-events-none absolute inset-0 h-full w-full" aria-label={`Khung chiếu hình học reference #${selectedActor.id}, không phải detection ảnh`}>
+          {([["#10262e",4],["#d9ee98",2]] as const).map(([color,width])=><rect key={color} x={selectedActor.camera_box_uv![0]*100} y={selectedActor.camera_box_uv![1]*100} width={(selectedActor.camera_box_uv![2]-selectedActor.camera_box_uv![0])*100} height={(selectedActor.camera_box_uv![3]-selectedActor.camera_box_uv![1])*100} fill="none" stroke={color} strokeWidth={width} vectorEffect="non-scaling-stroke" />)}
+        </svg>}
+      </div><figcaption className="text-xs text-[var(--muted)]">Camera phía trước · Cùng frame BEV. {isReference && selectedActor?.camera_box_uv ? `Viền sáng: phép chiếu reference #${selectedActor.id}, chưa xét che khuất/khả năng nhìn thấy; không phải detection ảnh.` : isReference && selectedActor?.camera_projection_status === "geometry_recorded" ? "Actor được chọn không có khung chiếu hợp lệ trên ảnh này (ngoài khung hoặc quá gần camera)." : "Ô cam chưa xác định danh tính từng vật thể; capture cũ có thể thiếu camera calibration."}</figcaption></figure>}
     </div>
   </section>;
 }

@@ -34,6 +34,7 @@ class LidarSpec(BaseModel):
 
 class CameraSpec(BaseModel):
     """Bounded capture presets; FOV is not a detector quality recommendation."""
+
     model_config = ConfigDict(extra="forbid")
     fov: Literal[60, 90, 110] = 90
 
@@ -105,8 +106,12 @@ class SensorAgentRequest(AgentPlanRequest):
 
 class SensorProfile(BaseModel):
     model_config = ConfigDict(extra="forbid")
-    name: str = Field(min_length=1, max_length=40, pattern=r"^[a-zA-Z0-9_-]+$",
-                      description="Candidate profile name. Never use baseline; baseline runs automatically.")
+    name: str = Field(
+        min_length=1,
+        max_length=40,
+        pattern=r"^[a-zA-Z0-9_-]+$",
+        description="Candidate profile name. Never use baseline; baseline runs automatically.",
+    )
     lidar: LidarSpec
 
 
@@ -114,8 +119,11 @@ class SensorStudySpec(BaseModel):
     model_config = ConfigDict(extra="forbid")
     scenarios: list[ScenarioSpec] = Field(min_length=1, max_length=3)
     profiles: list[SensorProfile] = Field(min_length=1, max_length=3)
+    native_input_adapter: Literal["raw", "intensity_mean_experimental"] = "raw"
     max_iou_drop: float = Field(default=0.02, ge=0, le=0.2)
     min_occupied_iou: float = Field(default=0.3, ge=0, le=1)
+    min_object_iou: float | None = Field(default=None, ge=0, le=1)
+    min_object_recall: float | None = Field(default=None, ge=0, le=1)
 
     @model_validator(mode="after")
     def bounded_study(self):

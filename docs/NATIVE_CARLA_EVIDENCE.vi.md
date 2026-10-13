@@ -53,3 +53,36 @@ Tái đánh giá capture hoàn chỉnh có sẵn, không khởi động CARLA v�
 ```
 
 Không ghi đè evidence cũ. Bước tiếp theo là thiết kế split native theo route/map, coverage và reference audit; sau đó thu bộ profile sensor có đo chất lượng/latency. Bộ 12–24 profile và MultiDiscrete trong kế hoạch gốc vẫn chưa hoàn tất. PPO offline 3 mức giữ điểm hiện có là kết quả riêng, không dùng các con số CARLA này để tô lại báo cáo PPO.
+
+## Pilot 12 profile LiDAR vật lý
+
+12 profile = 16/32/64 kênh × 150k/300k/450k/600k điểm/s. Bốn study đã hoàn tất; các baseline lặp lại có cùng reference hash. Audit đọc lại raw điểm/intensity để tái tạo chính xác feature tensor, so input/reference SHA và confusion matrix với prediction lưu. Không nâng 16/32 kênh giả thành 64 kênh.
+
+Ở cùng Town01/seed42, baseline 32 kênh 600k có occupied IoU 83,2%, object IoU 39,8%, object-cell recall 96,2%. 32 kênh 300k: 65,2% / 29,8% / 71,7%; 32 kênh 150k: 42,9% / 18,2% / 45,3%. Theo ngưỡng đã đặt trước đo (occupied ≥50%, object IoU ≥10%, recall ≥50%, occupied IoU giảm tối đa 2 điểm phần trăm), các study giữ baseline. 16 kênh 600k có object IoU cao hơn baseline nhưng occupied IoU chỉ 50,1%: nhiều hoặc ít kênh không tự bảo đảm mọi metric tốt hơn.
+
+Trong bot, mở “12 profile LiDAR · pilot đã đo” để xem matrix và từng metric vật thể. “Kiểm chứng 2 mức LiDAR” tạo ba capture mới không gọi LLM. Evidence có hash, run JSON, thông số, lý do không chọn profile và engineer review; review không tự train lại. Lặp capture phát lại dữ liệu đã ghi, không là mô phỏng trực tiếp.
+
+Nguồn: `native-12-profile-plan.json/.sha256`, `native-12-profile-audit.json/.sha256` và `native-sensor-study-evidence.json`. API đọc `/api/v1/experiments/native-profile-pilot` và `/report` từ artifact allowlist; chưa có hoặc sai checksum thì không hiển thị như evidence hợp lệ.
+
+**Chưa admit cho RL native**: chỉ một route, 4 frame/profile, chưa có train/validation/test tách biệt. Ba profile đầu đã được đo trước mở rộng catalog; không gọi toàn bộ pilot là test chưa từng xem. Baseline hit cache nên p95 của nó trong study này là null, không lấy số đo khác để điền. Payload ước tính từ gói sensor lấy mẫu, không là điện/GPU/chi phí tiền.
+
+Tái audit (không chạy CARLA/model hay training):
+
+```bash
+.venv-recovery312/bin/python -m scripts.audit_native_profile_pilot \
+  data/runtime/native-12-profile-current.json \
+  --plan eval/recovery-mvp-2026-10-13/native-12-profile-plan.json \
+  --output data/native-profile-audit-new.json
+```
+
+## Liên hệ actor reference giữa BEV và camera
+
+Clip `5e811b1fc4154003bcb34a371b90d83f` có 20 frame với camera pose, world box matrix, FOV và kích thước ảnh được ghi thực. API kiểm tra camera/simulation frame ID, center BEV so với world/ego transform, và tính lại khung chiếu. Không ước lượng calibration của capture cũ.
+
+Trong Reference, chọn actor: viền footprint xuất hiện ở BEV; nếu có phép chiếu hợp lệ, viền sáng xuất hiện trên camera. Actor phía sau không bị vẽ vào camera trước. Đây là hình học tham chiếu theo [hướng dẫn bounding box CARLA](https://carla.readthedocs.io/en/latest/tuto_G_bounding_boxes/), không phải detection ảnh; chưa xét che khuất hoặc méo lens. Vật thể trong occupancy không có instance ID nên không tuyên bố đã ghép model-cell với danh tính trên ảnh.
+
+Clip fog `33443fbf2b254d60a62f9f456565b63c` cũng có 20 frame; chưa có camera projection metadata vì được tạo trước bổ sung này. Cả hai chỉ để demo/review, không admit RL native. SHA ảnh, frame ID và output lưu trong `native-continuous-preview-evidence.json/.sha256`.
+
+Trang đối chiếu baseline/ứng viên phát cặp output + ảnh atomic: giữ cặp trước đến khi cả hai sẵn sàng, cache tối đa 6 cặp, có Play/Pause/Lặp. Camera lỗi không được thay bằng raw hoặc frame khác. Chế độ lặp là replay dữ liệu đã ghi, không là mô phỏng/agent online.
+
+![So sánh chất lượng và payload của pilot](../eval/recovery-mvp-2026-10-13/native-profile-comparison.png)

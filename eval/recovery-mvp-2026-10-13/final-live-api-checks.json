@@ -1,0 +1,72 @@
+[
+  {
+    "base": "http://127.0.0.1:8000",
+    "path": "/health",
+    "status": 200,
+    "bytes": 35,
+    "response_sha256": "6059f378eaae926e616dbfc376fa350a989fa4845cf349f33e19c0e300209233"
+  },
+  {
+    "base": "http://127.0.0.1:3111",
+    "path": "/lab",
+    "status": 200,
+    "bytes": 16760,
+    "response_sha256": "8f3bd1062963fbb93949f931303087a75702df639b184e2f14aef3c589ddddb3"
+  },
+  {
+    "base": "http://127.0.0.1:8000",
+    "path": "/api/v1/experiments/native-profile-pilot",
+    "status": 200,
+    "bytes": 59891,
+    "response_sha256": "204864e5e48bc1ac79dc3c8936b7e8b7b19bcf2550f3c3be7bfef87c687e91d0"
+  },
+  {
+    "base": "http://127.0.0.1:8000",
+    "path": "/api/v1/experiments/native-profile-pilot/report",
+    "status": 200,
+    "bytes": 97960,
+    "response_sha256": "cb9f319be008adb3cb1edcdf1f0c3d01330feecd677a255515bb994c3d5d024d"
+  },
+  {
+    "base": "http://127.0.0.1:8000",
+    "path": "/api/v1/experiments/sensor-agent/c34f2411c1f84da886d0770b589dd6c7/evidence",
+    "status": 200,
+    "bytes": 9288,
+    "response_sha256": "a2e46958767a5550d14660190a50333dd7e6349630a48052ea9e8947427aecc8"
+  },
+  {
+    "base": "http://127.0.0.1:8000",
+    "path": "/api/v1/experiments/5e811b1fc4154003bcb34a371b90d83f/reference/0",
+    "status": 200,
+    "bytes": 317396,
+    "response_sha256": "93a6a85e3a18d2cba3ea3fda073c1ac1339230de6cb2c8b4699c36d6d5b2cfa4"
+  },
+  {
+    "base": "http://127.0.0.1:8000",
+    "path": "/api/v1/experiments/5e811b1fc4154003bcb34a371b90d83f/camera?index=0",
+    "status": 200,
+    "bytes": 330549,
+    "response_sha256": "265765be6f0935b8872425582892dfe7086e7180b6cf7c32ad20bdef25057152"
+  },
+  {
+    "base": "http://127.0.0.1:8000",
+    "path": "/api/v1/experiments/5e811b1fc4154003bcb34a371b90d83f/predictions/occupancy_lidar/19",
+    "status": 200,
+    "bytes": 80253,
+    "response_sha256": "39d5ec5f11c70497d69ca964057563465e87a33b2c4bd13a2e5295e66292148d"
+  },
+  {
+    "base": "http://127.0.0.1:3111",
+    "path": "/api/v1/experiments/native-profile-pilot",
+    "status": 200,
+    "bytes": 59891,
+    "response_sha256": "204864e5e48bc1ac79dc3c8936b7e8b7b19bcf2550f3c3be7bfef87c687e91d0"
+  },
+  {
+    "base": "http://127.0.0.1:8000",
+    "path": "/api/v1/experiments/occupancy-rl",
+    "status": 200,
+    "bytes": 6781,
+    "response_sha256": "16814ed76bbcc3901f4926e34facb868a27e31cbb8d131538c12ef2a3ef21c59"
+  }
+]

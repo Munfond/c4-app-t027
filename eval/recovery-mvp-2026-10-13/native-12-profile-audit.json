@@ -1,0 +1,2252 @@
+{
+  "kind": "audited_native_12_profile_integration_pilot",
+  "status": "complete_pilot",
+  "checkpoint_sha256": "8d6c7155534906a50ca2f52b039696700072ff200768f0d91ead33c828e9f878",
+  "adapter": {
+    "id": "intensity_mean_experimental",
+    "manifest_sha256": "e0338b8b1bd7963bedbbb499128f734e25c5dc1725c17f17eaca0440a520379a",
+    "gain": 0.06486433468844091,
+    "checkpoint_sha256": "8d6c7155534906a50ca2f52b039696700072ff200768f0d91ead33c828e9f878",
+    "notice": "Experimental input alignment; validated only on limited Town01 captures, not real-world safety"
+  },
+  "profiles": [
+    {
+      "profile": "channels32_600k",
+      "job_id": "26ff39d780f947c9b75e8a1511feebce",
+      "channels": 32,
+      "points_per_second": 600000,
+      "frames": 4,
+      "raw_point_counts": [
+        15449,
+        15289,
+        15274,
+        15120
+      ],
+      "metrics": {
+        "frame_count": 4,
+        "evaluated_cells": 17665,
+        "confusion": [
+          [
+            12291,
+            143,
+            26
+          ],
+          [
+            731,
+            4244,
+            124
+          ],
+          [
+            4,
+            0,
+            102
+          ]
+        ],
+        "class_iou": {
+          "free": 0.9314892004547177,
+          "static": 0.8096146508966043,
+          "object": 0.3984375
+        },
+        "miou_supported_classes": 0.7131804504504408,
+        "occupied_iou": 0.831782657238556,
+        "object_recall": 0.9622641509433962,
+        "flow_epe_m_s": null,
+        "flow_valid_cells": 0,
+        "latency_model_only_ms": null,
+        "timed_frames": 0
+      },
+      "raw_npz_sha256": {
+        "frame_0000": "9c96c705b2a9a837bbef9ce9f083adba3327cb4205c7e1fddb8db5f19c65efe4",
+        "frame_0001": "3fab494c5b5e28e2324b7842a96e7537693dbbcedee8a6f10ce09f076f81de34",
+        "frame_0002": "83c3edc081fa9ae777c6fe33b72c56b332b37e06ad49f4853321d553c52a1811",
+        "frame_0003": "1635ef3970c3d6fc8ed1657692e3df4e48994002405ab2da529c6718a0221f1c"
+      },
+      "reference_sha256": "58a9cfb450934ee825d444048ea5b6e41a2c6acc36569aa1090c186b409e1ed7",
+      "input_sha256": "93322f910beeba1edae161bf7a3e3ec1dbfb08d528ba3f1f4668ca93682950fa",
+      "sampled_lidar_bytes_per_second": 4890560.0
+    },
+    {
+      "profile": "channels32_300k",
+      "job_id": "a74a401a33134821b4b5095b0d39438e",
+      "channels": 32,
+      "points_per_second": 300000,
+      "frames": 4,
+      "raw_point_counts": [
+        7652,
+        7670,
+        7613,
+        7578
+      ],
+      "metrics": {
+        "frame_count": 4,
+        "evaluated_cells": 17665,
+        "confusion": [
+          [
+            12350,
+            67,
+            43
+          ],
+          [
+            1713,
+            3280,
+            106
+          ],
+          [
+            28,
+            2,
+            76
+          ]
+        ],
+        "class_iou": {
+          "free": 0.8696570664037744,
+          "static": 0.6346749226006192,
+          "object": 0.2980392156862745
+        },
+        "miou_supported_classes": 0.600790401563556,
+        "occupied_iou": 0.6517403574788335,
+        "object_recall": 0.7169811320754716,
+        "flow_epe_m_s": null,
+        "flow_valid_cells": 0,
+        "latency_model_only_ms": {
+          "p50": 79.3399079957453,
+          "p95": 81.73380694861407
+        },
+        "timed_frames": 4
+      },
+      "raw_npz_sha256": {
+        "frame_0000": "00a0802e2b701ae3ad093f78b97236a3fe1f1b65e54ffb9155e4cd20a4f8223d",
+        "frame_0001": "54359ab1533a9757b0a2d3d4cabef88390d7917820a9d5921fba3f29e63a3e08",
+        "frame_0002": "ef29d4df76747066ccacbf06e9ea9ec62c281f593762592be23bc74db4cdd5c8",
+        "frame_0003": "16916ae9b947b1f51942fc504b8cf8ca8a2ef3aa905604ae22d7ac34d33e8ab0"
+      },
+      "reference_sha256": "58a9cfb450934ee825d444048ea5b6e41a2c6acc36569aa1090c186b409e1ed7",
+      "input_sha256": "7a31eb780c52d28a06c02d865c27a5aec6fe48c9dc23f652294b1e008b69247e",
+      "sampled_lidar_bytes_per_second": 2441040.0
+    },
+    {
+      "profile": "channels32_150k",
+      "job_id": "3aaca58343a548f8b9f49f261448ea56",
+      "channels": 32,
+      "points_per_second": 150000,
+      "frames": 4,
+      "raw_point_counts": [
+        3831,
+        3818,
+        3772,
+        3827
+      ],
+      "metrics": {
+        "frame_count": 4,
+        "evaluated_cells": 17665,
+        "confusion": [
+          [
+            12357,
+            36,
+            67
+          ],
+          [
+            2874,
+            2134,
+            91
+          ],
+          [
+            54,
+            4,
+            48
+          ]
+        ],
+        "class_iou": {
+          "free": 0.8030283337665713,
+          "static": 0.41525588635921384,
+          "object": 0.18181818181818182
+        },
+        "miou_supported_classes": 0.4667008006479891,
+        "occupied_iou": 0.42897513187641295,
+        "object_recall": 0.4528301886792453,
+        "flow_epe_m_s": null,
+        "flow_valid_cells": 0,
+        "latency_model_only_ms": {
+          "p50": 86.73266050391248,
+          "p95": 87.245050103229
+        },
+        "timed_frames": 4
+      },
+      "raw_npz_sha256": {
+        "frame_0000": "13faf845519290098c361b19ea7f3744f7fef4bf7121b6a1e581c0a03d884613",
+        "frame_0001": "b57cf4059aca971b0b1eb545703ac9e4e9c047a48dd82d2d07dc6e193e5c0c3c",
+        "frame_0002": "1133e4ed1e06da060a5561dae14f571e955d674203b7c5400661c68e103b3458",
+        "frame_0003": "2a6cd3e230249a084cfab802a5d4efc966072fa64f59855a6397466aabdedc5c"
+      },
+      "reference_sha256": "58a9cfb450934ee825d444048ea5b6e41a2c6acc36569aa1090c186b409e1ed7",
+      "input_sha256": "76f4ece1803cda82500da3d3ed238f4a4ee5f0eafaa4b4b7782d242de8a4dcdc",
+      "sampled_lidar_bytes_per_second": 1219840.0
+    },
+    {
+      "profile": "channels16_150k",
+      "job_id": "9b96c02209664ca6817f427d5a7614fc",
+      "channels": 16,
+      "points_per_second": 150000,
+      "frames": 4,
+      "raw_point_counts": [
+        3820,
+        3795,
+        3766,
+        3790
+      ],
+      "metrics": {
+        "frame_count": 4,
+        "evaluated_cells": 17665,
+        "confusion": [
+          [
+            12356,
+            75,
+            29
+          ],
+          [
+            3266,
+            1745,
+            88
+          ],
+          [
+            32,
+            1,
+            73
+          ]
+        ],
+        "class_iou": {
+          "free": 0.784109658586115,
+          "static": 0.33719806763285026,
+          "object": 0.3273542600896861
+        },
+        "miou_supported_classes": 0.4828873287695505,
+        "occupied_iou": 0.35920135618760596,
+        "object_recall": 0.6886792452830188,
+        "flow_epe_m_s": null,
+        "flow_valid_cells": 0,
+        "latency_model_only_ms": {
+          "p50": 83.83306599716889,
+          "p95": 83.90804904447577
+        },
+        "timed_frames": 4
+      },
+      "raw_npz_sha256": {
+        "frame_0000": "8ddef699011a0d116a15cb927934b27ac0bd975ac69f58bc6084e267e7655d8c",
+        "frame_0001": "6ff8d32cc8e9269da0d899ee147f826faab5fe7fffdc7bff9dfa704876f14d9d",
+        "frame_0002": "78ca0df340ad9e69c710b93be2641a90270be2cfb7ac99ef55496e28d9f0360a",
+        "frame_0003": "9228ac8d8dddd8c2d76d62bd7ea70bd96a2626d8d23c601c0bd4386da2c773b1"
+      },
+      "reference_sha256": "58a9cfb450934ee825d444048ea5b6e41a2c6acc36569aa1090c186b409e1ed7",
+      "input_sha256": "aad8a1906c94cb4e39cb7a929119ab20e2576f30ea51e6b60f84ddcd31db74ed",
+      "sampled_lidar_bytes_per_second": 1213680.0
+    },
+    {
+      "profile": "channels16_300k",
+      "job_id": "863325c4c3cc47feba7e9c97f0379ded",
+      "channels": 16,
+      "points_per_second": 300000,
+      "frames": 4,
+      "raw_point_counts": [
+        7558,
+        7562,
+        7493,
+        7525
+      ],
+      "metrics": {
+        "frame_count": 4,
+        "evaluated_cells": 17665,
+        "confusion": [
+          [
+            12277,
+            133,
+            50
+          ],
+          [
+            2783,
+            2212,
+            104
+          ],
+          [
+            11,
+            0,
+            95
+          ]
+        ],
+        "class_iou": {
+          "free": 0.8048380752589485,
+          "static": 0.422782874617737,
+          "object": 0.36538461538461536
+        },
+        "miou_supported_classes": 0.5310018550871003,
+        "occupied_iou": 0.44747587230883445,
+        "object_recall": 0.8962264150943396,
+        "flow_epe_m_s": null,
+        "flow_valid_cells": 0,
+        "latency_model_only_ms": {
+          "p50": 86.67760000025737,
+          "p95": 86.96985815004155
+        },
+        "timed_frames": 4
+      },
+      "raw_npz_sha256": {
+        "frame_0000": "712298788cd5fecab682f0bba50069df83f1a3ee91320f7e5990c4228dd7c10d",
+        "frame_0001": "d2f4dfd3953fa1ede554e575e2cf9c36910b532c7dffe745c13df890ea7f9b68",
+        "frame_0002": "4856849a84030a32a3bb94c9e0db83806730e5c9d1b4c1c81a9865ad65fffebf",
+        "frame_0003": "f8ea585fabd128750c1c4e0da01bd31c325c9ea7ebdcdb233f8b846660eaf929"
+      },
+      "reference_sha256": "58a9cfb450934ee825d444048ea5b6e41a2c6acc36569aa1090c186b409e1ed7",
+      "input_sha256": "1993bbaa447de4e58ebef6fdd583f85c116a5a54de94de90f259e302ebf37464",
+      "sampled_lidar_bytes_per_second": 2411040.0
+    },
+    {
+      "profile": "channels16_450k",
+      "job_id": "96e9ae5dd65044069e2b0e4b70849e2d",
+      "channels": 16,
+      "points_per_second": 450000,
+      "frames": 4,
+      "raw_point_counts": [
+        11333,
+        11369,
+        11390,
+        11248
+      ],
+      "metrics": {
+        "frame_count": 4,
+        "evaluated_cells": 17665,
+        "confusion": [
+          [
+            12248,
+            175,
+            37
+          ],
+          [
+            2568,
+            2444,
+            87
+          ],
+          [
+            7,
+            0,
+            99
+          ]
+        ],
+        "class_iou": {
+          "free": 0.8146325241104091,
+          "static": 0.4634053849070914,
+          "object": 0.43043478260869567
+        },
+        "miou_supported_classes": 0.569490897208732,
+        "occupied_iou": 0.4855085840871331,
+        "object_recall": 0.9339622641509434,
+        "flow_epe_m_s": null,
+        "flow_valid_cells": 0,
+        "latency_model_only_ms": {
+          "p50": 86.92789249835187,
+          "p95": 87.63239195177448
+        },
+        "timed_frames": 4
+      },
+      "raw_npz_sha256": {
+        "frame_0000": "79d74a97fd53f584aa8357945917e07154cafec614d63adcd5a66d4afa4cacd9",
+        "frame_0001": "97ac4cccbd47780fd261027fa8f396760f786b99c528dc4c9e5cd867e0d06c10",
+        "frame_0002": "095108dfc70650e0d259634c693321458238c532f90e964d3d10b355261e27f0",
+        "frame_0003": "9ec5ac34b24010d73905fa4ca2e1fc66f0f82206a4b6b3b244a9a00bad0834f7"
+      },
+      "reference_sha256": "58a9cfb450934ee825d444048ea5b6e41a2c6acc36569aa1090c186b409e1ed7",
+      "input_sha256": "e9ccbc616fcb01bc526bd1d6fa538a4abaf0a611adcc6e6585a55185ef67c478",
+      "sampled_lidar_bytes_per_second": 3627200.0
+    },
+    {
+      "profile": "channels16_600k",
+      "job_id": "22f1b70d24bb41768b5bb4ab2a0d1fcb",
+      "channels": 16,
+      "points_per_second": 600000,
+      "frames": 4,
+      "raw_point_counts": [
+        15212,
+        15194,
+        15210,
+        15023
+      ],
+      "metrics": {
+        "frame_count": 4,
+        "evaluated_cells": 17665,
+        "confusion": [
+          [
+            12263,
+            167,
+            30
+          ],
+          [
+            2490,
+            2516,
+            93
+          ],
+          [
+            6,
+            0,
+            100
+          ]
+        ],
+        "class_iou": {
+          "free": 0.8199384862262638,
+          "static": 0.47778199772123053,
+          "object": 0.4366812227074236
+        },
+        "miou_supported_classes": 0.578133902218306,
+        "occupied_iou": 0.5014809329877823,
+        "object_recall": 0.9433962264150944,
+        "flow_epe_m_s": null,
+        "flow_valid_cells": 0,
+        "latency_model_only_ms": {
+          "p50": 84.65220500147552,
+          "p95": 86.04834534708061
+        },
+        "timed_frames": 4
+      },
+      "raw_npz_sha256": {
+        "frame_0000": "c31c6614dac57214e9e6266d241e38a80d5aee6bc0ae699e713f2feb270744a3",
+        "frame_0001": "931cf9b4ccc6096b804a79ef2de562e29696b8cc9641b777d75c645b7f719362",
+        "frame_0002": "b17acb46de99d61f51f76e58fe9639fe667ad2adeba308397c706a7c7aa60c38",
+        "frame_0003": "6ba8d1e053d8fff86d313798c15266abd07ae3e04b35fd77883cc8a976a656a8"
+      },
+      "reference_sha256": "58a9cfb450934ee825d444048ea5b6e41a2c6acc36569aa1090c186b409e1ed7",
+      "input_sha256": "fd3dd4172fb33eaf8d77f06bf0de95491784df3f9369acd250533e240e9e8d03",
+      "sampled_lidar_bytes_per_second": 4851120.0
+    },
+    {
+      "profile": "channels32_450k",
+      "job_id": "aabf95d4f1fa4cef8cc0454543771a5d",
+      "channels": 32,
+      "points_per_second": 450000,
+      "frames": 4,
+      "raw_point_counts": [
+        11447,
+        11376,
+        11446,
+        11349
+      ],
+      "metrics": {
+        "frame_count": 4,
+        "evaluated_cells": 17665,
+        "confusion": [
+          [
+            12307,
+            123,
+            30
+          ],
+          [
+            1271,
+            3727,
+            101
+          ],
+          [
+            16,
+            2,
+            88
+          ]
+        ],
+        "class_iou": {
+          "free": 0.8952498726994981,
+          "static": 0.7134379785604901,
+          "object": 0.37130801687763715
+        },
+        "miou_supported_classes": 0.6599986227125417,
+        "occupied_iou": 0.7312430011198209,
+        "object_recall": 0.8301886792452831,
+        "flow_epe_m_s": null,
+        "flow_valid_cells": 0,
+        "latency_model_only_ms": {
+          "p50": 84.64135700342013,
+          "p95": 86.37032864971843
+        },
+        "timed_frames": 4
+      },
+      "raw_npz_sha256": {
+        "frame_0000": "0454c0698b76f6a82629a97282df1a81e161ef8273c8fcbb8baf2a04cd694c5f",
+        "frame_0001": "e9874555d5f4bb7b4f325867e75f5b7a85e07efc2ed8b09e5d1f7ba3a57ec03d",
+        "frame_0002": "59878a7ff2daaa1598a758e63f8407aed2ab3d4e852f34478fefb39dba9f0644",
+        "frame_0003": "5ca9d6a14e0fa505e81a8e24d29a35c657fcf32700b89a6548466073c333f814"
+      },
+      "reference_sha256": "58a9cfb450934ee825d444048ea5b6e41a2c6acc36569aa1090c186b409e1ed7",
+      "input_sha256": "32f1816383dd56186ea0f92979de25607007642b237c696a7e2bb7c529011f8e",
+      "sampled_lidar_bytes_per_second": 3649440.0
+    },
+    {
+      "profile": "channels64_150k",
+      "job_id": "d61e9c68775d49fb8292e67d96cb18b7",
+      "channels": 64,
+      "points_per_second": 150000,
+      "frames": 4,
+      "raw_point_counts": [
+        3841,
+        3828,
+        3789,
+        3820
+      ],
+      "metrics": {
+        "frame_count": 4,
+        "evaluated_cells": 17665,
+        "confusion": [
+          [
+            12371,
+            59,
+            30
+          ],
+          [
+            3412,
+            1608,
+            79
+          ],
+          [
+            50,
+            4,
+            52
+          ]
+        ],
+        "class_iou": {
+          "free": 0.7769752543650296,
+          "static": 0.3115071677644324,
+          "object": 0.24186046511627907
+        },
+        "miou_supported_classes": 0.44344762908191365,
+        "occupied_iou": 0.3292406497922176,
+        "object_recall": 0.49056603773584906,
+        "flow_epe_m_s": null,
+        "flow_valid_cells": 0,
+        "latency_model_only_ms": {
+          "p50": 83.80216899968218,
+          "p95": 85.32717614980356
+        },
+        "timed_frames": 4
+      },
+      "raw_npz_sha256": {
+        "frame_0000": "6ed62e1f78935e98d97c8e8234d9d248d4244bee1a9467ca433313a0fdec7a90",
+        "frame_0001": "d1097ba755dfa0ff446444ceb87f97af3affe382b73dbb6896aed948f5eec038",
+        "frame_0002": "b8420284e4cc89ce957bfbccc51c75bdd09cda32462cfea7c5f9e478a6d4fbd0",
+        "frame_0003": "0154133ecbcf21360b871a26da2601c77421e6a870afb134dfe74f075cac4fbd"
+      },
+      "reference_sha256": "58a9cfb450934ee825d444048ea5b6e41a2c6acc36569aa1090c186b409e1ed7",
+      "input_sha256": "bcedc48b79d42b7da66666f1beaa5637760a3ed0f61791e6f21952201ae177be",
+      "sampled_lidar_bytes_per_second": 1222240.0
+    },
+    {
+      "profile": "channels64_300k",
+      "job_id": "633e2e8406424bd4a642fe82b4f86d9b",
+      "channels": 64,
+      "points_per_second": 300000,
+      "frames": 4,
+      "raw_point_counts": [
+        7611,
+        7580,
+        7543,
+        7545
+      ],
+      "metrics": {
+        "frame_count": 4,
+        "evaluated_cells": 17665,
+        "confusion": [
+          [
+            12317,
+            127,
+            16
+          ],
+          [
+            2534,
+            2496,
+            69
+          ],
+          [
+            39,
+            0,
+            67
+          ]
+        ],
+        "class_iou": {
+          "free": 0.8193308055610989,
+          "static": 0.47761194029850745,
+          "object": 0.3507853403141361
+        },
+        "miou_supported_classes": 0.5492426953912475,
+        "occupied_iou": 0.49214659685863876,
+        "object_recall": 0.6320754716981132,
+        "flow_epe_m_s": null,
+        "flow_valid_cells": 0,
+        "latency_model_only_ms": {
+          "p50": 81.48446300037904,
+          "p95": 84.80451595241902
+        },
+        "timed_frames": 4
+      },
+      "raw_npz_sha256": {
+        "frame_0000": "b1c69a700d88a517ae23bc60e7df3735426c2d6c49439a999db639e02b5060cd",
+        "frame_0001": "50a1df1ab5d8a27e44e4d899d7e5eaf813243dc875e2cc9fb03162638cf64f1d",
+        "frame_0002": "5aa3b0604d9cc74afa122e93b754c7fce6253f3a979a9d540a70440cae699d18",
+        "frame_0003": "fbbb9d1df1f4f5388fc7a7082e57f12f6ac5dc9218d774598708d29219325f28"
+      },
+      "reference_sha256": "58a9cfb450934ee825d444048ea5b6e41a2c6acc36569aa1090c186b409e1ed7",
+      "input_sha256": "a1bad17875e11344e671c98b578771de0135aa2d8b5f8810fbd052deba38c63b",
+      "sampled_lidar_bytes_per_second": 2422320.0
+    },
+    {
+      "profile": "channels64_450k",
+      "job_id": "c89c5b418aaf41318a9e51dd25793acd",
+      "channels": 64,
+      "points_per_second": 450000,
+      "frames": 4,
+      "raw_point_counts": [
+        11419,
+        11398,
+        11483,
+        11400
+      ],
+      "metrics": {
+        "frame_count": 4,
+        "evaluated_cells": 17665,
+        "confusion": [
+          [
+            12254,
+            180,
+            26
+          ],
+          [
+            1921,
+            3109,
+            69
+          ],
+          [
+            20,
+            3,
+            83
+          ]
+        ],
+        "class_iou": {
+          "free": 0.8509131310325672,
+          "static": 0.5886028019689512,
+          "object": 0.4129353233830846
+        },
+        "miou_supported_classes": 0.617483752128201,
+        "occupied_iou": 0.603215671779708,
+        "object_recall": 0.7830188679245284,
+        "flow_epe_m_s": null,
+        "flow_valid_cells": 0,
+        "latency_model_only_ms": {
+          "p50": 82.88688299944624,
+          "p95": 84.28811144694919
+        },
+        "timed_frames": 4
+      },
+      "raw_npz_sha256": {
+        "frame_0000": "ab58848511318ee4c62af081bbd8074a3729d128a5f61b6ba03e69319bbc0515",
+        "frame_0001": "f9a6081a890190f3325d8de9fb92f37400bacfbb3592c2f4a5450aa34ec7dd03",
+        "frame_0002": "d48c9c8095a92ec02aaaa22609d879f0fa21d3e00808ac495bdccba99afe8c5b",
+        "frame_0003": "718b797a71381743a4ec9b1a49ee2686dfb1c7db830c055ccc437cb9b3b424a4"
+      },
+      "reference_sha256": "58a9cfb450934ee825d444048ea5b6e41a2c6acc36569aa1090c186b409e1ed7",
+      "input_sha256": "1adca1d089bacde2a627591ca2efafc0239007c85c4cb03339baaf926c02f291",
+      "sampled_lidar_bytes_per_second": 3656000.0
+    },
+    {
+      "profile": "channels64_600k",
+      "job_id": "54e56042c4df4850865858245e3e1243",
+      "channels": 64,
+      "points_per_second": 600000,
+      "frames": 4,
+      "raw_point_counts": [
+        15348,
+        15336,
+        15366,
+        15138
+      ],
+      "metrics": {
+        "frame_count": 4,
+        "evaluated_cells": 17665,
+        "confusion": [
+          [
+            12195,
+            234,
+            31
+          ],
+          [
+            1509,
+            3495,
+            95
+          ],
+          [
+            16,
+            1,
+            89
+          ]
+        ],
+        "class_iou": {
+          "free": 0.8720057204147301,
+          "static": 0.6552305961754781,
+          "object": 0.38362068965517243
+        },
+        "miou_supported_classes": 0.6369523354151269,
+        "occupied_iou": 0.6727605118829981,
+        "object_recall": 0.839622641509434,
+        "flow_epe_m_s": null,
+        "flow_valid_cells": 0,
+        "latency_model_only_ms": {
+          "p50": 84.87285500086728,
+          "p95": 86.21854790180805
+        },
+        "timed_frames": 4
+      },
+      "raw_npz_sha256": {
+        "frame_0000": "2c7ce1f341325c03d7369840390cc96e8391cdd0ca97b642a8531dce08ed7fa9",
+        "frame_0001": "74d178270d5448893f4b82fc9ec9bb3862fd46356ea0d1d29d891c681585ad1d",
+        "frame_0002": "943ed5ec07e2a4acdd871159b84f2bb3d5eb83959a7aa05c1c7f145ae24c2216",
+        "frame_0003": "e877ccbdf1824878467b6cbf675af39d739c6818e4eb1221a1aaed44d5a94582"
+      },
+      "reference_sha256": "58a9cfb450934ee825d444048ea5b6e41a2c6acc36569aa1090c186b409e1ed7",
+      "input_sha256": "0f623d927239f4ec70d789e79eca2c1d39402a91e94ed4168a1d8cf3f92022eb",
+      "sampled_lidar_bytes_per_second": 4895040.0
+    }
+  ],
+  "errors": [],
+  "study_evidence": [
+    {
+      "schema_version": 1,
+      "study_id": "c34f2411c1f84da886d0770b589dd6c7",
+      "source": "carla",
+      "checkpoint_sha256": "ee709da76caa53d7eac1db45fe2d20111f55cd689005b46e1adccea41cb806e9",
+      "constraints": {
+        "min_occupied_iou": 0.5,
+        "max_iou_drop": 0.02,
+        "min_object_iou": 0.1,
+        "min_object_recall": 0.5
+      },
+      "environments": [
+        {
+          "environment": 0,
+          "scenario": {
+            "map": "Town01",
+            "weather": "clear",
+            "vehicles": 2,
+            "pedestrians": 0,
+            "seed": 42,
+            "frames": 4,
+            "capture_interval": 0.5,
+            "timestep": 0.05,
+            "traffic_placement": "nearest_spawn",
+            "route_spawn_index": 0,
+            "route_kind": "spawn",
+            "lane_change_interval_seconds": null,
+            "lidar": {
+              "channels": 32,
+              "points_per_second": 600000,
+              "range_m": 100.0,
+              "upper_fov": 10.0,
+              "lower_fov": -30.0,
+              "mount_z": 2.0,
+              "pitch": 0.0
+            },
+            "camera": {
+              "fov": 90
+            }
+          },
+          "decisions": [
+            {
+              "model": "occupancy_lidar",
+              "outcome": "no_improvement",
+              "selected": "baseline",
+              "explanation": "Kh\u00f4ng t\u00ecm \u0111\u01b0\u1ee3c c\u1ea5u h\u00ecnh gi\u1ea3m d\u1eef li\u1ec7u t\u1ed1t h\u01a1n trong c\u00e1c c\u1ea5u h\u00ecnh \u0111\u00e3 th\u1eed v\u00e0 theo ng\u01b0\u1ee1ng \u0111\u00e3 \u0111\u1eb7t. Gi\u1eef baseline; baseline kh\u00f4ng nh\u1ea5t thi\u1ebft l\u00e0 c\u1ea5u h\u00ecnh k\u00e9m.",
+              "trials": [
+                {
+                  "job_id": "26ff39d780f947c9b75e8a1511feebce",
+                  "profile": "baseline",
+                  "status": "succeeded",
+                  "iou": 0.831782657238556,
+                  "cost": 4890560.0,
+                  "iou_drop": 0.0,
+                  "object_iou": 0.3984375,
+                  "object_recall": 0.9622641509433962,
+                  "reduction": 0.0,
+                  "eligible": true,
+                  "reasons": [],
+                  "error": null,
+                  "configuration": {
+                    "source": "carla",
+                    "replay": null,
+                    "model_ids": [
+                      "occupancy_lidar"
+                    ],
+                    "native_input_adapter": "intensity_mean_experimental",
+                    "scenario": {
+                      "map": "Town01",
+                      "weather": "clear",
+                      "vehicles": 2,
+                      "pedestrians": 0,
+                      "seed": 42,
+                      "frames": 4,
+                      "capture_interval": 0.5,
+                      "timestep": 0.05,
+                      "traffic_placement": "nearest_spawn",
+                      "route_spawn_index": 0,
+                      "route_kind": "spawn",
+                      "lane_change_interval_seconds": null,
+                      "lidar": {
+                        "channels": 32,
+                        "points_per_second": 600000,
+                        "range_m": 100.0,
+                        "upper_fov": 10.0,
+                        "lower_fov": -30.0,
+                        "mount_z": 2.0,
+                        "pitch": 0.0
+                      },
+                      "camera": {
+                        "fov": 90
+                      }
+                    },
+                    "scene_id": null,
+                    "capture_id": null,
+                    "max_latency_ms": null
+                  },
+                  "reference_sha256": "58a9cfb450934ee825d444048ea5b6e41a2c6acc36569aa1090c186b409e1ed7",
+                  "input_sha256": "93322f910beeba1edae161bf7a3e3ec1dbfb08d528ba3f1f4668ca93682950fa",
+                  "checkpoint_sha256": "8d6c7155534906a50ca2f52b039696700072ff200768f0d91ead33c828e9f878",
+                  "hardware": "Linux-6.8.0-138-generic-x86_64-with-glibc2.35",
+                  "device": "cpu",
+                  "cache_hits": 4,
+                  "latency_model_only_ms": null,
+                  "frame_count": 4,
+                  "visible_actor_counts": [
+                    2,
+                    2,
+                    2,
+                    2
+                  ],
+                  "label_policy": "Only semantic-LiDAR observed cells; static-height proxy + visible actor footprints",
+                  "limitations": [
+                    "GT static cells are a height-based proxy, not complete free-space ground truth",
+                    "Weather affects RGB; current checkpoint consumes LiDAR only",
+                    "LiDAR intensity scaled 0..1 to 0..255 is an approximation, not calibrated to nuScenes",
+                    "Ego ground origin approximated using vehicle bounding-box bottom",
+                    "Actor population is not guaranteed dense in ego ROI; inspect visible_actor_counts",
+                    "Autopilot spawn-index route; no verified highway route classification",
+                    "Camera is for review, not an input to these occupancy checkpoints",
+                    "Reference semantic LiDAR configuration is fixed independently of input LiDAR",
+                    "Fresh trials reset world/seed; exact reference hash must match before quality-based selection",
+                    "Experimental input alignment; validated only on limited Town01 captures, not real-world safety",
+                    "BEV 2D, not 3D boxes; no mAP/NDS or pedestrian detection recall",
+                    "Current checkpoints do not consume camera; RGB weather alone is not a model robustness test"
+                  ],
+                  "evidence_path": "/api/v1/experiments/26ff39d780f947c9b75e8a1511feebce"
+                },
+                {
+                  "job_id": "a74a401a33134821b4b5095b0d39438e",
+                  "profile": "lidar_300k",
+                  "status": "succeeded",
+                  "iou": 0.6517403574788335,
+                  "cost": 2441040.0,
+                  "iou_drop": 0.18004229975972252,
+                  "object_iou": 0.2980392156862745,
+                  "object_recall": 0.7169811320754716,
+                  "reduction": 0.5008669763789833,
+                  "eligible": false,
+                  "reasons": [
+                    "quality_drop_exceeds_limit"
+                  ],
+                  "error": null,
+                  "configuration": {
+                    "source": "carla",
+                    "replay": null,
+                    "model_ids": [
+                      "occupancy_lidar"
+                    ],
+                    "native_input_adapter": "intensity_mean_experimental",
+                    "scenario": {
+                      "map": "Town01",
+                      "weather": "clear",
+                      "vehicles": 2,
+                      "pedestrians": 0,
+                      "seed": 42,
+                      "frames": 4,
+                      "capture_interval": 0.5,
+                      "timestep": 0.05,
+                      "traffic_placement": "nearest_spawn",
+                      "route_spawn_index": 0,
+                      "route_kind": "spawn",
+                      "lane_change_interval_seconds": null,
+                      "lidar": {
+                        "channels": 32,
+                        "points_per_second": 300000,
+                        "range_m": 100.0,
+                        "upper_fov": 10.0,
+                        "lower_fov": -30.0,
+                        "mount_z": 2.0,
+                        "pitch": 0.0
+                      },
+                      "camera": {
+                        "fov": 90
+                      }
+                    },
+                    "scene_id": null,
+                    "capture_id": null,
+                    "max_latency_ms": null
+                  },
+                  "reference_sha256": "58a9cfb450934ee825d444048ea5b6e41a2c6acc36569aa1090c186b409e1ed7",
+                  "input_sha256": "7a31eb780c52d28a06c02d865c27a5aec6fe48c9dc23f652294b1e008b69247e",
+                  "checkpoint_sha256": "8d6c7155534906a50ca2f52b039696700072ff200768f0d91ead33c828e9f878",
+                  "hardware": "Linux-6.8.0-138-generic-x86_64-with-glibc2.35",
+                  "device": "cpu",
+                  "cache_hits": 0,
+                  "latency_model_only_ms": {
+                    "p50": 79.3399079957453,
+                    "p95": 81.73380694861407
+                  },
+                  "frame_count": 4,
+                  "visible_actor_counts": [
+                    2,
+                    2,
+                    2,
+                    2
+                  ],
+                  "label_policy": "Only semantic-LiDAR observed cells; static-height proxy + visible actor footprints",
+                  "limitations": [
+                    "GT static cells are a height-based proxy, not complete free-space ground truth",
+                    "Weather affects RGB; current checkpoint consumes LiDAR only",
+                    "LiDAR intensity scaled 0..1 to 0..255 is an approximation, not calibrated to nuScenes",
+                    "Ego ground origin approximated using vehicle bounding-box bottom",
+                    "Actor population is not guaranteed dense in ego ROI; inspect visible_actor_counts",
+                    "Autopilot spawn-index route; no verified highway route classification",
+                    "Camera is for review, not an input to these occupancy checkpoints",
+                    "Reference semantic LiDAR configuration is fixed independently of input LiDAR",
+                    "Fresh trials reset world/seed; exact reference hash must match before quality-based selection",
+                    "Experimental input alignment; validated only on limited Town01 captures, not real-world safety",
+                    "BEV 2D, not 3D boxes; no mAP/NDS or pedestrian detection recall",
+                    "Current checkpoints do not consume camera; RGB weather alone is not a model robustness test"
+                  ],
+                  "evidence_path": "/api/v1/experiments/a74a401a33134821b4b5095b0d39438e"
+                },
+                {
+                  "job_id": "3aaca58343a548f8b9f49f261448ea56",
+                  "profile": "lidar_150k",
+                  "status": "succeeded",
+                  "iou": 0.42897513187641295,
+                  "cost": 1219840.0,
+                  "iou_drop": 0.4028075253621431,
+                  "object_iou": 0.18181818181818182,
+                  "object_recall": 0.4528301886792453,
+                  "reduction": 0.7505725315710267,
+                  "eligible": false,
+                  "reasons": [
+                    "below_minimum_iou",
+                    "quality_drop_exceeds_limit",
+                    "below_minimum_object_recall"
+                  ],
+                  "error": null,
+                  "configuration": {
+                    "source": "carla",
+                    "replay": null,
+                    "model_ids": [
+                      "occupancy_lidar"
+                    ],
+                    "native_input_adapter": "intensity_mean_experimental",
+                    "scenario": {
+                      "map": "Town01",
+                      "weather": "clear",
+                      "vehicles": 2,
+                      "pedestrians": 0,
+                      "seed": 42,
+                      "frames": 4,
+                      "capture_interval": 0.5,
+                      "timestep": 0.05,
+                      "traffic_placement": "nearest_spawn",
+                      "route_spawn_index": 0,
+                      "route_kind": "spawn",
+                      "lane_change_interval_seconds": null,
+                      "lidar": {
+                        "channels": 32,
+                        "points_per_second": 150000,
+                        "range_m": 100.0,
+                        "upper_fov": 10.0,
+                        "lower_fov": -30.0,
+                        "mount_z": 2.0,
+                        "pitch": 0.0
+                      },
+                      "camera": {
+                        "fov": 90
+                      }
+                    },
+                    "scene_id": null,
+                    "capture_id": null,
+                    "max_latency_ms": null
+                  },
+                  "reference_sha256": "58a9cfb450934ee825d444048ea5b6e41a2c6acc36569aa1090c186b409e1ed7",
+                  "input_sha256": "76f4ece1803cda82500da3d3ed238f4a4ee5f0eafaa4b4b7782d242de8a4dcdc",
+                  "checkpoint_sha256": "8d6c7155534906a50ca2f52b039696700072ff200768f0d91ead33c828e9f878",
+                  "hardware": "Linux-6.8.0-138-generic-x86_64-with-glibc2.35",
+                  "device": "cpu",
+                  "cache_hits": 0,
+                  "latency_model_only_ms": {
+                    "p50": 86.73266050391248,
+                    "p95": 87.245050103229
+                  },
+                  "frame_count": 4,
+                  "visible_actor_counts": [
+                    2,
+                    2,
+                    2,
+                    2
+                  ],
+                  "label_policy": "Only semantic-LiDAR observed cells; static-height proxy + visible actor footprints",
+                  "limitations": [
+                    "GT static cells are a height-based proxy, not complete free-space ground truth",
+                    "Weather affects RGB; current checkpoint consumes LiDAR only",
+                    "LiDAR intensity scaled 0..1 to 0..255 is an approximation, not calibrated to nuScenes",
+                    "Ego ground origin approximated using vehicle bounding-box bottom",
+                    "Actor population is not guaranteed dense in ego ROI; inspect visible_actor_counts",
+                    "Autopilot spawn-index route; no verified highway route classification",
+                    "Camera is for review, not an input to these occupancy checkpoints",
+                    "Reference semantic LiDAR configuration is fixed independently of input LiDAR",
+                    "Fresh trials reset world/seed; exact reference hash must match before quality-based selection",
+                    "Experimental input alignment; validated only on limited Town01 captures, not real-world safety",
+                    "BEV 2D, not 3D boxes; no mAP/NDS or pedestrian detection recall",
+                    "Current checkpoints do not consume camera; RGB weather alone is not a model robustness test"
+                  ],
+                  "evidence_path": "/api/v1/experiments/3aaca58343a548f8b9f49f261448ea56"
+                }
+              ],
+              "cost_scope": "estimated_lidar_payload_rate",
+              "cost_unit": "bytes/s"
+            }
+          ]
+        }
+      ],
+      "limitations": [
+        "Exploratory two-dimensional occupancy proxy, not validated real-world sensor recommendation",
+        "Reference mismatch excludes trial from selection; more seeds/routes are needed",
+        "Data rate is not electricity or dollar cost; fixed BEV shape may keep model latency unchanged",
+        "Weather affects RGB; no physical LiDAR rain/fog degradation has been validated"
+      ],
+      "comparison_path": "/api/v1/experiments/sensor-agent/c34f2411c1f84da886d0770b589dd6c7/comparison",
+      "notice": "Occupancy proxy evidence; not validated real-world safety or GPU savings. Camera selection remains separate in comparison.",
+      "evidence_sha256": "d7f2c8bedc16e6c2b97f4bbbaf6b2555fd795ef8824dc32bf6a9449207bddd52"
+    },
+    {
+      "schema_version": 1,
+      "study_id": "b41b4c7a9b234c59914b70609c19b89c",
+      "source": "carla",
+      "checkpoint_sha256": "ee709da76caa53d7eac1db45fe2d20111f55cd689005b46e1adccea41cb806e9",
+      "constraints": {
+        "min_occupied_iou": 0.5,
+        "max_iou_drop": 0.02,
+        "min_object_iou": 0.1,
+        "min_object_recall": 0.5
+      },
+      "environments": [
+        {
+          "environment": 0,
+          "scenario": {
+            "map": "Town01",
+            "weather": "clear",
+            "vehicles": 2,
+            "pedestrians": 0,
+            "seed": 42,
+            "frames": 4,
+            "capture_interval": 0.5,
+            "timestep": 0.05,
+            "traffic_placement": "nearest_spawn",
+            "route_spawn_index": 0,
+            "route_kind": "spawn",
+            "lane_change_interval_seconds": null,
+            "lidar": {
+              "channels": 32,
+              "points_per_second": 600000,
+              "range_m": 100.0,
+              "upper_fov": 10.0,
+              "lower_fov": -30.0,
+              "mount_z": 2.0,
+              "pitch": 0.0
+            },
+            "camera": {
+              "fov": 90
+            }
+          },
+          "decisions": [
+            {
+              "model": "occupancy_lidar",
+              "outcome": "no_improvement",
+              "selected": "baseline",
+              "explanation": "Kh\u00f4ng t\u00ecm \u0111\u01b0\u1ee3c c\u1ea5u h\u00ecnh gi\u1ea3m d\u1eef li\u1ec7u t\u1ed1t h\u01a1n trong c\u00e1c c\u1ea5u h\u00ecnh \u0111\u00e3 th\u1eed v\u00e0 theo ng\u01b0\u1ee1ng \u0111\u00e3 \u0111\u1eb7t. Gi\u1eef baseline; baseline kh\u00f4ng nh\u1ea5t thi\u1ebft l\u00e0 c\u1ea5u h\u00ecnh k\u00e9m.",
+              "trials": [
+                {
+                  "job_id": "98ac56f15d304c3a816b4466f55b47ae",
+                  "profile": "baseline",
+                  "status": "succeeded",
+                  "iou": 0.831782657238556,
+                  "cost": 4890560.0,
+                  "iou_drop": 0.0,
+                  "object_iou": 0.3984375,
+                  "object_recall": 0.9622641509433962,
+                  "reduction": 0.0,
+                  "eligible": true,
+                  "reasons": [],
+                  "error": null,
+                  "configuration": {
+                    "source": "carla",
+                    "replay": null,
+                    "model_ids": [
+                      "occupancy_lidar"
+                    ],
+                    "native_input_adapter": "intensity_mean_experimental",
+                    "scenario": {
+                      "map": "Town01",
+                      "weather": "clear",
+                      "vehicles": 2,
+                      "pedestrians": 0,
+                      "seed": 42,
+                      "frames": 4,
+                      "capture_interval": 0.5,
+                      "timestep": 0.05,
+                      "traffic_placement": "nearest_spawn",
+                      "route_spawn_index": 0,
+                      "route_kind": "spawn",
+                      "lane_change_interval_seconds": null,
+                      "lidar": {
+                        "channels": 32,
+                        "points_per_second": 600000,
+                        "range_m": 100.0,
+                        "upper_fov": 10.0,
+                        "lower_fov": -30.0,
+                        "mount_z": 2.0,
+                        "pitch": 0.0
+                      },
+                      "camera": {
+                        "fov": 90
+                      }
+                    },
+                    "scene_id": null,
+                    "capture_id": null,
+                    "max_latency_ms": null
+                  },
+                  "reference_sha256": "58a9cfb450934ee825d444048ea5b6e41a2c6acc36569aa1090c186b409e1ed7",
+                  "input_sha256": "93322f910beeba1edae161bf7a3e3ec1dbfb08d528ba3f1f4668ca93682950fa",
+                  "checkpoint_sha256": "8d6c7155534906a50ca2f52b039696700072ff200768f0d91ead33c828e9f878",
+                  "hardware": "Linux-6.8.0-138-generic-x86_64-with-glibc2.35",
+                  "device": "cpu",
+                  "cache_hits": 4,
+                  "latency_model_only_ms": null,
+                  "frame_count": 4,
+                  "visible_actor_counts": [
+                    2,
+                    2,
+                    2,
+                    2
+                  ],
+                  "label_policy": "Only semantic-LiDAR observed cells; static-height proxy + visible actor footprints",
+                  "limitations": [
+                    "GT static cells are a height-based proxy, not complete free-space ground truth",
+                    "Weather affects RGB; current checkpoint consumes LiDAR only",
+                    "LiDAR intensity scaled 0..1 to 0..255 is an approximation, not calibrated to nuScenes",
+                    "Ego ground origin approximated using vehicle bounding-box bottom",
+                    "Actor population is not guaranteed dense in ego ROI; inspect visible_actor_counts",
+                    "Autopilot spawn-index route; no verified highway route classification",
+                    "Camera is for review, not an input to these occupancy checkpoints",
+                    "Reference semantic LiDAR configuration is fixed independently of input LiDAR",
+                    "Fresh trials reset world/seed; exact reference hash must match before quality-based selection",
+                    "Experimental input alignment; validated only on limited Town01 captures, not real-world safety",
+                    "BEV 2D, not 3D boxes; no mAP/NDS or pedestrian detection recall",
+                    "Current checkpoints do not consume camera; RGB weather alone is not a model robustness test"
+                  ],
+                  "evidence_path": "/api/v1/experiments/98ac56f15d304c3a816b4466f55b47ae"
+                },
+                {
+                  "job_id": "9b96c02209664ca6817f427d5a7614fc",
+                  "profile": "channels16_150k",
+                  "status": "succeeded",
+                  "iou": 0.35920135618760596,
+                  "cost": 1213680.0,
+                  "iou_drop": 0.4725813010509501,
+                  "object_iou": 0.3273542600896861,
+                  "object_recall": 0.6886792452830188,
+                  "reduction": 0.7518321010272853,
+                  "eligible": false,
+                  "reasons": [
+                    "below_minimum_iou",
+                    "quality_drop_exceeds_limit"
+                  ],
+                  "error": null,
+                  "configuration": {
+                    "source": "carla",
+                    "replay": null,
+                    "model_ids": [
+                      "occupancy_lidar"
+                    ],
+                    "native_input_adapter": "intensity_mean_experimental",
+                    "scenario": {
+                      "map": "Town01",
+                      "weather": "clear",
+                      "vehicles": 2,
+                      "pedestrians": 0,
+                      "seed": 42,
+                      "frames": 4,
+                      "capture_interval": 0.5,
+                      "timestep": 0.05,
+                      "traffic_placement": "nearest_spawn",
+                      "route_spawn_index": 0,
+                      "route_kind": "spawn",
+                      "lane_change_interval_seconds": null,
+                      "lidar": {
+                        "channels": 16,
+                        "points_per_second": 150000,
+                        "range_m": 100.0,
+                        "upper_fov": 10.0,
+                        "lower_fov": -30.0,
+                        "mount_z": 2.0,
+                        "pitch": 0.0
+                      },
+                      "camera": {
+                        "fov": 90
+                      }
+                    },
+                    "scene_id": null,
+                    "capture_id": null,
+                    "max_latency_ms": null
+                  },
+                  "reference_sha256": "58a9cfb450934ee825d444048ea5b6e41a2c6acc36569aa1090c186b409e1ed7",
+                  "input_sha256": "aad8a1906c94cb4e39cb7a929119ab20e2576f30ea51e6b60f84ddcd31db74ed",
+                  "checkpoint_sha256": "8d6c7155534906a50ca2f52b039696700072ff200768f0d91ead33c828e9f878",
+                  "hardware": "Linux-6.8.0-138-generic-x86_64-with-glibc2.35",
+                  "device": "cpu",
+                  "cache_hits": 0,
+                  "latency_model_only_ms": {
+                    "p50": 83.83306599716889,
+                    "p95": 83.90804904447577
+                  },
+                  "frame_count": 4,
+                  "visible_actor_counts": [
+                    2,
+                    2,
+                    2,
+                    2
+                  ],
+                  "label_policy": "Only semantic-LiDAR observed cells; static-height proxy + visible actor footprints",
+                  "limitations": [
+                    "GT static cells are a height-based proxy, not complete free-space ground truth",
+                    "Weather affects RGB; current checkpoint consumes LiDAR only",
+                    "LiDAR intensity scaled 0..1 to 0..255 is an approximation, not calibrated to nuScenes",
+                    "Ego ground origin approximated using vehicle bounding-box bottom",
+                    "Actor population is not guaranteed dense in ego ROI; inspect visible_actor_counts",
+                    "Autopilot spawn-index route; no verified highway route classification",
+                    "Camera is for review, not an input to these occupancy checkpoints",
+                    "Reference semantic LiDAR configuration is fixed independently of input LiDAR",
+                    "Fresh trials reset world/seed; exact reference hash must match before quality-based selection",
+                    "Experimental input alignment; validated only on limited Town01 captures, not real-world safety",
+                    "BEV 2D, not 3D boxes; no mAP/NDS or pedestrian detection recall",
+                    "Current checkpoints do not consume camera; RGB weather alone is not a model robustness test"
+                  ],
+                  "evidence_path": "/api/v1/experiments/9b96c02209664ca6817f427d5a7614fc"
+                },
+                {
+                  "job_id": "863325c4c3cc47feba7e9c97f0379ded",
+                  "profile": "channels16_300k",
+                  "status": "succeeded",
+                  "iou": 0.44747587230883445,
+                  "cost": 2411040.0,
+                  "iou_drop": 0.3843067849297216,
+                  "object_iou": 0.36538461538461536,
+                  "object_recall": 0.8962264150943396,
+                  "reduction": 0.5070012432114114,
+                  "eligible": false,
+                  "reasons": [
+                    "below_minimum_iou",
+                    "quality_drop_exceeds_limit"
+                  ],
+                  "error": null,
+                  "configuration": {
+                    "source": "carla",
+                    "replay": null,
+                    "model_ids": [
+                      "occupancy_lidar"
+                    ],
+                    "native_input_adapter": "intensity_mean_experimental",
+                    "scenario": {
+                      "map": "Town01",
+                      "weather": "clear",
+                      "vehicles": 2,
+                      "pedestrians": 0,
+                      "seed": 42,
+                      "frames": 4,
+                      "capture_interval": 0.5,
+                      "timestep": 0.05,
+                      "traffic_placement": "nearest_spawn",
+                      "route_spawn_index": 0,
+                      "route_kind": "spawn",
+                      "lane_change_interval_seconds": null,
+                      "lidar": {
+                        "channels": 16,
+                        "points_per_second": 300000,
+                        "range_m": 100.0,
+                        "upper_fov": 10.0,
+                        "lower_fov": -30.0,
+                        "mount_z": 2.0,
+                        "pitch": 0.0
+                      },
+                      "camera": {
+                        "fov": 90
+                      }
+                    },
+                    "scene_id": null,
+                    "capture_id": null,
+                    "max_latency_ms": null
+                  },
+                  "reference_sha256": "58a9cfb450934ee825d444048ea5b6e41a2c6acc36569aa1090c186b409e1ed7",
+                  "input_sha256": "1993bbaa447de4e58ebef6fdd583f85c116a5a54de94de90f259e302ebf37464",
+                  "checkpoint_sha256": "8d6c7155534906a50ca2f52b039696700072ff200768f0d91ead33c828e9f878",
+                  "hardware": "Linux-6.8.0-138-generic-x86_64-with-glibc2.35",
+                  "device": "cpu",
+                  "cache_hits": 0,
+                  "latency_model_only_ms": {
+                    "p50": 86.67760000025737,
+                    "p95": 86.96985815004155
+                  },
+                  "frame_count": 4,
+                  "visible_actor_counts": [
+                    2,
+                    2,
+                    2,
+                    2
+                  ],
+                  "label_policy": "Only semantic-LiDAR observed cells; static-height proxy + visible actor footprints",
+                  "limitations": [
+                    "GT static cells are a height-based proxy, not complete free-space ground truth",
+                    "Weather affects RGB; current checkpoint consumes LiDAR only",
+                    "LiDAR intensity scaled 0..1 to 0..255 is an approximation, not calibrated to nuScenes",
+                    "Ego ground origin approximated using vehicle bounding-box bottom",
+                    "Actor population is not guaranteed dense in ego ROI; inspect visible_actor_counts",
+                    "Autopilot spawn-index route; no verified highway route classification",
+                    "Camera is for review, not an input to these occupancy checkpoints",
+                    "Reference semantic LiDAR configuration is fixed independently of input LiDAR",
+                    "Fresh trials reset world/seed; exact reference hash must match before quality-based selection",
+                    "Experimental input alignment; validated only on limited Town01 captures, not real-world safety",
+                    "BEV 2D, not 3D boxes; no mAP/NDS or pedestrian detection recall",
+                    "Current checkpoints do not consume camera; RGB weather alone is not a model robustness test"
+                  ],
+                  "evidence_path": "/api/v1/experiments/863325c4c3cc47feba7e9c97f0379ded"
+                },
+                {
+                  "job_id": "96e9ae5dd65044069e2b0e4b70849e2d",
+                  "profile": "channels16_450k",
+                  "status": "succeeded",
+                  "iou": 0.4855085840871331,
+                  "cost": 3627200.0,
+                  "iou_drop": 0.34627407315142295,
+                  "object_iou": 0.43043478260869567,
+                  "object_recall": 0.9339622641509434,
+                  "reduction": 0.2583262448472159,
+                  "eligible": false,
+                  "reasons": [
+                    "below_minimum_iou",
+                    "quality_drop_exceeds_limit"
+                  ],
+                  "error": null,
+                  "configuration": {
+                    "source": "carla",
+                    "replay": null,
+                    "model_ids": [
+                      "occupancy_lidar"
+                    ],
+                    "native_input_adapter": "intensity_mean_experimental",
+                    "scenario": {
+                      "map": "Town01",
+                      "weather": "clear",
+                      "vehicles": 2,
+                      "pedestrians": 0,
+                      "seed": 42,
+                      "frames": 4,
+                      "capture_interval": 0.5,
+                      "timestep": 0.05,
+                      "traffic_placement": "nearest_spawn",
+                      "route_spawn_index": 0,
+                      "route_kind": "spawn",
+                      "lane_change_interval_seconds": null,
+                      "lidar": {
+                        "channels": 16,
+                        "points_per_second": 450000,
+                        "range_m": 100.0,
+                        "upper_fov": 10.0,
+                        "lower_fov": -30.0,
+                        "mount_z": 2.0,
+                        "pitch": 0.0
+                      },
+                      "camera": {
+                        "fov": 90
+                      }
+                    },
+                    "scene_id": null,
+                    "capture_id": null,
+                    "max_latency_ms": null
+                  },
+                  "reference_sha256": "58a9cfb450934ee825d444048ea5b6e41a2c6acc36569aa1090c186b409e1ed7",
+                  "input_sha256": "e9ccbc616fcb01bc526bd1d6fa538a4abaf0a611adcc6e6585a55185ef67c478",
+                  "checkpoint_sha256": "8d6c7155534906a50ca2f52b039696700072ff200768f0d91ead33c828e9f878",
+                  "hardware": "Linux-6.8.0-138-generic-x86_64-with-glibc2.35",
+                  "device": "cpu",
+                  "cache_hits": 0,
+                  "latency_model_only_ms": {
+                    "p50": 86.92789249835187,
+                    "p95": 87.63239195177448
+                  },
+                  "frame_count": 4,
+                  "visible_actor_counts": [
+                    2,
+                    2,
+                    2,
+                    2
+                  ],
+                  "label_policy": "Only semantic-LiDAR observed cells; static-height proxy + visible actor footprints",
+                  "limitations": [
+                    "GT static cells are a height-based proxy, not complete free-space ground truth",
+                    "Weather affects RGB; current checkpoint consumes LiDAR only",
+                    "LiDAR intensity scaled 0..1 to 0..255 is an approximation, not calibrated to nuScenes",
+                    "Ego ground origin approximated using vehicle bounding-box bottom",
+                    "Actor population is not guaranteed dense in ego ROI; inspect visible_actor_counts",
+                    "Autopilot spawn-index route; no verified highway route classification",
+                    "Camera is for review, not an input to these occupancy checkpoints",
+                    "Reference semantic LiDAR configuration is fixed independently of input LiDAR",
+                    "Fresh trials reset world/seed; exact reference hash must match before quality-based selection",
+                    "Experimental input alignment; validated only on limited Town01 captures, not real-world safety",
+                    "BEV 2D, not 3D boxes; no mAP/NDS or pedestrian detection recall",
+                    "Current checkpoints do not consume camera; RGB weather alone is not a model robustness test"
+                  ],
+                  "evidence_path": "/api/v1/experiments/96e9ae5dd65044069e2b0e4b70849e2d"
+                }
+              ],
+              "cost_scope": "estimated_lidar_payload_rate",
+              "cost_unit": "bytes/s"
+            }
+          ]
+        }
+      ],
+      "limitations": [
+        "Exploratory two-dimensional occupancy proxy, not validated real-world sensor recommendation",
+        "Reference mismatch excludes trial from selection; more seeds/routes are needed",
+        "Data rate is not electricity or dollar cost; fixed BEV shape may keep model latency unchanged",
+        "Weather affects RGB; no physical LiDAR rain/fog degradation has been validated"
+      ],
+      "comparison_path": "/api/v1/experiments/sensor-agent/b41b4c7a9b234c59914b70609c19b89c/comparison",
+      "notice": "Occupancy proxy evidence; not validated real-world safety or GPU savings. Camera selection remains separate in comparison.",
+      "evidence_sha256": "51f5e3a38874969f65b1963ca58b8d4c0ab660ee7755eb064c1264df66e0cc51"
+    },
+    {
+      "schema_version": 1,
+      "study_id": "ab1bbdc3e93d470c82e131641b2ab4ff",
+      "source": "carla",
+      "checkpoint_sha256": "ee709da76caa53d7eac1db45fe2d20111f55cd689005b46e1adccea41cb806e9",
+      "constraints": {
+        "min_occupied_iou": 0.5,
+        "max_iou_drop": 0.02,
+        "min_object_iou": 0.1,
+        "min_object_recall": 0.5
+      },
+      "environments": [
+        {
+          "environment": 0,
+          "scenario": {
+            "map": "Town01",
+            "weather": "clear",
+            "vehicles": 2,
+            "pedestrians": 0,
+            "seed": 42,
+            "frames": 4,
+            "capture_interval": 0.5,
+            "timestep": 0.05,
+            "traffic_placement": "nearest_spawn",
+            "route_spawn_index": 0,
+            "route_kind": "spawn",
+            "lane_change_interval_seconds": null,
+            "lidar": {
+              "channels": 32,
+              "points_per_second": 600000,
+              "range_m": 100.0,
+              "upper_fov": 10.0,
+              "lower_fov": -30.0,
+              "mount_z": 2.0,
+              "pitch": 0.0
+            },
+            "camera": {
+              "fov": 90
+            }
+          },
+          "decisions": [
+            {
+              "model": "occupancy_lidar",
+              "outcome": "no_improvement",
+              "selected": "baseline",
+              "explanation": "Kh\u00f4ng t\u00ecm \u0111\u01b0\u1ee3c c\u1ea5u h\u00ecnh gi\u1ea3m d\u1eef li\u1ec7u t\u1ed1t h\u01a1n trong c\u00e1c c\u1ea5u h\u00ecnh \u0111\u00e3 th\u1eed v\u00e0 theo ng\u01b0\u1ee1ng \u0111\u00e3 \u0111\u1eb7t. Gi\u1eef baseline; baseline kh\u00f4ng nh\u1ea5t thi\u1ebft l\u00e0 c\u1ea5u h\u00ecnh k\u00e9m.",
+              "trials": [
+                {
+                  "job_id": "1b353bd78c324fe1b8b2399b6cc002a4",
+                  "profile": "baseline",
+                  "status": "succeeded",
+                  "iou": 0.831782657238556,
+                  "cost": 4890560.0,
+                  "iou_drop": 0.0,
+                  "object_iou": 0.3984375,
+                  "object_recall": 0.9622641509433962,
+                  "reduction": 0.0,
+                  "eligible": true,
+                  "reasons": [],
+                  "error": null,
+                  "configuration": {
+                    "source": "carla",
+                    "replay": null,
+                    "model_ids": [
+                      "occupancy_lidar"
+                    ],
+                    "native_input_adapter": "intensity_mean_experimental",
+                    "scenario": {
+                      "map": "Town01",
+                      "weather": "clear",
+                      "vehicles": 2,
+                      "pedestrians": 0,
+                      "seed": 42,
+                      "frames": 4,
+                      "capture_interval": 0.5,
+                      "timestep": 0.05,
+                      "traffic_placement": "nearest_spawn",
+                      "route_spawn_index": 0,
+                      "route_kind": "spawn",
+                      "lane_change_interval_seconds": null,
+                      "lidar": {
+                        "channels": 32,
+                        "points_per_second": 600000,
+                        "range_m": 100.0,
+                        "upper_fov": 10.0,
+                        "lower_fov": -30.0,
+                        "mount_z": 2.0,
+                        "pitch": 0.0
+                      },
+                      "camera": {
+                        "fov": 90
+                      }
+                    },
+                    "scene_id": null,
+                    "capture_id": null,
+                    "max_latency_ms": null
+                  },
+                  "reference_sha256": "58a9cfb450934ee825d444048ea5b6e41a2c6acc36569aa1090c186b409e1ed7",
+                  "input_sha256": "93322f910beeba1edae161bf7a3e3ec1dbfb08d528ba3f1f4668ca93682950fa",
+                  "checkpoint_sha256": "8d6c7155534906a50ca2f52b039696700072ff200768f0d91ead33c828e9f878",
+                  "hardware": "Linux-6.8.0-138-generic-x86_64-with-glibc2.35",
+                  "device": "cpu",
+                  "cache_hits": 4,
+                  "latency_model_only_ms": null,
+                  "frame_count": 4,
+                  "visible_actor_counts": [
+                    2,
+                    2,
+                    2,
+                    2
+                  ],
+                  "label_policy": "Only semantic-LiDAR observed cells; static-height proxy + visible actor footprints",
+                  "limitations": [
+                    "GT static cells are a height-based proxy, not complete free-space ground truth",
+                    "Weather affects RGB; current checkpoint consumes LiDAR only",
+                    "LiDAR intensity scaled 0..1 to 0..255 is an approximation, not calibrated to nuScenes",
+                    "Ego ground origin approximated using vehicle bounding-box bottom",
+                    "Actor population is not guaranteed dense in ego ROI; inspect visible_actor_counts",
+                    "Autopilot spawn-index route; no verified highway route classification",
+                    "Camera is for review, not an input to these occupancy checkpoints",
+                    "Reference semantic LiDAR configuration is fixed independently of input LiDAR",
+                    "Fresh trials reset world/seed; exact reference hash must match before quality-based selection",
+                    "Experimental input alignment; validated only on limited Town01 captures, not real-world safety",
+                    "BEV 2D, not 3D boxes; no mAP/NDS or pedestrian detection recall",
+                    "Current checkpoints do not consume camera; RGB weather alone is not a model robustness test"
+                  ],
+                  "evidence_path": "/api/v1/experiments/1b353bd78c324fe1b8b2399b6cc002a4"
+                },
+                {
+                  "job_id": "22f1b70d24bb41768b5bb4ab2a0d1fcb",
+                  "profile": "channels16_600k",
+                  "status": "succeeded",
+                  "iou": 0.5014809329877823,
+                  "cost": 4851120.0,
+                  "iou_drop": 0.33030172425077375,
+                  "object_iou": 0.4366812227074236,
+                  "object_recall": 0.9433962264150944,
+                  "reduction": 0.008064516129032251,
+                  "eligible": false,
+                  "reasons": [
+                    "quality_drop_exceeds_limit"
+                  ],
+                  "error": null,
+                  "configuration": {
+                    "source": "carla",
+                    "replay": null,
+                    "model_ids": [
+                      "occupancy_lidar"
+                    ],
+                    "native_input_adapter": "intensity_mean_experimental",
+                    "scenario": {
+                      "map": "Town01",
+                      "weather": "clear",
+                      "vehicles": 2,
+                      "pedestrians": 0,
+                      "seed": 42,
+                      "frames": 4,
+                      "capture_interval": 0.5,
+                      "timestep": 0.05,
+                      "traffic_placement": "nearest_spawn",
+                      "route_spawn_index": 0,
+                      "route_kind": "spawn",
+                      "lane_change_interval_seconds": null,
+                      "lidar": {
+                        "channels": 16,
+                        "points_per_second": 600000,
+                        "range_m": 100.0,
+                        "upper_fov": 10.0,
+                        "lower_fov": -30.0,
+                        "mount_z": 2.0,
+                        "pitch": 0.0
+                      },
+                      "camera": {
+                        "fov": 90
+                      }
+                    },
+                    "scene_id": null,
+                    "capture_id": null,
+                    "max_latency_ms": null
+                  },
+                  "reference_sha256": "58a9cfb450934ee825d444048ea5b6e41a2c6acc36569aa1090c186b409e1ed7",
+                  "input_sha256": "fd3dd4172fb33eaf8d77f06bf0de95491784df3f9369acd250533e240e9e8d03",
+                  "checkpoint_sha256": "8d6c7155534906a50ca2f52b039696700072ff200768f0d91ead33c828e9f878",
+                  "hardware": "Linux-6.8.0-138-generic-x86_64-with-glibc2.35",
+                  "device": "cpu",
+                  "cache_hits": 0,
+                  "latency_model_only_ms": {
+                    "p50": 84.65220500147552,
+                    "p95": 86.04834534708061
+                  },
+                  "frame_count": 4,
+                  "visible_actor_counts": [
+                    2,
+                    2,
+                    2,
+                    2
+                  ],
+                  "label_policy": "Only semantic-LiDAR observed cells; static-height proxy + visible actor footprints",
+                  "limitations": [
+                    "GT static cells are a height-based proxy, not complete free-space ground truth",
+                    "Weather affects RGB; current checkpoint consumes LiDAR only",
+                    "LiDAR intensity scaled 0..1 to 0..255 is an approximation, not calibrated to nuScenes",
+                    "Ego ground origin approximated using vehicle bounding-box bottom",
+                    "Actor population is not guaranteed dense in ego ROI; inspect visible_actor_counts",
+                    "Autopilot spawn-index route; no verified highway route classification",
+                    "Camera is for review, not an input to these occupancy checkpoints",
+                    "Reference semantic LiDAR configuration is fixed independently of input LiDAR",
+                    "Fresh trials reset world/seed; exact reference hash must match before quality-based selection",
+                    "Experimental input alignment; validated only on limited Town01 captures, not real-world safety",
+                    "BEV 2D, not 3D boxes; no mAP/NDS or pedestrian detection recall",
+                    "Current checkpoints do not consume camera; RGB weather alone is not a model robustness test"
+                  ],
+                  "evidence_path": "/api/v1/experiments/22f1b70d24bb41768b5bb4ab2a0d1fcb"
+                },
+                {
+                  "job_id": "aabf95d4f1fa4cef8cc0454543771a5d",
+                  "profile": "channels32_450k",
+                  "status": "succeeded",
+                  "iou": 0.7312430011198209,
+                  "cost": 3649440.0,
+                  "iou_drop": 0.10053965611873517,
+                  "object_iou": 0.37130801687763715,
+                  "object_recall": 0.8301886792452831,
+                  "reduction": 0.2537787083687758,
+                  "eligible": false,
+                  "reasons": [
+                    "quality_drop_exceeds_limit"
+                  ],
+                  "error": null,
+                  "configuration": {
+                    "source": "carla",
+                    "replay": null,
+                    "model_ids": [
+                      "occupancy_lidar"
+                    ],
+                    "native_input_adapter": "intensity_mean_experimental",
+                    "scenario": {
+                      "map": "Town01",
+                      "weather": "clear",
+                      "vehicles": 2,
+                      "pedestrians": 0,
+                      "seed": 42,
+                      "frames": 4,
+                      "capture_interval": 0.5,
+                      "timestep": 0.05,
+                      "traffic_placement": "nearest_spawn",
+                      "route_spawn_index": 0,
+                      "route_kind": "spawn",
+                      "lane_change_interval_seconds": null,
+                      "lidar": {
+                        "channels": 32,
+                        "points_per_second": 450000,
+                        "range_m": 100.0,
+                        "upper_fov": 10.0,
+                        "lower_fov": -30.0,
+                        "mount_z": 2.0,
+                        "pitch": 0.0
+                      },
+                      "camera": {
+                        "fov": 90
+                      }
+                    },
+                    "scene_id": null,
+                    "capture_id": null,
+                    "max_latency_ms": null
+                  },
+                  "reference_sha256": "58a9cfb450934ee825d444048ea5b6e41a2c6acc36569aa1090c186b409e1ed7",
+                  "input_sha256": "32f1816383dd56186ea0f92979de25607007642b237c696a7e2bb7c529011f8e",
+                  "checkpoint_sha256": "8d6c7155534906a50ca2f52b039696700072ff200768f0d91ead33c828e9f878",
+                  "hardware": "Linux-6.8.0-138-generic-x86_64-with-glibc2.35",
+                  "device": "cpu",
+                  "cache_hits": 0,
+                  "latency_model_only_ms": {
+                    "p50": 84.64135700342013,
+                    "p95": 86.37032864971843
+                  },
+                  "frame_count": 4,
+                  "visible_actor_counts": [
+                    2,
+                    2,
+                    2,
+                    2
+                  ],
+                  "label_policy": "Only semantic-LiDAR observed cells; static-height proxy + visible actor footprints",
+                  "limitations": [
+                    "GT static cells are a height-based proxy, not complete free-space ground truth",
+                    "Weather affects RGB; current checkpoint consumes LiDAR only",
+                    "LiDAR intensity scaled 0..1 to 0..255 is an approximation, not calibrated to nuScenes",
+                    "Ego ground origin approximated using vehicle bounding-box bottom",
+                    "Actor population is not guaranteed dense in ego ROI; inspect visible_actor_counts",
+                    "Autopilot spawn-index route; no verified highway route classification",
+                    "Camera is for review, not an input to these occupancy checkpoints",
+                    "Reference semantic LiDAR configuration is fixed independently of input LiDAR",
+                    "Fresh trials reset world/seed; exact reference hash must match before quality-based selection",
+                    "Experimental input alignment; validated only on limited Town01 captures, not real-world safety",
+                    "BEV 2D, not 3D boxes; no mAP/NDS or pedestrian detection recall",
+                    "Current checkpoints do not consume camera; RGB weather alone is not a model robustness test"
+                  ],
+                  "evidence_path": "/api/v1/experiments/aabf95d4f1fa4cef8cc0454543771a5d"
+                },
+                {
+                  "job_id": "d61e9c68775d49fb8292e67d96cb18b7",
+                  "profile": "channels64_150k",
+                  "status": "succeeded",
+                  "iou": 0.3292406497922176,
+                  "cost": 1222240.0,
+                  "iou_drop": 0.5025420074463385,
+                  "object_iou": 0.24186046511627907,
+                  "object_recall": 0.49056603773584906,
+                  "reduction": 0.7500817902244323,
+                  "eligible": false,
+                  "reasons": [
+                    "below_minimum_iou",
+                    "quality_drop_exceeds_limit",
+                    "below_minimum_object_recall"
+                  ],
+                  "error": null,
+                  "configuration": {
+                    "source": "carla",
+                    "replay": null,
+                    "model_ids": [
+                      "occupancy_lidar"
+                    ],
+                    "native_input_adapter": "intensity_mean_experimental",
+                    "scenario": {
+                      "map": "Town01",
+                      "weather": "clear",
+                      "vehicles": 2,
+                      "pedestrians": 0,
+                      "seed": 42,
+                      "frames": 4,
+                      "capture_interval": 0.5,
+                      "timestep": 0.05,
+                      "traffic_placement": "nearest_spawn",
+                      "route_spawn_index": 0,
+                      "route_kind": "spawn",
+                      "lane_change_interval_seconds": null,
+                      "lidar": {
+                        "channels": 64,
+                        "points_per_second": 150000,
+                        "range_m": 100.0,
+                        "upper_fov": 10.0,
+                        "lower_fov": -30.0,
+                        "mount_z": 2.0,
+                        "pitch": 0.0
+                      },
+                      "camera": {
+                        "fov": 90
+                      }
+                    },
+                    "scene_id": null,
+                    "capture_id": null,
+                    "max_latency_ms": null
+                  },
+                  "reference_sha256": "58a9cfb450934ee825d444048ea5b6e41a2c6acc36569aa1090c186b409e1ed7",
+                  "input_sha256": "bcedc48b79d42b7da66666f1beaa5637760a3ed0f61791e6f21952201ae177be",
+                  "checkpoint_sha256": "8d6c7155534906a50ca2f52b039696700072ff200768f0d91ead33c828e9f878",
+                  "hardware": "Linux-6.8.0-138-generic-x86_64-with-glibc2.35",
+                  "device": "cpu",
+                  "cache_hits": 0,
+                  "latency_model_only_ms": {
+                    "p50": 83.80216899968218,
+                    "p95": 85.32717614980356
+                  },
+                  "frame_count": 4,
+                  "visible_actor_counts": [
+                    2,
+                    2,
+                    2,
+                    2
+                  ],
+                  "label_policy": "Only semantic-LiDAR observed cells; static-height proxy + visible actor footprints",
+                  "limitations": [
+                    "GT static cells are a height-based proxy, not complete free-space ground truth",
+                    "Weather affects RGB; current checkpoint consumes LiDAR only",
+                    "LiDAR intensity scaled 0..1 to 0..255 is an approximation, not calibrated to nuScenes",
+                    "Ego ground origin approximated using vehicle bounding-box bottom",
+                    "Actor population is not guaranteed dense in ego ROI; inspect visible_actor_counts",
+                    "Autopilot spawn-index route; no verified highway route classification",
+                    "Camera is for review, not an input to these occupancy checkpoints",
+                    "Reference semantic LiDAR configuration is fixed independently of input LiDAR",
+                    "Fresh trials reset world/seed; exact reference hash must match before quality-based selection",
+                    "Experimental input alignment; validated only on limited Town01 captures, not real-world safety",
+                    "BEV 2D, not 3D boxes; no mAP/NDS or pedestrian detection recall",
+                    "Current checkpoints do not consume camera; RGB weather alone is not a model robustness test"
+                  ],
+                  "evidence_path": "/api/v1/experiments/d61e9c68775d49fb8292e67d96cb18b7"
+                }
+              ],
+              "cost_scope": "estimated_lidar_payload_rate",
+              "cost_unit": "bytes/s"
+            }
+          ]
+        }
+      ],
+      "limitations": [
+        "Exploratory two-dimensional occupancy proxy, not validated real-world sensor recommendation",
+        "Reference mismatch excludes trial from selection; more seeds/routes are needed",
+        "Data rate is not electricity or dollar cost; fixed BEV shape may keep model latency unchanged",
+        "Weather affects RGB; no physical LiDAR rain/fog degradation has been validated"
+      ],
+      "comparison_path": "/api/v1/experiments/sensor-agent/ab1bbdc3e93d470c82e131641b2ab4ff/comparison",
+      "notice": "Occupancy proxy evidence; not validated real-world safety or GPU savings. Camera selection remains separate in comparison.",
+      "evidence_sha256": "da5569172c63c85a9cf8571c87562b331bdeb2b51f64a7e33b04379f679d4e30"
+    },
+    {
+      "schema_version": 1,
+      "study_id": "4a0e23b16d17457db9264c96c78dcf05",
+      "source": "carla",
+      "checkpoint_sha256": "ee709da76caa53d7eac1db45fe2d20111f55cd689005b46e1adccea41cb806e9",
+      "constraints": {
+        "min_occupied_iou": 0.5,
+        "max_iou_drop": 0.02,
+        "min_object_iou": 0.1,
+        "min_object_recall": 0.5
+      },
+      "environments": [
+        {
+          "environment": 0,
+          "scenario": {
+            "map": "Town01",
+            "weather": "clear",
+            "vehicles": 2,
+            "pedestrians": 0,
+            "seed": 42,
+            "frames": 4,
+            "capture_interval": 0.5,
+            "timestep": 0.05,
+            "traffic_placement": "nearest_spawn",
+            "route_spawn_index": 0,
+            "route_kind": "spawn",
+            "lane_change_interval_seconds": null,
+            "lidar": {
+              "channels": 32,
+              "points_per_second": 600000,
+              "range_m": 100.0,
+              "upper_fov": 10.0,
+              "lower_fov": -30.0,
+              "mount_z": 2.0,
+              "pitch": 0.0
+            },
+            "camera": {
+              "fov": 90
+            }
+          },
+          "decisions": [
+            {
+              "model": "occupancy_lidar",
+              "outcome": "no_improvement",
+              "selected": "baseline",
+              "explanation": "Kh\u00f4ng t\u00ecm \u0111\u01b0\u1ee3c c\u1ea5u h\u00ecnh gi\u1ea3m d\u1eef li\u1ec7u t\u1ed1t h\u01a1n trong c\u00e1c c\u1ea5u h\u00ecnh \u0111\u00e3 th\u1eed v\u00e0 theo ng\u01b0\u1ee1ng \u0111\u00e3 \u0111\u1eb7t. Gi\u1eef baseline; baseline kh\u00f4ng nh\u1ea5t thi\u1ebft l\u00e0 c\u1ea5u h\u00ecnh k\u00e9m.",
+              "trials": [
+                {
+                  "job_id": "f78cf721fa01486b8453aabc4d7b7cec",
+                  "profile": "baseline",
+                  "status": "succeeded",
+                  "iou": 0.831782657238556,
+                  "cost": 4890560.0,
+                  "iou_drop": 0.0,
+                  "object_iou": 0.3984375,
+                  "object_recall": 0.9622641509433962,
+                  "reduction": 0.0,
+                  "eligible": true,
+                  "reasons": [],
+                  "error": null,
+                  "configuration": {
+                    "source": "carla",
+                    "replay": null,
+                    "model_ids": [
+                      "occupancy_lidar"
+                    ],
+                    "native_input_adapter": "intensity_mean_experimental",
+                    "scenario": {
+                      "map": "Town01",
+                      "weather": "clear",
+                      "vehicles": 2,
+                      "pedestrians": 0,
+                      "seed": 42,
+                      "frames": 4,
+                      "capture_interval": 0.5,
+                      "timestep": 0.05,
+                      "traffic_placement": "nearest_spawn",
+                      "route_spawn_index": 0,
+                      "route_kind": "spawn",
+                      "lane_change_interval_seconds": null,
+                      "lidar": {
+                        "channels": 32,
+                        "points_per_second": 600000,
+                        "range_m": 100.0,
+                        "upper_fov": 10.0,
+                        "lower_fov": -30.0,
+                        "mount_z": 2.0,
+                        "pitch": 0.0
+                      },
+                      "camera": {
+                        "fov": 90
+                      }
+                    },
+                    "scene_id": null,
+                    "capture_id": null,
+                    "max_latency_ms": null
+                  },
+                  "reference_sha256": "58a9cfb450934ee825d444048ea5b6e41a2c6acc36569aa1090c186b409e1ed7",
+                  "input_sha256": "93322f910beeba1edae161bf7a3e3ec1dbfb08d528ba3f1f4668ca93682950fa",
+                  "checkpoint_sha256": "8d6c7155534906a50ca2f52b039696700072ff200768f0d91ead33c828e9f878",
+                  "hardware": "Linux-6.8.0-138-generic-x86_64-with-glibc2.35",
+                  "device": "cpu",
+                  "cache_hits": 4,
+                  "latency_model_only_ms": null,
+                  "frame_count": 4,
+                  "visible_actor_counts": [
+                    2,
+                    2,
+                    2,
+                    2
+                  ],
+                  "label_policy": "Only semantic-LiDAR observed cells; static-height proxy + visible actor footprints",
+                  "limitations": [
+                    "GT static cells are a height-based proxy, not complete free-space ground truth",
+                    "Weather affects RGB; current checkpoint consumes LiDAR only",
+                    "LiDAR intensity scaled 0..1 to 0..255 is an approximation, not calibrated to nuScenes",
+                    "Ego ground origin approximated using vehicle bounding-box bottom",
+                    "Actor population is not guaranteed dense in ego ROI; inspect visible_actor_counts",
+                    "Autopilot spawn-index route; no verified highway route classification",
+                    "Camera is for review, not an input to these occupancy checkpoints",
+                    "Reference semantic LiDAR configuration is fixed independently of input LiDAR",
+                    "Fresh trials reset world/seed; exact reference hash must match before quality-based selection",
+                    "Experimental input alignment; validated only on limited Town01 captures, not real-world safety",
+                    "BEV 2D, not 3D boxes; no mAP/NDS or pedestrian detection recall",
+                    "Current checkpoints do not consume camera; RGB weather alone is not a model robustness test"
+                  ],
+                  "evidence_path": "/api/v1/experiments/f78cf721fa01486b8453aabc4d7b7cec"
+                },
+                {
+                  "job_id": "633e2e8406424bd4a642fe82b4f86d9b",
+                  "profile": "channels64_300k",
+                  "status": "succeeded",
+                  "iou": 0.49214659685863876,
+                  "cost": 2422320.0,
+                  "iou_drop": 0.3396360603799173,
+                  "object_iou": 0.3507853403141361,
+                  "object_recall": 0.6320754716981132,
+                  "reduction": 0.5046947588824184,
+                  "eligible": false,
+                  "reasons": [
+                    "below_minimum_iou",
+                    "quality_drop_exceeds_limit"
+                  ],
+                  "error": null,
+                  "configuration": {
+                    "source": "carla",
+                    "replay": null,
+                    "model_ids": [
+                      "occupancy_lidar"
+                    ],
+                    "native_input_adapter": "intensity_mean_experimental",
+                    "scenario": {
+                      "map": "Town01",
+                      "weather": "clear",
+                      "vehicles": 2,
+                      "pedestrians": 0,
+                      "seed": 42,
+                      "frames": 4,
+                      "capture_interval": 0.5,
+                      "timestep": 0.05,
+                      "traffic_placement": "nearest_spawn",
+                      "route_spawn_index": 0,
+                      "route_kind": "spawn",
+                      "lane_change_interval_seconds": null,
+                      "lidar": {
+                        "channels": 64,
+                        "points_per_second": 300000,
+                        "range_m": 100.0,
+                        "upper_fov": 10.0,
+                        "lower_fov": -30.0,
+                        "mount_z": 2.0,
+                        "pitch": 0.0
+                      },
+                      "camera": {
+                        "fov": 90
+                      }
+                    },
+                    "scene_id": null,
+                    "capture_id": null,
+                    "max_latency_ms": null
+                  },
+                  "reference_sha256": "58a9cfb450934ee825d444048ea5b6e41a2c6acc36569aa1090c186b409e1ed7",
+                  "input_sha256": "a1bad17875e11344e671c98b578771de0135aa2d8b5f8810fbd052deba38c63b",
+                  "checkpoint_sha256": "8d6c7155534906a50ca2f52b039696700072ff200768f0d91ead33c828e9f878",
+                  "hardware": "Linux-6.8.0-138-generic-x86_64-with-glibc2.35",
+                  "device": "cpu",
+                  "cache_hits": 0,
+                  "latency_model_only_ms": {
+                    "p50": 81.48446300037904,
+                    "p95": 84.80451595241902
+                  },
+                  "frame_count": 4,
+                  "visible_actor_counts": [
+                    2,
+                    2,
+                    2,
+                    2
+                  ],
+                  "label_policy": "Only semantic-LiDAR observed cells; static-height proxy + visible actor footprints",
+                  "limitations": [
+                    "GT static cells are a height-based proxy, not complete free-space ground truth",
+                    "Weather affects RGB; current checkpoint consumes LiDAR only",
+                    "LiDAR intensity scaled 0..1 to 0..255 is an approximation, not calibrated to nuScenes",
+                    "Ego ground origin approximated using vehicle bounding-box bottom",
+                    "Actor population is not guaranteed dense in ego ROI; inspect visible_actor_counts",
+                    "Autopilot spawn-index route; no verified highway route classification",
+                    "Camera is for review, not an input to these occupancy checkpoints",
+                    "Reference semantic LiDAR configuration is fixed independently of input LiDAR",
+                    "Fresh trials reset world/seed; exact reference hash must match before quality-based selection",
+                    "Experimental input alignment; validated only on limited Town01 captures, not real-world safety",
+                    "BEV 2D, not 3D boxes; no mAP/NDS or pedestrian detection recall",
+                    "Current checkpoints do not consume camera; RGB weather alone is not a model robustness test"
+                  ],
+                  "evidence_path": "/api/v1/experiments/633e2e8406424bd4a642fe82b4f86d9b"
+                },
+                {
+                  "job_id": "c89c5b418aaf41318a9e51dd25793acd",
+                  "profile": "channels64_450k",
+                  "status": "succeeded",
+                  "iou": 0.603215671779708,
+                  "cost": 3656000.0,
+                  "iou_drop": 0.22856698545884802,
+                  "object_iou": 0.4129353233830846,
+                  "object_recall": 0.7830188679245284,
+                  "reduction": 0.25243734868808476,
+                  "eligible": false,
+                  "reasons": [
+                    "quality_drop_exceeds_limit"
+                  ],
+                  "error": null,
+                  "configuration": {
+                    "source": "carla",
+                    "replay": null,
+                    "model_ids": [
+                      "occupancy_lidar"
+                    ],
+                    "native_input_adapter": "intensity_mean_experimental",
+                    "scenario": {
+                      "map": "Town01",
+                      "weather": "clear",
+                      "vehicles": 2,
+                      "pedestrians": 0,
+                      "seed": 42,
+                      "frames": 4,
+                      "capture_interval": 0.5,
+                      "timestep": 0.05,
+                      "traffic_placement": "nearest_spawn",
+                      "route_spawn_index": 0,
+                      "route_kind": "spawn",
+                      "lane_change_interval_seconds": null,
+                      "lidar": {
+                        "channels": 64,
+                        "points_per_second": 450000,
+                        "range_m": 100.0,
+                        "upper_fov": 10.0,
+                        "lower_fov": -30.0,
+                        "mount_z": 2.0,
+                        "pitch": 0.0
+                      },
+                      "camera": {
+                        "fov": 90
+                      }
+                    },
+                    "scene_id": null,
+                    "capture_id": null,
+                    "max_latency_ms": null
+                  },
+                  "reference_sha256": "58a9cfb450934ee825d444048ea5b6e41a2c6acc36569aa1090c186b409e1ed7",
+                  "input_sha256": "1adca1d089bacde2a627591ca2efafc0239007c85c4cb03339baaf926c02f291",
+                  "checkpoint_sha256": "8d6c7155534906a50ca2f52b039696700072ff200768f0d91ead33c828e9f878",
+                  "hardware": "Linux-6.8.0-138-generic-x86_64-with-glibc2.35",
+                  "device": "cpu",
+                  "cache_hits": 0,
+                  "latency_model_only_ms": {
+                    "p50": 82.88688299944624,
+                    "p95": 84.28811144694919
+                  },
+                  "frame_count": 4,
+                  "visible_actor_counts": [
+                    2,
+                    2,
+                    2,
+                    2
+                  ],
+                  "label_policy": "Only semantic-LiDAR observed cells; static-height proxy + visible actor footprints",
+                  "limitations": [
+                    "GT static cells are a height-based proxy, not complete free-space ground truth",
+                    "Weather affects RGB; current checkpoint consumes LiDAR only",
+                    "LiDAR intensity scaled 0..1 to 0..255 is an approximation, not calibrated to nuScenes",
+                    "Ego ground origin approximated using vehicle bounding-box bottom",
+                    "Actor population is not guaranteed dense in ego ROI; inspect visible_actor_counts",
+                    "Autopilot spawn-index route; no verified highway route classification",
+                    "Camera is for review, not an input to these occupancy checkpoints",
+                    "Reference semantic LiDAR configuration is fixed independently of input LiDAR",
+                    "Fresh trials reset world/seed; exact reference hash must match before quality-based selection",
+                    "Experimental input alignment; validated only on limited Town01 captures, not real-world safety",
+                    "BEV 2D, not 3D boxes; no mAP/NDS or pedestrian detection recall",
+                    "Current checkpoints do not consume camera; RGB weather alone is not a model robustness test"
+                  ],
+                  "evidence_path": "/api/v1/experiments/c89c5b418aaf41318a9e51dd25793acd"
+                },
+                {
+                  "job_id": "54e56042c4df4850865858245e3e1243",
+                  "profile": "channels64_600k",
+                  "status": "succeeded",
+                  "iou": 0.6727605118829981,
+                  "cost": 4895040.0,
+                  "iou_drop": 0.15902214535555792,
+                  "object_iou": 0.38362068965517243,
+                  "object_recall": 0.839622641509434,
+                  "reduction": -0.000916050513642519,
+                  "eligible": false,
+                  "reasons": [
+                    "quality_drop_exceeds_limit"
+                  ],
+                  "error": null,
+                  "configuration": {
+                    "source": "carla",
+                    "replay": null,
+                    "model_ids": [
+                      "occupancy_lidar"
+                    ],
+                    "native_input_adapter": "intensity_mean_experimental",
+                    "scenario": {
+                      "map": "Town01",
+                      "weather": "clear",
+                      "vehicles": 2,
+                      "pedestrians": 0,
+                      "seed": 42,
+                      "frames": 4,
+                      "capture_interval": 0.5,
+                      "timestep": 0.05,
+                      "traffic_placement": "nearest_spawn",
+                      "route_spawn_index": 0,
+                      "route_kind": "spawn",
+                      "lane_change_interval_seconds": null,
+                      "lidar": {
+                        "channels": 64,
+                        "points_per_second": 600000,
+                        "range_m": 100.0,
+                        "upper_fov": 10.0,
+                        "lower_fov": -30.0,
+                        "mount_z": 2.0,
+                        "pitch": 0.0
+                      },
+                      "camera": {
+                        "fov": 90
+                      }
+                    },
+                    "scene_id": null,
+                    "capture_id": null,
+                    "max_latency_ms": null
+                  },
+                  "reference_sha256": "58a9cfb450934ee825d444048ea5b6e41a2c6acc36569aa1090c186b409e1ed7",
+                  "input_sha256": "0f623d927239f4ec70d789e79eca2c1d39402a91e94ed4168a1d8cf3f92022eb",
+                  "checkpoint_sha256": "8d6c7155534906a50ca2f52b039696700072ff200768f0d91ead33c828e9f878",
+                  "hardware": "Linux-6.8.0-138-generic-x86_64-with-glibc2.35",
+                  "device": "cpu",
+                  "cache_hits": 0,
+                  "latency_model_only_ms": {
+                    "p50": 84.87285500086728,
+                    "p95": 86.21854790180805
+                  },
+                  "frame_count": 4,
+                  "visible_actor_counts": [
+                    2,
+                    2,
+                    2,
+                    2
+                  ],
+                  "label_policy": "Only semantic-LiDAR observed cells; static-height proxy + visible actor footprints",
+                  "limitations": [
+                    "GT static cells are a height-based proxy, not complete free-space ground truth",
+                    "Weather affects RGB; current checkpoint consumes LiDAR only",
+                    "LiDAR intensity scaled 0..1 to 0..255 is an approximation, not calibrated to nuScenes",
+                    "Ego ground origin approximated using vehicle bounding-box bottom",
+                    "Actor population is not guaranteed dense in ego ROI; inspect visible_actor_counts",
+                    "Autopilot spawn-index route; no verified highway route classification",
+                    "Camera is for review, not an input to these occupancy checkpoints",
+                    "Reference semantic LiDAR configuration is fixed independently of input LiDAR",
+                    "Fresh trials reset world/seed; exact reference hash must match before quality-based selection",
+                    "Experimental input alignment; validated only on limited Town01 captures, not real-world safety",
+                    "BEV 2D, not 3D boxes; no mAP/NDS or pedestrian detection recall",
+                    "Current checkpoints do not consume camera; RGB weather alone is not a model robustness test"
+                  ],
+                  "evidence_path": "/api/v1/experiments/54e56042c4df4850865858245e3e1243"
+                }
+              ],
+              "cost_scope": "estimated_lidar_payload_rate",
+              "cost_unit": "bytes/s"
+            }
+          ]
+        }
+      ],
+      "limitations": [
+        "Exploratory two-dimensional occupancy proxy, not validated real-world sensor recommendation",
+        "Reference mismatch excludes trial from selection; more seeds/routes are needed",
+        "Data rate is not electricity or dollar cost; fixed BEV shape may keep model latency unchanged",
+        "Weather affects RGB; no physical LiDAR rain/fog degradation has been validated"
+      ],
+      "comparison_path": "/api/v1/experiments/sensor-agent/4a0e23b16d17457db9264c96c78dcf05/comparison",
+      "notice": "Occupancy proxy evidence; not validated real-world safety or GPU savings. Camera selection remains separate in comparison.",
+      "evidence_sha256": "17a7dc9fe0359c80c1c7377ca8006a9fef5259c0053b1f196254ac442e23efdb"
+    }
+  ],
+  "native_rl_admitted": false,
+  "limitations": [
+    "One Town01 route and four frames per profile: no independent training/validation/test split",
+    "Only LiDAR occupancy proxy; no full sensor fusion, real-world safety or weather robustness claim",
+    "Cache hits are reported; absent model timing must not be filled from a different trial",
+    "Physical sensor settings verified; no upsampling of 16/32-channel returns into 64 channels"
+  ],
+  "plan_sha256": "0aa86818cf9d40a8721f687d5fd4e17d159a60919351ceb8249a61c5bd581faa"
+}

@@ -127,9 +127,8 @@ export function ExperimentWorkspace({ source = "carla", initialSpec, active = tr
   return <div className="grid gap-6">
     <PageHeader title="CARLA Experiments" description="Tạo capture, chạy checkpoint thật và so sánh BEV occupancy. Mở bot cạnh workspace để trao đổi và đối chiếu evidence; form này tạo thí nghiệm thủ công." />
     <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
-      CARLA hiện hỗ trợ occupancy LiDAR. Bảy checkpoint chạy được trên nuScenes; radar CARLA chưa có adapter RCS/velocity phù hợp.
-      Model không dùng camera, nên weather RGB chưa đo được độ bền trước mưa/sương mù.
-      <p className="mt-2">Preset MVP dùng Town01, 2 xe, không người đi bộ. Map/traffic khác cần kiểm chứng riêng trên máy chạy.</p>
+      CARLA dùng occupancy LiDAR; camera giúp đối chiếu bối cảnh, chưa là input của model.
+      <details className="mt-2"><summary className="cursor-pointer">Phạm vi môi trường và preset</summary><p className="mt-2">Mưa/sương mù mới đổi RGB, chưa đo độ bền sensor. Bảy checkpoint chạy trên nuScenes; radar CARLA chưa có adapter phù hợp. Preset MVP: Town01, 2 xe, 0 người. Map/traffic khác cần kiểm chứng riêng.</p></details>
       {registry && !registry.carla_client_installed ? <p className="mt-2 font-medium">Backend chưa có CARLA client. Worker cần client/server riêng hoặc dùng nguồn nuScenes.</p> : null}
     </div>
     {error ? <p role="alert" className="rounded-lg bg-red-50 p-4 text-sm text-red-700">{error}</p> : null}
@@ -183,7 +182,7 @@ export function ExperimentWorkspace({ source = "carla", initialSpec, active = tr
         <div className="overflow-x-auto"><table className="w-full text-left text-sm"><thead><tr>{["Model", "Occupied IoU", "Object IoU", "Object-cell recall", "Flow EPE (m/s)", "p95 model (ms)", "Cache frames"].map(label => <th key={label} className="border-b p-3">{label}</th>)}</tr></thead><tbody>{Object.entries(chosen.result.models).map(([name, result]) => <tr key={name}><td className="p-3">{name}</td><td>{metric(result.metrics.occupied_iou, true)}</td><td>{metric(result.metrics.class_iou?.object, true)}</td><td>{metric(result.metrics.object_recall, true)}</td><td>{metric(result.metrics.flow_epe_m_s)}</td><td>{metric(result.metrics.latency_model_only_ms?.p95)}</td><td>{result.cache_hits}</td></tr>)}</tbody></table></div>
         {Object.values(chosen.result.models).some(result => result.metrics.object_recall === 0) && <p className="text-sm text-amber-800">Có model object-cell recall bằng 0 trên capture này. Đối chiếu Reference để xem vùng vật thể bị bỏ sót; thứ hạng occupied IoU không chứng minh nhận biết vật thể đáng tin cậy.</p>}
         <p className="text-sm">Đề xuất theo occupied IoU: <b>{chosen.result.recommendation.selected ?? "Chưa có model đáp ứng tiêu chí"}</b></p>
-        <ul className="list-disc space-y-1 pl-5 text-xs text-[var(--muted)]">{[...chosen.result.limitations, ...chosen.result.recommendation.limitations].map((item, index) => <li key={index}>{item}</li>)}</ul>
+        <details><summary className="cursor-pointer text-xs text-[var(--muted)]">Nguồn đo và giới hạn</summary><ul className="mt-2 list-disc space-y-1 pl-5 text-xs text-[var(--muted)]">{[...new Set([...chosen.result.limitations, ...chosen.result.recommendation.limitations])].map(item => <li key={item}>{item}</li>)}</ul></details>
         {frameCount > 0 ? <>
           <div className="grid gap-3 sm:grid-cols-2"><Select label="Model preview" value={previewModel} onChange={event => setSelectedModel(event.target.value)}>{chosen.spec.request.model_ids.map(name => <option key={name}>{name}</option>)}</Select></div>
           <CapturePlayback key={`${chosen.id}:${previewModel}`} job={chosen.id} model={previewModel} count={frameCount} timestamps={chosen.result.manifest.frames.map(frame => frame.timestamp ?? NaN)} interval={chosen.spec.request.scenario.capture_interval} camera={chosen.spec.request.source === "carla"} active={active} />

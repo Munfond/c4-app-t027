@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import type { ExperimentSessionState } from "./use-experiment-session";
 import type { ExperimentSpec } from "./experiment-workspace";
 import OccupancyRlEvidence from "./occupancy-rl-evidence";
+import { NativeProfileEvidence } from "./native-profile-evidence";
 
 const base = "/api/v1/experiments";
 export type ExperimentSource = "carla" | "dataset_replay";
@@ -14,6 +15,7 @@ type Study = { id: string; source: Source; status: string; total_trials: number;
   metadata: { request?: string }; jobs: { id: string; status: string; profile: string }[];
   summary?: { explanation: string } | null };
 export type EvidenceTrial = { job_id: string; profile: string; status: string; iou: number | null;
+  object_iou?: number | null; object_recall?: number | null;
   cost: number | null; iou_drop: number | null; reduction: number | null; eligible: boolean;
   reasons: string[]; error: string | null; configuration: object; reference_sha256: string | null;
   checkpoint_sha256: string | null; input_sha256: string | null; frame_count: number;
@@ -22,7 +24,7 @@ export type EvidenceTrial = { job_id: string; profile: string; status: string; i
   latency_model_only_ms: { p95: number } | null; evidence_path: string };
 type Decision = { model: string; outcome: string; selected: string | null; explanation: string;
   cost_unit: string; cost_scope: string; trials: EvidenceTrial[] };
-type Evidence = { study_id: string; evidence_sha256: string; constraints: { min_occupied_iou: number; max_iou_drop: number };
+type Evidence = { study_id: string; evidence_sha256: string; constraints: { min_occupied_iou: number; max_iou_drop: number; min_object_iou?: number | null; min_object_recall?: number | null };
   environments: { environment: number; scenario: object; decisions: Decision[] }[]; limitations: string[]; notice: string };
 type Review = { id: string; reviewer: string; verdict: string; notes: string; created_at: number };
 export type Inspection = { baseline: EvidenceTrial; candidate: EvidenceTrial; model: string; session: string;
@@ -31,6 +33,7 @@ const reasons: Record<string, string> = {
   trial_failed_or_cancelled: "Lượt thử lỗi hoặc đã hủy", reference_mismatch_or_missing: "Tham chiếu không khớp/thiếu",
   missing_measurement: "Thiếu số đo", below_minimum_iou: "IoU dưới ngưỡng tối thiểu",
   quality_drop_exceeds_limit: "Giảm IoU quá mức cho phép",
+  below_minimum_object_iou: "Object IoU dưới ngưỡng", below_minimum_object_recall: "Object-cell recall dưới ngưỡng", missing_object_measurement: "Thiếu metric vật thể; không đủ bằng chứng chọn cấu hình",
 };
 const outcomes: Record<string, string> = { improved: "Có phương án giảm dữ liệu", no_improvement: "Giữ cấu hình gốc", inconclusive: "Chưa đủ bằng chứng" };
 const statuses: Record<string, string> = { running: "Đang đo", completed: "Hoàn tất", cancelled: "Đã hủy" };
@@ -42,6 +45,7 @@ export default function AgentPanel({ source, onSourceChange, onOpenTools, toolsO
 }) {
   const { session, error: sessionError, start: startSession, loading: sessionLoading } = sessionState;
   const [enabled, setEnabled] = useState(false);
+  const [nativeAdapterAvailable, setNativeAdapterAvailable] = useState(false);
   const [message, setMessage] = useState("");
   const [cameraFov, setCameraFov] = useState(90);
   const [history, setHistory] = useState<Study[]>([]);
@@ -75,11 +79,11 @@ export default function AgentPanel({ source, onSourceChange, onOpenTools, toolsO
     const controller = new AbortController();
     const suffix = source === "dataset_replay" ? `?session=${encodeURIComponent(session)}` : "";
     const path = source === "dataset_replay" ? "/replay/studies" : "/sensor-agent";
-    void Promise.all([apiJson<{ agent_enabled: boolean }>(`${base}/registry`, controller.signal),
+    void Promise.all([apiJson<{ agent_enabled: boolean; native_input_adapters?: {id:string;available:boolean}[] }>(`${base}/registry`, controller.signal),
       apiJson<{ items: Study[] }>(`${base}${path}${suffix}`, controller.signal)])
       .then(([registry, data]) => {
         if (controller.signal.aborted) return;
-        setEnabled(registry.agent_enabled); setHistory(data.items.filter(item => item.source === source));
+        setEnabled(registry.agent_enabled); setNativeAdapterAvailable(!!registry.native_input_adapters?.some(adapter => adapter.id === "intensity_mean_experimental" && adapter.available)); setHistory(data.items.filter(item => item.source === source));
       }).catch(cause => { if (!controller.signal.aborted) setError(String(cause)); });
     return () => controller.abort();
   }, [source, session]);
@@ -171,6 +175,7 @@ export default function AgentPanel({ source, onSourceChange, onOpenTools, toolsO
       <p className="agent-small">Gửi yêu cầu sẽ tạo lượt đo mới và dùng token LLM. Đọc evidence không gọi LLM.</p>
     </form>
     <OccupancyRlEvidence />
+    {source === "carla" && <NativeProfileEvidence onInspect={onInspect} />}
     {source === "carla" && <section className="agent-panel-body" aria-label="Cấu hình camera nhanh">
       <label className="agent-small" htmlFor="agent-camera-fov">Preset camera · không dùng token LLM</label>
       <select id="agent-camera-fov" className="w-full rounded-lg border border-[var(--line)] p-2 text-sm" value={cameraFov} onChange={event => setCameraFov(Number(event.target.value))}>
@@ -183,7 +188,21 @@ export default function AgentPanel({ source, onSourceChange, onOpenTools, toolsO
           scenario: { map: "Town01", weather: "clear", vehicles: 2, pedestrians: 0, seed: 42, frames: 4, capture_interval: .5, timestep: .05, route_spawn_index: 0, traffic_placement: "nearest_spawn", camera: { fov: cameraFov } } };
         setDraft(spec); onOpenTools(spec, "manual");
       }}>Điền cấu hình để kiểm tra</Button>
-      <p className="agent-small">Chưa chạy capture. FOV không ảnh hưởng prediction occupancy LiDAR; chưa có evidence chọn preset tốt nhất.</p>
+      <p className="agent-small">Nút preset chỉ điền cấu hình, chưa tạo capture mới. FOV không ảnh hưởng prediction occupancy LiDAR; chưa có evidence chọn preset tốt nhất.</p>
+    </section>}
+    {source === "carla" && <section className="agent-panel-body" aria-label="Kiểm chứng cấu hình có số đo">
+      <Button disabled={busy || running || !nativeAdapterAvailable} loading={busy} onClick={async () => {
+        setBusy(true);setError("");
+        try {
+          const fresh = await post<Study>("/sensor-agent/studies", {
+            scenarios:[{map:"Town01",weather:"clear",vehicles:2,pedestrians:0,frames:4,seed:42,traffic_placement:"nearest_spawn",camera:{fov:cameraFov}}],
+            profiles:[{name:"lidar_300k",lidar:{points_per_second:300000}},{name:"lidar_150k",lidar:{points_per_second:150000}}],
+            native_input_adapter:"intensity_mean_experimental",max_iou_drop:0.02,min_occupied_iou:0.5,min_object_iou:0.1,min_object_recall:0.5,
+          });
+          choose(fresh);setHistory(previous=>[fresh,...previous.filter(item=>item.id!==fresh.id)]);
+        } catch(cause) {setError(String(cause));} finally {setBusy(false);}
+      }}>Kiểm chứng 2 mức LiDAR</Button>
+      <p className="agent-small">Baseline 600k so với 300k/150k điểm/s · 3 capture mới, 4 frame/capture. Căn chỉnh intensity thử nghiệm; kiểm tra cả occupied và object. Không dùng LLM, không tự train hoặc áp cấu hình lên xe.</p>
     </section>}
     {draft && <details open><summary>Cấu hình nháp · chưa chạy</summary><p className="agent-small">Cấu hình đã điền vào phần nâng cao cạnh bot. Kiểm tra rồi bấm Tạo thí nghiệm.</p><pre>{JSON.stringify(draft, null, 2)}</pre></details>}
     <section className="agent-section" aria-label="Lịch sử và bằng chứng">
@@ -193,6 +212,7 @@ export default function AgentPanel({ source, onSourceChange, onOpenTools, toolsO
       {study && <div className="agent-study"><p className="agent-request">{study.metadata.request ?? `Study ${study.id.slice(0, 8)}`}</p><p className="agent-small" role="status">{statuses[study.status] ?? study.status} · {study.jobs.filter(job => ["succeeded", "failed", "cancelled"].includes(job.status)).length}/{study.total_trials} lượt xử lý</p>{study.status === "running" && <Button variant="secondary" loading={busy} onClick={async () => { setBusy(true); try { choose(await post<Study>(`/sensor-agent/${study.id}/cancel`)); } catch (cause) { setError(String(cause)); } finally { setBusy(false); } }}>Hủy lượt đánh giá</Button>}</div>}
       {report && <>
         <p className="agent-small">IoU tối thiểu {pct(report.constraints.min_occupied_iou)} · được giảm tối đa {(report.constraints.max_iou_drop * 100).toFixed(1)} điểm phần trăm.</p>
+        {(report.constraints.min_object_iou != null || report.constraints.min_object_recall != null) && <p className="agent-small">Object IoU ≥ {pct(report.constraints.min_object_iou ?? null)} · object-cell recall ≥ {pct(report.constraints.min_object_recall ?? null)}. Thiếu metric thì không chọn cấu hình.</p>}
         {report.environments.map(environment => <div key={environment.environment}>
           <details><summary>Cảnh {environment.environment + 1} · cấu hình môi trường</summary><pre>{JSON.stringify(environment.scenario, null, 2)}</pre></details>
           {environment.decisions.map(decision => {
@@ -201,8 +221,9 @@ export default function AgentPanel({ source, onSourceChange, onOpenTools, toolsO
               <p className="agent-small">{decision.model}</p><h4>{outcomes[decision.outcome]}</h4><p>{decision.explanation}</p>
               <div className="agent-measures"><span>Cấu hình gốc<strong>{pct(baseline.iou)} IoU</strong></span><span>Lựa chọn đạt ngưỡng<strong>{decision.selected ?? "Chưa có"}</strong></span></div>
               {decision.trials.map(trial => <details key={trial.job_id} className="agent-trial"><summary><span>{trial.profile === "baseline" ? "Cấu hình gốc" : trial.profile}</span><span>{pct(trial.iou)} · {trial.eligible ? "Đạt ngưỡng" : "Chưa đạt"}</span></summary>
-                <p>{trial.cost == null ? "Chi phí dữ liệu chưa đo" : `${trial.cost.toLocaleString("vi-VN")} ${decision.cost_unit}${decision.cost_scope === "estimated_lidar_payload_rate" ? " (ước tính từ payload LiDAR)" : ""}`} · giảm {pct(trial.reduction)} dữ liệu.</p>
+                <p>{trial.cost == null ? "Lượng dữ liệu chưa đo" : `${trial.cost.toLocaleString("vi-VN")} ${decision.cost_unit}${decision.cost_scope === "estimated_lidar_payload_rate" ? " (ước tính từ payload LiDAR)" : ""}`} · giảm {pct(trial.reduction)} dữ liệu.</p>
                 <p className="agent-small">Chênh lệch IoU (gốc − ứng viên): {trial.iou_drop == null ? "chưa đo" : `${(trial.iou_drop * 100).toFixed(2)} điểm phần trăm`}. Đánh giá trên {trial.frame_count} frame{trial.visible_actor_counts ? ` · vật trong ROI: ${trial.visible_actor_counts.join(", ")}` : ""}.</p>
+                <p className="agent-small">Object IoU {pct(trial.object_iou ?? null)} · object-cell recall {pct(trial.object_recall ?? null)}.</p>
                 {trial.reasons.map(reason => <p key={reason} className="agent-error">{reasons[reason] ?? reason}</p>)}{trial.error && <p className="agent-error">{trial.error}</p>}
                 <p className="agent-small">p95 model: {trial.latency_model_only_ms?.p95 ?? "Chưa đo"}{trial.latency_model_only_ms ? " ms" : ""} · cache {trial.cache_hits ?? "—"} frame. Giảm bytes không chứng minh giảm GPU.</p>
                 <dl className="agent-provenance"><dt>Run</dt><dd>{trial.job_id}</dd><dt>Reference SHA</dt><dd>{trial.reference_sha256 ?? "Thiếu"}</dd><dt>Checkpoint SHA</dt><dd>{trial.checkpoint_sha256 ?? "Thiếu"}</dd><dt>Thiết bị</dt><dd>{trial.device ?? "Chưa ghi"} · {trial.hardware ?? "Chưa ghi"}</dd></dl>

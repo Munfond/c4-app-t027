@@ -8,7 +8,7 @@ from fastapi import APIRouter, Depends, Header, HTTPException, Path, Query, Requ
 from fastapi.responses import FileResponse
 
 from src.config import get_settings
-from src.models.experiments import AgentPlanRequest, EngineerReview, ExperimentSpec, SensorAgentRequest
+from src.models.experiments import AgentPlanRequest, EngineerReview, ExperimentSpec, SensorAgentRequest, SensorStudySpec
 from src.models.replay import CAMERAS, OCCUPANCY_MODELS, RADARS, ReplayStudySpec
 from src.services import experiment_store as store
 from src.services import sensor_studies as studies
@@ -134,6 +134,19 @@ def create_experiment(spec: ExperimentSpec, idempotency_key: Annotated[str | Non
 @router.get("")
 def experiments():
     return {"items": store.recent()}
+
+
+@router.post("/sensor-agent/studies", status_code=201)
+def create_native_study(spec: SensorStudySpec):
+    try:
+        # Validate before inserting a study; unavailable adapters must not create orphan records.
+        for trial in studies.trials(spec):
+            validate_spec(trial["spec"])
+        return studies.create(
+            spec, metadata={"request": "Manual measured sensor study; no LLM call", "llm_called": False}
+        )
+    except (ValueError, OSError, KeyError) as exc:
+        raise HTTPException(422, str(exc)) from exc
 
 
 @router.post("/sensor-agent/start", status_code=201)
@@ -317,6 +330,28 @@ async def summarize_study(ident: ExperimentId):
         raise HTTPException(422, str(exc)) from exc
 
 
+@router.get("/native-profile-pilot")
+def native_profile_pilot():
+    from src.services.native_profile_evidence import read_report
+
+    try:
+        return read_report()
+    except (OSError, ValueError, KeyError, TypeError) as exc:
+        raise HTTPException(503, "Native profile evidence unavailable or failed integrity check") from exc
+
+
+@router.get("/native-profile-pilot/report")
+def native_profile_pilot_report():
+    snapshot = native_profile_pilot()
+    if not snapshot["ready"]:
+        raise HTTPException(404, snapshot["notice"])
+    return FileResponse(
+        get_settings().native_profile_pilot_report,
+        media_type="application/json",
+        filename="native-12-profile-audit.json",
+    )
+
+
 @router.get("/occupancy-rl")
 def occupancy_rl_report():
     from src.services.occupancy_rl_evidence import read_report
@@ -428,7 +463,8 @@ def capture_reference(ident: ExperimentId, index: int = Path(ge=0, le=80)):
     path = store.root() / capture_id / "capture" / f"frame_{index:04d}.npz"
     actors = []
     try:
-        geometry = json.loads(path.with_suffix(".json").read_text())["boxes"]
+        metadata = json.loads(path.with_suffix(".json").read_text())
+        geometry = metadata["boxes"]
         if not isinstance(geometry, list) or len(geometry) > 80:
             raise ValueError("Invalid actor catalog")
         for actor in geometry:
@@ -444,6 +480,40 @@ def capture_reference(ident: ExperimentId, index: int = Path(ge=0, le=80)):
                 or any(abs(item[key]) > 1000 for key in ("x", "y"))
             ):
                 raise ValueError("Invalid actor geometry")
+            projection = actor.get("camera_box_uv")
+            if projection is not None:
+                if (
+                    not isinstance(projection, list)
+                    or len(projection) != 4
+                    or any(type(v) not in (float, int) or not math.isfinite(v) or not 0 <= v <= 1 for v in projection)
+                    or projection[2] <= projection[0]
+                    or projection[3] <= projection[1]
+                ):
+                    raise ValueError("Invalid actor camera projection")
+            recorded = actor.get("camera_projection_status") == "geometry_recorded"
+            if recorded:
+                from src.simulation.camera_projection import camera_box
+
+                if metadata["camera_frame_id"] != metadata["simulation_frame_id"]:
+                    raise ValueError("Camera/reference frame mismatch")
+                local = np.linalg.inv(np.asarray(metadata["ego_matrix"], dtype=float)) @ np.asarray(
+                    actor["world_box_matrix"], dtype=float
+                )
+                if not np.allclose([item["x"], item["y"]], [local[0, 3], -local[1, 3]], rtol=0, atol=1e-6):
+                    raise ValueError("Camera/BEV actor pose mismatch")
+                expected = camera_box(
+                    actor["world_box_matrix"],
+                    (item["l"] / 2, item["w"] / 2, item["h"] / 2),
+                    metadata["camera_matrix"],
+                    tuple(metadata["camera_size"]),
+                    metadata["camera_fov"],
+                )
+                if (expected is None) != (projection is None) or (
+                    expected is not None and not np.allclose(expected, projection, rtol=0, atol=1e-9)
+                ):
+                    raise ValueError("Camera projection differs from recorded geometry")
+            item["camera_box_uv"] = projection
+            item["camera_projection_status"] = "geometry_recorded" if recorded else "unavailable"
             actors.append(item)
         if len({item["id"] for item in actors}) != len(actors):
             raise ValueError("Duplicate actor IDs")

@@ -2,9 +2,10 @@
 
 Agent mở dưới dạng bot cạnh Lab; công cụ CARLA/nuScenes nằm trong workspace thay vì thêm tab riêng. LLM lập kế hoạch khi có cấu hình API; inference/evaluation và quyết định được kiểm chứng bằng artifact, không dùng lời LLM làm metric.
 
-Bản phục hồi có PPO offline thực tế trên ba mức giữ điểm LiDAR 100/50/25%. Kết quả test hiện chưa tốt hơn baseline đầy đủ; UI báo đúng điều đó và cho tải evidence, lưu engineer review. Đây là occupancy proxy research, chưa phải CARLA online hoặc hoàn tất bộ 12–24 profile của kế hoạch gốc.
+Bản phục hồi có PPO offline thực tế trên ba mức giữ điểm LiDAR 100/50/25%. Kết quả test hiện chưa tốt hơn baseline đầy đủ; UI báo đúng điều đó và cho tải evidence, lưu engineer review. Đây là occupancy proxy research, chưa phải CARLA online. CARLA đã có pilot 12 cấu hình LiDAR vật lý (16/32/64 kênh × bốn mức điểm/s), cùng reference và audit input; pilot một route chưa được dùng để train PPO native.
 
 - [Khởi động local, phạm vi phục hồi và giới hạn](docs/MVP_RECOVERY_SCOPE.vi.md)
+- [CARLA native, 12 profile và evidence](docs/NATIVE_CARLA_EVIDENCE.vi.md)
 - [Lời trình bày nhanh theo giao diện](docs/MVP_DEMO_RECOVERY.vi.md)
 - [Evidence kiểm tra thực tế](eval/recovery-mvp-2026-10-13/EVIDENCE.vi.md)
 - [Hướng dẫn AI Agent: setup, FE/worker, phiên tạm, API](docs/REPLAY_SENSOR_AGENT.vi.md)

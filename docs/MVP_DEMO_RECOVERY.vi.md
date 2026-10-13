@@ -21,4 +21,12 @@ CARLA sạch đã tạo capture FOV và preview mưa/sương mù. Căn chỉnh i
 5. Mở nguồn/split/giới hạn, tải report. Chỉ engineer thật mới ghi review.
 6. Camera preset 60/90/110: chọn các capture smoke đã chạy; đọc FOV và giới hạn. Chọn capture căn chỉnh thử nghiệm để so Model/Reference, chỉ rõ đây chưa là native RL.
 
-Ba profile thinning là phạm vi MVP phục hồi. Bộ 12–24 profile và MultiDiscrete của kế hoạch Active Sensing ban đầu chưa hoàn thành; không gọi ba profile này là triển khai đầy đủ kế hoạch.
+Ba profile thinning là phạm vi MVP phục hồi. Đã có pilot 12 profile LiDAR vật lý, nhưng training PPO hiện vẫn là ba action trên nuScenes; split native và MultiDiscrete chưa hoàn thành; không gọi ba profile này là triển khai đầy đủ kế hoạch.
+
+## Đoạn nói thêm khi mở bot
+
+“Ở đây nhóm đã đo 12 cấu hình LiDAR vật lý: 16, 32, 64 kênh với bốn mức điểm mỗi giây. Tất cả dùng cùng reference. Ví dụ giảm từ 600 nghìn xuống 300 nghìn điểm mỗi giây làm occupied IoU giảm từ 83 xuống 65 phần trăm; recall ô vật thể giảm từ 96 xuống 72 phần trăm. Vì vượt ngưỡng chất lượng đã đặt, hệ thống giữ cấu hình gốc và chỉ rõ evidence. Đây là kiểm chứng cấu hình; PPO đã train là phần nuScenes riêng, chưa nối vào CARLA online.”
+
+## Demo clip dài và reference
+
+Trong công cụ CARLA, chọn clip clear route17 seed73 (20 frame): bật Reference, chọn actor phía trước để xem footprint trên BEV và viền geometry trên camera. Bật Lặp capture để chạy liên tục. Clip fog route31 seed97 có 20 frame để review môi trường, không chứng minh độ bền LiDAR trong sương mù. Ở matrix 12 profile, chọn ứng viên rồi “Đối chiếu trên map” để xem đồng bộ với baseline.

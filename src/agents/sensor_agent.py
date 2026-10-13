@@ -80,6 +80,8 @@ async def start(message, max_iou_drop=None, frames=None):
         "Nếu người dùng yêu cầu cao tốc: map Town04, route_kind=highway, vehicles15, pedestrians0, frames20. "
         "Nếu yêu cầu đổi làn liên tục: lane_change_interval_seconds=2.5; runner gửi lệnh và ghi nhận đổi làn thật. "
         "Với cảnh thông thường dùng route_kind=spawn và lane_change_interval_seconds=null nếu không yêu cầu đổi làn. "
+        "native_input_adapter mặc định raw; chỉ dùng intensity_mean_experimental khi người dùng yêu cầu rõ. "
+        "min_object_iou/min_object_recall là ngưỡng optional: null nếu người dùng không chỉ định, không tự bịa số đo. "
         "Không hứa tiết kiệm điện hoặc chi phí tiền."
     )
     name = "create_sensor_study"

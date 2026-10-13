@@ -2,7 +2,7 @@
 
 ## Khởi động local
 
-Repo sử dụng: `P-027-recovery-20261013`. Mở hai terminal tại repo:
+Repo sử dụng: `P-027-recovery-20261013`. Mở terminal backend và frontend tại repo:
 
 ```bash
 bash scripts/run_local_mvp.sh backend
@@ -12,14 +12,14 @@ bash scripts/run_local_mvp.sh backend
 bash scripts/run_local_mvp.sh frontend
 ```
 
-Truy cập http://127.0.0.1:3111/lab; health http://127.0.0.1:8000/health. Ctrl+C dừng đúng tiến trình ở mỗi terminal. Khi sửa frontend, dừng frontend rồi `bash scripts/run_local_mvp.sh build` và khởi động lại. Runtime phục hồi và `.env` là cấu hình local, không đưa vào Git. Nếu tạo thí nghiệm mới bằng nuScenes, mở terminal thứ ba và chạy `bash scripts/run_local_mvp.sh worker`. Worker không tự cài hoặc khởi động CARLA; không tạo job CARLA khi runtime chưa sẵn sàng.
+Truy cập http://127.0.0.1:3111/lab; health http://127.0.0.1:8000/health. Ctrl+C dừng đúng tiến trình ở mỗi terminal. Khi sửa frontend, chạy `bash scripts/run_local_mvp.sh build`, sau khi build thành công thì Ctrl+C frontend và khởi động lại. Script đóng gói release cố định; build kế tiếp không xóa file của release đang phục vụ. `package` chỉ đóng gói build đã thành công, không thay thế bước compile. Runtime phục hồi và `.env` là cấu hình local, không đưa vào Git. Để chạy lượt đo mới, mở terminal thứ ba: `bash scripts/run_local_mvp.sh worker`. Worker không tự cài CARLA; khi `CARLA_SERVER_EXECUTABLE` trỏ runtime sạch, nó khởi động/dừng server cho từng capture và kiểm tra RAM trước launch. Không dùng checkpoint hoặc dữ liệu hỏng để bỏ qua guard.
 
 Sau reboot, ổ backup Windows phải được mount read-only trở lại trước khi dùng raw nuScenes. Không reset repo cũ hoặc xoá backup.
 
 ## Luồng trình bày
 
 1. Lab: chọn scene/frame, xem camera và LiDAR/Radar, chuyển các kết quả model. Model là precomputed khi có nhãn đó trên UI.
-2. Mở bot cạnh Lab → cấu hình camera FOV 60/90/110 → mở thiết lập để xem và xác nhận. Preset chỉ thay góc nhìn, không tự tạo thí nghiệm hay tự tuyên bố tối ưu. CARLA native chưa được xác minh trong runtime phục hồi.
+2. Mở bot cạnh Lab → cấu hình camera FOV 60/90/110 → mở thiết lập để xem và xác nhận. Preset chỉ thay góc nhìn, không tự tạo thí nghiệm hay tự tuyên bố tối ưu. FOV native đã smoke thành công trên runtime phục hồi.
 3. Capture cũ phục hồi: 41 cặp ảnh/prediction hợp lệ từ 81 frame. Play/Pause, scrubber và tốc độ giữ timestamp gốc; tuỳ chọn rút ngắn khoảng trống chỉ đổi nhịp xem; khoảng trống do file hỏng không được biến thành frame giả. Kết quả này chỉ để xem, không dùng làm evidence train.
 4. Trong bot, mở “Học tăng cường · PPO offline”: xem baseline, quyết định, nguồn dữ liệu và tải report. Engineer có thể lưu review gắn SHA report; tên tự khai báo, chưa có xác thực vai trò hay tự train lại từ review.
 
@@ -61,7 +61,7 @@ Client 0.9.16 cài lại từ PyPI và import thành công. Server cũ có 5 sha
 
 Managed CARLA có guard tối thiểu 10 GiB RAM khả dụng trước khi spawn để tránh lặp OOM. Không tự hạ ngưỡng trong môi trường vừa phục hồi. Client import được không đồng nghĩa server/capture đã sẵn sàng. Policy PPO được load lại và ra đúng quyết định trên 81 frame, CPU decision p95 khoảng 0,203 ms; phép đo này riêng với inference, không cộng percentile để tuyên bố end-to-end.
 
-Ba action thinning hiện tại là MVP phục hồi sau hỏng dữ liệu/runtime. Chưa hoàn tất bộ 12–24 profile, camera/radar policy và MultiDiscrete của kế hoạch gốc. Bộ test không được dùng để chọn lại reward hoặc retrain cho số đẹp hơn.
+Ba action thinning hiện tại là MVP phục hồi sau hỏng dữ liệu/runtime. Đã có pilot 12 profile LiDAR vật lý trên một route, chưa admit cho training. Camera/radar policy và MultiDiscrete của kế hoạch gốc chưa hoàn thành. Bộ test không được dùng để chọn lại reward hoặc retrain cho số đẹp hơn.
 
 `.env` local trỏ `CARLA_SERVER_EXECUTABLE` tới shipping binary sạch. Chạy `python -m scripts.check_carla_runtime` để đọc preflight; phải đủ RAM trước khi chạy worker. Các smoke đã chạy sau khi guard qua; không hạ guard khi RAM thiếu.
 

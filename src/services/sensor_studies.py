@@ -2,6 +2,7 @@
 
 import hashlib
 import json
+import math
 import time
 import uuid
 from contextlib import contextmanager
@@ -28,9 +29,17 @@ def connection():
 def trials(spec):
     if isinstance(spec, ReplayStudySpec):
         return [
-            {"environment": index, "profile": profile.name,
-             "spec": ExperimentSpec(source="dataset_replay", model_ids=spec.model_ids,
-                 replay=ReplayTrialSpec(scenario=scenario, profile=profile, cameras=spec.cameras, radars=spec.radars))}
+            {
+                "environment": index,
+                "profile": profile.name,
+                "spec": ExperimentSpec(
+                    source="dataset_replay",
+                    model_ids=spec.model_ids,
+                    replay=ReplayTrialSpec(
+                        scenario=scenario, profile=profile, cameras=spec.cameras, radars=spec.radars
+                    ),
+                ),
+            }
             for index, scenario in enumerate(spec.scenarios)
             for profile in [ReplayProfile(name="baseline"), *spec.profiles]
         ]
@@ -40,7 +49,13 @@ def trials(spec):
         for name, lidar in profiles:
             modified = scenario.model_dump()
             modified["lidar"] = lidar.model_dump()
-            items.append({"environment": index, "profile": name, "spec": ExperimentSpec(scenario=modified)})
+            items.append(
+                {
+                    "environment": index,
+                    "profile": name,
+                    "spec": ExperimentSpec(scenario=modified, native_input_adapter=spec.native_input_adapter),
+                }
+            )
     return items
 
 
@@ -49,14 +64,43 @@ def parse_spec(value):
         return value
     if isinstance(value, str):
         value = json.loads(value)
-    return ReplayStudySpec.model_validate(value) if value.get("source") == "dataset_replay" else SensorStudySpec.model_validate(value)
+    return (
+        ReplayStudySpec.model_validate(value)
+        if value.get("source") == "dataset_replay"
+        else SensorStudySpec.model_validate(value)
+    )
 
 
 def checkpoint_identity(spec):
     if isinstance(spec, ReplayStudySpec):
         identity = {"models": {name: verified_hash(name) for name in spec.model_ids}, "camera": camera_fingerprint()}
         return hashlib.sha256(json.dumps(identity, sort_keys=True).encode()).hexdigest()
-    return verified_hash("occupancy_lidar")
+    checkpoint = verified_hash("occupancy_lidar")
+    if spec.native_input_adapter != "raw":
+        from src.inference.native_input import fingerprint
+
+        return hashlib.sha256(
+            json.dumps(
+                {"checkpoint": checkpoint, "input_adapter": fingerprint(spec.native_input_adapter)}, sort_keys=True
+            ).encode()
+        ).hexdigest()
+    return checkpoint
+
+
+def object_quality_reasons(spec, metrics):
+    reasons = []
+    for key, value, reason in (
+        ("min_object_iou", (metrics.get("class_iou") or {}).get("object"), "below_minimum_object_iou"),
+        ("min_object_recall", metrics.get("object_recall"), "below_minimum_object_recall"),
+    ):
+        threshold = spec.get(key)
+        if threshold is None:
+            continue  # Legacy studies did not request these constraints.
+        if type(value) not in (int, float) or not math.isfinite(value):
+            reasons.append("missing_object_measurement")
+        elif value < threshold:
+            reasons.append(reason)
+    return list(dict.fromkeys(reasons))
 
 
 def create(spec, metadata=None):
@@ -170,6 +214,7 @@ def comparison(ident):
             result = job["result"] if job["status"] == "succeeded" else None
             base = baseline["result"] if baseline["status"] == "succeeded" else None
             metrics = result["models"]["occupancy_lidar"]["metrics"] if result else {}
+            object_reasons = object_quality_reasons(study["spec"], metrics)
             cost = result["manifest"].get("sensor_cost", {}) if result else {}
             iou = metrics.get("occupied_iou")
             matched = bool(
@@ -190,6 +235,9 @@ def comparison(ident):
                 "status": job["status"],
                 "error": job["error"],
                 "occupied_iou": iou,
+                "object_iou": (metrics.get("class_iou") or {}).get("object"),
+                "object_recall": metrics.get("object_recall"),
+                "object_quality_reasons": object_reasons,
                 "iou_drop": drop,
                 "reference_matches_baseline": matched,
                 "lidar_bytes_per_second": bandwidth,
@@ -199,8 +247,14 @@ def comparison(ident):
                 "latency_model_only_ms": metrics.get("latency_model_only_ms"),
             }
             rows.append(row)
-            if (matched and drop is not None and drop <= study["spec"]["max_iou_drop"]
-                    and iou >= study["spec"].get("min_occupied_iou", 0.3) and bandwidth is not None):
+            if (
+                matched
+                and not object_reasons
+                and drop is not None
+                and drop <= study["spec"]["max_iou_drop"]
+                and iou >= study["spec"].get("min_occupied_iou", 0.3)
+                and bandwidth is not None
+            ):
                 eligible.append(row)
         eligible.sort(key=lambda row: (row["lidar_bytes_per_second"], -row["occupied_iou"], row["profile"]))
         environments.append(
@@ -214,7 +268,7 @@ def comparison(ident):
     return {
         "study_id": ident,
         "environments": environments,
-        "criterion": "Lowest sampled LiDAR byte rate above minimum occupied IoU and within absolute IoU drop bound, exact reference match",
+        "criterion": "Lowest sampled LiDAR byte rate within requested occupied/object quality constraints and IoU drop bound, exact reference match",
         "limitations": [
             "Exploratory two-dimensional occupancy proxy, not validated real-world sensor recommendation",
             "Reference mismatch excludes trial from selection; more seeds/routes are needed",
@@ -238,9 +292,7 @@ def recent():
 def advance_running(source=None):
     """Worker advances both sources, bounded to one queued trial per study."""
     with connection() as db:
-        ids = [row[0] for row in db.execute(
-            "SELECT id FROM sensor_studies WHERE cancelled=0 ORDER BY created"
-        )]
+        ids = [row[0] for row in db.execute("SELECT id FROM sensor_studies WHERE cancelled=0 ORDER BY created")]
     for ident in ids:
         study = get(ident)
         if study["status"] != "running" or (source and study["source"] != source):

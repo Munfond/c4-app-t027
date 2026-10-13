@@ -296,3 +296,49 @@ async def test_native_actor_geometry_is_reference_only_and_invalid_metadata_is_o
     response = await client.get(endpoint)
     assert response.status_code == 200 and response.json()["actors"] == []
     assert len(response.json()["cells"]) == 40000
+
+
+@pytest.mark.asyncio
+async def test_reference_projection_is_bound_to_pose_and_frame(client, experiment_settings):
+    from src.simulation.camera_projection import camera_box
+
+    job = store.create(ExperimentSpec())
+    store.claim("projection-test")
+    store.finish(job["id"], "projection-test", "succeeded", result={"manifest": {"frames": [{"id": "frame_0000"}]}})
+    path = experiment_settings.experiment_root / job["id"] / "capture/frame_0000.npz"
+    path.parent.mkdir(parents=True)
+    np.savez_compressed(path, labels=np.zeros((200, 200), np.uint8), valid=np.ones((200, 200), bool))
+    world = np.eye(4)
+    world[:3, 3] = [10, 2, 0]
+    actor = dict(
+        id=42,
+        x=10,
+        y=-2,
+        l=4,
+        w=2,
+        h=1.5,
+        yaw=0,
+        world_box_matrix=world.tolist(),
+        camera_projection_status="geometry_recorded",
+        camera_box_uv=camera_box(world, (2, 1, 0.75), np.eye(4), (640, 360), 90),
+    )
+    metadata = dict(
+        boxes=[actor],
+        camera_matrix=np.eye(4).tolist(),
+        ego_matrix=np.eye(4).tolist(),
+        camera_size=[640, 360],
+        camera_fov=90,
+        camera_frame_id=12,
+        simulation_frame_id=12,
+    )
+    path.with_suffix(".json").write_text(json.dumps(metadata))
+    url = f"/api/v1/experiments/{job['id']}/reference/0"
+    response = await client.get(url)
+    assert response.status_code == 200 and response.json()["actors"][0]["camera_box_uv"] == actor["camera_box_uv"]
+    metadata["camera_frame_id"] = 13
+    path.with_suffix(".json").write_text(json.dumps(metadata))
+    assert (await client.get(url)).json()["actors"] == []
+    metadata["camera_frame_id"] = 12
+    actor["x"] = -10
+    path.with_suffix(".json").write_text(json.dumps(metadata))
+    assert (await client.get(url)).json()["actors"] == []
