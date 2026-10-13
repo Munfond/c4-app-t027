@@ -47,7 +47,7 @@ Nguồn: `data/rl-occupancy-proxy-measured-20261013/{replay.json,audit.json}` v�
 
 FOV 60/90/110 áp dụng khi spawn camera mới. Góc hẹp phóng lớn vật trên ảnh nhưng giảm coverage; không phải autofocus hoặc lens zoom vật lý. Model occupancy LiDAR không dùng camera, nên chưa thể đánh giá FOV bằng metric occupancy này.
 
-Còn thiếu: capture FOV native trên CARLA sạch; online RL và adapter camera/radar được đánh giá; held-out môi trường/thời tiết; visual QA bản UI mới. Công cụ browser hiện chặn truy cập tab local, nên không tuyên bố đã kiểm tra rendering bản cuối. HTTP và JS/CSS production đã kiểm tra; regression API + Active Sensing đã qua.
+FOV native 60/90/110 đã smoke thành công trên Town01 (2 frame/cấu hình). Còn thiếu: online RL và adapter camera/radar được đánh giá; held-out môi trường/thời tiết; visual QA bản UI mới. Công cụ browser hiện chặn truy cập tab local, nên không tuyên bố đã kiểm tra rendering bản cuối. HTTP và JS/CSS production đã kiểm tra; regression API + Active Sensing đã qua.
 
 Nền phục hồi f560457 giữ 21 commit local trên main137b166. Không ghép toàn bộ backup Windows thiếu module. Schema Detection replay cũ vẫn giữ gate quality/protocol/catalog/split; không đổi dữ liệu diagnostic thành validated. GPU mode lịch sử chỉ để tương thích, không là mục tiêu MVP mới.
 
@@ -57,16 +57,16 @@ Nền phục hồi f560457 giữ 21 commit local trên main137b166. Không ghép
 
 ## CARLA server phục hồi
 
-Client 0.9.16 cài lại từ PyPI và import thành công. Server cũ có 5 shared library không có ELF header hợp lệ, nên không chạy. Script `scripts/recover_carla_server.py --extract` tải từ URL trên release chính thức vào `data/runtime/carla-server-recovery`; kiểm tra dung lượng và không ghi đè runtime cũ. Hash tự tính để đối chiếu lần sau, không phải chữ ký/hash do nhà phát hành cung cấp. Bản tối thiểu đã giải nén xong: bỏ debug symbols, HDMaps và Python SDK cài riêng. Binary và 14 shared library có ELF header hợp lệ, loader không báo thiếu thư viện. Installer tự tải được dọn sau đối chiếu SHA để trả lại khoảng 7,8 GiB; runtime gốc và backup không bị xoá. Chưa ghi nhận capture native thành công.
+Client 0.9.16 cài lại từ PyPI và import thành công. Server cũ có 5 shared library không có ELF header hợp lệ, nên không chạy. Script `scripts/recover_carla_server.py --extract` tải từ URL trên release chính thức vào `data/runtime/carla-server-recovery`; kiểm tra dung lượng và không ghi đè runtime cũ. Hash tự tính để đối chiếu lần sau, không phải chữ ký/hash do nhà phát hành cung cấp. Bản tối thiểu đã giải nén xong: bỏ debug symbols, HDMaps và Python SDK cài riêng. Binary và 14 shared library có ELF header hợp lệ, loader không báo thiếu thư viện. Installer tự tải được dọn sau đối chiếu SHA để trả lại khoảng 7,8 GiB; runtime gốc và backup không bị xoá. Capture native đã thành công trên Town01; xem [evidence và giới hạn](NATIVE_CARLA_EVIDENCE.vi.md).
 
 Managed CARLA có guard tối thiểu 10 GiB RAM khả dụng trước khi spawn để tránh lặp OOM. Không tự hạ ngưỡng trong môi trường vừa phục hồi. Client import được không đồng nghĩa server/capture đã sẵn sàng. Policy PPO được load lại và ra đúng quyết định trên 81 frame, CPU decision p95 khoảng 0,203 ms; phép đo này riêng với inference, không cộng percentile để tuyên bố end-to-end.
 
 Ba action thinning hiện tại là MVP phục hồi sau hỏng dữ liệu/runtime. Chưa hoàn tất bộ 12–24 profile, camera/radar policy và MultiDiscrete của kế hoạch gốc. Bộ test không được dùng để chọn lại reward hoặc retrain cho số đẹp hơn.
 
-`.env` local trỏ `CARLA_SERVER_EXECUTABLE` tới shipping binary sạch. Chạy `python -m scripts.check_carla_runtime` để đọc preflight; phải đủ RAM trước khi chạy worker. Hiện guard chặn khoảng 9,2 GiB RAM khả dụng. Không bật simulator hay train vòng mới khi guard chưa qua.
+`.env` local trỏ `CARLA_SERVER_EXECUTABLE` tới shipping binary sạch. Chạy `python -m scripts.check_carla_runtime` để đọc preflight; phải đủ RAM trước khi chạy worker. Các smoke đã chạy sau khi guard qua; không hạ guard khi RAM thiếu.
 
-Tiến độ capture CARLA: worker ghi snapshot atomic sau khi lưu cặp camera/LiDAR. UI chỉ đọc count hợp lệ của job đang chạy; không suy diễn phần trăm từ thời gian chờ. Đã qua test contract; capture native mới vẫn chờ đủ RAM.
+Tiến độ capture CARLA: worker ghi snapshot atomic sau khi lưu cặp camera/LiDAR. UI chỉ đọc count hợp lệ của job đang chạy; không suy diễn phần trăm từ thời gian chờ. Đã qua test contract; capture native mới đã xác minh cặp camera/LiDAR và kết quả model.
 
 ### Smoke FOV sau khi đủ RAM
 
-Xem cấu hình mà không tạo job: `python -m scripts.smoke_carla --fov 60 --plan` (tương tự 90/110). Chạy thật chỉ sau khi đủ RAM: `python -m scripts.smoke_carla --fov 60 --output data/runtime/fov-60-new`. Mỗi lần dùng folder mới. Smoke chỉ 2 frame; kiểm tra sensor FOV ghi trong manifest, ảnh camera giải mã đúng 640×360 và số frame. Đây là kiểm tra tích hợp, không là bằng chứng FOV cải thiện chất lượng occupancy. Guard RAM chạy trước khi tạo queue/output; lần kiểm tra hiện tại bị chặn đúng vì RAM chưa đủ.
+Xem cấu hình mà không tạo job: `python -m scripts.smoke_carla --fov 60 --plan` (tương tự 90/110). Chạy thật chỉ sau khi đủ RAM: `python -m scripts.smoke_carla --fov 60 --output data/runtime/fov-60-new`. Mỗi lần dùng folder mới. Smoke chỉ 2 frame; kiểm tra sensor FOV ghi trong manifest, ảnh camera giải mã đúng 640×360 và số frame. Đây là kiểm tra tích hợp, không là bằng chứng FOV cải thiện chất lượng occupancy. Guard RAM chạy trước khi tạo queue/output; các lần FOV 60/90/110 đều thành công sau khi RAM đủ.

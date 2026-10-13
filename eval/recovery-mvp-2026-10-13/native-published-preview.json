@@ -1,0 +1,183 @@
+[
+  {
+    "id": "89b7813ef3ed4d1cbbc46747b1612dcd",
+    "scenario": {
+      "map": "Town01",
+      "weather": "fog",
+      "vehicles": 2,
+      "pedestrians": 0,
+      "seed": 42,
+      "frames": 2,
+      "capture_interval": 0.5,
+      "timestep": 0.05,
+      "traffic_placement": "nearest_spawn",
+      "route_spawn_index": 0,
+      "route_kind": "spawn",
+      "lane_change_interval_seconds": null,
+      "lidar": {
+        "channels": 32,
+        "points_per_second": 600000,
+        "range_m": 100.0,
+        "upper_fov": 10.0,
+        "lower_fov": -30.0,
+        "mount_z": 2.0,
+        "pitch": 0.0
+      },
+      "camera": {
+        "fov": 90
+      }
+    },
+    "raw_npz_sha256": {
+      "frame_0000": "9c96c705b2a9a837bbef9ce9f083adba3327cb4205c7e1fddb8db5f19c65efe4",
+      "frame_0001": "3fab494c5b5e28e2324b7842a96e7537693dbbcedee8a6f10ce09f076f81de34"
+    },
+    "notice": "Small native integration/diagnostic; no native RL admission or real-world safety proof"
+  },
+  {
+    "id": "eb2624623d9540e582028574b7bf54c2",
+    "scenario": {
+      "map": "Town01",
+      "weather": "rain",
+      "vehicles": 2,
+      "pedestrians": 0,
+      "seed": 42,
+      "frames": 2,
+      "capture_interval": 0.5,
+      "timestep": 0.05,
+      "traffic_placement": "nearest_spawn",
+      "route_spawn_index": 0,
+      "route_kind": "spawn",
+      "lane_change_interval_seconds": null,
+      "lidar": {
+        "channels": 32,
+        "points_per_second": 600000,
+        "range_m": 100.0,
+        "upper_fov": 10.0,
+        "lower_fov": -30.0,
+        "mount_z": 2.0,
+        "pitch": 0.0
+      },
+      "camera": {
+        "fov": 90
+      }
+    },
+    "raw_npz_sha256": {
+      "frame_0000": "9c96c705b2a9a837bbef9ce9f083adba3327cb4205c7e1fddb8db5f19c65efe4",
+      "frame_0001": "3fab494c5b5e28e2324b7842a96e7537693dbbcedee8a6f10ce09f076f81de34"
+    },
+    "notice": "Small native integration/diagnostic; no native RL admission or real-world safety proof"
+  },
+  {
+    "id": "addccff7e7354eb59d9e42334484fe51",
+    "scenario": {
+      "map": "Town01",
+      "weather": "clear",
+      "vehicles": 2,
+      "pedestrians": 1,
+      "seed": 42,
+      "frames": 4,
+      "capture_interval": 0.5,
+      "timestep": 0.05,
+      "traffic_placement": "nearest_spawn",
+      "route_spawn_index": 0,
+      "route_kind": "spawn",
+      "lane_change_interval_seconds": null,
+      "lidar": {
+        "channels": 32,
+        "points_per_second": 600000,
+        "range_m": 100.0,
+        "upper_fov": 10.0,
+        "lower_fov": -30.0,
+        "mount_z": 2.0,
+        "pitch": 0.0
+      },
+      "camera": {
+        "fov": 90
+      }
+    },
+    "raw_npz_sha256": {
+      "frame_0000": "9c96c705b2a9a837bbef9ce9f083adba3327cb4205c7e1fddb8db5f19c65efe4",
+      "frame_0001": "3fab494c5b5e28e2324b7842a96e7537693dbbcedee8a6f10ce09f076f81de34",
+      "frame_0002": "83c3edc081fa9ae777c6fe33b72c56b332b37e06ad49f4853321d553c52a1811",
+      "frame_0003": "1635ef3970c3d6fc8ed1657692e3df4e48994002405ab2da529c6718a0221f1c"
+    },
+    "notice": "Small native integration/diagnostic; no native RL admission or real-world safety proof"
+  },
+  {
+    "aligned_job": "bd68af56940f4ec38984e1a37caec881",
+    "raw_parent": "89b7813ef3ed4d1cbbc46747b1612dcd",
+    "metrics": {
+      "frame_count": 2,
+      "evaluated_cells": 8878,
+      "confusion": [
+        [
+          6168,
+          65,
+          13
+        ],
+        [
+          392,
+          2143,
+          43
+        ],
+        [
+          4,
+          0,
+          50
+        ]
+      ],
+      "class_iou": {
+        "free": 0.928635953026197,
+        "static": 0.8108210367007189,
+        "object": 0.45454545454545453
+      },
+      "miou_supported_classes": 0.7313341480907901,
+      "occupied_iou": 0.8250922509225093,
+      "object_recall": 0.9259259259259259,
+      "flow_epe_m_s": null,
+      "flow_valid_cells": 0,
+      "latency_model_only_ms": {
+        "p50": 71.81633100117324,
+        "p95": 74.78522940000403
+      },
+      "timed_frames": 2
+    }
+  },
+  {
+    "aligned_job": "ea7c6ffa2a24491792c89bb48aa1d41a",
+    "raw_parent": "eb2624623d9540e582028574b7bf54c2",
+    "metrics": {
+      "frame_count": 2,
+      "evaluated_cells": 8878,
+      "confusion": [
+        [
+          6168,
+          65,
+          13
+        ],
+        [
+          392,
+          2143,
+          43
+        ],
+        [
+          4,
+          0,
+          50
+        ]
+      ],
+      "class_iou": {
+        "free": 0.928635953026197,
+        "static": 0.8108210367007189,
+        "object": 0.45454545454545453
+      },
+      "miou_supported_classes": 0.7313341480907901,
+      "occupied_iou": 0.8250922509225093,
+      "object_recall": 0.9259259259259259,
+      "flow_epe_m_s": null,
+      "flow_valid_cells": 0,
+      "latency_model_only_ms": null,
+      "timed_frames": 0
+    }
+  }
+]

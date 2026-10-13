@@ -1,6 +1,7 @@
 import importlib.util
 import json
 from typing import Annotated, Literal
+from zipfile import BadZipFile
 
 import httpx
 from fastapi import APIRouter, Depends, Header, HTTPException, Path, Query, Request
@@ -41,8 +42,11 @@ async def session_scope(request: Request):
         sessions.release(ident)
 
 
-router = APIRouter(prefix="/experiments", tags=["experiments"],
-                   dependencies=[Depends(require_experiment_access), Depends(session_scope)])
+router = APIRouter(
+    prefix="/experiments",
+    tags=["experiments"],
+    dependencies=[Depends(require_experiment_access), Depends(session_scope)],
+)
 ExperimentId = Annotated[str, Path(pattern=r"^[a-f0-9]{32}$")]
 
 
@@ -82,9 +86,12 @@ def end_session(ident: ExperimentId):
 
 @router.get("/registry")
 def experiment_registry():
+    from src.inference.native_input import catalog
+
     settings = get_settings()
     return {
         "models": registry(),
+        "native_input_adapters": catalog(),
         "carla_client_installed": client_available(settings),
         "torch_installed": importlib.util.find_spec("torch") is not None,
         "agent_enabled": settings.experiment_agent_enabled and bool(settings.openai_api_key),
@@ -153,46 +160,50 @@ def replay_catalog():
     return catalog() | {"cameras": CAMERAS, "radars": RADARS, "models": OCCUPANCY_MODELS}
 
 
-@router.get('/detector-pilot')
-def detector_pilot(pilot: Literal['short', 'sparse60'] = 'short'):
+@router.get("/detector-pilot")
+def detector_pilot(pilot: Literal["short", "sparse60"] = "short"):
     from src.services.detector_pilot_evidence import snapshot
+
     try:
         return snapshot(pilot)
     except FileNotFoundError:
-        return {'available': False, 'notice': 'Detector pilot evidence is not packaged on this server'}
+        return {"available": False, "notice": "Detector pilot evidence is not packaged on this server"}
     except (ValueError, KeyError) as exc:
-        raise HTTPException(409, 'Detector evidence integrity check failed') from exc
+        raise HTTPException(409, "Detector evidence integrity check failed") from exc
 
 
-@router.get('/detector-pilot/artifacts/{name:path}')
-def detector_pilot_artifact(name: str, pilot: Literal['short', 'sparse60'] = 'short'):
+@router.get("/detector-pilot/artifacts/{name:path}")
+def detector_pilot_artifact(name: str, pilot: Literal["short", "sparse60"] = "short"):
     from src.services.detector_pilot_evidence import artifact
+
     try:
-        return FileResponse(artifact(name, pilot), filename=name.rsplit('/', 1)[-1])
+        return FileResponse(artifact(name, pilot), filename=name.rsplit("/", 1)[-1])
     except (FileNotFoundError, KeyError) as exc:
-        raise HTTPException(404, 'Evidence artifact not found') from exc
+        raise HTTPException(404, "Evidence artifact not found") from exc
     except ValueError as exc:
-        raise HTTPException(409, 'Detector evidence integrity check failed') from exc
+        raise HTTPException(409, "Detector evidence integrity check failed") from exc
 
 
-@router.get('/detector-pilot/reviews')
-def detector_pilot_reviews(pilot: Literal['short', 'sparse60'] = 'short'):
+@router.get("/detector-pilot/reviews")
+def detector_pilot_reviews(pilot: Literal["short", "sparse60"] = "short"):
     from src.services.detector_pilot_evidence import reviews
+
     try:
-        return {'items': reviews(pilot)}
+        return {"items": reviews(pilot)}
     except FileNotFoundError as exc:
-        raise HTTPException(404, 'Detector evidence is unavailable') from exc
+        raise HTTPException(404, "Detector evidence is unavailable") from exc
     except (ValueError, KeyError) as exc:
-        raise HTTPException(409, 'Detector evidence integrity check failed') from exc
+        raise HTTPException(409, "Detector evidence integrity check failed") from exc
 
 
-@router.post('/detector-pilot/reviews', status_code=201)
-def review_detector_pilot(request: EngineerReview, pilot: Literal['short', 'sparse60'] = 'short'):
+@router.post("/detector-pilot/reviews", status_code=201)
+def review_detector_pilot(request: EngineerReview, pilot: Literal["short", "sparse60"] = "short"):
     from src.services.detector_pilot_evidence import save_review
+
     try:
         return save_review(request, pilot)
     except FileNotFoundError as exc:
-        raise HTTPException(404, 'Detector evidence is unavailable') from exc
+        raise HTTPException(404, "Detector evidence is unavailable") from exc
     except (ValueError, KeyError) as exc:
         raise HTTPException(409, str(exc)) from exc
 
@@ -309,6 +320,7 @@ async def summarize_study(ident: ExperimentId):
 @router.get("/occupancy-rl")
 def occupancy_rl_report():
     from src.services.occupancy_rl_evidence import read_report
+
     try:
         return read_report()
     except (ValueError, OSError, KeyError, TypeError) as exc:
@@ -318,6 +330,7 @@ def occupancy_rl_report():
 @router.get("/occupancy-rl/report")
 def download_occupancy_rl_report():
     from src.services.occupancy_rl_evidence import read_report, report_path
+
     try:
         if not read_report()["ready"]:
             raise HTTPException(404, "Chưa có báo cáo")
@@ -329,6 +342,7 @@ def download_occupancy_rl_report():
 @router.get("/occupancy-rl/reviews")
 def occupancy_rl_reviews():
     from src.services.occupancy_rl_evidence import list_reviews
+
     try:
         return {"items": list_reviews()}
     except (ValueError, OSError, KeyError, TypeError) as exc:
@@ -338,6 +352,7 @@ def occupancy_rl_reviews():
 @router.post("/occupancy-rl/reviews")
 def review_occupancy_rl(body: EngineerReview):
     from src.services.occupancy_rl_evidence import add_review
+
     try:
         return add_review(body)
     except ValueError as exc:
@@ -372,8 +387,12 @@ def prediction(ident: ExperimentId, model_id: str, index: int = Path(ge=0, le=80
 
 
 @router.get("/{ident}/camera")
-def capture_camera(ident: ExperimentId, index: int = Query(default=0, ge=0, le=80),
-                   channel: str = Query(default="CAM_FRONT"), reference: bool = False):
+def capture_camera(
+    ident: ExperimentId,
+    index: int = Query(default=0, ge=0, le=80),
+    channel: str = Query(default="CAM_FRONT"),
+    reference: bool = False,
+):
     job = experiment(ident)
     spec = job["spec"]["request"]
     if spec["source"] == "dataset_replay":
@@ -391,6 +410,40 @@ def capture_camera(ident: ExperimentId, index: int = Query(default=0, ge=0, le=8
     if not path.is_file():
         raise HTTPException(404, "Camera capture not yet available")
     return FileResponse(path, media_type="image/png")
+
+
+@router.get("/{ident}/reference/{index}")
+def capture_reference(ident: ExperimentId, index: int = Path(ge=0, le=80)):
+    import numpy as np
+
+    job = experiment(ident)
+    spec = job["spec"]["request"]
+    if spec["source"] != "carla" or job["status"] != "succeeded" or not job.get("result"):
+        raise HTTPException(404, "Completed native reference not available")
+    if index >= len(job["result"]["manifest"]["frames"]):
+        raise HTTPException(404, "Reference frame not available")
+    capture_id = spec.get("capture_id") or ident
+    path = store.root() / capture_id / "capture" / f"frame_{index:04d}.npz"
+    try:
+        with np.load(path, allow_pickle=False) as data:
+            labels, valid = data["labels"], data["valid"]
+            if (
+                labels.shape != (200, 200)
+                or valid.shape != (200, 200)
+                or valid.dtype != np.bool_
+                or not np.isin(labels, [0, 1, 2]).all()
+            ):
+                raise ValueError("Invalid reference grid")
+            return {
+                "cells": labels.reshape(-1).tolist(),
+                "valid": valid.reshape(-1).tolist(),
+                "kind": "reference",
+                "label_policy": "semantic-LiDAR observed cells; static-height proxy + visible actor footprints",
+            }
+    except FileNotFoundError as exc:
+        raise HTTPException(404, "Reference was not preserved for this capture") from exc
+    except (OSError, ValueError, KeyError, EOFError, BadZipFile) as exc:
+        raise HTTPException(503, "Native reference failed integrity validation") from exc
 
 
 @router.get("/{ident}/capture/{index}/{kind}")
@@ -432,7 +485,11 @@ def sensor_preview(ident: ExperimentId, index: int = Query(default=0, ge=0, le=1
             if name == "radar":
                 output[name]["speed"] = np.nan_to_num(data["radar_speed"][indices][finite]).tolist()
                 output[name]["rcs"] = np.nan_to_num(data["radar_rcs"][indices][finite]).tolist()
-    return {"frame_id": manifest["frames"][index]["id"], "index": index,
-            "profile": manifest["replay"]["profile"], "sensors": output,
-            "camera": [row for row in manifest["camera"]["rows"] if row["frame"] == index],
-            "note": "BEV ego coordinates: forward up, left left; display capped at 6000 points per sensor"}
+    return {
+        "frame_id": manifest["frames"][index]["id"],
+        "index": index,
+        "profile": manifest["replay"]["profile"],
+        "sensors": output,
+        "camera": [row for row in manifest["camera"]["rows"] if row["frame"] == index],
+        "note": "BEV ego coordinates: forward up, left left; display capped at 6000 points per sensor",
+    }

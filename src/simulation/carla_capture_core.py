@@ -124,17 +124,29 @@ def capture(scenario, root, pulse, settings, rig_options=None):
             candidates = [i for i in range(len(spawns)) if i != scenario.route_spawn_index]
             rng.shuffle(candidates)
             traffic_spawns = [spawns[i] for i in candidates]
-            if rig_options is not None and rig_options["traffic_placement"] == "nearest_spawn":
+            placement = (
+                rig_options["traffic_placement"]
+                if rig_options is not None
+                else getattr(scenario, "traffic_placement", "random_spawn")
+            )
+            if placement == "nearest_spawn":
                 traffic_spawns.sort(key=lambda spawn: ego_spawn.location.distance(spawn.location))
-            route_evidence = {"policy": "autopilot spawn-index route", "original_spawn_index": scenario.route_spawn_index}
+            route_evidence = {
+                "policy": "autopilot spawn-index route",
+                "original_spawn_index": scenario.route_spawn_index,
+                "traffic_placement": placement,
+            }
         if rig_options is not None:
             route_evidence["traffic_placement"] = (
                 "verified_highway" if route_kind == "highway" else rig_options["traffic_placement"]
             )
         vehicles = sorted(library.filter("vehicle.*"), key=lambda bp: bp.id)
         if route_kind == "highway":
-            vehicles = [bp for bp in vehicles if bp.has_attribute("number_of_wheels")
-                        and int(bp.get_attribute("number_of_wheels")) == 4]
+            vehicles = [
+                bp
+                for bp in vehicles
+                if bp.has_attribute("number_of_wheels") and int(bp.get_attribute("number_of_wheels")) == 4
+            ]
         ego = world.try_spawn_actor(library.find("vehicle.tesla.model3"), ego_spawn)
         if ego is None:
             raise RuntimeError("Ego spawn failed")
@@ -219,8 +231,9 @@ def capture(scenario, root, pulse, settings, rig_options=None):
         rig = None
         if rig_options is not None:
             from src.simulation.carla_rig import RigRecorder
+
             rig = RigRecorder(root, rig_options, scenario.timestep)
-            if rig_options.get('record_environment_inventory'):
+            if rig_options.get("record_environment_inventory"):
                 rig.record_environment(world, carla)
             sensor_specs = rig.specs
         logger.info("Attaching %s synchronized sensors", len(sensor_specs))
@@ -268,10 +281,12 @@ def capture(scenario, root, pulse, settings, rig_options=None):
             }
             if spectator is not None:
                 view = ego.get_transform()
-                spectator.set_transform(carla.Transform(
-                    view.transform(carla.Location(x=-8, z=4)),
-                    carla.Rotation(pitch=-15, yaw=view.rotation.yaw),
-                ))
+                spectator.set_transform(
+                    carla.Transform(
+                        view.transform(carla.Location(x=-8, z=4)),
+                        carla.Rotation(pitch=-15, yaw=view.rotation.yaw),
+                    )
+                )
             if getattr(settings, "carla_realtime_capture", False):
                 time.sleep(max(0, scenario.timestep - (time.monotonic() - tick_started)))
             if step < warmup or (step - warmup) % cadence:
@@ -288,10 +303,12 @@ def capture(scenario, root, pulse, settings, rig_options=None):
             ego_matrix = np.asarray(reference.get_matrix(), dtype=float)
             if rig is not None:
                 # All live vehicle/walker actors, not only the list created here.
-                reference_actors = [a for a in world.get_actors()
-                                    if a.type_id.startswith(('vehicle.', 'walker.pedestrian.'))]
-                rig.record(packets, snapshot, ego_matrix, reference_actors, ego,
-                           actor_scope='world_vehicle_walker_actors')
+                reference_actors = [
+                    a for a in world.get_actors() if a.type_id.startswith(("vehicle.", "walker.pedestrian."))
+                ]
+                rig.record(
+                    packets, snapshot, ego_matrix, reference_actors, ego, actor_scope="world_vehicle_walker_actors"
+                )
                 continue
             raw = np.frombuffer(packets["lidar"].raw_data, dtype="<f4").reshape(-1, 4)
             if not len(raw):
@@ -299,7 +316,8 @@ def capture(scenario, root, pulse, settings, rig_options=None):
             point_counts.append(len(raw))
             lidar_bytes.append(len(packets["lidar"].raw_data))
             points = carla_to_ego(raw[:, :3], np.asarray(packets["lidar"].transform.get_matrix()), ego_matrix)
-            x = lidar_features(points, np.clip(raw[:, 3], 0, 1) * 255)
+            intensity = np.clip(raw[:, 3], 0, 1) * 255
+            x = lidar_features(points, intensity)
             semantic = np.frombuffer(packets["semantic"].raw_data, dtype=SEMANTIC_DTYPE)
             xyz = np.column_stack((semantic["x"], semantic["y"], semantic["z"]))
             sem_points = carla_to_ego(xyz, np.asarray(packets["semantic"].transform.get_matrix()), ego_matrix)
@@ -345,13 +363,21 @@ def capture(scenario, root, pulse, settings, rig_options=None):
                 labels=labels,
                 valid=valid,
                 points=points.astype(np.float32),
+                feature_points=points,
+                feature_intensity=intensity,
                 rotation=ego_matrix[:3, :3],
                 translation=ego_matrix[:3, 3],
             )
             (root / f"{name}.json").write_text(
-                json.dumps({"boxes": boxes, "ego_matrix": ego_matrix.tolist(),
-                            "ego_lane": road_map.get_waypoint(ego.get_location()).lane_id,
-                            "ego_road": road_map.get_waypoint(ego.get_location()).road_id}), encoding="utf-8"
+                json.dumps(
+                    {
+                        "boxes": boxes,
+                        "ego_matrix": ego_matrix.tolist(),
+                        "ego_lane": road_map.get_waypoint(ego.get_location()).lane_id,
+                        "ego_road": road_map.get_waypoint(ego.get_location()).road_id,
+                    }
+                ),
+                encoding="utf-8",
             )
             frames.append(
                 {
@@ -368,18 +394,24 @@ def capture(scenario, root, pulse, settings, rig_options=None):
             captured.append({"id": name, "frame_id": frame_id, "timestamp": snapshot.timestamp.elapsed_seconds})
             progress = root / "progress.json"
             temporary = progress.with_suffix(".tmp")
-            temporary.write_text(json.dumps({"completed":len(captured),"total":scenario.frames}))
+            temporary.write_text(json.dumps({"completed": len(captured), "total": scenario.frames}))
             temporary.replace(progress)
             visible_counts.append(len(boxes))
         if rig is not None:
-            manifest = rig.finish(scenario, {
-                "source": "carla", "server_version": client.get_server_version(),
-                "pedestrian_seed_supported": pedestrian_seed_supported,
-                "route_evidence": route_evidence, "ego_actor_id": ego.id,
-                "realized_vehicles": count_vehicle, "realized_pedestrians": count_pedestrian,
-                "lane_change_requests": lane_changes.requests if lane_changes else [],
-                "observed_lane_changes": lane_changes.observed if lane_changes else [],
-            })
+            manifest = rig.finish(
+                scenario,
+                {
+                    "source": "carla",
+                    "server_version": client.get_server_version(),
+                    "pedestrian_seed_supported": pedestrian_seed_supported,
+                    "route_evidence": route_evidence,
+                    "ego_actor_id": ego.id,
+                    "realized_vehicles": count_vehicle,
+                    "realized_pedestrians": count_pedestrian,
+                    "lane_change_requests": lane_changes.requests if lane_changes else [],
+                    "observed_lane_changes": lane_changes.observed if lane_changes else [],
+                },
+            )
             return [], manifest
         manifest = {
             "source": "carla",
@@ -394,6 +426,7 @@ def capture(scenario, root, pulse, settings, rig_options=None):
             "scenario": scenario.model_dump(),
             "frames": captured,
             "sensor_specs": sensor_specs,
+            "feature_input_format": "ego_xyz_float64+intensity_0_255_float32",
             "realized_vehicles": count_vehicle,
             "realized_pedestrians": count_pedestrian,
             "visible_actor_counts": visible_counts,
@@ -411,9 +444,11 @@ def capture(scenario, root, pulse, settings, rig_options=None):
                 "LiDAR intensity scaled 0..1 to 0..255 is an approximation, not calibrated to nuScenes",
                 "Ego ground origin approximated using vehicle bounding-box bottom",
                 "Actor population is not guaranteed dense in ego ROI; inspect visible_actor_counts",
-                ("Highway placement verified at spawn; autopilot may later leave that road"
-                 if getattr(scenario, "route_kind", "spawn") == "highway"
-                 else "Autopilot spawn-index route; no verified highway route classification"),
+                (
+                    "Highway placement verified at spawn; autopilot may later leave that road"
+                    if getattr(scenario, "route_kind", "spawn") == "highway"
+                    else "Autopilot spawn-index route; no verified highway route classification"
+                ),
                 "Camera is for review, not an input to these occupancy checkpoints",
                 "Reference semantic LiDAR configuration is fixed independently of input LiDAR",
                 "Fresh trials reset world/seed; exact reference hash must match before quality-based selection",

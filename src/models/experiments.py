@@ -40,15 +40,16 @@ class CameraSpec(BaseModel):
 
 class ScenarioSpec(BaseModel):
     model_config = ConfigDict(extra="forbid")
-    map: Literal["Town01", "Town02", "Town03", "Town04", "Town05"] = "Town03"
+    map: Literal["Town01", "Town02", "Town03", "Town04", "Town05"] = "Town01"
     weather: Literal["clear", "rain", "fog"] = "clear"
-    vehicles: int = Field(default=8, ge=0, le=40)
-    pedestrians: int = Field(default=8, ge=0, le=40)
+    vehicles: int = Field(default=2, ge=0, le=40)
+    pedestrians: int = Field(default=0, ge=0, le=40)
     seed: int = Field(default=42, ge=0, le=2147483647)
     frames: int = Field(default=4, ge=1, le=81)
     # Model temporal training cadence is 0.5 seconds, not the simulator tick rate.
     capture_interval: Literal[0.5] = 0.5
     timestep: Literal[0.05] = 0.05
+    traffic_placement: Literal["random_spawn", "nearest_spawn"] = "random_spawn"
     route_spawn_index: int = Field(default=0, ge=0, le=1000)
     route_kind: Literal["spawn", "highway"] = "spawn"
     lane_change_interval_seconds: float | None = Field(default=None, ge=2, le=15)
@@ -57,6 +58,8 @@ class ScenarioSpec(BaseModel):
 
     @model_validator(mode="after")
     def supported_route(self):
+        if self.route_kind == "highway" and self.traffic_placement != "random_spawn":
+            raise ValueError("Highway route uses its own verified traffic placement")
         if self.route_kind == "highway" and self.map != "Town04":
             raise ValueError("Verified highway capture currently requires Town04")
         return self
@@ -67,6 +70,7 @@ class ExperimentSpec(BaseModel):
     source: Literal["carla", "nuscenes", "dataset_replay"] = "carla"
     replay: ReplayTrialSpec | None = None
     model_ids: list[str] = Field(default_factory=lambda: ["occupancy_lidar"], min_length=1, max_length=7)
+    native_input_adapter: Literal["raw", "intensity_mean_experimental"] = "raw"
     scenario: ScenarioSpec = Field(default_factory=ScenarioSpec)
     scene_id: str | None = Field(default=None, max_length=64, pattern=r"^scene-\d{4}$")
     capture_id: str | None = Field(default=None, pattern=r"^[a-f0-9]{32}$")
@@ -74,6 +78,8 @@ class ExperimentSpec(BaseModel):
 
     @model_validator(mode="after")
     def unique_models(self):
+        if self.native_input_adapter != "raw" and self.source != "carla":
+            raise ValueError("Native adapter cannot change stored nuScenes/dataset replay inputs")
         if len(set(self.model_ids)) != len(self.model_ids):
             raise ValueError("Duplicate model IDs")
         if self.source == "nuscenes" and self.scene_id is None:

@@ -119,6 +119,8 @@ async def test_agent_tool_plan_is_validated_and_does_not_enqueue(client, experim
     assert store.recent() == []
     assert len(captured) == 1
     assert captured[0]["max_tokens"] == 700
+    assert "Town01, clear, vehicles=2" in captured[0]["messages"][0]["content"]
+    assert "native_input_adapter=raw" in captured[0]["messages"][0]["content"]
     assert captured[0]["tools"][0]["function"]["strict"] is True
 
 
@@ -249,3 +251,27 @@ def test_capture_progress_is_bounded_and_only_for_running_jobs(experiment_settin
     path.write_text(json.dumps({"completed": 4, "total": 4}))
     store.finish(job["id"], "progress-test", "succeeded", result={})
     assert store.get(job["id"])["capture_progress"] is None
+
+
+@pytest.mark.asyncio
+async def test_native_reference_preserves_mask_and_rejects_invalid_grid(client, experiment_settings):
+    job = store.create(ExperimentSpec())
+    endpoint = f"/api/v1/experiments/{job['id']}/reference/0"
+    assert (await client.get(endpoint)).status_code == 404
+    store.claim("reference-test")
+    store.finish(job["id"], "reference-test", "succeeded", result={"manifest": {"frames": [{"id": "frame_0000"}]}})
+    path = experiment_settings.experiment_root / job["id"] / "capture/frame_0000.npz"
+    path.parent.mkdir(parents=True)
+    labels = np.zeros((200, 200), dtype=np.uint8)
+    labels[0, 0] = 2
+    valid = np.ones((200, 200), dtype=bool)
+    valid[0, 1] = False
+    np.savez_compressed(path, labels=labels, valid=valid)
+    response = await client.get(endpoint)
+    assert response.status_code == 200
+    assert response.json()["cells"][:2] == [2, 0]
+    assert response.json()["valid"][:2] == [True, False]
+    assert (await client.get(endpoint[:-1] + "1")).status_code == 404
+    labels[0, 0] = 99
+    np.savez_compressed(path, labels=labels, valid=valid)
+    assert (await client.get(endpoint)).status_code == 503

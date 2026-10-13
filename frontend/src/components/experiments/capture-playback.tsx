@@ -4,11 +4,13 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { apiJson } from "@/lib/lab-api";
 
-type Frame = { index: number; cells: number[]; image: string | null };
+type Reference = { cells: number[]; valid: boolean[] };
+type Frame = { index: number; cells: number[]; image: string | null; reference: Reference | null };
 export function CapturePlayback({ job, model, count, interval, camera, active, timestamps }: {
   job: string; model: string; count: number; interval: number; camera: boolean; active: boolean; timestamps?: number[];
 }) {
   const [index, setIndex] = useState(0);
+  const [referenceMode, setReferenceMode] = useState(false);
   const [frame, setFrame] = useState<Frame | null>(null);
   const [playing, setPlaying] = useState(false);
   const [speed, setSpeed] = useState(1);
@@ -32,12 +34,13 @@ export function CapturePlayback({ job, model, count, interval, camera, active, t
       const underway = pending.current.get(target);
       if (underway) return underway;
       const task = (async () => {
-        const [data, blob] = await Promise.all([
+        const [data, blob, reference] = await Promise.all([
           apiJson<{ cells: number[] }>(`/api/v1/experiments/${job}/predictions/${encodeURIComponent(model)}/${target}`),
           camera ? fetch(`/api/v1/experiments/${job}/camera?index=${target}`).then(async r => {
             if (!r.ok) throw new Error(`Camera HTTP ${r.status}`);
             return r.blob();
           }) : Promise.resolve(null),
+          camera ? apiJson<Reference>(`/api/v1/experiments/${job}/reference/${target}`).catch(() => null) : Promise.resolve(null),
         ]);
         if (data.cells.length !== 40000) throw new Error("Lưới occupancy không hợp lệ");
         const image = blob ? URL.createObjectURL(blob) : null;
@@ -46,7 +49,7 @@ export function CapturePlayback({ job, model, count, interval, camera, active, t
           catch (cause) { URL.revokeObjectURL(image); throw cause; }
         }
         if (!alive.current) { if (image) URL.revokeObjectURL(image); throw new Error("Preview closed"); }
-        const ready = { index: target, cells: data.cells, image };
+        const ready = { index: target, cells: data.cells, image, reference: reference?.cells.length === 40000 && reference.valid.length === 40000 ? reference : null };
         cache.current.set(target, ready);
         for (const [key, old] of cache.current) {
           if (cache.current.size <= 6) break;
@@ -77,12 +80,14 @@ export function CapturePlayback({ job, model, count, interval, camera, active, t
     const timer = setTimeout(() => setIndex(index + 1), Math.max(80, playbackGap * 1000 / speed));
     return () => clearTimeout(timer);
   }, [playing, active, error, frame, index, count, playbackGap, speed]);
+  const isReference = referenceMode && !!frame?.reference;
   useLayoutEffect(() => {
     const ctx = canvas.current?.getContext("2d");
     if (!ctx || !frame) return;
     const pixels = ctx.createImageData(200, 200);
     const colors = [[16, 38, 46], [80, 167, 152], [255, 177, 76]];
-    frame.cells.forEach((v, cell) => pixels.data.set([...(colors[v] ?? colors[0]), 255], ((199 - Math.floor(cell / 200)) * 200 + 199 - cell % 200) * 4));
+    const display = isReference ? frame.reference!.cells : frame.cells;
+    display.forEach((v, cell) => pixels.data.set([...(isReference && !frame.reference!.valid[cell] ? [45, 53, 57] : colors[v] ?? colors[0]), 255], ((199 - Math.floor(cell / 200)) * 200 + 199 - cell % 200) * 4));
     ctx.putImageData(pixels, 0, 0);
     ctx.strokeStyle = "rgba(255,255,255,.2)"; ctx.lineWidth = .4;
     for (const radius of [20, 50]) {
@@ -90,7 +95,7 @@ export function CapturePlayback({ job, model, count, interval, camera, active, t
     }
     ctx.strokeStyle = "#ffffff"; ctx.lineWidth = .8;
     ctx.beginPath(); ctx.moveTo(96,100);ctx.lineTo(104,100);ctx.moveTo(100,96);ctx.lineTo(100,104);ctx.stroke();
-  }, [frame]);
+  }, [frame, isReference]);
   const end = index === count - 1;
   const elapsed = frame && timestamps && Number.isFinite(timestamps[frame.index]) && Number.isFinite(timestamps[0]) ? timestamps[frame.index] - timestamps[0] : (frame?.index ?? 0) * interval;
   return <section className="grid gap-4" aria-label="Phát lại capture đồng bộ">
@@ -105,11 +110,16 @@ export function CapturePlayback({ job, model, count, interval, camera, active, t
     </div>
     <p className="text-xs text-[var(--muted)]">Thời gian hiển thị lấy từ capture gốc. Rút ngắn khoảng trống chỉ đổi tốc độ xem, không tạo thêm frame.</p>
     {error && <div role="alert" className="text-sm text-red-700">{error} · Giữ frame trước.<Button variant="secondary" onClick={() => setRetry(v=>v+1)}>Thử lại</Button></div>}
+    <div className="flex flex-wrap items-center gap-2" aria-label="Đối chiếu output với reference">
+      <Button variant="secondary" aria-pressed={!isReference} onClick={() => setReferenceMode(false)}>Model</Button>
+      <Button variant="secondary" aria-pressed={isReference} disabled={!frame?.reference} onClick={() => setReferenceMode(true)}>Reference</Button>
+      <span className="text-xs text-[var(--muted)]">{isReference ? "Xám: ô chưa được reference quan sát. Tĩnh là proxy theo độ cao, vật thể từ footprint actor." : frame?.reference ? "Chuyển Reference để xem vùng/vật thể model bỏ sót." : "Reference chưa sẵn sàng cho capture này."}</span>
+    </div>
     <div className="grid gap-4 lg:grid-cols-2">
       <figure className="grid content-start gap-2"><div className="relative overflow-hidden rounded-lg bg-[var(--navy)]">
         <canvas ref={canvas} width={200} height={200} className="aspect-square w-full [image-rendering:pixelated]" aria-label="Occupancy: trước lên trên, trái sang trái; dấu cộng là gốc ego" />
         <span className="absolute left-3 top-3 text-xs text-white">PHÍA TRƯỚC ↑</span><span className="absolute bottom-3 left-3 text-xs text-white">← TRÁI</span><span className="absolute bottom-3 right-3 text-xs text-white">PHẢI →</span>
-      </div><figcaption className="text-xs text-[var(--muted)]">100 × 100 m · 0,5 m/ô · + gốc ego · vòng 10/25 m · xanh: tĩnh · cam: vật thể</figcaption></figure>
+      </div><figcaption className="text-xs text-[var(--muted)]">{isReference ? "REFERENCE" : "MODEL"} · 100 × 100 m · 0,5 m/ô · + gốc ego · vòng 10/25 m · xanh: tĩnh · cam: vật thể</figcaption></figure>
       {camera && <figure className="grid content-start gap-2"><div className="aspect-video overflow-hidden rounded-lg bg-[var(--navy)]">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         {frame?.image && <img src={frame.image} className="h-full w-full object-contain" alt={`Camera cùng frame ${frame.index+1} với occupancy`} />}

@@ -53,6 +53,9 @@ def registry():
 
 
 def validate_spec(spec):
+    if spec.native_input_adapter != "raw":
+        from src.inference.native_input import fingerprint
+        fingerprint(spec.native_input_adapter)
     if spec.source == "dataset_replay":
         from src.models.replay import OCCUPANCY_MODELS
         from src.services.dataset_replay import validate_trial

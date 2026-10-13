@@ -1,3 +1,5 @@
+> Cập nhật 13/10/2026 sau phục hồi Ubuntu: mục bên dưới là checkpoint lịch sử, không mô tả runtime đang chạy. Bản MVP hiện dùng PPO occupancy proxy nuScenes đã niêm phong và CARLA Town01 sạch. Capture FOV/mưa/sương mù đã chạy; căn chỉnh intensity là tùy chọn thử nghiệm. Native online RL, bộ 12–24 profile và MultiDiscrete chưa hoàn thành. Xem [phạm vi hiện tại](MVP_RECOVERY_SCOPE.vi.md) và [evidence native](NATIVE_CARLA_EVIDENCE.vi.md). Không dùng các raw/benchmark lịch sử bị hỏng để tự nghiệm thu training mới.
+
 # Checkpoint active sensing — 08/10/2026, đã nhận yêu cầu tiếp tục
 
 ## Trạng thái hiện tại: baseline + bốn diagnostics hoàn tất, không còn job GPU

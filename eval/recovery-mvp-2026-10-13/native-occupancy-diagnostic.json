@@ -1,0 +1,130 @@
+{
+  "kind": "native_carla_occupancy_diagnostic_not_training_admission",
+  "frames": 4,
+  "source_npz_sha256": {
+    "frame_0000.npz": "bd7561dd27556740beb8825be4d8a31d7792b41ec98de6441f1d808d6830a40d",
+    "frame_0001.npz": "64ddc8c433243ffc08ccf62bb24fb882a0b86f525ddbfa80e7da1c923657c3fb",
+    "frame_0002.npz": "56b5e75a1227aba1ec241f6a330f5a671d96008f81905c9b2382e6324a97b272",
+    "frame_0003.npz": "c91b1ae1b61259d3e34bb7139c8d983767ca2e77bfccc55fd20e0fb517549cda"
+  },
+  "checkpoint_sha256": "8d6c7155534906a50ca2f52b039696700072ff200768f0d91ead33c828e9f878",
+  "exact_full_feature_reconstruction": true,
+  "ground_truth_object_cells": 0,
+  "results": {
+    "1": {
+      "metrics": {
+        "frame_count": 4,
+        "evaluated_cells": 17873,
+        "confusion": [
+          [
+            6075,
+            6700,
+            0
+          ],
+          [
+            794,
+            4302,
+            2
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ],
+        "class_iou": {
+          "free": 0.44771169577713904,
+          "static": 0.3646380742498729,
+          "object": 0.0
+        },
+        "miou_supported_classes": 0.27078325667567066,
+        "occupied_iou": 0.36480759450754363,
+        "object_recall": null,
+        "flow_epe_m_s": null,
+        "flow_valid_cells": 0,
+        "latency_model_only_ms": null,
+        "timed_frames": 0
+      },
+      "cpu_preprocessing_inference_p95_ms": 83.56179854999999
+    },
+    "0.5": {
+      "metrics": {
+        "frame_count": 4,
+        "evaluated_cells": 17873,
+        "confusion": [
+          [
+            7539,
+            5236,
+            0
+          ],
+          [
+            1775,
+            3320,
+            3
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ],
+        "class_iou": {
+          "free": 0.5181443298969072,
+          "static": 0.3212695955099671,
+          "object": 0.0
+        },
+        "miou_supported_classes": 0.2798046418022914,
+        "occupied_iou": 0.3215598993613315,
+        "object_recall": null,
+        "flow_epe_m_s": null,
+        "flow_valid_cells": 0,
+        "latency_model_only_ms": null,
+        "timed_frames": 0
+      },
+      "cpu_preprocessing_inference_p95_ms": 82.956576
+    },
+    "0.25": {
+      "metrics": {
+        "frame_count": 4,
+        "evaluated_cells": 17873,
+        "confusion": [
+          [
+            9052,
+            3723,
+            0
+          ],
+          [
+            2750,
+            2346,
+            2
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ],
+        "class_iou": {
+          "free": 0.5830595813204509,
+          "static": 0.2659562407890262,
+          "object": 0.0
+        },
+        "miou_supported_classes": 0.28300527403649234,
+        "occupied_iou": 0.26618297245210293,
+        "object_recall": null,
+        "flow_epe_m_s": null,
+        "flow_valid_cells": 0,
+        "latency_model_only_ms": null,
+        "timed_frames": 0
+      },
+      "cpu_preprocessing_inference_p95_ms": 85.0701983
+    }
+  },
+  "limitations": [
+    "Only four frames, one Town01 capture; no independent train/validation/test",
+    "Thinning recorded points, not physically changing sensor settings",
+    "Shared original semantic-reference valid mask across actions",
+    "No FOV optimization or real-world safety claim",
+    "No PPO training or deployment admission from this diagnostic"
+  ]
+}

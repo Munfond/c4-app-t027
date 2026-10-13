@@ -180,7 +180,7 @@ export default function AgentPanel({ source, onSourceChange, onOpenTools, toolsO
       </select>
       <Button variant="secondary" onClick={() => {
         const spec: ExperimentSpec = { source: "carla", model_ids: ["occupancy_lidar"], scene_id: null, capture_id: null, max_latency_ms: null,
-          scenario: { map: "Town02", weather: "clear", vehicles: 2, pedestrians: 4, seed: 42, frames: 4, capture_interval: .5, timestep: .05, route_spawn_index: 0, camera: { fov: cameraFov } } };
+          scenario: { map: "Town01", weather: "clear", vehicles: 2, pedestrians: 0, seed: 42, frames: 4, capture_interval: .5, timestep: .05, route_spawn_index: 0, traffic_placement: "nearest_spawn", camera: { fov: cameraFov } } };
         setDraft(spec); onOpenTools(spec, "manual");
       }}>Điền cấu hình để kiểm tra</Button>
       <p className="agent-small">Chưa chạy capture. FOV không ảnh hưởng prediction occupancy LiDAR; chưa có evidence chọn preset tốt nhất.</p>

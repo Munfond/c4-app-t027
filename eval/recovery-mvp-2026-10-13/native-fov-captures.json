@@ -1,0 +1,95 @@
+[
+  {
+    "fov": 60,
+    "job_id": "83d6d5e5cbc945efaf45e91cae31f986",
+    "native_validation": {
+      "passed": true,
+      "requested_fov": 60,
+      "recorded_fov": "60",
+      "frames": 2,
+      "image_dimensions": [
+        [
+          640,
+          360
+        ],
+        [
+          640,
+          360
+        ]
+      ]
+    },
+    "source_report_sha256": "3a17ae36e19235a2b43c51879af96d5757ae309888c59b05cbb26927dc8b9935",
+    "capture_hashes": {
+      "frame_0000.npz": "7e88b7122f43c2eeb1394fd42475988d901398d4eb48255da4e4b51f41d93faf",
+      "frame_0000.png": "793ce69b948740008bf4f38d5f8d9fb4f3a0229f3e3b2a89479fa46a63f6373a",
+      "frame_0000.json": "4ce4c25531381da4c8f38abb2358763e6a7ce711f9e2bdca97d64992f1e71b26",
+      "frame_0001.npz": "ad4efda51538127e2dd4ec5b0daf9c441615fab0905989f50402cef198df8de1",
+      "frame_0001.png": "9feda9cf0e05e07677831cbcd71deb992c509b786e1ca8827b2d9876ac873471",
+      "frame_0001.json": "932aa9a9593c6311f6dd70b34c61fe7a4253d208a62be36ae791ff017af92567"
+    },
+    "published_local": true,
+    "notice": "Only native integration smoke; no real-world claim"
+  },
+  {
+    "fov": 90,
+    "job_id": "acae446c6dc74efb939529c2a24e552d",
+    "native_validation": {
+      "passed": true,
+      "requested_fov": 90,
+      "recorded_fov": "90",
+      "frames": 2,
+      "image_dimensions": [
+        [
+          640,
+          360
+        ],
+        [
+          640,
+          360
+        ]
+      ]
+    },
+    "source_report_sha256": "c0eb110577f40dec8916a7c79b0446e03559b25c669c7cd70efe6079e8dd0543",
+    "capture_hashes": {
+      "frame_0000.npz": "7e88b7122f43c2eeb1394fd42475988d901398d4eb48255da4e4b51f41d93faf",
+      "frame_0000.png": "03abbe97370b262323a0d690f1bf4d43a82a19b6126aac34ccf780c9c3425d7d",
+      "frame_0000.json": "4ce4c25531381da4c8f38abb2358763e6a7ce711f9e2bdca97d64992f1e71b26",
+      "frame_0001.npz": "ad4efda51538127e2dd4ec5b0daf9c441615fab0905989f50402cef198df8de1",
+      "frame_0001.png": "07d62278cfd28e8f7c978c04ac3a4ac939ff3046adef4c05d2a0a76e2fdbe0ec",
+      "frame_0001.json": "932aa9a9593c6311f6dd70b34c61fe7a4253d208a62be36ae791ff017af92567"
+    },
+    "published_local": true,
+    "notice": "Only native integration smoke; no real-world claim"
+  },
+  {
+    "fov": 110,
+    "job_id": "5c6db61793d4499dbc07d444f062a1cd",
+    "native_validation": {
+      "passed": true,
+      "requested_fov": 110,
+      "recorded_fov": "110",
+      "frames": 2,
+      "image_dimensions": [
+        [
+          640,
+          360
+        ],
+        [
+          640,
+          360
+        ]
+      ]
+    },
+    "source_report_sha256": "210548d9c29e8c7ca84e828abd92fc02e8dc044d66ee67e0db981270cd032d19",
+    "capture_hashes": {
+      "frame_0000.npz": "7e88b7122f43c2eeb1394fd42475988d901398d4eb48255da4e4b51f41d93faf",
+      "frame_0000.png": "1c4785d870a9a3217661d8d14decf64f59d62621c83c6f46ecd70d0968ab6c17",
+      "frame_0000.json": "4ce4c25531381da4c8f38abb2358763e6a7ce711f9e2bdca97d64992f1e71b26",
+      "frame_0001.npz": "ad4efda51538127e2dd4ec5b0daf9c441615fab0905989f50402cef198df8de1",
+      "frame_0001.png": "f60f632999c7f72eec117b3d5469f1e916557ca3ba56dc0690edeaeee5d0a17b",
+      "frame_0001.json": "932aa9a9593c6311f6dd70b34c61fe7a4253d208a62be36ae791ff017af92567"
+    },
+    "published_local": true,
+    "notice": "Only native integration smoke; no real-world claim"
+  }
+]

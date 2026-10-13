@@ -73,6 +73,10 @@ def create(spec, key=None):
     validate_spec(spec)
     checkpoints = {name: verified_hash(name) for name in spec.model_ids}
     frozen = {"request": spec.model_dump(), "checkpoints": checkpoints, "pipeline_version": "bev-v2"}
+    if spec.native_input_adapter != "raw":
+        from src.inference.native_input import fingerprint
+
+        frozen["native_input_adapter"] = fingerprint(spec.native_input_adapter)
     if spec.source == "dataset_replay":
         frozen["camera_detector"] = camera_fingerprint()
         frozen["pipeline_version"] = "dataset-replay-v1"

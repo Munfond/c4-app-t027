@@ -103,6 +103,11 @@ def run_once():
         for name, expected in job["spec"]["checkpoints"].items():
             if verified_hash(name) != expected:
                 raise ValueError("Checkpoint changed after enqueue")
+        if spec.native_input_adapter != "raw":
+            from src.inference.native_input import fingerprint
+
+            if fingerprint(spec.native_input_adapter) != job["spec"].get("native_input_adapter"):
+                raise ValueError("Native adapter changed after enqueue")
         if spec.source == "dataset_replay":
             from src.services.dataset_replay import frames as replay_frames
 
@@ -118,6 +123,15 @@ def run_once():
             from src.simulation.carla_capture import capture
 
             frames, manifest = capture(spec.scenario, root / "capture", pulse)
+        if spec.native_input_adapter != "raw":
+            from src.inference.native_input import apply, fingerprint
+
+            current = fingerprint(spec.native_input_adapter)
+            if current != job["spec"].get("native_input_adapter"):
+                raise ValueError("Native adapter changed after enqueue")
+            frames = apply(frames, current)
+            manifest["native_input_adapter"] = current
+            manifest["limitations"] = [*manifest["limitations"], current["notice"]]
         digest = hashlib.sha256()
         reference_digest = hashlib.sha256()
         reference_digest.update(manifest.get("dataset_reference_sha256", "").encode())

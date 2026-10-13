@@ -1,0 +1,82 @@
+{
+  "kind": "descriptive_input_domain_diagnostic_not_calibration",
+  "channels": [
+    "obstacle_density",
+    "height",
+    "all_density",
+    "mean_intensity_normalized"
+  ],
+  "nuscenes_training_only": {
+    "observed_cells": 60420,
+    "mean": [
+      0.18627966940402985,
+      0.18398380279541016,
+      0.563564121723175,
+      0.059619635343551636
+    ],
+    "median": [
+      0.0,
+      0.0,
+      0.5364792943000793,
+      0.046078432351350784
+    ],
+    "p95": [
+      0.7992984056472778,
+      0.7412649393081665,
+      1.1337324380874634,
+      0.16601307690143585
+    ]
+  },
+  "native_town01": {
+    "observed_cells": 14738,
+    "mean": [
+      0.10789014399051666,
+      0.15212363004684448,
+      0.44103091955184937,
+      0.919143557548523
+    ],
+    "median": [
+      0.0,
+      0.0,
+      0.36620408296585083,
+      0.9258791208267212
+    ],
+    "p95": [
+      0.5364792943000793,
+      0.7130061984062195,
+      0.8796857595443726,
+      0.9785476922988892
+    ]
+  },
+  "artifact_sha256": {
+    "artifacts/ca9a282c9e77460f8360f564131a8af5-0.npz": "1e94ba8cdfffec2d2946f09020d4747677dda46801ca71accddda4815f0d885e",
+    "artifacts/39586f9d59004284a7114a68825e8eec-0.npz": "4ce787c6d3d88d01dc3a06552ef85f0c81ee6cf1492f7c5f739333f320cbe249",
+    "artifacts/356d81f38dd9473ba590f39e266f54e5-0.npz": "6eeb65da9a5837e7427b400d04aa6d86ad9c2b293c052a61f10304de26c115a7",
+    "artifacts/e0845f5322254dafadbbed75aaa07969-0.npz": "d6cee4c9b29a1353b8835e4ffb38d6593f6c52bcfca8466a085e5e026fb2d7f5",
+    "artifacts/c923fe08b2ff4e27975d2bf30934383b-0.npz": "9eb8fc6e91c5a46018c87abe877c0e3ea2aeb21dd48bdf38f6c67a187a8c23bf",
+    "artifacts/f1e3d9d08f044c439ce86a2d6fcca57b-0.npz": "c1de975610425c8ad59c02c68eff0ada4e83a27d2c50b92b528c062392251bf0",
+    "artifacts/4f545737bf3347fbbc9af60b0be9a963-0.npz": "3e3b7f804c1a74286e9b96c459b00e5d6a59c7b83255112c7006ac054e9d7066",
+    "artifacts/7626dde27d604ac28a0240bdd54eba7a-0.npz": "82c0a75e0411b1bee240e98c644e6c632e600342e8fd893de4d8328040071c9c",
+    "artifacts/be99ffc878b24aca8956bbb4e0f97d0c-0.npz": "5395e0d394f875f14e2e9ba20edb61c3a02f18fcee1a30dcbd0b69c26a0904b2",
+    "artifacts/9813c23a5f1448b09bb7910fea9baf20-0.npz": "81420d316bf7d56e391fe5794dc6a110b8671e2a4ca1d1cbb3ddff33c59da8cd",
+    "artifacts/8687ba92abd3406aa797115b874ebeba-0.npz": "a57ff4028a5ecce89a4be1bc9dcda178bc6397e774ecfba72cc277aab3c66da9",
+    "artifacts/5bbeb4e68d51413f81a370cb33ef27fb-0.npz": "ce80054cb96a3e9a1487a6e27c9fc71f5265b2226a4dcb1d86d4deb474eb77e5",
+    "artifacts/e9a1c915c0d641d0b0a3019112a1ee90-0.npz": "1e0d8e82146ef2e89313b411c8fdd7a16b7e07370ff80e1249f6cec1e6396d42",
+    "artifacts/f5b8088835f247b8a5434a9f0daadc20-0.npz": "30ccdf64d77f6aad44c7e4306e577c097f159b84764b675df008b12e26528ebb",
+    "artifacts/2021b6b367984ad7b18464a550d0ae8d-0.npz": "1b70c278f4b0a7af9c456f9b21bb603e2fb34dd9e7f8799819c478589d418c98",
+    "artifacts/7315022fc89147a6afc7f978601f8f38-0.npz": "0a8b2f025c2397b4bcf9de11b4858ec641c88a02a6d9a925670d7322a523643f",
+    "artifacts/dc03fe4e0a374592af7701c66d5276c4-0.npz": "7b4d71f494db55b9326c7d419717a95128cbaf26a71cca2300a352d990449b5c",
+    "artifacts/b7f64f73e8a548488e6d85d9b0e13242-0.npz": "ce8f5272a586652e3c97b6f4bfa004edcab55cdca288a746ba93c812576af804",
+    "artifacts/6dabc0fb1df045558f802246dd186b3f-0.npz": "f25a33cd3dd71ba5846ac453add248c794879e46445ed26ced9af6bd3ada1a27",
+    "artifacts/82597244941b4e79aa3e1e9cc6386f8b-0.npz": "c534da657fb7f8447b842011d570775125de58e60745b414cff370cacf02e3cc",
+    "data/runtime/carla-nearby-pilot-20261013/f88247cc15194080968db68a8205ce81/capture/frame_0000.npz": "9c96c705b2a9a837bbef9ce9f083adba3327cb4205c7e1fddb8db5f19c65efe4",
+    "data/runtime/carla-nearby-pilot-20261013/f88247cc15194080968db68a8205ce81/capture/frame_0001.npz": "3fab494c5b5e28e2324b7842a96e7537693dbbcedee8a6f10ce09f076f81de34",
+    "data/runtime/carla-nearby-pilot-20261013/f88247cc15194080968db68a8205ce81/capture/frame_0002.npz": "83c3edc081fa9ae777c6fe33b72c56b332b37e06ad49f4853321d553c52a1811",
+    "data/runtime/carla-nearby-pilot-20261013/f88247cc15194080968db68a8205ce81/capture/frame_0003.npz": "1635ef3970c3d6fc8ed1657692e3df4e48994002405ab2da529c6718a0221f1c"
+  },
+  "limitations": [
+    "20 source training frames vs4 native frames; no validation/test used",
+    "Scene geometry and label policy differ; this does not establish cause of model failure",
+    "No input rescaling, checkpoint change or learned calibration applied"
+  ]
+}

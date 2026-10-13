@@ -10,7 +10,7 @@ Phần học tăng cường đã chạy PPO thật trên dữ liệu occupancy p
 
 Kết quả hiện tại agent giữ 100% điểm. Giảm điểm làm IoU giảm nhưng thời gian mạng chạy trên lưới cố định chỉ thay đổi ít. Vì vậy hệ thống báo chưa có cấu hình tốt hơn, kèm báo cáo và hash để đối chiếu. Engineer có thể đánh giá kết luận đó.
 
-Bước tiếp theo là capture mới trên CARLA sạch và đánh giá thêm môi trường, sensor/model. Bản hiện tại chưa chứng minh online RL hoặc khả năng an toàn ngoài thực tế.”
+CARLA sạch đã tạo capture FOV và preview mưa/sương mù. Căn chỉnh intensity thử nghiệm cải thiện trên hai route Town01 mới, nhưng object IoU vẫn thấp ở một route; cần kiểm chứng rộng hơn. Bản hiện tại chưa chứng minh online RL hoặc khả năng an toàn ngoài thực tế.”
 
 ## Trình tự demo
 
@@ -19,6 +19,6 @@ Bước tiếp theo là capture mới trên CARLA sạch và đánh giá thêm m
 3. Mở bot → công cụ CARLA → chọn capture phục hồi → Play/Pause. Bật/tắt rút ngắn khoảng trống để giải thích timestamp.
 4. Mở “Học tăng cường · PPO offline”, chỉ vào hàng 50% so với 100% và PPO.
 5. Mở nguồn/split/giới hạn, tải report. Chỉ engineer thật mới ghi review.
-6. Camera preset 60/90/110: mở cấu hình để xem; chưa trình bày như đã chạy capture FOV mới.
+6. Camera preset 60/90/110: chọn các capture smoke đã chạy; đọc FOV và giới hạn. Chọn capture căn chỉnh thử nghiệm để so Model/Reference, chỉ rõ đây chưa là native RL.
 
 Ba profile thinning là phạm vi MVP phục hồi. Bộ 12–24 profile và MultiDiscrete của kế hoạch Active Sensing ban đầu chưa hoàn thành; không gọi ba profile này là triển khai đầy đủ kế hoạch.
