@@ -22,6 +22,7 @@ class Replay:
     def __init__(self, payload: dict[str, Any], *, allow_synthetic: bool = False):
         if payload.get("schema_version") != 1:
             raise ValueError("Replay schema_version must be 1")
+        self.objective = payload.get("constraints", {}).get("objective", "gpu_quality")
         self.provenance = payload.get("provenance", {})
         kind = self.provenance.get("kind")
         if kind not in ("measured_perception", "synthetic_contract_fixture"):
@@ -34,7 +35,8 @@ class Replay:
             required = ("capture_id", "model_manifest_sha256", "hardware", "timing_scope", "monitoring_cost_included")
             if any(not self.provenance.get(key) for key in required):
                 raise ValueError("Measured replay needs capture/model/hardware/timing provenance and monitoring cost")
-            if self.provenance["timing_scope"] != "total_gpu_work_per_window":
+            timing_scope = "end_to_end_wall_latency" if self.objective == "quality_latency" else "total_gpu_work_per_window"
+            if self.provenance["timing_scope"] != timing_scope:
                 raise ValueError("Timing must include ALL inference in each window, not ms per call")
             if self.provenance['monitoring_cost_included'] is not True:
                 raise ValueError('Monitoring cost must be explicitly measured, not a truthy string')
@@ -93,7 +95,7 @@ class Replay:
                         raise ValueError('Partial/unvalidated profile results cannot be used as RL reward')
                     if result["frame_id"] != step["frame_id"]:
                         raise ValueError("Perception result belongs to a different frame")
-                    for key in ("gpu_ms", "end_to_end_ms"):
+                    for key in (("end_to_end_ms",) if self.objective == "quality_latency" else ("gpu_ms", "end_to_end_ms")):
                         finite(result[key], key, 0)
                     if "detection" not in self.by_id[profile_id].tasks:
                         raise ValueError("Detection results need a detection profile")
@@ -115,7 +117,7 @@ class Replay:
                     if not set(feedback) <= {"nearest_detection_m", "min_ttc_s", "new_near_target"}:
                         raise ValueError("Actor feedback must be observable, not ground truth")
                     Observation.from_mapping(dict(step["observation"], **feedback))
-                if step["profile_results"][self.reference]["gpu_ms"] <= 0:
+                if self.objective != "quality_latency" and step["profile_results"][self.reference]["gpu_ms"] <= 0:
                     raise ValueError("Reference GPU work must be positive")
         self.index = 0
         self.current_profile = self.reference
@@ -172,8 +174,8 @@ class Replay:
             metrics = evaluate(
                 [Box(**b) for b in step["ground_truth"]],
                 [Box(**b) for b in result["detections"]],
-                observation, self.constraints, result["gpu_ms"],
-                step["profile_results"][self.reference]["gpu_ms"],
+                observation, self.constraints, result.get("gpu_ms"),
+                step["profile_results"][self.reference].get("gpu_ms"),
                 result["end_to_end_ms"], switched, decision.intervened,
             )
             required_seg = set(self.constraints.required_tasks) - {"detection"}
@@ -226,7 +228,7 @@ def summarize(logs: list[dict[str, Any]]) -> dict[str, Any]:
         "constraint_rate_evaluated": (
             sum(m["constraint_cost"] for m in evaluated) / len(evaluated) if evaluated else None
         ),
-        "gpu_ms": sum(m["gpu_ms"] for m in evaluated),
+        "gpu_ms": (sum(m["gpu_ms"] for m in evaluated) if evaluated and all(m["gpu_ms"] is not None for m in evaluated) else None),
         "target_steps": sum(m["required_targets"] > 0 for m in evaluated),
         "target_conditional_constraint_rate": (
             sum(m["constraint_cost"] for m in evaluated if m["required_targets"] > 0)

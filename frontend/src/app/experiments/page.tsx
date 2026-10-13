@@ -1,7 +1,5 @@
-import { ReplayWorkspace } from "@/components/experiments/replay-workspace";
+import { redirect } from "next/navigation";
 
-export const metadata = { title: "AI Agent · Occupancy" };
-
-export default function ExperimentsPage() {
-  return <ReplayWorkspace />;
+export default function LegacyExperimentPage() {
+  redirect("/lab?agent=dataset_replay&tools=history");
 }

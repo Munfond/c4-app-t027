@@ -1,0 +1,102 @@
+[
+  {
+    "url": "http://127.0.0.1:8000/health",
+    "status": 200,
+    "bytes": 35
+  },
+  {
+    "url": "http://127.0.0.1:8000/api/v1/experiments/occupancy-rl",
+    "status": 200,
+    "bytes": 6781
+  },
+  {
+    "url": "http://127.0.0.1:8000/api/v1/experiments/occupancy-rl/report",
+    "status": 200,
+    "bytes": 10542
+  },
+  {
+    "url": "http://127.0.0.1:8000/api/v1/experiments/occupancy-rl/reviews",
+    "status": 200,
+    "bytes": 12
+  },
+  {
+    "url": "http://127.0.0.1:3111/lab",
+    "status": 200,
+    "bytes": 16760
+  },
+  {
+    "url": "http://127.0.0.1:3111/_next/static/css/6bc2fa9a55e8cdc4.css",
+    "status": 200,
+    "bytes": 72690
+  },
+  {
+    "url": "http://127.0.0.1:3111/_next/static/chunks/4bd1b696-92152b0f5947070d.js",
+    "status": 200,
+    "bytes": 201054
+  },
+  {
+    "url": "http://127.0.0.1:3111/_next/static/chunks/b536a0f1-e752df2a6b047382.js",
+    "status": 200,
+    "bytes": 356577
+  },
+  {
+    "url": "http://127.0.0.1:3111/_next/static/chunks/webpack-53e62ff81a2a9298.js",
+    "status": 200,
+    "bytes": 3497
+  },
+  {
+    "url": "http://127.0.0.1:3111/_next/static/chunks/794-000a715ce19c7a17.js",
+    "status": 200,
+    "bytes": 241031
+  },
+  {
+    "url": "http://127.0.0.1:3111/_next/static/chunks/534-44e711e5d5df1a3b.js",
+    "status": 200,
+    "bytes": 19715
+  },
+  {
+    "url": "http://127.0.0.1:3111/_next/static/chunks/bd904a5c-2879a0d7004013f9.js",
+    "status": 200,
+    "bytes": 219546
+  },
+  {
+    "url": "http://127.0.0.1:3111/_next/static/chunks/main-app-99695630221f3374.js",
+    "status": 200,
+    "bytes": 513
+  },
+  {
+    "url": "http://127.0.0.1:3111/_next/static/chunks/772-908b300e7805a49b.js",
+    "status": 200,
+    "bytes": 24219
+  },
+  {
+    "url": "http://127.0.0.1:3111/_next/static/chunks/628-eab0fbfd94bcc91b.js",
+    "status": 200,
+    "bytes": 26575
+  },
+  {
+    "url": "http://127.0.0.1:3111/_next/static/chunks/app/lab/page-409f412fa81fda35.js",
+    "status": 200,
+    "bytes": 32082
+  },
+  {
+    "url": "http://127.0.0.1:3111/_next/static/chunks/polyfills-42372ed130431b0a.js",
+    "status": 200,
+    "bytes": 112594
+  },
+  {
+    "url": "http://127.0.0.1:3111/_next/static/chunks/app/layout-3846c2efe0c27315.js",
+    "status": 200,
+    "bytes": 12458
+  },
+  {
+    "url": "http://127.0.0.1:3111/compare",
+    "status": 200,
+    "bytes": 19226
+  },
+  {
+    "url": "http://127.0.0.1:3111/benchmarks",
+    "status": 200,
+    "bytes": 10075
+  }
+]

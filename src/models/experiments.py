@@ -32,6 +32,12 @@ class LidarSpec(BaseModel):
         return self
 
 
+class CameraSpec(BaseModel):
+    """Bounded capture presets; FOV is not a detector quality recommendation."""
+    model_config = ConfigDict(extra="forbid")
+    fov: Literal[60, 90, 110] = 90
+
+
 class ScenarioSpec(BaseModel):
     model_config = ConfigDict(extra="forbid")
     map: Literal["Town01", "Town02", "Town03", "Town04", "Town05"] = "Town03"
@@ -47,6 +53,7 @@ class ScenarioSpec(BaseModel):
     route_kind: Literal["spawn", "highway"] = "spawn"
     lane_change_interval_seconds: float | None = Field(default=None, ge=2, le=15)
     lidar: LidarSpec = Field(default_factory=LidarSpec)
+    camera: CameraSpec = Field(default_factory=CameraSpec)
 
     @model_validator(mode="after")
     def supported_route(self):

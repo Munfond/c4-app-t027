@@ -1,21 +1,22 @@
 "use client";
 
-import Image from "next/image";
+import { CapturePlayback } from "./capture-playback";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { PageHeader } from "@/components/ui/page-header";
 import { Select } from "@/components/ui/select";
 import { apiJson } from "@/lib/lab-api";
 
-type Spec = {
+export type ExperimentSpec = {
   source: "carla" | "nuscenes";
   model_ids: string[];
   scene_id: string | null;
   capture_id: string | null;
   max_latency_ms: number | null;
   scenario: { map: string; weather: string; vehicles: number; pedestrians: number; seed: number; frames: number;
-    capture_interval: number; timestep: number; route_spawn_index: number };
+    capture_interval: number; timestep: number; route_spawn_index: number; camera?: { fov: number } };
 };
+type Spec = ExperimentSpec;
 type Registry = {
   models: { id: string; task: string; available: boolean; sources: string[] }[];
   maps: string[]; agent_enabled: boolean; agent_model: string; carla_client_installed: boolean;
@@ -26,7 +27,7 @@ type Job = {
   id: string; status: string; stage: string; error: string | null; spec: { request: Spec };
   result: null | { models: Record<string, { metrics: Metrics; cache_hits: number }>;
     recommendation: { selected: string | null; limitations: string[] };
-    manifest: { frames: { id: string }[] }; limitations: string[] };
+    manifest: { frames: { id: string; timestamp?: number }[] }; limitations: string[] };
 };
 const initial: Spec = {
   source: "carla", model_ids: ["occupancy_lidar"], scene_id: null, capture_id: null, max_latency_ms: null,
@@ -49,47 +50,14 @@ function metric(value: number | null | undefined, percent = false) {
   return percent ? `${(value * 100).toFixed(1)}%` : value.toFixed(2);
 }
 
-function OccupancyPreview({ job, model, index }: { job: Job; model: string; index: number }) {
-  const canvas = useRef<HTMLCanvasElement>(null);
-  const key = `${job.id}:${model}:${index}`;
-  const [loaded, setLoaded] = useState<{ key: string; cells: number[] } | null>(null);
-  const [failure, setFailure] = useState<{ key: string; message: string } | null>(null);
-  useEffect(() => {
-    const controller = new AbortController();
-    void apiJson<{ cells: number[] }>(`/api/v1/experiments/${job.id}/predictions/${encodeURIComponent(model)}/${index}`, controller.signal)
-      .then(data => { if (!controller.signal.aborted) setLoaded({ key, cells: data.cells }); })
-      .catch(cause => { if (!controller.signal.aborted) setFailure({ key, message: String(cause) }); });
-    return () => controller.abort();
-  }, [job.id, model, index, key]);
-  useEffect(() => {
-    const ctx = canvas.current?.getContext("2d");
-    if (!ctx) return;
-    ctx.clearRect(0, 0, 200, 200);
-    if (loaded?.key !== key || loaded.cells.length !== 40000) return;
-    const pixels = ctx.createImageData(200, 200);
-    const colors = [[16, 38, 46], [80, 167, 152], [255, 177, 76]];
-    loaded.cells.forEach((value, cell) => {
-      const row = Math.floor(cell / 200), col = cell % 200;
-      const offset = ((199 - row) * 200 + 199 - col) * 4;
-      const color = colors[value] ?? colors[0];
-      pixels.data.set([...color, 255], offset);
-    });
-    ctx.putImageData(pixels, 0, 0);
-  }, [loaded, key]);
-  return <div className="grid gap-2">
-    <canvas ref={canvas} width={200} height={200} className="aspect-square w-full max-w-[500px] bg-[var(--navy)] [image-rendering:pixelated]" aria-label="Prediction occupancy BEV: forward lên trên, left sang trái" />
-    <p className="text-xs text-[var(--muted)]">BEV 2D · 0.5 m/cell · forward ↑ · static xanh · object cam</p>
-    {failure?.key === key ? <p role="alert" className="text-sm text-red-700">{failure.message}</p> : null}
-  </div>;
-}
 
-export function ExperimentWorkspace() {
+export function ExperimentWorkspace({ source = "carla", initialSpec, active = true }: { source?: Spec["source"]; initialSpec?: Spec; active?: boolean }) {
   const [registry, setRegistry] = useState<Registry | null>(null);
-  const [spec, setSpec] = useState<Spec>(initial);
+  const [spec, setSpec] = useState<Spec>(() => initialSpec ?? { ...initial, source, scene_id: source === "nuscenes" ? "scene-0103" : null });
   const [jobs, setJobs] = useState<Job[]>([]);
   const [selectedId, setSelectedId] = useState("");
   const [selectedModel, setSelectedModel] = useState("");
-  const [frameIndex, setFrameIndex] = useState(0);
+
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const attempt = useRef<{ body: string; key: string } | null>(null);
@@ -102,17 +70,18 @@ export function ExperimentWorkspace() {
   }, []);
   useEffect(() => {
     const controller = new AbortController();
+    if (!active) return;
     let timer: ReturnType<typeof setTimeout>;
     const poll = async () => {
       try {
         const data = await apiJson<{ items: Job[] }>("/api/v1/experiments", controller.signal);
-        if (!controller.signal.aborted) setJobs(data.items);
+        if (!controller.signal.aborted) setJobs(data.items.filter(job => job.spec.request.source === spec.source));
       } catch (cause) { if (!controller.signal.aborted) setError(String(cause)); }
       if (!controller.signal.aborted) timer = setTimeout(poll, 3000);
     };
     void poll();
     return () => { controller.abort(); clearTimeout(timer); };
-  }, []);
+  }, [active, spec.source]);
 
   useEffect(() => {
     const receive = (event: Event) => {
@@ -122,11 +91,12 @@ export function ExperimentWorkspace() {
     return () => window.removeEventListener("p027-agent-plan", receive);
   }, []);
 
-  const chosen = jobs.find(job => job.id === selectedId) ?? jobs[0];
+  const visibleJobs = jobs.filter(job => job.spec.request.source === spec.source);
+  const chosen = visibleJobs.find(job => job.id === selectedId) ?? visibleJobs[0];
   const models = registry?.models.filter(model => model.available && model.sources.includes(spec.source)) ?? [];
   const previewModel = chosen?.spec.request.model_ids.includes(selectedModel) ? selectedModel : chosen?.spec.request.model_ids[0] ?? "";
   const frameCount = chosen?.result?.manifest.frames.length ?? 0;
-  const previewIndex = Math.min(frameIndex, Math.max(0, frameCount - 1));
+
   const scenario = (key: keyof Spec["scenario"], value: string | number) => setSpec(previous => ({ ...previous, capture_id: null, scenario: { ...previous.scenario, [key]: value } }));
 
   const submit = async () => {
@@ -135,7 +105,7 @@ export function ExperimentWorkspace() {
       const body = JSON.stringify(spec);
       if (attempt.current?.body !== body) attempt.current = { body, key: crypto.randomUUID() };
       const job = await post<Job>("", spec, attempt.current.key);
-      setSelectedId(job.id); setFrameIndex(0); setJobs(previous => [job, ...previous.filter(item => item.id !== job.id)]);
+      setSelectedId(job.id);  setJobs(previous => [job, ...previous.filter(item => item.id !== job.id)]);
       attempt.current = null;
     } catch (cause) { setError(String(cause)); }
     finally { setBusy(false); }
@@ -170,13 +140,21 @@ export function ExperimentWorkspace() {
       </div>
       <div className="grid gap-3 sm:grid-cols-4">{([ ["frames", "Số frame", 81], ["vehicles", "Xe nền", 40], ["pedestrians", "Người đi bộ", 40], ["seed", "Seed", 2147483647] ] as const)
         .filter(([key]) => spec.source === "carla" || key === "frames").map(([key, label, max]) => <label key={key} className="grid gap-2 text-xs text-[var(--muted)]">{label}<input type="number" min={key === "frames" ? 1 : 0} max={max} value={spec.scenario[key]} onChange={event => scenario(key, Number(event.target.value))} className="rounded-lg border border-[var(--line)] p-3 text-sm" /></label>)}</div>
+      {spec.source === "carla" && <div className="grid gap-2 sm:max-w-md">
+        <Select label="Góc nhìn camera (FOV)" value={spec.scenario.camera?.fov ?? 90} onChange={event => setSpec(previous => ({ ...previous, capture_id: null, scenario: { ...previous.scenario, camera: { fov: Number(event.target.value) } } }))}>
+          <option value={60}>60° · Hẹp / vật phía trước lớn hơn</option>
+          <option value={90}>90° · Cân bằng</option>
+          <option value={110}>110° · Rộng / bao quát hai bên</option>
+        </Select>
+        <p className="text-xs text-[var(--muted)]">Áp dụng khi tạo capture mới. FOV hẹp giảm vùng bao quát; occupancy LiDAR hiện không dùng ảnh này để dự đoán.</p>
+      </div>}
       <fieldset><legend className="mb-2 text-xs font-semibold">Checkpoint</legend><div className="flex flex-wrap gap-4">{models.map(model => <label key={model.id} className="flex items-center gap-2 text-sm"><input type="checkbox" checked={spec.model_ids.includes(model.id)} onChange={event => setSpec(previous => ({ ...previous, model_ids: event.target.checked ? [...previous.model_ids, model.id] : previous.model_ids.filter(id => id !== model.id) }))} />{model.id}</label>)}</div></fieldset>
       <div className="flex flex-wrap items-center gap-3"><Button loading={busy} disabled={!spec.model_ids.length} onClick={submit}>Tạo thí nghiệm</Button><Button variant="secondary" onClick={() => window.dispatchEvent(new Event("p027-open-agent"))}>Trao đổi với agent ↗</Button><span className="text-xs text-[var(--muted)]">Agent mở cạnh kết quả, không cần đổi trang.</span></div>
       <details><summary className="cursor-pointer text-xs text-[var(--muted)]">Cấu hình sẽ chạy</summary><pre className="mt-3 overflow-auto text-xs">{JSON.stringify(spec, null, 2)}</pre></details>
     </section>
     <section className="grid gap-4 rounded-xl border border-[var(--line)] bg-white p-5">
       <div className="flex flex-wrap items-center justify-between gap-3"><h2 className="font-semibold">Thí nghiệm gần đây</h2>{chosen && ["queued", "running"].includes(chosen.status) ? <Button variant="secondary" loading={busy} onClick={cancel}>Hủy job</Button> : null}</div>
-      <Select label="Experiment" value={chosen?.id ?? ""} onChange={event => { setSelectedId(event.target.value); setFrameIndex(0); }}>{jobs.map(job => <option key={job.id} value={job.id}>{job.id.slice(0, 8)} · {job.spec.request.source} · {job.status}</option>)}</Select>
+      <Select label="Experiment" value={chosen?.id ?? ""} onChange={event => { setSelectedId(event.target.value);  }}>{visibleJobs.map(job => <option key={job.id} value={job.id}>{job.id.slice(0, 8)} · {job.spec.request.source} · {job.status}</option>)}</Select>
       {chosen ? <p className="text-sm">Trạng thái: <b>{chosen.status}</b> · {chosen.stage}{chosen.status === "queued" ? " · Chờ worker chạy" : ""}</p> : <p className="text-sm text-[var(--muted)]">Chưa có thí nghiệm.</p>}
       {chosen?.error ? <p role="alert" className="text-sm text-red-700">{chosen.error}</p> : null}
       {chosen?.result ? <>
@@ -184,8 +162,8 @@ export function ExperimentWorkspace() {
         <p className="text-sm">Đề xuất theo occupied IoU: <b>{chosen.result.recommendation.selected ?? "Chưa có model đáp ứng tiêu chí"}</b></p>
         <ul className="list-disc space-y-1 pl-5 text-xs text-[var(--muted)]">{[...chosen.result.limitations, ...chosen.result.recommendation.limitations].map((item, index) => <li key={index}>{item}</li>)}</ul>
         {frameCount > 0 ? <>
-          <div className="grid gap-3 sm:grid-cols-2"><Select label="Model preview" value={previewModel} onChange={event => setSelectedModel(event.target.value)}>{chosen.spec.request.model_ids.map(name => <option key={name}>{name}</option>)}</Select><Select label="Frame" value={previewIndex} onChange={event => setFrameIndex(Number(event.target.value))}>{chosen.result.manifest.frames.map((frame, index) => <option key={frame.id} value={index}>{index} · {frame.id}</option>)}</Select></div>
-          <div className="grid gap-4 lg:grid-cols-2"><OccupancyPreview job={chosen} model={previewModel} index={previewIndex} />{chosen.spec.request.source === "carla" ? <Image unoptimized width={960} height={540} src={`/api/v1/experiments/${chosen.id}/camera?index=${previewIndex}`} alt="Camera RGB từ capture CARLA, cùng frame prediction" className="h-auto w-full rounded-lg" /> : null}</div>
+          <div className="grid gap-3 sm:grid-cols-2"><Select label="Model preview" value={previewModel} onChange={event => setSelectedModel(event.target.value)}>{chosen.spec.request.model_ids.map(name => <option key={name}>{name}</option>)}</Select></div>
+          <CapturePlayback key={`${chosen.id}:${previewModel}`} job={chosen.id} model={previewModel} count={frameCount} timestamps={chosen.result.manifest.frames.map(frame => frame.timestamp ?? NaN)} interval={chosen.spec.request.scenario.capture_interval} camera={chosen.spec.request.source === "carla"} active={active} />
         </> : null}
       </> : null}
     </section>

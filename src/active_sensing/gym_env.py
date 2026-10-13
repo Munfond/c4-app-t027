@@ -54,7 +54,7 @@ class ReplayEnv(gym.Env):
         _, reward, done, info = self.replay.advance(profile_id, self.multiplier)
         if reward is None:
             raise RuntimeError("Infeasible configuration: cannot fabricate reward or GPU measurement")
-        self.previous_gpu_ratio = info["metrics"]["gpu_ratio"]
+        self.previous_gpu_ratio = (info["metrics"]["latency_ratio"] if self.replay.objective == "quality_latency" else info["metrics"]["gpu_ratio"])
         # Terminal observation is not a future row and cannot leak GT.
         vector = np.zeros(self.observation_space.shape, dtype=np.float32) if done else self._vector()
         return vector, float(reward), done, False, info

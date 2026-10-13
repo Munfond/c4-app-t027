@@ -1,0 +1,11 @@
+{
+  "keyframes": 404,
+  "sensor_records": 31206,
+  "missing_sensor_files": 0,
+  "exported_frames": 81,
+  "unknown_export_tokens": [],
+  "checkpoint_present": 7,
+  "checkpoint_absent": 14,
+  "checkpoint_hash_errors": [],
+  "ok": true
+}

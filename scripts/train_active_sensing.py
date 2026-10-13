@@ -6,6 +6,7 @@ chance constraint. Asymmetric critics and stateful perception are deferred.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import sys
 from pathlib import Path
@@ -26,6 +27,10 @@ def main():
     if args.steps <= 0 or args.bc_steps < 0:
         parser.error("steps must be positive and bc-steps nonnegative")
     replay = Replay.load(args.replay, allow_synthetic=args.allow_synthetic)
+    if replay.objective != "quality_latency":
+        raise ValueError("MVP training requires constraints.objective=quality_latency; GPU objectives are archived only")
+    if args.output.exists():
+        raise ValueError("Preserve prior training output; choose a new directory")
     # Heavy optional imports are deliberately isolated from the API and core.
     import numpy as np
     import torch
@@ -95,12 +100,30 @@ def main():
             self.logger.record("constraint/mean_window_cost", rate)
             self.logger.record("constraint/next_beta", env.multiplier)
 
+    def digest():
+        h = hashlib.sha256()
+        for name, tensor in sorted(model.policy.state_dict().items()):
+            h.update(name.encode())
+            h.update(tensor.detach().cpu().contiguous().numpy().tobytes())
+        return h.hexdigest()
+
+    before = digest()
+    before_updates = model._n_updates
+    args.output.mkdir(parents=True)
+    model.save(args.output / "policy-before-ppo")
     callback = DualUpdate()
     model.learn(total_timesteps=args.steps, callback=callback)
-    args.output.mkdir(parents=True, exist_ok=True)
+    after = digest()
+    epochs = model._n_updates - before_updates
+    if epochs <= 0 or before == after:
+        raise RuntimeError("PPO policy state did not update; preserve output for investigation")
     model.save(args.output / "policy")
     (args.output / "training.json").write_text(json.dumps({
         "provenance": replay.provenance, "seed": args.seed,
+        "objective": replay.objective,
+        "observation_abi": "quality-latency-v1" if replay.objective == "quality_latency" else "legacy-gpu-quality",
+        "algorithm": "MaskablePPO", "bc_steps": args.bc_steps,
+        "ppo_epoch_updates": epochs, "before_ppo_sha256": before, "after_ppo_sha256": after,
         "actual_steps": model.num_timesteps, "profiles": [p.id for p in replay.profiles],
         "final_multiplier": env.multiplier, "dual_updates": callback.trace,
         "validated_on_test": False,

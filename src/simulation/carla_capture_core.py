@@ -16,6 +16,15 @@ import numpy as np
 from src.inference.bev import carla_to_ego, cells, footprint, lidar_features
 from src.simulation.carla_scenarios import LaneChanges, highway_placement
 
+
+def camera_attributes(scenario):
+    camera = getattr(scenario, "camera", None)
+    fov = camera.get("fov", 90) if isinstance(camera, dict) else getattr(camera, "fov", 90)
+    if fov not in (60, 90, 110):
+        raise ValueError("Unsupported camera FOV preset")
+    return {"image_size_x": "640", "image_size_y": "360", "fov": str(fov)}
+
+
 logger = logging.getLogger(__name__)
 
 SEMANTIC_DTYPE = np.dtype(
@@ -205,7 +214,7 @@ def capture(scenario, root, pulse, settings, rig_options=None):
                     "lower_fov": "-30",
                 },
             ),
-            "camera": ("sensor.camera.rgb", {"image_size_x": "640", "image_size_y": "360", "fov": "90"}),
+            "camera": ("sensor.camera.rgb", camera_attributes(scenario)),
         }
         rig = None
         if rig_options is not None:

@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Select } from "@/components/ui/select";
 import { apiJson } from "@/lib/lab-api";
 import { SensorComparison } from "./sensor-comparison";
-import { useExperimentSession } from "./use-experiment-session";
+import type { ExperimentSessionState } from "./use-experiment-session";
 
 const base = "/api/v1/experiments";
 type Scene = { id: string; description: string; frames: number; mean_annotated_objects: number };
@@ -57,18 +57,18 @@ function selectedStats(env: Environment) {
     reduction: baseline && selected && payload(baseline) ? 1 - payload(selected) / payload(baseline) : null };
 }
 
-export function ReplayWorkspace() {
-  const { session, loading, error, end, start } = useExperimentSession();
+export function ReplayWorkspace({ sessionState, active = true }: { sessionState: ExperimentSessionState; active?: boolean }) {
+  const { session, loading, error, end, start } = sessionState;
   return <section className="grid gap-6">
-    <header className="flex flex-wrap items-start justify-between gap-4"><div><p className="mb-2 text-xs font-semibold uppercase tracking-widest text-[var(--accent)]">04 / Experiments · Occupancy</p><h1 className="text-2xl font-semibold sm:text-3xl">Tìm cấu hình sensor cho Occupancy</h1><p className="mt-2 max-w-2xl text-sm text-[var(--muted)]">Giảm dữ liệu LiDAR/radar trong khi giữ chất lượng bản đồ vật cản BEV. Agent thử cấu hình trên dữ liệu ghi sẵn và đề xuất phương án dựa trên IoU.</p></div><div className="grid justify-items-end gap-2"><span className="rounded-full bg-[var(--accent-soft)] px-3 py-1.5 text-xs font-medium">{session ? "● Phiên tạm đang mở" : loading ? "Đang mở phiên…" : "Phiên đã kết thúc"}</span>{session ? <Button variant="ghost" loading={loading} onClick={() => void end()}>Kết thúc phiên</Button> : !loading ? <Button onClick={() => void start()}>Bắt đầu phiên mới</Button> : null}</div></header>
-    <p className="rounded-xl bg-[var(--accent-soft)] p-4 text-sm"><strong>Mục 04 dành cho Occupancy:</strong> so sánh ba model LiDAR, Radar và LiDAR + Radar trên cùng frame. Camera được đánh giá riêng về chất lượng ảnh và dung lượng. Luồng này chưa tối ưu Detection, Flow hoặc Risk; Lab và Compare phục vụ các kết quả tính sẵn riêng.</p>
+    <header className="flex flex-wrap items-start justify-between gap-4"><div><p className="mb-2 text-xs font-semibold uppercase tracking-widest text-[var(--accent)]">THÍ NGHIỆM / NUSCENES REPLAY</p><h1 className="text-2xl font-semibold sm:text-3xl">Tìm cấu hình sensor cho Occupancy</h1><p className="mt-2 max-w-2xl text-sm text-[var(--muted)]">Giảm dữ liệu LiDAR/radar trong khi giữ chất lượng bản đồ vật cản BEV. Agent thử cấu hình trên dữ liệu ghi sẵn và đề xuất phương án dựa trên IoU.</p></div><div className="grid justify-items-end gap-2"><span className="rounded-full bg-[var(--accent-soft)] px-3 py-1.5 text-xs font-medium">{session ? "● Phiên tạm đang mở" : loading ? "Đang mở phiên…" : "Phiên đã kết thúc"}</span>{session ? <Button variant="ghost" loading={loading} onClick={() => void end()}>Kết thúc phiên</Button> : !loading ? <Button onClick={() => void start()}>Bắt đầu phiên mới</Button> : null}</div></header>
+    <p className="rounded-xl bg-[var(--accent-soft)] p-4 text-sm"><strong>Thử nghiệm Occupancy trên dữ liệu ghi sẵn:</strong> so sánh ba model LiDAR, Radar và LiDAR + Radar trên cùng frame. Camera được đánh giá riêng về chất lượng ảnh và dung lượng. Luồng này chưa tối ưu Detection, Flow hoặc Risk; Lab và Compare phục vụ các kết quả tính sẵn riêng.</p>
     <p className="rounded-xl border border-[var(--line)] bg-[var(--surface-subtle)] p-4 text-xs text-[var(--muted)]">Lịch sử chỉ thuộc phiên này, giữ khi refresh. Đóng tab: tự dọn sau khoảng 30 giây; nếu trình duyệt không gửi tín hiệu đóng, phiên hết hạn sau 3 phút. Kết thúc phiên hủy lượt đang chạy và dọn dữ liệu tạm. Tải báo cáo nếu muốn giữ kết quả.</p>
     {error ? <p role="alert" className="rounded-xl bg-red-50 p-4 text-sm text-red-700">{error}</p> : null}
-    {session ? <SessionWorkspace key={session} session={session} /> : <div className="rounded-2xl border border-dashed border-[var(--line)] bg-white p-12 text-center text-sm text-[var(--muted)]">{loading ? "Đang kết nối dữ liệu…" : "Phiên đã đóng. Bắt đầu phiên mới để chạy thí nghiệm với lịch sử trống."}</div>}
+    {session ? <SessionWorkspace key={session} session={session} active={active} /> : <div className="rounded-2xl border border-dashed border-[var(--line)] bg-white p-12 text-center text-sm text-[var(--muted)]">{loading ? "Đang kết nối dữ liệu…" : "Phiên đã đóng. Bắt đầu phiên mới để chạy thí nghiệm với lịch sử trống."}</div>}
   </section>;
 }
 
-function SessionWorkspace({ session }: { session: string }) {
+function SessionWorkspace({ session, active }: { session: string; active: boolean }) {
   const post = <T,>(path: string, body: unknown = {}) => sessionPost<T>(path, session, body);
   const [catalog, setCatalog] = useState<Catalog | null>(null);
   const [studies, setStudies] = useState<Study[]>([]);
@@ -101,6 +101,7 @@ function SessionWorkspace({ session }: { session: string }) {
   }, []);
   useEffect(() => {
     const controller = new AbortController();
+    if (!active) return;
     let timer: ReturnType<typeof setTimeout>;
     const poll = async () => {
       try {
@@ -115,7 +116,7 @@ function SessionWorkspace({ session }: { session: string }) {
     };
     void poll();
     return () => { controller.abort(); clearTimeout(timer); };
-  }, [session]);
+  }, [session, active]);
   useEffect(() => {
     if (chosen?.status !== "completed") return;
     const controller = new AbortController();

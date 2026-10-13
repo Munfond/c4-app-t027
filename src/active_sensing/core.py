@@ -155,6 +155,8 @@ class Constraints:
     conservative_deceleration_mps2: float = 4.0
     quality_weight: float = 1.0
     gpu_weight: float = 0.5
+    objective: str = "gpu_quality"
+    latency_weight: float = 0.1
     switch_weight: float = 0.05
     shield_weight: float = 0.05
     false_positive_weight: float = 0.05
@@ -162,8 +164,10 @@ class Constraints:
     def __post_init__(self):
         if not self.required_tasks or not set(self.required_tasks) <= TASKS:
             raise ValueError("Invalid required tasks")
+        if self.objective not in ("gpu_quality", "quality_latency"):
+            raise ValueError("Unknown policy objective")
         for field in fields(self):
-            if field.name != "required_tasks":
+            if field.name not in ("required_tasks", "objective"):
                 finite(getattr(self, field.name), field.name, 0)
         if self.conservative_deceleration_mps2 <= 0 or self.perception_deadline_ms <= 0:
             raise ValueError("Deceleration and deadline must be positive")
@@ -283,10 +287,13 @@ def evaluate(
     end_to_end_ms: float, switched: bool, intervened: bool,
 ) -> dict[str, Any]:
     """GT is consumed only here. Matching is one-to-one with a 2m class-aware gate."""
-    gpu_ms = finite(gpu_ms, "gpu_ms", 0)
-    reference_gpu_ms = finite(reference_gpu_ms, "reference_gpu_ms", 0)
+    if constraints.objective == "gpu_quality":
+        gpu_ms = finite(gpu_ms, "gpu_ms", 0)
+        reference_gpu_ms = finite(reference_gpu_ms, "reference_gpu_ms", 0)
+    else:
+        gpu_ms = reference_gpu_ms = None
     end_to_end_ms = finite(end_to_end_ms, "end_to_end_ms", 0)
-    if reference_gpu_ms <= 0:
+    if constraints.objective == "gpu_quality" and reference_gpu_ms <= 0:
         raise ValueError("Reference GPU work must be positive")
     if len({b.id for b in ground_truth}) != len(ground_truth):
         raise ValueError("Duplicate GT ids")
@@ -314,9 +321,11 @@ def evaluate(
     false_positives = len(pred) - len(matched_pred)
     cost = float(bool(truth) and (len(matched_gt) < len(truth) or late))
     # Ratio may exceed 1; never clamp away work above the measured reference.
-    ratio = gpu_ms / reference_gpu_ms
+    ratio = gpu_ms / reference_gpu_ms if constraints.objective == "gpu_quality" else None
+    latency_ratio = end_to_end_ms / constraints.perception_deadline_ms
+    resource_penalty = constraints.gpu_weight * ratio if ratio is not None else constraints.latency_weight * latency_ratio
     base_reward = (
-        constraints.quality_weight * effective_recall - constraints.gpu_weight * ratio
+        constraints.quality_weight * effective_recall - resource_penalty
         - constraints.switch_weight * int(switched) - constraints.shield_weight * int(intervened)
         - constraints.false_positive_weight * false_positives
     )
@@ -325,6 +334,7 @@ def evaluate(
         "required_targets": len(truth), "matched_targets": len(matched_gt),
         "false_positives": false_positives, "constraint_cost": cost,
         "late": late, "gpu_ms": gpu_ms, "gpu_ratio": ratio,
+        "latency_ratio": latency_ratio, "objective": constraints.objective,
         "base_reward": base_reward,
     }
 

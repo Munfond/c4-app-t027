@@ -1,7 +1,5 @@
-import { ExperimentWorkspace } from "@/components/experiments/experiment-workspace";
+import { redirect } from "next/navigation";
 
-export const metadata = { title: "CARLA Lab · Experiments" };
-
-export default function CarlaPage() {
-  return <ExperimentWorkspace />;
+export default function LegacyExperimentPage() {
+  redirect("/lab?agent=carla&tools=manual");
 }

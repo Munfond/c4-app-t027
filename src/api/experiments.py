@@ -306,6 +306,44 @@ async def summarize_study(ident: ExperimentId):
         raise HTTPException(422, str(exc)) from exc
 
 
+@router.get("/occupancy-rl")
+def occupancy_rl_report():
+    from src.services.occupancy_rl_evidence import read_report
+    try:
+        return read_report()
+    except (ValueError, OSError, KeyError, TypeError) as exc:
+        raise HTTPException(503, "Báo cáo RL chưa qua kiểm tra toàn vẹn") from exc
+
+
+@router.get("/occupancy-rl/report")
+def download_occupancy_rl_report():
+    from src.services.occupancy_rl_evidence import read_report, report_path
+    try:
+        if not read_report()["ready"]:
+            raise HTTPException(404, "Chưa có báo cáo")
+        return FileResponse(report_path(), media_type="application/json", filename="p027-occupancy-rl-report.json")
+    except (ValueError, OSError, KeyError, TypeError) as exc:
+        raise HTTPException(503, "Báo cáo RL chưa qua kiểm tra toàn vẹn") from exc
+
+
+@router.get("/occupancy-rl/reviews")
+def occupancy_rl_reviews():
+    from src.services.occupancy_rl_evidence import list_reviews
+    try:
+        return {"items": list_reviews()}
+    except (ValueError, OSError, KeyError, TypeError) as exc:
+        raise HTTPException(503, "Báo cáo RL chưa qua kiểm tra toàn vẹn") from exc
+
+
+@router.post("/occupancy-rl/reviews")
+def review_occupancy_rl(body: EngineerReview):
+    from src.services.occupancy_rl_evidence import add_review
+    try:
+        return add_review(body)
+    except ValueError as exc:
+        raise HTTPException(409, str(exc)) from exc
+
+
 @router.get("/{ident}")
 def experiment(ident: ExperimentId):
     try:

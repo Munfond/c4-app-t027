@@ -25,17 +25,20 @@ async function initialize() {
   return data.id;
 }
 
-export function useExperimentSession() {
+export type ExperimentSessionState = ReturnType<typeof useExperimentSession>;
+
+export function useExperimentSession(enabled = true) {
   const [session, setSession] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   useEffect(() => {
+    if (!enabled) return;
     let disposed = false;
     initialization ??= initialize();
     void initialization.then(id => { if (!disposed) { setSession(id); setLoading(false); } })
       .catch(cause => { initialization = null; if (!disposed) { setError(String(cause)); setLoading(false); } });
     return () => { disposed = true; };
-  }, []);
+  }, [enabled]);
   useEffect(() => {
     if (!session) return;
     let disposed = false;

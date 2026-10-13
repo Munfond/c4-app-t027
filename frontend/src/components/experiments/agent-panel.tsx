@@ -3,11 +3,13 @@
 import { useEffect, useRef, useState } from "react";
 import { apiJson } from "@/lib/lab-api";
 import { Button } from "@/components/ui/button";
-import { useExperimentSession } from "./use-experiment-session";
-import DetectorPilotEvidence from "./detector-pilot-evidence";
+import type { ExperimentSessionState } from "./use-experiment-session";
+import type { ExperimentSpec } from "./experiment-workspace";
+import OccupancyRlEvidence from "./occupancy-rl-evidence";
 
 const base = "/api/v1/experiments";
-type Source = "carla" | "dataset_replay";
+export type ExperimentSource = "carla" | "dataset_replay";
+type Source = ExperimentSource;
 type Study = { id: string; source: Source; status: string; total_trials: number;
   metadata: { request?: string }; jobs: { id: string; status: string; profile: string }[];
   summary?: { explanation: string } | null };
@@ -34,11 +36,14 @@ const outcomes: Record<string, string> = { improved: "Có phương án giảm d�
 const statuses: Record<string, string> = { running: "Đang đo", completed: "Hoàn tất", cancelled: "Đã hủy" };
 const pct = (value: number | null) => value == null ? "Chưa đo" : `${(value * 100).toFixed(1)}%`;
 
-export default function AgentPanel({ initialSource, onInspect }: { initialSource: Source; onInspect: (inspection: Inspection) => void }) {
-  const { session, error: sessionError, start: startSession, loading: sessionLoading } = useExperimentSession();
-  const [source, setSource] = useState<Source>(initialSource);
+export default function AgentPanel({ source, onSourceChange, onOpenTools, toolsOpen, sessionState, onInspect }: {
+  source: Source; onSourceChange: (source: Source) => void; onOpenTools: (draft?: ExperimentSpec, mode?: "manual" | "history") => void;
+  toolsOpen: boolean; sessionState: ExperimentSessionState; onInspect: (inspection: Inspection) => void;
+}) {
+  const { session, error: sessionError, start: startSession, loading: sessionLoading } = sessionState;
   const [enabled, setEnabled] = useState(false);
   const [message, setMessage] = useState("");
+  const [cameraFov, setCameraFov] = useState(90);
   const [history, setHistory] = useState<Study[]>([]);
   const [study, setStudy] = useState<Study | null>(null);
   const [report, setReport] = useState<Evidence | null>(null);
@@ -109,8 +114,8 @@ export default function AgentPanel({ initialSource, onInspect }: { initialSource
     setBusy(true); setError(""); setDraft(null);
     try {
       if (planOnly) {
-        const data = await post<{ spec: object }>("/plan", { message });
-        setDraft(data.spec); window.dispatchEvent(new CustomEvent("p027-agent-plan", { detail: data.spec }));
+        const data = await post<{ spec: ExperimentSpec }>("/plan", { message });
+        setDraft(data.spec); onOpenTools(data.spec);
       } else {
         const item = await post<Study>(source === "carla" ? "/sensor-agent/start" : "/replay/agent/start", { message });
         choose(item); setMessage(""); setHistory(previous => [item, ...previous]);
@@ -146,14 +151,18 @@ export default function AgentPanel({ initialSource, onInspect }: { initialSource
   const running = study?.status === "running" || history.some(item => item.status === "running");
   return <div className="agent-panel-body">
     <div className="agent-source" role="group" aria-label="Nguồn thí nghiệm">
-      {(["carla", "dataset_replay"] as const).map(value => <button key={value} disabled={busy} aria-pressed={source === value} onClick={() => {
-        setSource(value); setStudy(null); setReport(null); setHistory([]); setReviews([]); setDraft(null); setError(""); current.current = "";
+      {(["carla", "dataset_replay"] as const).map(value => <button key={value} disabled={busy || !!notes.trim()} aria-pressed={source === value} onClick={() => {
+        if (value === source) return;
+        onSourceChange(value); setStudy(null); setReport(null); setHistory([]); setReviews([]); setDraft(null); setError(""); current.current = "";
       }}>{value === "carla" ? "CARLA" : "nuScenes replay"}</button>)}
     </div>
     <p className="agent-small">{source === "carla" ? "Mô phỏng CARLA · hiện hỗ trợ occupancy LiDAR." : "Dữ liệu ghi sẵn · LiDAR, radar và chất lượng ảnh."} RL chọn profile chưa được nối vào vòng kín này.</p>
-    {!enabled && <p className="agent-notice" role="status">Chưa bật LLM hoặc chưa cấu hình API key. Bạn vẫn xem evidence và dùng form CARLA thủ công được.</p>}
+    {!enabled && <p className="agent-notice" role="status">Chưa bật LLM hoặc chưa cấu hình API key. Bạn vẫn xem evidence và mở cấu hình nâng cao để chạy thủ công được.</p>}
     {source === "dataset_replay" && sessionError && <p role="alert" className="agent-notice">{sessionError}{!session && <Button loading={sessionLoading} onClick={() => void startSession()}>Mở phiên replay mới</Button>}</p>}
     {error && <p role="alert" className="agent-error">{error.replace(/^Error: /, "")}</p>}
+    <button type="button" className="agent-tools-button" aria-controls="agent-tools" aria-expanded={toolsOpen} onClick={() => onOpenTools()}><span>{source === "carla" ? "Cấu hình nâng cao" : "Lịch sử & kết quả replay"}</span><span aria-hidden="true">↗</span></button>
+    {source === "dataset_replay" && <button type="button" className="agent-text-button" onClick={() => onOpenTools(undefined, "manual")}>Cấu hình nâng cao · chạy checkpoint thủ công</button>}
+    {!!notes.trim() && <p className="agent-small">Lưu đánh giá engineer trước khi đổi nguồn.</p>}
     <form className="agent-compose" onSubmit={event => { event.preventDefault(); void send(); }}>
       <label htmlFor="dock-message">Bạn muốn kiểm chứng điều gì?</label>
       <textarea id="dock-message" rows={3} maxLength={2000} value={message} onChange={event => setMessage(event.target.value)} placeholder={source === "carla" ? "So sánh baseline với LiDAR 300.000 và 150.000 điểm/s ở Town01, 2 frame…" : "Thử giữ 50% điểm LiDAR/radar ở scene-0103, 2 frame; IoU giảm tối đa 0.02…"} />
@@ -161,7 +170,22 @@ export default function AgentPanel({ initialSource, onInspect }: { initialSource
       {source === "carla" && <button type="button" className="agent-text-button" disabled={busy || !enabled || !message.trim()} onClick={() => void send(true)}>Chỉ lập cấu hình để tôi kiểm tra trước</button>}
       <p className="agent-small">Gửi yêu cầu sẽ tạo lượt đo mới và dùng token LLM. Đọc evidence không gọi LLM.</p>
     </form>
-    {draft && <details open><summary>Cấu hình nháp · chưa chạy</summary><p className="agent-small">Nếu đang ở CARLA Lab, cấu hình đã điền vào form. Kiểm tra rồi bấm tạo thí nghiệm.</p><pre>{JSON.stringify(draft, null, 2)}</pre></details>}
+    <OccupancyRlEvidence />
+    {source === "carla" && <section className="agent-panel-body" aria-label="Cấu hình camera nhanh">
+      <label className="agent-small" htmlFor="agent-camera-fov">Preset camera · không dùng token LLM</label>
+      <select id="agent-camera-fov" className="w-full rounded-lg border border-[var(--line)] p-2 text-sm" value={cameraFov} onChange={event => setCameraFov(Number(event.target.value))}>
+        <option value={60}>60° · Vật trước mặt lớn hơn, vùng nhìn hẹp</option>
+        <option value={90}>90° · Cân bằng</option>
+        <option value={110}>110° · Bao quát hai bên, vật nhỏ hơn</option>
+      </select>
+      <Button variant="secondary" onClick={() => {
+        const spec: ExperimentSpec = { source: "carla", model_ids: ["occupancy_lidar"], scene_id: null, capture_id: null, max_latency_ms: null,
+          scenario: { map: "Town02", weather: "clear", vehicles: 2, pedestrians: 4, seed: 42, frames: 4, capture_interval: .5, timestep: .05, route_spawn_index: 0, camera: { fov: cameraFov } } };
+        setDraft(spec); onOpenTools(spec, "manual");
+      }}>Điền cấu hình để kiểm tra</Button>
+      <p className="agent-small">Chưa chạy capture. FOV không ảnh hưởng prediction occupancy LiDAR; chưa có evidence chọn preset tốt nhất.</p>
+    </section>}
+    {draft && <details open><summary>Cấu hình nháp · chưa chạy</summary><p className="agent-small">Cấu hình đã điền vào phần nâng cao cạnh bot. Kiểm tra rồi bấm Tạo thí nghiệm.</p><pre>{JSON.stringify(draft, null, 2)}</pre></details>}
     <section className="agent-section" aria-label="Lịch sử và bằng chứng">
       <div className="agent-section-heading"><h3>Evidence</h3><span>Đo trước, kết luận sau</span></div>
       <label className="agent-small">Lượt đánh giá<select aria-label="Lượt đánh giá agent" value={study?.id ?? ""} onChange={event => { const item = history.find(item => item.id === event.target.value); if (item) choose(item); }}><option value="" disabled>Chọn lượt đã chạy</option>{history.map(item => <option key={item.id} value={item.id}>{item.id.slice(0, 8)} · {statuses[item.status] ?? item.status}</option>)}</select></label>
@@ -197,13 +221,12 @@ export default function AgentPanel({ initialSource, onInspect }: { initialSource
           <h3>Engineer review</h3><p className="agent-small">Đánh giá kết luận trên evidence này. Phản hồi được lưu để review, chưa tự train lại policy. Tên người đánh giá là tự khai báo.</p>
           <label>Tên engineer<input required maxLength={80} value={reviewer} onChange={event => setReviewer(event.target.value)} /></label>
           <label>Đánh giá<select value={verdict} onChange={event => setVerdict(event.target.value)}><option value="needs_evidence">Cần thêm bằng chứng</option><option value="accept">Đồng ý với kết luận</option><option value="reject">Không đồng ý</option></select></label>
-          <label>Lý do / hướng cải thiện<textarea required minLength={10} maxLength={2000} rows={3} value={notes} onChange={event => setNotes(event.target.value)} placeholder="Cần thêm scene đông người, seed khác hoặc đo GPU thực…" /></label>
+          <label>Lý do / hướng cải thiện<textarea required minLength={10} maxLength={2000} rows={3} value={notes} onChange={event => setNotes(event.target.value)} placeholder="Cần thêm scene đông người, seed khác hoặc đo độ trễ thực…" /></label>
           <Button loading={busy} disabled={!reviewer.trim() || notes.trim().length < 10}>Lưu đánh giá</Button>
           {saved && <p role="status">Đã lưu cùng snapshot evidence. Không thay đổi kết quả đo.</p>}
         </form>
         {reviews.map(review => <details key={review.id}><summary>{review.reviewer} · {({ accept: "Đồng ý", reject: "Không đồng ý", needs_evidence: "Cần bằng chứng" } as Record<string, string>)[review.verdict]}</summary><p>{review.notes}</p><p className="agent-small">{new Date(review.created_at * 1000).toLocaleString("vi-VN")}</p></details>)}
       </>}
     </section>
-    {source === "carla" && <DetectorPilotEvidence />}
   </div>;
 }

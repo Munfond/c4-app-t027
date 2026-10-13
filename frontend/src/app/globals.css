@@ -95,6 +95,11 @@ button, a, select { -webkit-tap-highlight-color: transparent; }
 .agent-trial-actions { display: flex; flex-wrap: wrap; gap: 12px; font-size: 11px; margin: 12px 0; color: var(--accent-strong); }
 .agent-trial-actions :where(a, button), .agent-text-button { text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
 .agent-text-button { color: var(--accent-strong); font-size: 12px; }
+.agent-tools-button { display: flex; justify-content: space-between; align-items: center; width: 100%; gap: 12px; padding: 13px 0; border-block: 1px solid var(--line); color: var(--accent-strong); text-align: left; font-weight: 600; cursor: pointer; }
+.agent-tools-button:hover { color: var(--foreground); }
+.experiment-toolbar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; padding-bottom: 20px; margin-bottom: 24px; border-bottom: 1px solid var(--line); }
+.experiment-toolbar button { color: var(--accent-strong); font-size: 13px; cursor: pointer; }
+.experiment-toolbar span { color: var(--muted); font-size: 11px; }
 .agent-panel-body button:disabled { opacity: .5; cursor: not-allowed; }
 .agent-pilot-table { overflow-x: auto; margin: 12px 0; }
 .agent-pilot-table table { width: 100%; border-collapse: collapse; font-size: 11px; font-variant-numeric: tabular-nums; }
@@ -118,10 +123,12 @@ button, a, select { -webkit-tap-highlight-color: transparent; }
 .evidence-footnote { font-size: 12px; line-height: 1.8; max-width: 720px; color: var(--muted); margin-top: 24px; }
 @media (max-width: 1100px) {
   .product-shell[data-agent-open="true"] .product-main { width: 100%; margin-right: auto; }
-  .agent-dock { inset: 110px 12px 92px auto; width: min(410px, calc(100vw - 24px)); box-shadow: 0 8px 35px #10262e22; }
+  .product-shell[data-agent-open="true"] .agent-workspace-layout { display: flex; flex-direction: column; }
+  .agent-dock { position: static; order: -1; width: calc(100% - 32px); max-height: 55vh; margin: 0 16px 24px; }
+  .agent-panel-body { min-height: 0; }
 }
 @media (max-width: 600px) {
-  .agent-dock { inset: 20vh 8px 90px; width: auto; }
+  .agent-dock { width: calc(100% - 24px); margin-inline: 12px; }
   .agent-launcher { right: 12px; bottom: 12px; }
   .evidence-map-pair { gap: 8px; }
   .evidence-viewport > header { flex-wrap: wrap; }
@@ -540,3 +547,68 @@ button, a, select { -webkit-tap-highlight-color: transparent; }
  .mobile-task-selector svg { color:#9ab5b1; }
  .lab-inspector label[for="bài-toán"] { display:none; }
 }
+
+/* Restored shared sensor viewer: one canvas, two independently visible layers. */
+.semantic-summary { display:flex; align-items:center; justify-content:space-between; gap:20px; padding:16px 20px; color:#d3e5e3; }
+.semantic-summary div > span { display:block; font:9px var(--font-app-mono); letter-spacing:.1em; color:#90abaa; margin-bottom:6px; }
+.semantic-summary strong { font-size:23px; font-weight:450; letter-spacing:-.03em; }
+.semantic-summary small { font-size:11px; font-weight:400; color:#90abaa; }
+.semantic-summary label { display:grid; gap:8px; font-size:11px; color:#a9bebd; }
+.semantic-summary input { accent-color:#d9ee98; }
+.cloud-views button[aria-pressed="true"] { background:#d9ee98; color:#21312b; }
+.sensor-semantics { border-bottom:1px solid #263c43; background:#0b2028; }
+.sensor-workspace { display:flex; flex-direction:column; min-height:0; }
+.sensor-workspace > .cloud-canvas { flex:1; height:auto; min-height:150px; }
+.stage-canvas:has(> .sensor-workspace) { height:clamp(500px,56vh,680px); min-height:500px; flex:none; }
+.sensor-class-filter summary { padding:6px 20px; min-height:32px; font-size:11px; color:#c9dcd8; cursor:pointer; }
+.sensor-view-toolbar { display:flex; align-items:center; flex-wrap:wrap; gap:12px 20px; padding:12px 20px; border-bottom:1px solid #263c43; background:#0b2028; }
+.sensor-view-toolbar p { color:#a4bcbc; font-size:11px; }
+.sensor-view-toolbar .view-switch button { min-height:40px; }
+.sensor-seg-source { padding:10px 20px; color:#a4bcbc; font-size:11px; line-height:1.7; }
+
+/* Sensor visibility stays next to the shared canvas, including on mobile. */
+.sensor-visibility { border:0; padding:0; display:flex; align-items:center; gap:22px; }
+.sensor-visibility label, .sensor-color-mode { display:flex; align-items:center; gap:8px; min-height:40px; font-size:12px; color:#d5e5dd; }
+.sensor-visibility input, .sensor-radar-options input { accent-color:#d9ee98; width:15px; height:15px; }
+.sensor-visibility i, .sensor-radar-key i { width:7px; height:7px; border-radius:50%; display:inline-block; }
+.sensor-color-mode { margin-left:auto; color:#a4bcbc; }
+.sensor-color-mode select, .sensor-radar-options select { min-height:36px; padding:7px 9px; border:1px solid #47646a; border-radius:3px; color:#e2ece4; background:#122c36; font-size:11px; max-width:100%; }
+.sensor-color-mode select:disabled { opacity:.45; cursor:not-allowed; }
+.sensor-view-toolbar { padding:8px 20px; gap:8px 20px; }
+.sensor-radar-details { flex-shrink:0; color:#c7dad3; border-top:1px solid #263c43; background:#0b2028; }
+.sensor-radar-details > summary { display:flex; align-items:center; flex-wrap:wrap; gap:6px 16px; min-height:44px; padding:8px 20px; cursor:pointer; font:10px var(--font-app-mono); list-style:none; }
+.sensor-radar-details > summary::-webkit-details-marker { display:none; }
+.sensor-radar-details > summary::after { content:"+"; font-size:16px; }
+.sensor-radar-details[open] > summary::after { content:"−"; }
+.sensor-radar-details summary > span:nth-child(2) { color:#9ebbb5; }
+.radar-details-hint { margin-left:auto; color:#9ebbb5; }
+.sensor-radar-options { display:flex; flex-wrap:wrap; align-items:center; gap:8px 20px; padding:0 20px 14px; max-height:230px; overflow:auto; }
+.sensor-radar-options label { display:flex; align-items:center; gap:8px; font-size:11px; min-height:40px; min-width:0; }
+.sensor-return-select { margin-left:auto; }
+.sensor-return-select select { width:170px; }
+.sensor-return-position { flex-basis:100%; color:#e1ebdc; font:11px var(--font-app-mono); line-height:1.7; }
+.sensor-radar-key { display:flex; gap:16px; flex-wrap:wrap; font-size:10px; }
+.sensor-radar-key span { display:flex; align-items:center; gap:6px; }
+.sensor-radar-note { flex-basis:100%; font-size:10px; color:#9ebbb5; line-height:1.7; }
+.sensor-semantics > summary { padding:10px 20px; cursor:pointer; font-size:11px; color:#d5e5dd; }
+.sensor-view-toolbar input:focus-visible, .sensor-radar-options input:focus-visible { outline:2px solid #d9ee98; outline-offset:4px; }
+@media(max-width:760px) {
+  .stage-toolbar { flex-wrap:wrap; gap:10px; }
+  .stage-canvas:has(> .sensor-workspace) { height:460px; min-height:460px; }
+  .stage-canvas:has(> .sensor-workspace > details[open]) { height:auto; }
+  .sensor-workspace:has(> details[open]) > .cloud-canvas { flex:none; height:340px; }
+  .sensor-view-toolbar { padding:8px 12px; gap:4px 12px; }
+  .sensor-visibility { gap:16px; }
+  .sensor-color-mode { font-size:10px; gap:5px; }
+  .sensor-color-mode select { padding:7px 5px; }
+  .sensor-radar-details > summary { padding:8px 12px; gap:5px 12px; }
+  .sensor-radar-details .radar-details-hint { font-size:9px; }
+  .sensor-radar-options { padding:0 12px 12px; gap:6px 14px; max-height:none; overflow:visible; }
+  .sensor-return-select { margin-left:0; flex-basis:100%; }
+  .sensor-return-select select { flex:1; width:auto; }
+  .sensor-semantics > summary { padding:10px 12px; }
+  .sensor-workspace .cloud-legend { top:58px; max-width:calc(100% - 24px); }
+  .sensor-workspace .cloud-instructions { bottom:10px; }
+}
+
+.sensor-semantics { max-height:240px; overflow:auto; flex-shrink:0; }

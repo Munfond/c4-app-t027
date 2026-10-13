@@ -68,3 +68,6 @@ out/
 
 # Isolated review runtime
 .venv-review/
+
+# Recovery runtimes stay local
+.venv-recovery*/
