@@ -43,6 +43,9 @@ class Settings(BaseSettings):
     native_input_adapter_manifest: Path = PROJECT_ROOT / "eval/recovery-mvp-2026-10-13/native-input-adapter.json"
     native_profile_pilot_report: Path = PROJECT_ROOT / "eval/recovery-mvp-2026-10-13/native-12-profile-audit.json"
     occupancy_rl_root: Path = PROJECT_ROOT / "data/rl-occupancy-ppo-20261013"
+    native_rl_matrix_root: Path = PROJECT_ROOT / "data/native-rl-matrix-v1-20261013"
+    native_rl_replay_root: Path = PROJECT_ROOT / "data/native-rl-measured-v1-20261013"
+    native_rl_root: Path = PROJECT_ROOT / "data/native-rl-ppo-v1-20261013"
     experiment_device: Literal["cpu", "cuda"] = "cpu"
     experiment_cpu_threads: int = Field(default=2, ge=1, le=32)
     experiment_lease_seconds: int = Field(default=600, ge=60)

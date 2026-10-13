@@ -69,10 +69,14 @@ def decode(row):
     return value
 
 
-def create(spec, key=None):
+def create(spec, key=None, *, purpose="interactive"):
+    if purpose not in ("interactive", "native_rl_collection"):
+        raise ValueError("Unknown experiment purpose")
     validate_spec(spec)
     checkpoints = {name: verified_hash(name) for name in spec.model_ids}
     frozen = {"request": spec.model_dump(), "checkpoints": checkpoints, "pipeline_version": "bev-v2"}
+    if purpose != "interactive":
+        frozen["purpose"] = purpose
     if spec.native_input_adapter != "raw":
         from src.inference.native_input import fingerprint
 
@@ -108,9 +112,12 @@ def get(ident):
         return decode(db.execute("SELECT * FROM experiments WHERE id=?", (ident,)).fetchone())
 
 
-def recent():
+def recent(*, include_research=True):
     with connection() as db:
-        return [decode(row) for row in db.execute("SELECT * FROM experiments ORDER BY created DESC LIMIT 30")]
+        query = "SELECT * FROM experiments"
+        if not include_research:
+            query += " WHERE COALESCE(json_extract(spec, '$.purpose'), 'interactive') = 'interactive'"
+        return [decode(row) for row in db.execute(query + " ORDER BY created DESC LIMIT 30")]
 
 
 def claim(owner):

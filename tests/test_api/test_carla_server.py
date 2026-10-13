@@ -1,4 +1,5 @@
 """Owned simulator processes must clean up without touching external servers."""
+
 import socket
 import sys
 from types import SimpleNamespace
@@ -17,8 +18,7 @@ def managed(tmp_path, monkeypatch):
     binary.parent.mkdir(parents=True)
     binary.write_text("#!/bin/sh\n")
     binary.chmod(0o755)
-    settings = Settings(_env_file=None, carla_server_executable=binary,
-                        carla_port=19400, carla_tm_port=19402)
+    settings = Settings(_env_file=None, carla_server_executable=binary, carla_port=19400, carla_tm_port=19402)
     child = SimpleNamespace(terminated=False, returncode=None)
     child.poll = lambda: child.returncode
 
@@ -28,6 +28,9 @@ def managed(tmp_path, monkeypatch):
 
     child.terminate = terminate
     child.wait = lambda timeout: child.returncode
+    # Lifecycle uses a fake process: host RAM can legitimately be low during a real capture.
+    # The memory guard has independent boundary tests in test_recovery_evidence.py.
+    monkeypatch.setattr(carla_server, "require_memory_headroom", lambda minimum: 12.0)
     monkeypatch.setattr(carla_server.subprocess, "Popen", lambda *a, **k: child)
     client = SimpleNamespace(
         set_timeout=lambda _: None,
@@ -145,8 +148,8 @@ def test_managed_capture_isolates_native_clients_from_long_lived_worker(managed,
 
 def test_native_crash_after_startup_stops_waiting_for_missing_server(managed, tmp_path):
     settings, child, _ = managed
-    with pytest.raises(RuntimeError, match='exited during capture'):
-        with carla_server.fresh_server(settings, tmp_path / 'crashed', lambda: None) as pulse:
+    with pytest.raises(RuntimeError, match="exited during capture"):
+        with carla_server.fresh_server(settings, tmp_path / "crashed", lambda: None) as pulse:
             child.returncode = -11
             pulse()
     assert not child.terminated  # Already dead; no unrelated process is touched.

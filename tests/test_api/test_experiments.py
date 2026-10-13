@@ -342,3 +342,12 @@ async def test_reference_projection_is_bound_to_pose_and_frame(client, experimen
     actor["x"] = -10
     path.with_suffix(".json").write_text(json.dumps(metadata))
     assert (await client.get(url)).json()["actors"] == []
+
+
+def test_research_capture_does_not_flood_interactive_history(experiment_settings):
+    interactive = store.create(ExperimentSpec(), "interactive-fixture")
+    research = store.create(ExperimentSpec(), "research-fixture", purpose="native_rl_collection")
+    assert [job["id"] for job in store.recent(include_research=False)] == [interactive["id"]]
+    assert {job["id"] for job in store.recent()} == {interactive["id"], research["id"]}
+    assert store.get(research["id"])["spec"]["purpose"] == "native_rl_collection"
+    assert store.create(ExperimentSpec(), "interactive-fixture")["id"] == interactive["id"]

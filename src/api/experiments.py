@@ -132,8 +132,8 @@ def create_experiment(spec: ExperimentSpec, idempotency_key: Annotated[str | Non
 
 
 @router.get("")
-def experiments():
-    return {"items": store.recent()}
+def experiments(include_research: bool = False):
+    return {"items": store.recent(include_research=include_research)}
 
 
 @router.post("/sensor-agent/studies", status_code=201)
@@ -350,6 +350,26 @@ def native_profile_pilot_report():
         media_type="application/json",
         filename="native-12-profile-audit.json",
     )
+
+
+@router.get("/native-rl")
+def native_rl_report():
+    from src.services.native_rl_evidence import read_report
+
+    try:
+        return read_report()
+    except (OSError, ValueError, KeyError, TypeError) as exc:
+        raise HTTPException(503, "Native RL evidence chưa qua kiểm tra toàn vẹn") from exc
+
+
+@router.get("/native-rl/report")
+def native_rl_download():
+    from src.services.native_rl_evidence import report_path
+
+    value = native_rl_report()
+    if not value["ready"]:
+        raise HTTPException(404, "Chưa có báo cáo native PPO hoàn tất")
+    return FileResponse(report_path(), media_type="application/json", filename="native-occupancy-ppo-report.json")
 
 
 @router.get("/occupancy-rl")

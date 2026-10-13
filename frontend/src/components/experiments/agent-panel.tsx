@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import type { ExperimentSessionState } from "./use-experiment-session";
 import type { ExperimentSpec } from "./experiment-workspace";
 import OccupancyRlEvidence from "./occupancy-rl-evidence";
+import { NativeRlEvidence } from "./native-rl-evidence";
 import { NativeProfileEvidence } from "./native-profile-evidence";
 
 const base = "/api/v1/experiments";
@@ -175,6 +176,7 @@ export default function AgentPanel({ source, onSourceChange, onOpenTools, toolsO
       <p className="agent-small">Gửi yêu cầu sẽ tạo lượt đo mới và dùng token LLM. Đọc evidence không gọi LLM.</p>
     </form>
     <OccupancyRlEvidence />
+    {source === "carla" && <NativeRlEvidence />}
     {source === "carla" && <NativeProfileEvidence onInspect={onInspect} />}
     {source === "carla" && <section className="agent-panel-body" aria-label="Cấu hình camera nhanh">
       <label className="agent-small" htmlFor="agent-camera-fov">Preset camera · không dùng token LLM</label>

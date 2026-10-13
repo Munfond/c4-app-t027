@@ -7,6 +7,7 @@ Bản phục hồi có PPO offline thực tế trên ba mức giữ điểm LiDA
 - [Khởi động local, phạm vi phục hồi và giới hạn](docs/MVP_RECOVERY_SCOPE.vi.md)
 - [Chuyển assets native/PPO sang máy khác](docs/MVP_PORTABLE_ASSETS.vi.md)
 - [CARLA native, 12 profile và evidence](docs/NATIVE_CARLA_EVIDENCE.vi.md)
+- [Giao thức RL 12 cấu hình CARLA; điều kiện được train](docs/NATIVE_RL_RESEARCH.vi.md)
 - [Lời trình bày nhanh theo giao diện](docs/MVP_DEMO_RECOVERY.vi.md)
 - [Evidence kiểm tra thực tế](eval/recovery-mvp-2026-10-13/EVIDENCE.vi.md)
 - [Hướng dẫn AI Agent: setup, FE/worker, phiên tạm, API](docs/REPLAY_SENSOR_AGENT.vi.md)
