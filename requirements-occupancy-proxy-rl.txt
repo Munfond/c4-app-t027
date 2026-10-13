@@ -1,0 +1,6 @@
+# Verified recovery runtime; install CPU torch separately from official CPU index.
+# python -m pip install torch==2.7.1 --index-url https://download.pytorch.org/whl/cpu
+# Isolated Python 3.12 environment; do not modify the legacy detection environment.
+gymnasium==1.2.1
+stable-baselines3==2.7.0
+numpy==2.5.4

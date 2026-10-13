@@ -57,6 +57,12 @@ Nền phục hồi f560457 giữ 21 commit local trên main137b166. Không ghép
 
 ## CARLA server phục hồi
 
-Client 0.9.16 cài lại từ PyPI và import thành công. Server cũ có 5 shared library không có ELF header hợp lệ, nên không chạy. Script `scripts/recover_carla_server.py --extract` tải từ URL trên release chính thức vào `data/runtime/carla-server-recovery`; kiểm tra dung lượng và không ghi đè runtime cũ. Hash tự tính để đối chiếu lần sau, không phải chữ ký/hash do nhà phát hành cung cấp. Download đang thực hiện; chưa ghi nhận capture native thành công.
+Client 0.9.16 cài lại từ PyPI và import thành công. Server cũ có 5 shared library không có ELF header hợp lệ, nên không chạy. Script `scripts/recover_carla_server.py --extract` tải từ URL trên release chính thức vào `data/runtime/carla-server-recovery`; kiểm tra dung lượng và không ghi đè runtime cũ. Hash tự tính để đối chiếu lần sau, không phải chữ ký/hash do nhà phát hành cung cấp. Bản tối thiểu đã giải nén xong: bỏ debug symbols, HDMaps và Python SDK cài riêng. Binary và 14 shared library có ELF header hợp lệ, loader không báo thiếu thư viện. Installer tự tải được dọn sau đối chiếu SHA để trả lại khoảng 7,8 GiB; runtime gốc và backup không bị xoá. Chưa ghi nhận capture native thành công.
 
 Managed CARLA có guard tối thiểu 10 GiB RAM khả dụng trước khi spawn để tránh lặp OOM. Không tự hạ ngưỡng trong môi trường vừa phục hồi. Client import được không đồng nghĩa server/capture đã sẵn sàng. Policy PPO được load lại và ra đúng quyết định trên 81 frame, CPU decision p95 khoảng 0,203 ms; phép đo này riêng với inference, không cộng percentile để tuyên bố end-to-end.
+
+Ba action thinning hiện tại là MVP phục hồi sau hỏng dữ liệu/runtime. Chưa hoàn tất bộ 12–24 profile, camera/radar policy và MultiDiscrete của kế hoạch gốc. Bộ test không được dùng để chọn lại reward hoặc retrain cho số đẹp hơn.
+
+`.env` local trỏ `CARLA_SERVER_EXECUTABLE` tới shipping binary sạch. Chạy `python -m scripts.check_carla_runtime` để đọc preflight; phải đủ RAM trước khi chạy worker. Hiện guard chặn khoảng 9,2 GiB RAM khả dụng. Không bật simulator hay train vòng mới khi guard chưa qua.
+
+Tiến độ capture CARLA: worker ghi snapshot atomic sau khi lưu cặp camera/LiDAR. UI chỉ đọc count hợp lệ của job đang chạy; không suy diễn phần trăm từ thời gian chờ. Đã qua test contract; capture native mới vẫn chờ đủ RAM.

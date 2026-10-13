@@ -51,6 +51,20 @@ def decode(row):
     value = dict(row)
     value["spec"] = json.loads(value["spec"])
     value["result"] = json.loads(value["result"]) if value["result"] else None
+    value["capture_progress"] = None
+    if value["status"] == "running" and value["spec"]["request"]["source"] == "carla":
+        try:
+            progress = json.loads((root() / value["id"] / "capture/progress.json").read_text())
+            completed, total = progress["completed"], progress["total"]
+            if (
+                type(completed) is int
+                and type(total) is int
+                and 0 <= completed <= total
+                and total == value["spec"]["request"]["scenario"]["frames"]
+            ):
+                value["capture_progress"] = {"completed": completed, "total": total}
+        except (OSError, ValueError, KeyError, TypeError):
+            pass  # Never invent progress from a partial or invalid snapshot.
     value.pop("owner", None)
     return value
 

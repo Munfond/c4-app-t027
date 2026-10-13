@@ -16,3 +16,5 @@ Các kiểm tra HTTP dưới đây được chạy trên backend/frontend local,
 Regression tổng: 105 passed trước bổ sung memory guard; 8 test evidence/guard đã qua sau bổ sung. ESLint các component sửa và production build đã qua. Không tuyên bố native CARLA FOV, online RL hoặc thời tiết đã được kiểm định.
 
 Cache lịch sử: 486 ảnh JPEG, 81 artifact mỗi task Radar/Seg3D/occupancy/flow. Đã kiểm tra CRC, SHA, ảnh giải mã hoặc schema/coordinate/identity. Metadata/model/kind từ artifact giữ nguyên; Seg3D ground truth phải được trình bày là reference, không đổi nhãn thành prediction.
+
+Sau bổ sung progress, 29 test experiment/session/evidence đã qua. Progress snapshot vượt total hoặc JSON thiếu/hỏng bị bỏ qua; job kết thúc không còn hiển thị capture progress. FOV API: 60/90/110 → HTTP 200; 75 → HTTP 422. CARLA sạch: binary + 14 library ELF hợp lệ, loader không báo thiếu library, native capture vẫn chưa chạy vì guard RAM.

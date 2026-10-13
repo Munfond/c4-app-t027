@@ -366,6 +366,10 @@ def capture(scenario, root, pulse, settings, rig_options=None):
                 }
             )
             captured.append({"id": name, "frame_id": frame_id, "timestamp": snapshot.timestamp.elapsed_seconds})
+            progress = root / "progress.json"
+            temporary = progress.with_suffix(".tmp")
+            temporary.write_text(json.dumps({"completed":len(captured),"total":scenario.frames}))
+            temporary.replace(progress)
             visible_counts.append(len(boxes))
         if rig is not None:
             manifest = rig.finish(scenario, {

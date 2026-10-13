@@ -16,8 +16,16 @@ SIZE = 8346095504
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--extract", action="store_true")
+    parser.add_argument(
+        "--minimal", action="store_true", help="Omit debug symbols, HDMaps point clouds and bundled Python SDK"
+    )
+    parser.add_argument("--reserve-gib", type=float, default=4)
     args = parser.parse_args()
+    if args.reserve_gib < 3:
+        parser.error("Keep at least 3 GiB disk reserve")
     target = ROOT / "data/runtime/carla-server-recovery"
+    if args.extract and (target / "server").exists():
+        raise RuntimeError("Server folder already exists; inspect it instead of downloading again")
     target.mkdir(parents=True, exist_ok=True)
     archive = target / "CARLA_0.9.16.tar.gz"
     partial = archive.with_suffix(".gz.part")
@@ -65,17 +73,43 @@ def main():
             indent=2,
         )
     )
+    (target / "download-progress.json").write_text(
+        json.dumps({"url": URL, "bytes": SIZE, "expected_bytes": SIZE, "status": "completed", "extraction": "pending"})
+    )
     if args.extract:
         destination = target / "server"
         if destination.exists():
             raise RuntimeError("Destination already exists; will not overwrite")
         with tarfile.open(archive, "r:gz") as bundle:
             members = bundle.getmembers()
+            excluded = [
+                m
+                for m in members
+                if args.minimal
+                and (m.name.lstrip("./").startswith(("HDMaps/", "PythonAPI/")) or m.name.endswith(".debug"))
+            ]
+            omit = {m.name for m in excluded}
+            members = [m for m in members if m.name not in omit]
             total = sum(m.size for m in members if m.isfile())
-            if shutil.disk_usage(target).free < total + 4 * 1024**3:
-                raise RuntimeError("Need extracted size plus 4 GiB free; archive preserved")
+            (target / "extraction-plan.json").write_text(
+                json.dumps(
+                    {
+                        "minimal": args.minimal,
+                        "required_bytes": total,
+                        "free_bytes": shutil.disk_usage(target).free,
+                        "omitted": [m.name for m in excluded],
+                    },
+                    indent=2,
+                )
+            )
+            print(
+                f"Extract {total / 1024**3:.2f} GiB; free {shutil.disk_usage(target).free / 1024**3:.2f} GiB",
+                flush=True,
+            )
+            if shutil.disk_usage(target).free < total + args.reserve_gib * 1024**3:
+                raise RuntimeError(f"Need extracted size plus {args.reserve_gib:g} GiB free; archive preserved")
             destination.mkdir()
-            bundle.extractall(destination, filter="data")
+            bundle.extractall(destination, members=members, filter="data")
         print("Extracted into", destination, flush=True)
     (target / "download-progress.json").write_text(
         json.dumps({"url": URL, "bytes": SIZE, "expected_bytes": SIZE, "status": "completed"})

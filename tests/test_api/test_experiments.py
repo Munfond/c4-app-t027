@@ -233,3 +233,19 @@ def test_worker_evaluates_same_frames_and_reuses_cache(experiment_settings, monk
     assert second["result"]["models"]["occupancy_lidar"]["cache_hits"] == 1
     assert calls == [0]
     assert json.dumps(second["result"], allow_nan=False)
+
+
+def test_capture_progress_is_bounded_and_only_for_running_jobs(experiment_settings):
+    job = store.create(ExperimentSpec())
+    store.claim("progress-test")
+    path = experiment_settings.experiment_root / job["id"] / "capture/progress.json"
+    path.parent.mkdir(parents=True)
+    path.write_text(json.dumps({"completed": 2, "total": 4}))
+    assert store.get(job["id"])["capture_progress"] == {"completed": 2, "total": 4}
+    path.write_text(json.dumps({"completed": 5, "total": 4}))
+    assert store.get(job["id"])["capture_progress"] is None
+    path.write_text("{")
+    assert store.get(job["id"])["capture_progress"] is None
+    path.write_text(json.dumps({"completed": 4, "total": 4}))
+    store.finish(job["id"], "progress-test", "succeeded", result={})
+    assert store.get(job["id"])["capture_progress"] is None

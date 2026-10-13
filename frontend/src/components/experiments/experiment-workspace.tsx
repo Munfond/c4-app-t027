@@ -24,6 +24,7 @@ type Registry = {
 type Metrics = { occupied_iou: number | null; object_recall: number | null; flow_epe_m_s: number | null;
   latency_model_only_ms: { p50: number; p95: number } | null };
 type Job = {
+  capture_progress?: { completed: number; total: number } | null;
   id: string; status: string; stage: string; error: string | null; spec: { request: Spec };
   result: null | { models: Record<string, { metrics: Metrics; cache_hits: number }>;
     recommendation: { selected: string | null; limitations: string[] };
@@ -156,6 +157,11 @@ export function ExperimentWorkspace({ source = "carla", initialSpec, active = tr
       <div className="flex flex-wrap items-center justify-between gap-3"><h2 className="font-semibold">Thí nghiệm gần đây</h2>{chosen && ["queued", "running"].includes(chosen.status) ? <Button variant="secondary" loading={busy} onClick={cancel}>Hủy job</Button> : null}</div>
       <Select label="Experiment" value={chosen?.id ?? ""} onChange={event => { setSelectedId(event.target.value);  }}>{visibleJobs.map(job => <option key={job.id} value={job.id}>{job.id.slice(0, 8)} · {job.spec.request.source} · {job.status}</option>)}</Select>
       {chosen ? <p className="text-sm">Trạng thái: <b>{chosen.status}</b> · {chosen.stage}{chosen.status === "queued" ? " · Chờ worker chạy" : ""}</p> : <p className="text-sm text-[var(--muted)]">Chưa có thí nghiệm.</p>}
+      {chosen?.status === "running" && chosen.capture_progress && <div className="grid gap-2">
+        <label htmlFor="capture-progress" className="text-xs text-[var(--muted)]">Đã ghi {chosen.capture_progress.completed}/{chosen.capture_progress.total} frame camera + LiDAR. Kết quả model xuất hiện sau inference.</label>
+        <progress id="capture-progress" max={chosen.capture_progress.total} value={chosen.capture_progress.completed} className="h-2 w-full accent-[var(--accent)]" />
+      </div>}
+      {chosen?.status === "running" && chosen.stage === "capture" && !chosen.capture_progress && <p role="status" className="text-xs text-[var(--muted)]">Đang chuẩn bị simulator/cảm biến; chưa có frame đã ghi.</p>}
       {chosen?.error ? <p role="alert" className="text-sm text-red-700">{chosen.error}</p> : null}
       {chosen?.result ? <>
         <div className="overflow-x-auto"><table className="w-full text-left text-sm"><thead><tr>{["Model", "Occupied IoU", "Object-cell recall", "Flow EPE (m/s)", "p95 model (ms)", "Cache frames"].map(label => <th key={label} className="border-b p-3">{label}</th>)}</tr></thead><tbody>{Object.entries(chosen.result.models).map(([name, result]) => <tr key={name}><td className="p-3">{name}</td><td>{metric(result.metrics.occupied_iou, true)}</td><td>{metric(result.metrics.object_recall, true)}</td><td>{metric(result.metrics.flow_epe_m_s)}</td><td>{metric(result.metrics.latency_model_only_ms?.p95)}</td><td>{result.cache_hits}</td></tr>)}</tbody></table></div>

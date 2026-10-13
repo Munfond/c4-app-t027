@@ -1,12 +1,14 @@
 # Perception Lab · Team 27
 
-**Mục 04 / Agent Occupancy** tìm cấu hình giảm dữ liệu LiDAR/radar trên nuScenes
-mini bằng inference CPU, không cần CARLA. LLM lập kế hoạch; worker đo bằng ba
-checkpoint occupancy, Python chọn phương án theo IoU và dung lượng. Camera được
-đánh giá riêng về chất lượng ảnh; detection/flow/risk chưa là mục tiêu của agent.
+Agent mở dưới dạng bot cạnh Lab; công cụ CARLA/nuScenes nằm trong workspace thay vì thêm tab riêng. LLM lập kế hoạch khi có cấu hình API; inference/evaluation và quyết định được kiểm chứng bằng artifact, không dùng lời LLM làm metric.
 
-- [Hướng dẫn AI Agent: setup, FE/worker, phiên tạm, API và giới hạn](docs/REPLAY_SENSOR_AGENT.vi.md)
-- [Prompt kiểm thử và kết quả mong đợi](docs/AGENT_TEST_PROMPTS.vi.md)
+Bản phục hồi có PPO offline thực tế trên ba mức giữ điểm LiDAR 100/50/25%. Kết quả test hiện chưa tốt hơn baseline đầy đủ; UI báo đúng điều đó và cho tải evidence, lưu engineer review. Đây là occupancy proxy research, chưa phải CARLA online hoặc hoàn tất bộ 12–24 profile của kế hoạch gốc.
+
+- [Khởi động local, phạm vi phục hồi và giới hạn](docs/MVP_RECOVERY_SCOPE.vi.md)
+- [Lời trình bày nhanh theo giao diện](docs/MVP_DEMO_RECOVERY.vi.md)
+- [Evidence kiểm tra thực tế](eval/recovery-mvp-2026-10-13/EVIDENCE.vi.md)
+- [Hướng dẫn AI Agent: setup, FE/worker, phiên tạm, API](docs/REPLAY_SENSOR_AGENT.vi.md)
+- [Prompt kiểm thử](docs/AGENT_TEST_PROMPTS.vi.md)
 
 Demo: [c4-app-t027.vercel.app/lab](https://c4-app-t027.vercel.app/lab).
 Frontend Vercel gọi backend qua `/api/...`; deployment được kiểm tra riêng với local evidence.
