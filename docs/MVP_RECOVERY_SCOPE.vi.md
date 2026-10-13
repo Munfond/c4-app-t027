@@ -20,7 +20,7 @@ Sau reboot, ổ backup Windows phải được mount read-only trở lại trư�
 
 1. Lab: chọn scene/frame, xem camera và LiDAR/Radar, chuyển các kết quả model. Model là precomputed khi có nhãn đó trên UI.
 2. Mở bot cạnh Lab → cấu hình camera FOV 60/90/110 → mở thiết lập để xem và xác nhận. Preset chỉ thay góc nhìn, không tự tạo thí nghiệm hay tự tuyên bố tối ưu. CARLA native chưa được xác minh trong runtime phục hồi.
-3. Capture cũ phục hồi: 41 cặp ảnh/prediction hợp lệ từ 81 frame. Play/Pause, scrubber và tốc độ dùng timestamp gốc; khoảng trống do file hỏng không được biến thành frame giả. Kết quả này chỉ để xem, không dùng làm evidence train.
+3. Capture cũ phục hồi: 41 cặp ảnh/prediction hợp lệ từ 81 frame. Play/Pause, scrubber và tốc độ giữ timestamp gốc; tuỳ chọn rút ngắn khoảng trống chỉ đổi nhịp xem; khoảng trống do file hỏng không được biến thành frame giả. Kết quả này chỉ để xem, không dùng làm evidence train.
 4. Trong bot, mở “Học tăng cường · PPO offline”: xem baseline, quyết định, nguồn dữ liệu và tải report. Engineer có thể lưu review gắn SHA report; tên tự khai báo, chưa có xác thực vai trò hay tự train lại từ review.
 
 ## Học tăng cường đã thực hiện
@@ -58,3 +58,5 @@ Nền phục hồi f560457 giữ 21 commit local trên main137b166. Không ghép
 ## CARLA server phục hồi
 
 Client 0.9.16 cài lại từ PyPI và import thành công. Server cũ có 5 shared library không có ELF header hợp lệ, nên không chạy. Script `scripts/recover_carla_server.py --extract` tải từ URL trên release chính thức vào `data/runtime/carla-server-recovery`; kiểm tra dung lượng và không ghi đè runtime cũ. Hash tự tính để đối chiếu lần sau, không phải chữ ký/hash do nhà phát hành cung cấp. Download đang thực hiện; chưa ghi nhận capture native thành công.
+
+Managed CARLA có guard tối thiểu 10 GiB RAM khả dụng trước khi spawn để tránh lặp OOM. Không tự hạ ngưỡng trong môi trường vừa phục hồi. Client import được không đồng nghĩa server/capture đã sẵn sàng. Policy PPO được load lại và ra đúng quyết định trên 81 frame, CPU decision p95 khoảng 0,203 ms; phép đo này riêng với inference, không cộng percentile để tuyên bố end-to-end.

@@ -1,0 +1,504 @@
+{
+  "kind": "supplemental_policy_timing_not_online_end_to_end",
+  "evidence_sha256": "5cdd721975f1bd6b0a06c2318abb8960efcf90a9fac0730516fd56c759c195f9",
+  "policy_sha256": "606c0d1330ef30fc3f150f3c7d7b8c095f0b5b833ac643e816cadd3ca3206df4",
+  "frames": 81,
+  "warmup_predictions": 20,
+  "torch_threads": 2,
+  "decision_p50_ms": 0.177454,
+  "decision_p95_ms": 0.202702,
+  "matches_report_action_counts": true,
+  "limitations": [
+    "Local CPU decision timing only; previous model latency comes from sealed measurement matrix",
+    "No new capture, input extraction, model execution or actuator timing in this benchmark",
+    "Do not add percentiles from separate runs to claim measured end-to-end latency"
+  ],
+  "rows": [
+    {
+      "token": "3e8750f331d7499e9b5123e9eb70f2e2",
+      "action": 0,
+      "policy_decision_ms": 0.200357,
+      "recorded_model_ms": 88.6087869999983
+    },
+    {
+      "token": "3950bd41f74548429c0f7700ff3d8269",
+      "action": 0,
+      "policy_decision_ms": 0.180029,
+      "recorded_model_ms": 89.77387300001283
+    },
+    {
+      "token": "c5f58c19249d4137ae063b0e9ecd8b8e",
+      "action": 0,
+      "policy_decision_ms": 0.17029,
+      "recorded_model_ms": 91.37044300007346
+    },
+    {
+      "token": "700c1a25559b4433be532de3475e58a9",
+      "action": 0,
+      "policy_decision_ms": 0.165221,
+      "recorded_model_ms": 87.9580820000001
+    },
+    {
+      "token": "747aa46b9a4641fe90db05d97db2acea",
+      "action": 0,
+      "policy_decision_ms": 0.18087,
+      "recorded_model_ms": 87.22220899994682
+    },
+    {
+      "token": "f4f86af4da3b49e79497deda5c5f223a",
+      "action": 0,
+      "policy_decision_ms": 0.168607,
+      "recorded_model_ms": 95.74281599998358
+    },
+    {
+      "token": "6832e717621341568c759151b5974512",
+      "action": 0,
+      "policy_decision_ms": 0.168628,
+      "recorded_model_ms": 90.51393400000052
+    },
+    {
+      "token": "c59e60042a8643e899008da2e446acca",
+      "action": 0,
+      "policy_decision_ms": 0.166133,
+      "recorded_model_ms": 91.36125700001685
+    },
+    {
+      "token": "fa65a298c01f44e7a182bbf9e5fe3697",
+      "action": 0,
+      "policy_decision_ms": 0.167896,
+      "recorded_model_ms": 90.15946299996358
+    },
+    {
+      "token": "a98fba72bde9433fb882032d18aedb2e",
+      "action": 0,
+      "policy_decision_ms": 0.180931,
+      "recorded_model_ms": 90.6035719999636
+    },
+    {
+      "token": "b6b0d9f2f2e14a3aaa2c8aedeb1edb69",
+      "action": 0,
+      "policy_decision_ms": 0.176693,
+      "recorded_model_ms": 90.10098399994604
+    },
+    {
+      "token": "796b1988dd254f74bf2fb19ba9c5b8c6",
+      "action": 0,
+      "policy_decision_ms": 0.177114,
+      "recorded_model_ms": 90.24423199991816
+    },
+    {
+      "token": "0d0700a2284e477db876c3ee1d864668",
+      "action": 0,
+      "policy_decision_ms": 0.189547,
+      "recorded_model_ms": 91.004560999977
+    },
+    {
+      "token": "de7593d76648450e947ba0c203dee1b0",
+      "action": 0,
+      "policy_decision_ms": 0.201991,
+      "recorded_model_ms": 88.59070500000144
+    },
+    {
+      "token": "f753d3f87e5b40af87ff2cbf7c8e7082",
+      "action": 0,
+      "policy_decision_ms": 0.189507,
+      "recorded_model_ms": 93.67831400004434
+    },
+    {
+      "token": "b22fa0b3c34f47b6a360b60f35d5d567",
+      "action": 0,
+      "policy_decision_ms": 0.184948,
+      "recorded_model_ms": 89.34491299999081
+    },
+    {
+      "token": "0a0d6b8c2e884134a3b48df43d54c36a",
+      "action": 0,
+      "policy_decision_ms": 0.18041,
+      "recorded_model_ms": 90.29003800003466
+    },
+    {
+      "token": "8e9c2cba0ee74056aa3746e8391d54a9",
+      "action": 0,
+      "policy_decision_ms": 0.207721,
+      "recorded_model_ms": 92.67538199992487
+    },
+    {
+      "token": "fdc39b23ab4242eda6ec5e1e6574fe33",
+      "action": 0,
+      "policy_decision_ms": 0.191961,
+      "recorded_model_ms": 91.76934999993591
+    },
+    {
+      "token": "9ee4020153674b9e9943d395ff8cfdf3",
+      "action": 0,
+      "policy_decision_ms": 0.199155,
+      "recorded_model_ms": 89.19373000003361
+    },
+    {
+      "token": "5b03af7a953245b5a3b23191ed4da62a",
+      "action": 0,
+      "policy_decision_ms": 0.202702,
+      "recorded_model_ms": 94.64078200005588
+    },
+    {
+      "token": "d0ecf474e0e64950aa265cd44b9c9d75",
+      "action": 0,
+      "policy_decision_ms": 0.178616,
+      "recorded_model_ms": 92.11039699994217
+    },
+    {
+      "token": "456ec36cb4a44ca78f36fbd90c0c34fa",
+      "action": 0,
+      "policy_decision_ms": 0.178006,
+      "recorded_model_ms": 90.25919099997282
+    },
+    {
+      "token": "6bfd42cf0aba4f1a94ec11fa43e2dd92",
+      "action": 0,
+      "policy_decision_ms": 0.174038,
+      "recorded_model_ms": 89.10698800002592
+    },
+    {
+      "token": "0af0feb5b1394b928dd13d648de898f5",
+      "action": 0,
+      "policy_decision_ms": 0.165832,
+      "recorded_model_ms": 88.91763499991612
+    },
+    {
+      "token": "61d9340c5ad8418dafe7a4af1b96e6b9",
+      "action": 0,
+      "policy_decision_ms": 0.18617,
+      "recorded_model_ms": 92.25328499996976
+    },
+    {
+      "token": "9e7683e8586542a1b6032980c45f15ce",
+      "action": 0,
+      "policy_decision_ms": 0.182103,
+      "recorded_model_ms": 88.70544900003097
+    },
+    {
+      "token": "cc57c1ea80fe46a7abddfdb15654c872",
+      "action": 0,
+      "policy_decision_ms": 0.165512,
+      "recorded_model_ms": 85.63366100008807
+    },
+    {
+      "token": "4cf5d6c3f6ab42aab23f67b5a9782d1a",
+      "action": 0,
+      "policy_decision_ms": 0.162756,
+      "recorded_model_ms": 88.07977000003575
+    },
+    {
+      "token": "6d9984d09d52479e837da2fd09e192cc",
+      "action": 0,
+      "policy_decision_ms": 0.161274,
+      "recorded_model_ms": 93.52830600005291
+    },
+    {
+      "token": "38a28a3aaf2647f2a8c0e90e31267bf8",
+      "action": 0,
+      "policy_decision_ms": 0.161965,
+      "recorded_model_ms": 90.71375999997144
+    },
+    {
+      "token": "6402fd1ffaf041d0b9162bd92a7ba0a2",
+      "action": 0,
+      "policy_decision_ms": 0.177454,
+      "recorded_model_ms": 90.96531900001992
+    },
+    {
+      "token": "ce94ef7a0522468e81c0e2b3a2f1e12d",
+      "action": 0,
+      "policy_decision_ms": 0.164179,
+      "recorded_model_ms": 84.88510200004384
+    },
+    {
+      "token": "9fcdc52b791045e99c623c5fc643331f",
+      "action": 0,
+      "policy_decision_ms": 0.163107,
+      "recorded_model_ms": 92.62752400002228
+    },
+    {
+      "token": "1c9a906c40f6417bbe1cea06d6e55501",
+      "action": 0,
+      "policy_decision_ms": 0.160492,
+      "recorded_model_ms": 91.5426279999565
+    },
+    {
+      "token": "a771effa2a2648d78096c3e92b95b129",
+      "action": 0,
+      "policy_decision_ms": 0.16974,
+      "recorded_model_ms": 89.9889949999988
+    },
+    {
+      "token": "b9ea04a6121d4a8bb00199b885aa5ef0",
+      "action": 0,
+      "policy_decision_ms": 0.185789,
+      "recorded_model_ms": 90.07226100004573
+    },
+    {
+      "token": "87e772078a494d42bd34cd16172808bc",
+      "action": 0,
+      "policy_decision_ms": 0.179197,
+      "recorded_model_ms": 87.25443699995594
+    },
+    {
+      "token": "f40544fd4f5d42abbcfa948eeaf86850",
+      "action": 0,
+      "policy_decision_ms": 0.179508,
+      "recorded_model_ms": 91.71214399998462
+    },
+    {
+      "token": "281b92269fd648d4b52d06ac06ca6d65",
+      "action": 0,
+      "policy_decision_ms": 0.186471,
+      "recorded_model_ms": 89.37407700000222
+    },
+    {
+      "token": "b5989651183643369174912bc5641d3b",
+      "action": 0,
+      "policy_decision_ms": 0.215926,
+      "recorded_model_ms": 89.42927900000086
+    },
+    {
+      "token": "0bb62a68055249e381b039bf54b0ccf8",
+      "action": 0,
+      "policy_decision_ms": 0.194225,
+      "recorded_model_ms": 94.92592699996294
+    },
+    {
+      "token": "07fad91090c746ccaa1b2bdb55329e20",
+      "action": 0,
+      "policy_decision_ms": 0.180981,
+      "recorded_model_ms": 95.30768000001899
+    },
+    {
+      "token": "ae5004bf4ebb4db0a84cb3c27bd398d1",
+      "action": 0,
+      "policy_decision_ms": 0.173958,
+      "recorded_model_ms": 84.88313500004097
+    },
+    {
+      "token": "ac8b4d49731d43289579f014cb7c97ef",
+      "action": 0,
+      "policy_decision_ms": 0.179097,
+      "recorded_model_ms": 91.17392699999982
+    },
+    {
+      "token": "c1eed31234b94e9f8e22fbf3428b0ac2",
+      "action": 0,
+      "policy_decision_ms": 0.183135,
+      "recorded_model_ms": 86.53307600002336
+    },
+    {
+      "token": "edba7d0cf1c64d2a9c8a5ebddab507a9",
+      "action": 0,
+      "policy_decision_ms": 0.20703,
+      "recorded_model_ms": 91.96385299992471
+    },
+    {
+      "token": "a5afebb0aa5e4d7c95665788ce51ec58",
+      "action": 0,
+      "policy_decision_ms": 0.199466,
+      "recorded_model_ms": 91.0048010000537
+    },
+    {
+      "token": "5b7cb170eee6468aa1fdbd3abcf63c5a",
+      "action": 0,
+      "policy_decision_ms": 0.171052,
+      "recorded_model_ms": 90.50435599999673
+    },
+    {
+      "token": "d8251bbc2105497ab8ec80827d4429aa",
+      "action": 0,
+      "policy_decision_ms": 0.186822,
+      "recorded_model_ms": 88.99467399999139
+    },
+    {
+      "token": "048a45dd2cf54aa5808d8ccc85731d44",
+      "action": 0,
+      "policy_decision_ms": 0.16438,
+      "recorded_model_ms": 94.89140300001964
+    },
+    {
+      "token": "858a1ece22cf45d9bc71e42336604b78",
+      "action": 0,
+      "policy_decision_ms": 0.162516,
+      "recorded_model_ms": 91.76155399995878
+    },
+    {
+      "token": "372725a4b00e49c78d6d0b1c4a38b6e0",
+      "action": 0,
+      "policy_decision_ms": 0.162616,
+      "recorded_model_ms": 89.92616500006534
+    },
+    {
+      "token": "61a7bd24f88a46c2963280d8b13ac675",
+      "action": 0,
+      "policy_decision_ms": 0.18593,
+      "recorded_model_ms": 92.70188100003907
+    },
+    {
+      "token": "609d5177362340458a3bfd4949cd1e64",
+      "action": 0,
+      "policy_decision_ms": 0.162326,
+      "recorded_model_ms": 96.02009100001396
+    },
+    {
+      "token": "b1303058fa624645b753d7283d70de45",
+      "action": 0,
+      "policy_decision_ms": 0.162155,
+      "recorded_model_ms": 89.8904069999844
+    },
+    {
+      "token": "a19a80c905674faab7203a3a4e0f5246",
+      "action": 0,
+      "policy_decision_ms": 0.162526,
+      "recorded_model_ms": 91.0819339999307
+    },
+    {
+      "token": "b6c420c3a5bd4a219b1cb82ee5ea0aa7",
+      "action": 0,
+      "policy_decision_ms": 0.160241,
+      "recorded_model_ms": 93.92876300000808
+    },
+    {
+      "token": "8092909473464f80b9f791a4d31ddcb8",
+      "action": 0,
+      "policy_decision_ms": 0.16468,
+      "recorded_model_ms": 92.29067100000066
+    },
+    {
+      "token": "e174cb43655f49dab7ffa27b973670e3",
+      "action": 0,
+      "policy_decision_ms": 0.161925,
+      "recorded_model_ms": 92.98184300007506
+    },
+    {
+      "token": "6ff9723a60bf4e14b328b3b19f04dc32",
+      "action": 0,
+      "policy_decision_ms": 0.159069,
+      "recorded_model_ms": 95.70020300009219
+    },
+    {
+      "token": "06be0e3b665c44fa8d17d9f4770bdf9c",
+      "action": 0,
+      "policy_decision_ms": 0.159911,
+      "recorded_model_ms": 91.41578599997047
+    },
+    {
+      "token": "9150678870764c1b87a649a25939c61b",
+      "action": 0,
+      "policy_decision_ms": 0.160162,
+      "recorded_model_ms": 91.9101199999659
+    },
+    {
+      "token": "8573a885a7cb41d185c05029eeb9a54e",
+      "action": 0,
+      "policy_decision_ms": 0.179217,
+      "recorded_model_ms": 81.4080099999046
+    },
+    {
+      "token": "55c258972acb4300a3a6077a531ab050",
+      "action": 0,
+      "policy_decision_ms": 0.17534,
+      "recorded_model_ms": 99.64453500003856
+    },
+    {
+      "token": "44237858a539457da65822bfcf58c414",
+      "action": 0,
+      "policy_decision_ms": 0.171683,
+      "recorded_model_ms": 92.5657149999779
+    },
+    {
+      "token": "8cd36e9531fb4eba8e6ac1d666c4641c",
+      "action": 0,
+      "policy_decision_ms": 0.181051,
+      "recorded_model_ms": 91.85254099998019
+    },
+    {
+      "token": "7bebe3c9be714f02837f8617c56df122",
+      "action": 0,
+      "policy_decision_ms": 0.182103,
+      "recorded_model_ms": 95.91625600000953
+    },
+    {
+      "token": "4b894442c95141f9affd731d9da7b43c",
+      "action": 0,
+      "policy_decision_ms": 0.198173,
+      "recorded_model_ms": 88.94030999999814
+    },
+    {
+      "token": "e00dc15130dc44e796687baadd076ae4",
+      "action": 0,
+      "policy_decision_ms": 0.178767,
+      "recorded_model_ms": 89.62373299993942
+    },
+    {
+      "token": "e63b83b436a0479db7362338cdfab118",
+      "action": 0,
+      "policy_decision_ms": 0.177334,
+      "recorded_model_ms": 90.05550000006224
+    },
+    {
+      "token": "c567f9b8e9f34817acdc9c49d791c557",
+      "action": 0,
+      "policy_decision_ms": 0.210777,
+      "recorded_model_ms": 89.55288600009226
+    },
+    {
+      "token": "8e352d4a6c6f40c8ad4f10a3d2c3f158",
+      "action": 0,
+      "policy_decision_ms": 0.189847,
+      "recorded_model_ms": 92.19869599996855
+    },
+    {
+      "token": "841dd6709e9b4d7c9d6bf888f1fe6d7e",
+      "action": 0,
+      "policy_decision_ms": 0.183075,
+      "recorded_model_ms": 88.43952899997021
+    },
+    {
+      "token": "e54b784a608644a2804fcf800c7499f7",
+      "action": 0,
+      "policy_decision_ms": 0.172265,
+      "recorded_model_ms": 89.80239199991047
+    },
+    {
+      "token": "a1289b27ca1d41deb6fc982be9a3d03c",
+      "action": 0,
+      "policy_decision_ms": 0.179027,
+      "recorded_model_ms": 95.37858900000629
+    },
+    {
+      "token": "e6e877f31dd447199b56cae07f86daad",
+      "action": 0,
+      "policy_decision_ms": 0.173437,
+      "recorded_model_ms": 91.26854599992384
+    },
+    {
+      "token": "cb4e6195faad467094fbd4d0a9e960e9",
+      "action": 0,
+      "policy_decision_ms": 0.178977,
+      "recorded_model_ms": 99.95368099998814
+    },
+    {
+      "token": "7f594234e8034228b1a7d727f1981e09",
+      "action": 0,
+      "policy_decision_ms": 0.16458,
+      "recorded_model_ms": 92.7409370000305
+    },
+    {
+      "token": "9cdbf5ff7f294549aea0a4307e5d104a",
+      "action": 0,
+      "policy_decision_ms": 0.161424,
+      "recorded_model_ms": 91.938106999919
+    },
+    {
+      "token": "b4ff30109dd14c89b24789dc5713cf8c",
+      "action": 0,
+      "policy_decision_ms": 0.162476,
+      "recorded_model_ms": 91.19197999996231
+    }
+  ]
+}

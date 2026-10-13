@@ -99,3 +99,14 @@ async def test_evidence_routes_fail_closed(client, sealed):
     (sealed / "report.json").write_text("{}")
     for path in ("", "/report", "/reviews"):
         assert (await client.get("/api/v1/experiments/occupancy-rl" + path)).status_code == 503
+
+
+def test_owned_carla_refuses_low_memory(tmp_path):
+    from src.simulation.carla_server import require_memory_headroom
+
+    mem = tmp_path / "meminfo"
+    mem.write_text("MemTotal: 15000000 kB\nMemAvailable: 9437184 kB\n")
+    with pytest.raises(RuntimeError, match="before launch"):
+        require_memory_headroom(10, mem)
+    mem.write_text("MemTotal: 15000000 kB\nMemAvailable: 11534336 kB\n")
+    assert require_memory_headroom(10, mem) == 11

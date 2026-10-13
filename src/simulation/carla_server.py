@@ -1,4 +1,5 @@
 """Optional local simulator lifecycle. Never terminate an externally started server."""
+
 import importlib
 import os
 import socket
@@ -6,6 +7,18 @@ import subprocess
 import sys
 import time
 from contextlib import contextmanager
+from pathlib import Path
+
+
+def require_memory_headroom(minimum_gib, meminfo_path=Path("/proc/meminfo")):
+    fields = dict(line.split(":", 1) for line in meminfo_path.read_text().splitlines())
+    available = int(fields["MemAvailable"].split()[0]) / 1024**2
+    if available < minimum_gib:
+        raise RuntimeError(
+            f"CARLA needs {minimum_gib:g} GiB available RAM before launch; "
+            f"currently {available:.1f} GiB. Close applications before a fresh capture."
+        )
+    return available
 
 
 @contextmanager
@@ -17,6 +30,7 @@ def fresh_server(settings, root, pulse):
         raise ValueError("Managed CARLA requires the client in the worker's Python runtime")
     if sys.platform != "linux" or not binary.is_file() or not os.access(binary, os.X_OK):
         raise ValueError("Managed CARLA requires an executable Linux server binary")
+    require_memory_headroom(settings.carla_min_available_memory_gib)
     # Refuse occupied ports; another person's simulator must remain untouched.
     for port in (settings.carla_port, settings.carla_port + 1, settings.carla_tm_port):
         with socket.socket() as probe:
@@ -26,13 +40,24 @@ def fresh_server(settings, root, pulse):
             probe.bind(("127.0.0.1", port))
     carla = importlib.import_module("carla")
     root.mkdir(parents=True, exist_ok=True)
-    env = dict(os.environ, __NV_PRIME_RENDER_OFFLOAD="1",
-               __GLX_VENDOR_LIBRARY_NAME="nvidia", __VK_LAYER_NV_optimus="NVIDIA_only")
-    command = [str(binary), "-RenderOffScreen", "-quality-level=Low", "-ResX=640", "-ResY=360",
-               "-ExecCmds=t.MaxFPS 20", f"-carla-rpc-port={settings.carla_port}", "-nosound"]
+    env = dict(
+        os.environ,
+        __NV_PRIME_RENDER_OFFLOAD="1",
+        __GLX_VENDOR_LIBRARY_NAME="nvidia",
+        __VK_LAYER_NV_optimus="NVIDIA_only",
+    )
+    command = [
+        str(binary),
+        "-RenderOffScreen",
+        "-quality-level=Low",
+        "-ResX=640",
+        "-ResY=360",
+        "-ExecCmds=t.MaxFPS 20",
+        f"-carla-rpc-port={settings.carla_port}",
+        "-nosound",
+    ]
     with (root / "server.log").open("w") as log:
-        process = subprocess.Popen(command, cwd=binary.parents[3], env=env,
-                                   stdout=log, stderr=subprocess.STDOUT)
+        process = subprocess.Popen(command, cwd=binary.parents[3], env=env, stdout=log, stderr=subprocess.STDOUT)
         try:
             deadline = time.monotonic() + max(60, settings.carla_timeout_seconds)
             while True:
@@ -53,10 +78,13 @@ def fresh_server(settings, root, pulse):
             if client.get_client_version() != server_version:
                 raise RuntimeError("CARLA client/server version mismatch")
             del client  # No readiness RPC connection survives server termination.
+
             def managed_pulse():
                 pulse()
                 if process.poll() is not None:
-                    raise RuntimeError(f'Owned CARLA server exited during capture ({process.returncode}); inspect server.log')
+                    raise RuntimeError(
+                        f"Owned CARLA server exited during capture ({process.returncode}); inspect server.log"
+                    )
 
             yield managed_pulse
         finally:

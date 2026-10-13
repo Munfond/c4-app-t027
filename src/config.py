@@ -47,6 +47,7 @@ class Settings(BaseSettings):
     carla_host: str = "127.0.0.1"
     carla_port: int = Field(default=2000, ge=1, le=65535)
     carla_tm_port: int = Field(default=8001, ge=1, le=65535)
+    carla_min_available_memory_gib: float = Field(default=10, ge=2, le=128)
     carla_timeout_seconds: float = Field(default=30, ge=1, le=120)
     # Optional trusted local binary: a fresh simulator per capture, owned by worker.
     carla_server_executable: Path | None = None

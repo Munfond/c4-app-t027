@@ -12,6 +12,7 @@ export function CapturePlayback({ job, model, count, interval, camera, active, t
   const [frame, setFrame] = useState<Frame | null>(null);
   const [playing, setPlaying] = useState(false);
   const [speed, setSpeed] = useState(1);
+  const [skipGaps, setSkipGaps] = useState(true);
   const [error, setError] = useState("");
   const [retry, setRetry] = useState(0);
   const canvas = useRef<HTMLCanvasElement>(null);
@@ -70,11 +71,12 @@ export function CapturePlayback({ job, model, count, interval, camera, active, t
   }, [job, model, index, count, camera, retry]);
   const measuredGap = timestamps && timestamps[index + 1] - timestamps[index];
   const nextGap = measuredGap && Number.isFinite(measuredGap) && measuredGap > 0 ? measuredGap : interval;
+  const playbackGap = skipGaps ? Math.min(nextGap, interval) : nextGap;
   useEffect(() => {
     if (!playing || !active || error || frame?.index !== index || index === count - 1) return;
-    const timer = setTimeout(() => setIndex(index + 1), Math.max(80, nextGap * 1000 / speed));
+    const timer = setTimeout(() => setIndex(index + 1), Math.max(80, playbackGap * 1000 / speed));
     return () => clearTimeout(timer);
-  }, [playing, active, error, frame, index, count, nextGap, speed]);
+  }, [playing, active, error, frame, index, count, playbackGap, speed]);
   useLayoutEffect(() => {
     const ctx = canvas.current?.getContext("2d");
     if (!ctx || !frame) return;
@@ -97,9 +99,11 @@ export function CapturePlayback({ job, model, count, interval, camera, active, t
       <Button variant="secondary" disabled={!index} onClick={() => {setPlaying(false);setIndex(index-1);}}>← Trước</Button>
       <Button variant="secondary" disabled={end} onClick={() => {setPlaying(false);setIndex(index+1);}}>Sau →</Button>
       <label className="text-sm">Tốc độ <select className="ml-2 rounded border p-2" value={speed} onChange={e => setSpeed(Number(e.target.value))}>{[.5,1,2].map(v => <option key={v} value={v}>{v}×</option>)}</select></label>
+      <label className="flex items-center gap-2 text-xs"><input type="checkbox" checked={skipGaps} onChange={e => setSkipGaps(e.target.checked)} />Rút ngắn khoảng trống</label>
       <span role="status" className="ml-auto text-xs tabular-nums text-[var(--muted)]">{frame ? `${frame.index+1}/${count} · ${elapsed.toFixed(1)} s` : "Chuẩn bị frame đầu"}{frame && frame.index !== index ? " · Đồng bộ frame tiếp" : ""}</span>
       <input aria-label="Chọn frame phát lại" type="range" min={0} max={count-1} value={index} className="w-full" onChange={e => {setPlaying(false);setIndex(Number(e.target.value));}} />
     </div>
+    <p className="text-xs text-[var(--muted)]">Thời gian hiển thị lấy từ capture gốc. Rút ngắn khoảng trống chỉ đổi tốc độ xem, không tạo thêm frame.</p>
     {error && <div role="alert" className="text-sm text-red-700">{error} · Giữ frame trước.<Button variant="secondary" onClick={() => setRetry(v=>v+1)}>Thử lại</Button></div>}
     <div className="grid gap-4 lg:grid-cols-2">
       <figure className="grid content-start gap-2"><div className="relative overflow-hidden rounded-lg bg-[var(--navy)]">
