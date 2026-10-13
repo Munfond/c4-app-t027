@@ -10,7 +10,7 @@ Phần học tăng cường đã chạy PPO thật trên dữ liệu occupancy p
 
 Kết quả hiện tại agent giữ 100% điểm. Giảm điểm làm IoU giảm nhưng thời gian mạng chạy trên lưới cố định chỉ thay đổi ít. Vì vậy hệ thống báo chưa có cấu hình tốt hơn, kèm báo cáo và hash để đối chiếu. Engineer có thể đánh giá kết luận đó.
 
-CARLA sạch đã tạo capture FOV và preview mưa/sương mù. Căn chỉnh intensity thử nghiệm cải thiện trên hai route Town01 mới, nhưng object IoU vẫn thấp ở một route; cần kiểm chứng rộng hơn. Bản hiện tại chưa chứng minh online RL hoặc khả năng an toàn ngoài thực tế.”
+CARLA sạch đã tạo capture FOV và preview mưa/sương mù. Căn chỉnh intensity thử nghiệm cải thiện trên hai route Town01 mới, nhưng object IoU vẫn thấp ở một route; cần kiểm chứng rộng hơn. PPO đã có smoke inference trực tiếp4frame, chưa có online training hoặc bằng chứng an toàn ngoài thực tế.”
 
 ## Trình tự demo
 
@@ -21,11 +21,11 @@ CARLA sạch đã tạo capture FOV và preview mưa/sương mù. Căn chỉnh i
 5. Mở nguồn/split/giới hạn, tải report. Chỉ engineer thật mới ghi review.
 6. Camera preset 60/90/110: chọn các capture smoke đã chạy; đọc FOV và giới hạn. Chọn capture căn chỉnh thử nghiệm để so Model/Reference, chỉ rõ đây chưa là native RL.
 
-Ba profile thinning nuScenes là một thí nghiệm riêng. Native PPO tiếp theo đã train 12 action từ 48 capture độc lập, chia route 2/1/1. Cả hai đều là replay offline; CARLA online switching và MultiDiscrete chưa hoàn thành.
+Ba profile thinning nuScenes là một thí nghiệm riêng. Native PPO tiếp theo đã train 12 action từ 48 capture độc lập, chia route 2/1/1. Training của cả hai dùng replay offline; policy native đã inference trong CARLA4frame, MultiDiscrete chưa hoàn thành.
 
 ## Đoạn nói thêm khi mở bot
 
-“Ở đây nhóm đã đo 12 cấu hình LiDAR vật lý: 16, 32, 64 kênh với bốn mức điểm mỗi giây. Tất cả dùng cùng reference. Ví dụ giảm từ 600 nghìn xuống 300 nghìn điểm mỗi giây làm occupied IoU giảm từ 83 xuống 65 phần trăm; recall ô vật thể giảm từ 96 xuống 72 phần trăm. Vì vượt ngưỡng chất lượng đã đặt, hệ thống giữ cấu hình gốc và chỉ rõ evidence. Đây là kiểm chứng cấu hình; PPO đã train là phần nuScenes riêng, chưa nối vào CARLA online.”
+“Ở đây nhóm đã đo 12 cấu hình LiDAR vật lý: 16, 32, 64 kênh với bốn mức điểm mỗi giây. Tất cả dùng cùng reference. Ví dụ giảm từ 600 nghìn xuống 300 nghìn điểm mỗi giây làm occupied IoU giảm từ 83 xuống 65 phần trăm; recall ô vật thể giảm từ 96 xuống 72 phần trăm. Vì vượt ngưỡng chất lượng đã đặt, hệ thống giữ cấu hình gốc và chỉ rõ evidence. Đây là kiểm chứng cấu hình; Policy native đã train riêng và có smoke trực tiếp4frame; không lấy các điểm pilot này để thay test native PPO.”
 
 ## Demo clip dài và reference
 
@@ -40,3 +40,10 @@ PPO chạy 8.192 bước; checkpoint chọn bằng validation ở bước 4.096.
 Mở bot → “Học tăng cường · 12 cấu hình LiDAR CARLA” → baseline/PPO → bảng đủ 12 cấu hình → nguồn/split → tải report. Không ghi engineer review giả.
 
 Từ mục native PPO, bấm “Xem capture mặc định của test · 20frame” để mở chính capture route72 ở workspace cạnh bot. Bật Play/Reference, xem camera và occupancy theo cùng frame; đây là đọc kết quả đã ghi, không tạo job CARLA mới. Policy giữ mặc định ở19/19 quyết định, nên clip này minh họa baseline đã chấm, không giả lập agent đang đổi sensor.
+
+
+## Preview PPO trực tiếp — lời nói khoảng20 giây
+
+“Nhóm đã nối policy đã học với dữ liệu LiDAR đang thu trong CARLA. Agent đọc frame hiện tại, chọn cấu hình cho frame tiếp theo, rồi lưu trace để đối chiếu. Lượt thử4frame giữ cấu hình mặc định; nhóm báo đúng kết quả, chưa gọi đó là cải thiện. Nút Play phát lại capture này cùng camera và reference, không giả là mô phỏng live.”
+
+Bot → CARLA → PPO trong CARLA → Xem capture & quyết định. Clip diagnostic chuyển stream là lịch cố định, không được trình bày là agent tự thích nghi. Kết quả20frame đang chờ runtime khỏe.

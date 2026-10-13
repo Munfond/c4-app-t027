@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import type { ExperimentSessionState } from "./use-experiment-session";
 import type { ExperimentSpec } from "./experiment-workspace";
 import OccupancyRlEvidence from "./occupancy-rl-evidence";
+import { NativeOnlineEvidence } from "./native-online-evidence";
 import { NativeRlEvidence } from "./native-rl-evidence";
 import { NativeProfileEvidence } from "./native-profile-evidence";
 
@@ -40,9 +41,9 @@ const outcomes: Record<string, string> = { improved: "Có phương án giảm d�
 const statuses: Record<string, string> = { running: "Đang đo", completed: "Hoàn tất", cancelled: "Đã hủy" };
 const pct = (value: number | null) => value == null ? "Chưa đo" : `${(value * 100).toFixed(1)}%`;
 
-export default function AgentPanel({ source, onSourceChange, onOpenTools, toolsOpen, sessionState, onInspect, onOpenCapture }: {
+export default function AgentPanel({ source, onSourceChange, onOpenTools, toolsOpen, sessionState, onInspect, onOpenCapture, onOpenOnline }: {
   source: Source; onSourceChange: (source: Source) => void; onOpenTools: (draft?: ExperimentSpec, mode?: "manual" | "history") => void;
-  onOpenCapture: (job: string) => void; toolsOpen: boolean; sessionState: ExperimentSessionState; onInspect: (inspection: Inspection) => void;
+  onOpenOnline: (run: string) => void; onOpenCapture: (job: string) => void; toolsOpen: boolean; sessionState: ExperimentSessionState; onInspect: (inspection: Inspection) => void;
 }) {
   const { session, error: sessionError, start: startSession, loading: sessionLoading } = sessionState;
   const [enabled, setEnabled] = useState(false);
@@ -161,7 +162,7 @@ export default function AgentPanel({ source, onSourceChange, onOpenTools, toolsO
         onSourceChange(value); setStudy(null); setReport(null); setHistory([]); setReviews([]); setDraft(null); setError(""); current.current = "";
       }}>{value === "carla" ? "CARLA" : "nuScenes replay"}</button>)}
     </div>
-    <p className="agent-small">{source === "carla" ? "Mô phỏng CARLA · hiện hỗ trợ occupancy LiDAR." : "Dữ liệu ghi sẵn · LiDAR, radar và chất lượng ảnh."} RL chọn profile chưa được nối vào vòng kín này.</p>
+    <p className="agent-small">{source === "carla" ? "Mô phỏng CARLA · hiện hỗ trợ occupancy LiDAR." : "Dữ liệu ghi sẵn · LiDAR, radar và chất lượng ảnh."} PPO đã có lượt thử chọn LiDAR trong capture trực tiếp; yêu cầu chat vẫn chạy study riêng.</p>
     {!enabled && <p className="agent-notice" role="status">Chưa bật LLM hoặc chưa cấu hình API key. Bạn vẫn xem evidence và mở cấu hình nâng cao để chạy thủ công được.</p>}
     {source === "dataset_replay" && sessionError && <p role="alert" className="agent-notice">{sessionError}{!session && <Button loading={sessionLoading} onClick={() => void startSession()}>Mở phiên replay mới</Button>}</p>}
     {error && <p role="alert" className="agent-error">{error.replace(/^Error: /, "")}</p>}
@@ -176,6 +177,7 @@ export default function AgentPanel({ source, onSourceChange, onOpenTools, toolsO
       <p className="agent-small">Gửi yêu cầu sẽ tạo lượt đo mới và dùng token LLM. Đọc evidence không gọi LLM.</p>
     </form>
     <OccupancyRlEvidence />
+    {source === "carla" && <NativeOnlineEvidence onPreview={onOpenOnline} />}
     {source === "carla" && <NativeRlEvidence onPreview={onOpenCapture} />}
     {source === "carla" && <NativeProfileEvidence onInspect={onInspect} />}
     {source === "carla" && <section className="agent-panel-body" aria-label="Cấu hình camera nhanh">

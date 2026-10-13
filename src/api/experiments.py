@@ -352,6 +352,66 @@ def native_profile_pilot_report():
     )
 
 
+@router.get("/native-online")
+def native_online_catalog():
+    from src.services.native_online_evidence import catalog
+
+    return catalog()
+
+
+@router.get("/native-online/{run}/report")
+def native_online_report(run: str):
+    from src.services.native_online_evidence import snapshot
+
+    try:
+        return snapshot(run)
+    except (FileNotFoundError, KeyError) as exc:
+        raise HTTPException(404, "Completed online capture unavailable") from exc
+    except (OSError, ValueError, TypeError) as exc:
+        raise HTTPException(503, "Online capture evidence failed integrity checks") from exc
+
+
+@router.get("/native-online/{run}/predictions/occupancy_lidar/{index}")
+def native_online_prediction(run: str, index: int = Path(ge=0, le=19)):
+    from src.services.native_online_evidence import frame_prediction
+
+    native_online_report(run)
+    try:
+        return frame_prediction(run, index)
+    except (FileNotFoundError, KeyError) as exc:
+        raise HTTPException(404, "Online frame unavailable") from exc
+    except (OSError, ValueError, TypeError, EOFError, BadZipFile) as exc:
+        raise HTTPException(503, "Online frame failed integrity checks") from exc
+
+
+@router.get("/native-online/{run}/reference/{index}")
+def native_online_reference(run: str, index: int = Path(ge=0, le=19)):
+    from src.services.capture_reference import read_reference
+    from src.services.native_online_evidence import artifact
+
+    native_online_report(run)
+    try:
+        artifact(run, index, "json")  # Bind optional actor geometry too.
+        return read_reference(artifact(run, index, "npz"))
+    except (FileNotFoundError, KeyError) as exc:
+        raise HTTPException(404, "Online reference unavailable") from exc
+    except (OSError, ValueError, TypeError) as exc:
+        raise HTTPException(503, "Online reference failed integrity checks") from exc
+
+
+@router.get("/native-online/{run}/camera")
+def native_online_camera(run: str, index: int = Query(default=0, ge=0, le=19)):
+    from src.services.native_online_evidence import artifact
+
+    native_online_report(run)
+    try:
+        return FileResponse(artifact(run, index, "png"), media_type="image/png")
+    except (FileNotFoundError, KeyError) as exc:
+        raise HTTPException(404, "Online camera unavailable") from exc
+    except (OSError, ValueError, TypeError) as exc:
+        raise HTTPException(503, "Online camera failed integrity checks") from exc
+
+
 @router.get("/native-rl")
 def native_rl_report():
     from src.services.native_rl_evidence import read_report
@@ -487,10 +547,6 @@ def capture_camera(
 
 @router.get("/{ident}/reference/{index}")
 def capture_reference(ident: ExperimentId, index: int = Path(ge=0, le=80)):
-    import math
-
-    import numpy as np
-
     job = experiment(ident)
     spec = job["spec"]["request"]
     if spec["source"] != "carla" or job["status"] != "succeeded" or not job.get("result"):
@@ -499,84 +555,13 @@ def capture_reference(ident: ExperimentId, index: int = Path(ge=0, le=80)):
         raise HTTPException(404, "Reference frame not available")
     capture_id = spec.get("capture_id") or ident
     path = store.root() / capture_id / "capture" / f"frame_{index:04d}.npz"
-    actors = []
-    try:
-        metadata = json.loads(path.with_suffix(".json").read_text())
-        geometry = metadata["boxes"]
-        if not isinstance(geometry, list) or len(geometry) > 80:
-            raise ValueError("Invalid actor catalog")
-        for actor in geometry:
-            item = {key: actor[key] for key in ("id", "x", "y", "l", "w", "h", "yaw")}
-            if (
-                type(item["id"]) is not int
-                or item["id"] < 0
-                or any(
-                    type(item[key]) not in (int, float) or not math.isfinite(item[key])
-                    for key in ("x", "y", "l", "w", "h", "yaw")
-                )
-                or any(not 0 < item[key] <= 100 for key in ("l", "w", "h"))
-                or any(abs(item[key]) > 1000 for key in ("x", "y"))
-            ):
-                raise ValueError("Invalid actor geometry")
-            projection = actor.get("camera_box_uv")
-            if projection is not None:
-                if (
-                    not isinstance(projection, list)
-                    or len(projection) != 4
-                    or any(type(v) not in (float, int) or not math.isfinite(v) or not 0 <= v <= 1 for v in projection)
-                    or projection[2] <= projection[0]
-                    or projection[3] <= projection[1]
-                ):
-                    raise ValueError("Invalid actor camera projection")
-            recorded = actor.get("camera_projection_status") == "geometry_recorded"
-            if recorded:
-                from src.simulation.camera_projection import camera_box
+    from src.services.capture_reference import read_reference
 
-                if metadata["camera_frame_id"] != metadata["simulation_frame_id"]:
-                    raise ValueError("Camera/reference frame mismatch")
-                local = np.linalg.inv(np.asarray(metadata["ego_matrix"], dtype=float)) @ np.asarray(
-                    actor["world_box_matrix"], dtype=float
-                )
-                if not np.allclose([item["x"], item["y"]], [local[0, 3], -local[1, 3]], rtol=0, atol=1e-6):
-                    raise ValueError("Camera/BEV actor pose mismatch")
-                expected = camera_box(
-                    actor["world_box_matrix"],
-                    (item["l"] / 2, item["w"] / 2, item["h"] / 2),
-                    metadata["camera_matrix"],
-                    tuple(metadata["camera_size"]),
-                    metadata["camera_fov"],
-                )
-                if (expected is None) != (projection is None) or (
-                    expected is not None and not np.allclose(expected, projection, rtol=0, atol=1e-9)
-                ):
-                    raise ValueError("Camera projection differs from recorded geometry")
-            item["camera_box_uv"] = projection
-            item["camera_projection_status"] = "geometry_recorded" if recorded else "unavailable"
-            actors.append(item)
-        if len({item["id"] for item in actors}) != len(actors):
-            raise ValueError("Duplicate actor IDs")
-    except (OSError, ValueError, KeyError, TypeError):
-        actors = []  # Optional geometry must not replace or invent reference cells.
     try:
-        with np.load(path, allow_pickle=False) as data:
-            labels, valid = data["labels"], data["valid"]
-            if (
-                labels.shape != (200, 200)
-                or valid.shape != (200, 200)
-                or valid.dtype != np.bool_
-                or not np.isin(labels, [0, 1, 2]).all()
-            ):
-                raise ValueError("Invalid reference grid")
-            return {
-                "actors": actors,
-                "cells": labels.reshape(-1).tolist(),
-                "valid": valid.reshape(-1).tolist(),
-                "kind": "reference",
-                "label_policy": "semantic-LiDAR observed cells; static-height proxy + visible actor footprints",
-            }
+        return read_reference(path)
     except FileNotFoundError as exc:
         raise HTTPException(404, "Reference was not preserved for this capture") from exc
-    except (OSError, ValueError, KeyError, EOFError, BadZipFile) as exc:
+    except ValueError as exc:
         raise HTTPException(503, "Native reference failed integrity validation") from exc
 
 

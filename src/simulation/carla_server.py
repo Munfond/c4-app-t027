@@ -2,6 +2,7 @@
 
 import importlib
 import os
+import shutil
 import socket
 import subprocess
 import sys
@@ -21,6 +22,20 @@ def require_memory_headroom(minimum_gib, meminfo_path=Path("/proc/meminfo")):
     return available
 
 
+def require_nvidia_health():
+    # Managed server explicitly uses NVIDIA PRIME/Vulkan offload. Refuse a broken
+    # driver before launching Unreal; never reset a GPU owned by the desktop.
+    binary = shutil.which("nvidia-smi")
+    if binary is None:
+        raise RuntimeError("Managed NVIDIA CARLA requires nvidia-smi; check the installed driver")
+    try:
+        result = subprocess.run([binary, "-L"], capture_output=True, text=True, timeout=10, check=False)
+    except (OSError, subprocess.TimeoutExpired) as exc:
+        raise RuntimeError("NVIDIA health check failed before CARLA launch") from exc
+    if result.returncode != 0 or not any(line.startswith("GPU ") for line in result.stdout.splitlines()):
+        raise RuntimeError("NVIDIA GPU unavailable; check nvidia-smi before retrying CARLA. No driver reset attempted.")
+
+
 @contextmanager
 def fresh_server(settings, root, pulse):
     binary = settings.carla_server_executable.resolve()
@@ -30,6 +45,7 @@ def fresh_server(settings, root, pulse):
         raise ValueError("Managed CARLA requires the client in the worker's Python runtime")
     if sys.platform != "linux" or not binary.is_file() or not os.access(binary, os.X_OK):
         raise ValueError("Managed CARLA requires an executable Linux server binary")
+    require_nvidia_health()
     require_memory_headroom(settings.carla_min_available_memory_gib)
     # Refuse occupied ports; another person's simulator must remain untouched.
     for port in (settings.carla_port, settings.carla_port + 1, settings.carla_tm_port):

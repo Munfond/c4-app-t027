@@ -4,7 +4,7 @@ from types import SimpleNamespace
 
 import pytest
 
-from src.active_sensing.native_occupancy import ABI, BASELINE, PROFILES
+from src.active_sensing.native_contract import ABI, BASELINE, PROFILES
 from src.services import native_rl_evidence as service
 
 

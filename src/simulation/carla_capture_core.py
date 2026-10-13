@@ -65,11 +65,13 @@ def release_stale_sync(world):
     return True
 
 
-def capture(scenario, root, pulse, settings, rig_options=None):
+def capture(scenario, root, pulse, settings, rig_options=None, online_control=None):
     try:
         carla = importlib.import_module("carla")
     except ImportError as exc:
         raise RuntimeError("CARLA Python client is not installed; use the matching server/client version") from exc
+    if online_control is not None and rig_options is not None:
+        raise ValueError("Online selector cannot use the detector rig recorder")
     rng = random.Random(scenario.seed)
     client = carla.Client(settings.carla_host, settings.carla_port)
     client.set_timeout(settings.carla_timeout_seconds)
@@ -236,6 +238,10 @@ def capture(scenario, root, pulse, settings, rig_options=None):
             if rig_options.get("record_environment_inventory"):
                 rig.record_environment(world, carla)
             sensor_specs = rig.specs
+        if online_control is not None:
+            from src.simulation.online_sensor_gate import sensor_bank
+
+            sensor_specs = sensor_bank(sensor_specs)
         logger.info("Attaching %s synchronized sensors", len(sensor_specs))
         for name, (blueprint_id, attrs) in sensor_specs.items():
             bp = library.find(blueprint_id)
@@ -244,13 +250,15 @@ def capture(scenario, root, pulse, settings, rig_options=None):
             bp.set_attribute("sensor_tick", "0.0")
             transform = (
                 carla.Transform(carla.Location(z=scenario.lidar.mount_z), carla.Rotation(pitch=scenario.lidar.pitch))
-                if name == "lidar"
+                if name == "lidar" or name.startswith("lidar_profile_")
                 else (carla.Transform(carla.Location(z=2.0)))
             )
             if rig is not None:
                 transform = rig.transform(name, carla)
             sensor = world.spawn_actor(bp, transform, attach_to=ego)
             sensors.append(sensor)
+            if online_control is not None:
+                online_control.record_sensor(name, sensor.attributes)
             q = queue.Queue(maxsize=8)
             queues[name] = q
 
@@ -291,6 +299,12 @@ def capture(scenario, root, pulse, settings, rig_options=None):
                 time.sleep(max(0, scenario.timestep - (time.monotonic() - tick_started)))
             if step < warmup or (step - warmup) % cadence:
                 continue
+            current_action = None
+            if online_control is not None:
+                from src.simulation.online_sensor_gate import sensor_name
+
+                current_action = online_control.current_action
+                packets["lidar"] = packets[sensor_name(current_action)]
             snapshot = world.get_snapshot()
             logger.info("Processing captured frame %s", frame_id)
             if snapshot.frame != frame_id:
@@ -385,6 +399,7 @@ def capture(scenario, root, pulse, settings, rig_options=None):
             (root / f"{name}.json").write_text(
                 json.dumps(
                     {
+                        **({"selected_lidar_action": current_action} if online_control is not None else {}),
                         "boxes": boxes,
                         "ego_matrix": ego_matrix.tolist(),
                         "camera_matrix": camera_matrix.tolist(),
@@ -417,6 +432,11 @@ def capture(scenario, root, pulse, settings, rig_options=None):
             temporary.write_text(json.dumps({"completed": len(captured), "total": scenario.frames}))
             temporary.replace(progress)
             visible_counts.append(len(boxes))
+            if online_control is not None:
+                online_control.decide(
+                    points, intensity, len(frames) - 1, frame_id, final=len(frames) == scenario.frames
+                )
+
         if rig is not None:
             manifest = rig.finish(
                 scenario,
@@ -435,6 +455,7 @@ def capture(scenario, root, pulse, settings, rig_options=None):
             return [], manifest
         manifest = {
             "source": "carla",
+            "online_sensor_selector": online_control is not None,
             "server_version": client.get_server_version(),
             "pedestrian_seed_supported": pedestrian_seed_supported,
             "follow_ego": bool(getattr(settings, "carla_follow_ego", False)),
@@ -454,8 +475,22 @@ def capture(scenario, root, pulse, settings, rig_options=None):
                 "mean_points_per_tick": float(np.mean(point_counts)),
                 "mean_lidar_bytes_per_tick": float(np.mean(lidar_bytes)),
                 "estimated_lidar_bytes_per_second": float(np.mean(lidar_bytes) / scenario.timestep),
-                "configured_points_per_second": scenario.lidar.points_per_second,
-                "note": "Sampled raw LiDAR payload only; not power, dollar cost, or network protocol overhead",
+                "configured_points_per_second": None
+                if online_control is not None
+                else scenario.lidar.points_per_second,
+                "selected_points_per_second_by_frame": [
+                    sensor_specs[
+                        sensor_name(json.loads((root / f"frame_{i:04d}.json").read_text())["selected_lidar_action"])
+                    ][1]["points_per_second"]
+                    for i in range(len(captured))
+                ]
+                if online_control is not None
+                else None,
+                "note": (
+                    "Selected input stream only; all12 sensors stay spawned, not total simulator work or power saving"
+                    if online_control is not None
+                    else "Sampled raw LiDAR payload only; not power, dollar cost, or network protocol overhead"
+                ),
             },
             "label_policy": "Only semantic-LiDAR observed cells; static-height proxy + visible actor footprints",
             "limitations": [
@@ -474,6 +509,13 @@ def capture(scenario, root, pulse, settings, rig_options=None):
                 "Fresh trials reset world/seed; exact reference hash must match before quality-based selection",
             ],
         }
+        if online_control is not None:
+            manifest["online_sensor_bank_actual_attributes"] = online_control.actual_attributes
+            manifest["limitations"] += [
+                "All12 LiDAR variants remain spawned; gate selects perception input only, no physical sensor power saving",
+                "Policy runs in a separate process with selected raw signal only; GT used after capture for evaluation",
+                "Online selector experimental; sim-time cadence is not proof of real-time wall-clock performance",
+            ]
         (root / "manifest.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
         return frames, manifest
     finally:

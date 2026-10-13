@@ -11,6 +11,7 @@ import { useExperimentSession } from "@/components/experiments/use-experiment-se
 
 const AgentPanel = dynamic(() => import("@/components/experiments/agent-panel"), { loading: () => <p className="agent-panel-body" role="status">Đang kết nối agent…</p> });
 const ManualWorkspace = dynamic(() => import("@/components/experiments/experiment-workspace").then(module => module.ExperimentWorkspace), { loading: () => <p role="status">Đang mở cấu hình nâng cao…</p> });
+const NativeOnlinePreview = dynamic(() => import("@/components/experiments/native-online-evidence").then(module => module.NativeOnlinePreview), { loading: () => <p role="status">Đang mở capture PPO…</p> });
 const ReplayWorkspace = dynamic(() => import("@/components/experiments/replay-workspace").then(module => module.ReplayWorkspace), { loading: () => <p role="status">Đang mở lịch sử replay…</p> });
 
 const navigation = [
@@ -46,7 +47,8 @@ export function AppShell({ children }: { children: ReactNode }) {
   const [source, setSource] = useState<ExperimentSource>("dataset_replay");
   const [toolsOpen, setToolsOpen] = useState(false);
   const [toolsVisited, setToolsVisited] = useState(false);
-  const [toolMode, setToolMode] = useState<"manual" | "history">("history");
+  const [toolMode, setToolMode] = useState<"manual" | "history" | "online">("history");
+  const [onlinePreview, setOnlinePreview] = useState<string | undefined>();
   const [capturePreview, setCapturePreview] = useState<string | undefined>();
   const [draft, setDraft] = useState<{ spec: ExperimentSpec; revision: number } | null>(null);
   const sessionState = useExperimentSession(mounted);
@@ -59,7 +61,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   const close = () => { setOpen(false); launcher.current?.focus(); };
   const show = () => { setMounted(true); setOpen(true); };
   const openTools = (spec?: ExperimentSpec, mode?: "manual" | "history") => {
-    setCapturePreview(undefined);
+    setCapturePreview(undefined); setOnlinePreview(undefined);
     setToolMode(source === "carla" || spec || mode === "manual" ? "manual" : "history");
     setToolsVisited(true); setToolsOpen(true); setInspection(null);
     if (spec) {
@@ -101,8 +103,10 @@ export function AppShell({ children }: { children: ReactNode }) {
       <main ref={main} id="main-content" className="product-main" tabIndex={-1}>
         {visibleInspection && <EvidenceViewport key={`${visibleInspection.study}:${visibleInspection.candidate.job_id}:${visibleInspection.model}`} inspection={visibleInspection} onClose={() => setInspection(null)} />}
         <section id="agent-tools" hidden={!toolsOpen || !!visibleInspection} aria-label="Công cụ thí nghiệm">
-          <div className="experiment-toolbar"><button ref={toolsBack} type="button" onClick={returnToLab}>← Quay lại bản đồ</button><span>{source === "carla" ? "CARLA / Cấu hình nâng cao" : toolMode === "manual" ? "nuScenes / Cấu hình nâng cao" : "nuScenes / Lịch sử & kết quả"}</span></div>
-          {toolsVisited && (toolMode === "manual"
+          <div className="experiment-toolbar"><button ref={toolsBack} type="button" onClick={returnToLab}>← Quay lại bản đồ</button><span>{toolMode === "online" ? "CARLA / Kiểm chứng PPO trực tiếp" : source === "carla" ? "CARLA / Cấu hình nâng cao" : toolMode === "manual" ? "nuScenes / Cấu hình nâng cao" : "nuScenes / Lịch sử & kết quả"}</span></div>
+          {toolsVisited && (toolMode === "online" && onlinePreview
+            ? <NativeOnlinePreview key={onlinePreview} run={onlinePreview} active={toolsOpen && !visibleInspection} />
+            : toolMode === "manual"
             ? <ManualWorkspace key={`${source}:${draft?.revision ?? 0}:${capturePreview ?? ""}`} source={source === "carla" ? "carla" : "nuscenes"} initialSpec={draft?.spec} initialJobId={capturePreview} active={toolsOpen && !visibleInspection} />
             : <ReplayWorkspace sessionState={sessionState} active={toolsOpen && !visibleInspection} />)}
         </section>
@@ -110,7 +114,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       </main>
       <aside id="perception-agent" aria-label="Perception agent" className="agent-dock" hidden={!open}>
         <header className="agent-dock-header"><div><span className="eyebrow">PERCEPTION ASSISTANT</span><h2>Hỏi. Đo. Đối chiếu.</h2></div><button ref={closeButton} onClick={close} aria-label="Thu gọn agent">×</button></header>
-        {mounted && <AgentPanel key={source === "dataset_replay" ? `replay:${sessionState.session}` : "carla"} source={source} sessionState={sessionState} toolsOpen={toolsOpen && !visibleInspection} onOpenTools={openTools} onOpenCapture={job => { setSource("carla"); setDraft(null); setCapturePreview(job); setToolMode("manual"); setToolsVisited(true); setToolsOpen(true); setInspection(null); window.dispatchEvent(new Event("p027-pause-lab")); requestAnimationFrame(() => main.current?.focus()); }} onSourceChange={value => { setSource(value); setCapturePreview(undefined); setInspection(null); setDraft(null); setToolMode(value === "carla" ? "manual" : "history"); }} onInspect={value => { setInspection(value); window.dispatchEvent(new Event("p027-pause-lab")); requestAnimationFrame(() => main.current?.focus()); }} />}
+        {mounted && <AgentPanel key={source === "dataset_replay" ? `replay:${sessionState.session}` : "carla"} source={source} sessionState={sessionState} toolsOpen={toolsOpen && !visibleInspection} onOpenTools={openTools} onOpenOnline={run => { setSource("carla"); setDraft(null); setCapturePreview(undefined); setOnlinePreview(run); setToolMode("online"); setToolsVisited(true); setToolsOpen(true); setInspection(null); window.dispatchEvent(new Event("p027-pause-lab")); requestAnimationFrame(() => main.current?.focus()); }} onOpenCapture={job => { setSource("carla"); setDraft(null); setCapturePreview(job); setOnlinePreview(undefined); setToolMode("manual"); setToolsVisited(true); setToolsOpen(true); setInspection(null); window.dispatchEvent(new Event("p027-pause-lab")); requestAnimationFrame(() => main.current?.focus()); }} onSourceChange={value => { setSource(value); setCapturePreview(undefined); setOnlinePreview(undefined); setInspection(null); setDraft(null); setToolMode(value === "carla" ? "manual" : "history"); }} onInspect={value => { setInspection(value); window.dispatchEvent(new Event("p027-pause-lab")); requestAnimationFrame(() => main.current?.focus()); }} />}
       </aside>
     </div>
     <button ref={launcher} className="agent-launcher" aria-expanded={open} aria-controls="perception-agent" aria-label={open ? "Thu gọn Perception agent" : "Mở Perception agent"} onClick={open ? close : show}>

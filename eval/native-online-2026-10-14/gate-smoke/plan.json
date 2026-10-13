@@ -1,0 +1,81 @@
+{
+  "kind": "native_online_selector_smoke_plan_v1",
+  "mode": "diagnostic_schedule_not_policy",
+  "route": 110,
+  "seed": 210,
+  "frames": 4,
+  "map": "Town01",
+  "weather": "clear",
+  "vehicles": 2,
+  "pedestrians": 0,
+  "profiles": [
+    {
+      "channels": 16,
+      "points_per_second": 150000
+    },
+    {
+      "channels": 16,
+      "points_per_second": 300000
+    },
+    {
+      "channels": 16,
+      "points_per_second": 450000
+    },
+    {
+      "channels": 16,
+      "points_per_second": 600000
+    },
+    {
+      "channels": 32,
+      "points_per_second": 150000
+    },
+    {
+      "channels": 32,
+      "points_per_second": 300000
+    },
+    {
+      "channels": 32,
+      "points_per_second": 450000
+    },
+    {
+      "channels": 32,
+      "points_per_second": 600000
+    },
+    {
+      "channels": 64,
+      "points_per_second": 150000
+    },
+    {
+      "channels": 64,
+      "points_per_second": 300000
+    },
+    {
+      "channels": 64,
+      "points_per_second": 450000
+    },
+    {
+      "channels": 64,
+      "points_per_second": 600000
+    }
+  ],
+  "initial_action": 7,
+  "native_report_sha256": "861050eaa952e2a57841c06785cc56c3cc77be99f454ffc3a83504026f968e8d",
+  "policy_sha256": "96e2838f7f160e3277dda4a026b3cecd0cd68b4986bdcbef92062874cc7d9b8f",
+  "checkpoint_sha256": "8d6c7155534906a50ca2f52b039696700072ff200768f0d91ead33c828e9f878",
+  "adapter": {
+    "id": "intensity_mean_experimental",
+    "manifest_sha256": "e0338b8b1bd7963bedbbb499128f734e25c5dc1725c17f17eaca0440a520379a",
+    "gain": 0.06486433468844091,
+    "checkpoint_sha256": "8d6c7155534906a50ca2f52b039696700072ff200768f0d91ead33c828e9f878",
+    "notice": "Experimental input alignment; validated only on limited Town01 captures, not real-world safety"
+  },
+  "selection": "Current selected raw signal and measured CPU latency -> next capture profile; no GT or other streams in actor",
+  "deployment_ready": false,
+  "training": false,
+  "limits": [
+    "All12 sensor variants stay spawned; select model input only, no physical power saving",
+    "Sim-time2Hz is not real-time wall-clock guarantee",
+    "No weather degradation/radar/model switching or ROS2 claim",
+    "One fresh route smoke, not performance/generalization evidence"
+  ]
+}

@@ -1,4 +1,5 @@
 """Isolated matching/legacy CARLA client; no Pydantic, Torch or LLM imports."""
+
 import argparse
 import importlib
 import json
@@ -31,17 +32,33 @@ def main():
         raise RuntimeError(f"CARLA client/server version mismatch: {local} != {server}")
     if request["mode"] == "probe":
         world = client.get_world()
-        result = {"client_version": local, "server_version": server,
-                  "map": world.get_map().name, "available_maps": client.get_available_maps(),
-                  "client_python": sys.version,
-                  "pedestrian_seed_supported": hasattr(world, "set_pedestrians_seed")}
+        result = {
+            "client_version": local,
+            "server_version": server,
+            "map": world.get_map().name,
+            "available_maps": client.get_available_maps(),
+            "client_python": sys.version,
+            "pedestrian_seed_supported": hasattr(world, "set_pedestrians_seed"),
+        }
         Path(request["result"]).write_text(json.dumps(result), encoding="utf-8")
-    elif request["mode"] in ("capture", "capture_rig"):
+    elif request["mode"] in ("capture", "capture_rig", "capture_online"):
         from src.simulation.carla_capture_core import capture
+
         data = dict(request["scenario"])
         data["lidar"] = SimpleNamespace(**data["lidar"])
-        capture(Scenario(**data), Path(request["root"]), lambda: None, settings,
-                rig_options=request.get("rig_options") if request["mode"] == "capture_rig" else None)
+        online = None
+        if request["mode"] == "capture_online":
+            from src.simulation.online_sensor_gate import FileSensorGate
+
+            online = FileSensorGate(Path(request["root"]) / "ipc")
+        capture(
+            Scenario(**data),
+            Path(request["root"]),
+            lambda: None,
+            settings,
+            rig_options=request.get("rig_options") if request["mode"] == "capture_rig" else None,
+            online_control=online,
+        )
     else:
         raise ValueError("Unknown client operation")
 

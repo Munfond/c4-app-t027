@@ -1,0 +1,29 @@
+{
+  "kind": "native_online_artifact_audit_v1",
+  "report_sha256": "633d97616f4834bcefa4be0690318c2e77785354c3d7b64fe07c335207a9c54b",
+  "files": {
+    "capture/manifest.json": "278d5235c24abec6c375f0db21d537f1a3b18c2dce3de3809d0d2b6dd8b56c6a",
+    "capture/frame_0000.npz": "5cc39adc00599b65553d1a434c345d14f5d019f4ff642c28a22fc12985948298",
+    "capture/frame_0000.json": "e5c25fec555487c35f6c51d299c0c52b1f362ecc9e689104896a2bf16129da35",
+    "capture/frame_0000.png": "f2b319a15a29880cafd02ce7e1a9377afcd1c3fec147120dc27e5f86ab21cc95",
+    "capture/online-predictions/0000.npz": "117347e2b406ff73d98aa166c43ac0d8b67e5e8df68f679275bff7ec83eb5666",
+    "capture/ipc/signal-0000.npz": "33442bd3c8d4c6d6959f0c7c5be6050d368c51bfe2a3ee2f156e67c82b1be5f5",
+    "capture/frame_0001.npz": "9c324224d668012b1dba19481ff1bbec65704cdb4ec3f8de3bf1967061b158f1",
+    "capture/frame_0001.json": "3211de63ac5f75954bfbdf6eea3e4d37fbc2b7910d7e4b59832be60a883c8626",
+    "capture/frame_0001.png": "cc5786be9d6d98855a54529f9929a0ac4ef9a396a49e9e035664a8ee34854516",
+    "capture/online-predictions/0001.npz": "cbaa9b35355a002364fa1117101af5241ea04e6fbcaaa9125473d30c6921752f",
+    "capture/ipc/signal-0001.npz": "73f27b68ef477d30e18896c86864ed6edf0f2d4847a04d9df63c7a44e7b8ae31",
+    "capture/frame_0002.npz": "f115d908ab839263276f5bcd0c87646fa00b6928fb8739e32e6f161eb243710b",
+    "capture/frame_0002.json": "eb10aa9cec3c9da7a5bfe4a73eb0b2bc4448983bc6d272c14be245dff7ab14b8",
+    "capture/frame_0002.png": "3dee40a89be718c52193fa74ab6c0c62a62da9b055b0a9e2d6dfa2d9369d5fe0",
+    "capture/online-predictions/0002.npz": "c71b78b839b75a24e0670ec4036ea498a3e8691fbdd0cdd2d0d45ab575a0cf44",
+    "capture/ipc/signal-0002.npz": "aa2784f3cba97b16fc4ff5cca91d1b569145a999f83dab2f37cc353b7085acd5",
+    "capture/frame_0003.npz": "d3e388292950d3e32101796d99650f6588e093535f7a428042b923d410dcd5ba",
+    "capture/frame_0003.json": "77e967dd463cb5078620ed3d502253b8b0e1879d1430f5fdc7b03cf88ac8f27f",
+    "capture/frame_0003.png": "73d78b9cdf30593016da31214cd5fe5388c7faea684cca7864772b554cbcea2a",
+    "capture/online-predictions/0003.npz": "71fc12e77b7a01d573974c06ed854a6c88a69dc52c47f61331ecff5d4fb06186",
+    "capture/ipc/signal-0003.npz": "b64386ae8c80f4fcb278b017edadab1068ccd429d5b3dd6e5ccc2a86265b77a5"
+  },
+  "reference_sha256": "88cf6ffe810437033362f8b994c37611f375603b829172f521303a4ba44a0f81",
+  "frames": 4
+}

@@ -5,7 +5,7 @@ import json
 import math
 import re
 
-from src.active_sensing.native_occupancy import ABI, BASELINE, PROFILES, quality, read_sealed
+from src.active_sensing.native_contract import ABI, BASELINE, PROFILES, quality, read_sealed
 from src.config import get_settings
 from src.inference.native_input import fingerprint
 from src.services import experiment_store as store

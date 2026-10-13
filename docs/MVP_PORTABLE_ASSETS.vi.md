@@ -1,3 +1,5 @@
+> Bổ sung14/10: [online selector và preview](NATIVE_ONLINE_SELECTOR.vi.md) có source/bundle và ZIP riêng trong thư mục rescue. ZIP này bổ sung hai smoke4frame và kế hoạch20frame, không thay các gói native13/10 hoặc bảy checkpoint perception. Đặt `NATIVE_ONLINE_ROOT=/absolute/path/P-027-restored/data` để đọc artifacts online.
+
 # Gói phục hồi và chuyển phần native/PPO sang máy khác
 
 Source đã commit ở `2bc259e`, branch `codex/active-sensing-integration`. Các gói dưới đây nằm ngoài Git tại `P-027-local-rescue-20261013`, không chứa `.env`, credential hoặc runtime Linux/Windows cũ.

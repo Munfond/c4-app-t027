@@ -30,6 +30,7 @@ def managed(tmp_path, monkeypatch):
     child.wait = lambda timeout: child.returncode
     # Lifecycle uses a fake process: host RAM can legitimately be low during a real capture.
     # The memory guard has independent boundary tests in test_recovery_evidence.py.
+    monkeypatch.setattr(carla_server, "require_nvidia_health", lambda: None)
     monkeypatch.setattr(carla_server, "require_memory_headroom", lambda minimum: 12.0)
     monkeypatch.setattr(carla_server.subprocess, "Popen", lambda *a, **k: child)
     client = SimpleNamespace(
@@ -153,3 +154,46 @@ def test_native_crash_after_startup_stops_waiting_for_missing_server(managed, tm
             child.returncode = -11
             pulse()
     assert not child.terminated  # Already dead; no unrelated process is touched.
+
+
+def test_nvidia_preflight_rejects_broken_device_without_reset(monkeypatch):
+    monkeypatch.setattr(carla_server.shutil, "which", lambda _: "/usr/bin/nvidia-smi")
+    seen = []
+
+    def failed(command, **kwargs):
+        seen.append(command)
+        return SimpleNamespace(returncode=255, stdout="No devices were found")
+
+    monkeypatch.setattr(carla_server.subprocess, "run", failed)
+    with pytest.raises(RuntimeError, match="GPU unavailable"):
+        carla_server.require_nvidia_health()
+    assert seen == [["/usr/bin/nvidia-smi", "-L"]]
+
+
+def test_nvidia_preflight_accepts_device_inventory_only(monkeypatch):
+    monkeypatch.setattr(carla_server.shutil, "which", lambda _: "/usr/bin/nvidia-smi")
+    monkeypatch.setattr(
+        carla_server.subprocess,
+        "run",
+        lambda *a, **k: SimpleNamespace(returncode=0, stdout="GPU 0: synthetic fixture (UUID: GPU-fixture)"),
+    )
+    carla_server.require_nvidia_health()
+    monkeypatch.setattr(
+        carla_server.subprocess, "run", lambda *a, **k: SimpleNamespace(returncode=0, stdout="No devices were found")
+    )
+    with pytest.raises(RuntimeError, match="GPU unavailable"):
+        carla_server.require_nvidia_health()
+
+
+def test_nvidia_preflight_missing_tool_or_timeout_never_launches_carla(monkeypatch):
+    monkeypatch.setattr(carla_server.shutil, "which", lambda _: None)
+    with pytest.raises(RuntimeError, match="requires nvidia-smi"):
+        carla_server.require_nvidia_health()
+    monkeypatch.setattr(carla_server.shutil, "which", lambda _: "/usr/bin/nvidia-smi")
+
+    def timeout(*args, **kwargs):
+        raise carla_server.subprocess.TimeoutExpired("nvidia-smi", 10)
+
+    monkeypatch.setattr(carla_server.subprocess, "run", timeout)
+    with pytest.raises(RuntimeError, match="health check failed"):
+        carla_server.require_nvidia_health()

@@ -7,9 +7,10 @@ import { apiJson } from "@/lib/lab-api";
 type Actor = {id:number; x:number; y:number; l:number; w:number; h:number; yaw:number; camera_box_uv?: [number,number,number,number] | null; camera_projection_status?: string};
 type Reference = { cells: number[]; valid: boolean[]; actors?: Actor[] };
 type Frame = { index: number; cells: number[]; image: string | null; reference: Reference | null };
-export function CapturePlayback({ job, model, count, interval, camera, active, timestamps }: {
-  job: string; model: string; count: number; interval: number; camera: boolean; active: boolean; timestamps?: number[];
+export function CapturePlayback({ job, model, count, interval, camera, active, timestamps, apiBase, frameNotes }: {
+  job: string; model: string; count: number; interval: number; camera: boolean; active: boolean; timestamps?: number[]; apiBase?: string; frameNotes?: string[];
 }) {
+  const base = apiBase ?? `/api/v1/experiments/${job}`;
   const [index, setIndex] = useState(0);
   const [referenceMode, setReferenceMode] = useState(false);
   const [selectedActorId, setSelectedActorId] = useState<number | null>(null);
@@ -38,12 +39,12 @@ export function CapturePlayback({ job, model, count, interval, camera, active, t
       if (underway) return underway;
       const task = (async () => {
         const [data, blob, reference] = await Promise.all([
-          apiJson<{ cells: number[] }>(`/api/v1/experiments/${job}/predictions/${encodeURIComponent(model)}/${target}`),
-          camera ? fetch(`/api/v1/experiments/${job}/camera?index=${target}`).then(async r => {
+          apiJson<{ cells: number[] }>(`${base}/predictions/${encodeURIComponent(model)}/${target}`),
+          camera ? fetch(`${base}/camera?index=${target}`).then(async r => {
             if (!r.ok) throw new Error(`Camera HTTP ${r.status}`);
             return r.blob();
           }) : Promise.resolve(null),
-          camera ? apiJson<Reference>(`/api/v1/experiments/${job}/reference/${target}`).catch(() => null) : Promise.resolve(null),
+          camera ? apiJson<Reference>(`${base}/reference/${target}`).catch(() => null) : Promise.resolve(null),
         ]);
         if (data.cells.length !== 40000 || data.cells.some(value => !Number.isInteger(value) || value < 0 || value > 2)) throw new Error("Lưới occupancy không hợp lệ");
         const image = blob ? URL.createObjectURL(blob) : null;
@@ -74,7 +75,7 @@ export function CapturePlayback({ job, model, count, interval, camera, active, t
     return () => { cancelled = true; };
     // Displayed frame is intentionally retained while the requested pair loads.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [job, model, index, count, camera, retry]);
+  }, [job, model, index, count, camera, retry, base]);
   const measuredGap = timestamps && timestamps[index + 1] - timestamps[index];
   const nextGap = measuredGap && Number.isFinite(measuredGap) && measuredGap > 0 ? measuredGap : interval;
   const playbackGap = skipGaps ? Math.min(nextGap, interval) : nextGap;
@@ -127,6 +128,7 @@ export function CapturePlayback({ job, model, count, interval, camera, active, t
       <span role="status" className="ml-auto text-xs tabular-nums text-[var(--muted)]">{frame ? `${frame.index+1}/${count} · ${elapsed.toFixed(1)} s` : "Chuẩn bị frame đầu"}{frame && frame.index !== index ? " · Đồng bộ frame tiếp" : ""}</span>
       <input aria-label="Chọn frame phát lại" type="range" min={0} max={count-1} value={index} className="w-full" onChange={e => {setPlaying(false);setIndex(Number(e.target.value));}} />
     </div>
+    {frame && frameNotes?.[frame.index] && <p className="border-l-2 border-[var(--accent)] pl-3 text-sm tabular-nums">{frameNotes[frame.index]}</p>}
     <p className="text-xs text-[var(--muted)]">Phát lại dữ liệu đã ghi, thời gian từ capture gốc.{loop ? " Lặp sẽ trở về frame đầu, không phải mô phỏng trực tiếp." : ""}{hasGaps ? " Rút ngắn khoảng trống chỉ đổi tốc độ xem, không tạo thêm frame." : ""}</p>
     {error && <div role="alert" className="text-sm text-red-700">{error} · Giữ frame trước.<Button variant="secondary" onClick={() => setRetry(v=>v+1)}>Thử lại</Button></div>}
     <div className="flex flex-wrap items-center gap-2" aria-label="Đối chiếu output với reference">

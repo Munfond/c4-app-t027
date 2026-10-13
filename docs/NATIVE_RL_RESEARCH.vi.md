@@ -1,3 +1,5 @@
+> Cập nhật14/10: policy frozen đã inference trong CARLA capture4frame. Phần training/test bên dưới vẫn là replay offline, không đổi. [Online selector](NATIVE_ONLINE_SELECTOR.vi.md) giữ diagnostic riêng, chưa có đối chiếu20frame hoặc chứng minh cải thiện.
+
 # Học tăng cường trên cấu hình LiDAR CARLA — bản nghiên cứu
 
 Bản PPO nuScenes đã chạy đủ 12.288 bước vẫn giữ nguyên. Bộ mới dưới đây dùng **12 cấu hình LiDAR vật lý**, không phải giảm điểm sau khi đã thu LiDAR đầy đủ. Bản ngày 13/10 đã hoàn tất 48 capture, kiểm định 960 outcome và chạy PPO native đủ 8.192 bước / 256 cập nhật optimizer. Checkpoint chọn bằng validation tại bước 4.096. Report và policy đã được kiểm tra toàn vẹn. Không dùng pilot một route trước đó để thay thế tập train/validation/test.

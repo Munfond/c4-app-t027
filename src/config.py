@@ -46,6 +46,7 @@ class Settings(BaseSettings):
     native_rl_matrix_root: Path = PROJECT_ROOT / "data/native-rl-matrix-v1-20261013"
     native_rl_replay_root: Path = PROJECT_ROOT / "data/native-rl-measured-v1-20261013"
     native_rl_root: Path = PROJECT_ROOT / "data/native-rl-ppo-v1-20261013"
+    native_online_root: Path = PROJECT_ROOT / "data"
     experiment_device: Literal["cpu", "cuda"] = "cpu"
     experiment_cpu_threads: int = Field(default=2, ge=1, le=32)
     experiment_lease_seconds: int = Field(default=600, ge=60)
