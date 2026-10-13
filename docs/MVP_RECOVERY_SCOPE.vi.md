@@ -66,3 +66,7 @@ Ba action thinning hiện tại là MVP phục hồi sau hỏng dữ liệu/runt
 `.env` local trỏ `CARLA_SERVER_EXECUTABLE` tới shipping binary sạch. Chạy `python -m scripts.check_carla_runtime` để đọc preflight; phải đủ RAM trước khi chạy worker. Hiện guard chặn khoảng 9,2 GiB RAM khả dụng. Không bật simulator hay train vòng mới khi guard chưa qua.
 
 Tiến độ capture CARLA: worker ghi snapshot atomic sau khi lưu cặp camera/LiDAR. UI chỉ đọc count hợp lệ của job đang chạy; không suy diễn phần trăm từ thời gian chờ. Đã qua test contract; capture native mới vẫn chờ đủ RAM.
+
+### Smoke FOV sau khi đủ RAM
+
+Xem cấu hình mà không tạo job: `python -m scripts.smoke_carla --fov 60 --plan` (tương tự 90/110). Chạy thật chỉ sau khi đủ RAM: `python -m scripts.smoke_carla --fov 60 --output data/runtime/fov-60-new`. Mỗi lần dùng folder mới. Smoke chỉ 2 frame; kiểm tra sensor FOV ghi trong manifest, ảnh camera giải mã đúng 640×360 và số frame. Đây là kiểm tra tích hợp, không là bằng chứng FOV cải thiện chất lượng occupancy. Guard RAM chạy trước khi tạo queue/output; lần kiểm tra hiện tại bị chặn đúng vì RAM chưa đủ.
