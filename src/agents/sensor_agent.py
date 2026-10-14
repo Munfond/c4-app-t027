@@ -1,6 +1,6 @@
 """Bounded real function tools: create study, read results, compare, then explain.
 
-Four LLM requests per study at most in the normal flow; polling is deterministic code.
+Five LLM requests per study at most, including one bounded validation repair; polling is deterministic code.
 No simulator or shell commands execute inside the LLM request handler.
 """
 
@@ -72,6 +72,9 @@ async def start(message, max_iou_drop=None, frames=None):
         "Chỉ chỉnh sensor trong miền schema; ưu tiên đổi points_per_second, channels, range_m. "
         "Tạo tối đa 3 environments và 3 profiles; baseline là lidar của từng scenario, được chạy tự động. "
         "Tuyệt đối không thêm baseline vào profiles và không đặt tên profile là baseline. "
+        "Mỗi scenarios entry là một môi trường độc lập, KHÔNG phải một cấu hình LiDAR ứng viên. "
+        "Nếu chỉ yêu cầu một Town/weather/seed/camera thì tạo ĐÚNG MỘT scenario với LiDAR baseline. "
+        "Mọi mật độ/kênh/tầm LiDAR ứng viên chỉ đặt trong profiles, không nhân đôi scenario. "
         "Mặc định test nhẹ: Town01, clear, 2 vehicles, 0 pedestrians, 2 frames, seed42, spawn0, "
         "capture_interval0.5, timestep0.05. LiDAR baseline channels32 points600000 range100 "
         "upper_fov10 lower_fov-30 mount_z2 pitch0. Profiles tiết kiệm 300000 và 150000 points/sec nếu "
@@ -85,19 +88,30 @@ async def start(message, max_iou_drop=None, frames=None):
         "Không hứa tiết kiệm điện hoặc chi phí tiền."
     )
     name = "create_sensor_study"
+    messages = [{"role": "system", "content": system}, {"role": "user", "content": message}]
+    tools = [tool(name, "Create a bounded sensor study and enqueue its first CARLA trial", SensorStudySpec.model_json_schema())]
     data = await completion(
-        [{"role": "system", "content": system}, {"role": "user", "content": message}],
-        [
-            tool(
-                name,
-                "Create a bounded sensor study and enqueue its first CARLA trial",
-                SensorStudySpec.model_json_schema(),
-            )
-        ],
+        messages,
+        tools,
         {"type": "function", "function": {"name": name}},
     )
-    _, call_id, arguments = one_call(data, name)
-    spec = SensorStudySpec.model_validate(arguments)
+    assistant, call_id, arguments = one_call(data, name)
+    repair_usage = None
+    try:
+        spec = SensorStudySpec.model_validate(arguments)
+    except ValueError as exc:
+        if "Duplicate environment" not in str(exc):
+            raise
+        # The rejected proposal creates no job. One correction round, never a capture retry.
+        repair_usage = data.get("usage", {})
+        messages += [assistant, {"role": "tool", "tool_call_id": call_id, "content": (
+            "Validation failed; no study/job was created. Duplicate environments are forbidden. "
+            "Keep each map/weather/seed/camera context exactly once with its ORIGINAL baseline LiDAR. "
+            "Put candidate LiDAR changes only in profiles. Return corrected create_sensor_study once."
+        )}]
+        data = await completion(messages, tools, {"type": "function", "function": {"name": name}})
+        _, call_id, arguments = one_call(data, name)
+        spec = SensorStudySpec.model_validate(arguments)
     # Explicit user controls take precedence over LLM defaults.
     if max_iou_drop is not None:
         spec = SensorStudySpec.model_validate({**spec.model_dump(), "max_iou_drop": max_iou_drop})
@@ -110,6 +124,7 @@ async def start(message, max_iou_drop=None, frames=None):
         {
             "model": data.get("model"),
             "usage": data.get("usage", {}),
+            "validation_repair_usage": repair_usage,
             "tool": name,
             "tool_call_id": call_id,
             "request": message,

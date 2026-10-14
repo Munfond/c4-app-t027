@@ -57,6 +57,23 @@ def test_sensor_bounds_and_nuscenes_contract(sensor_settings):
         store.create(ExperimentSpec(source="nuscenes", scene_id="scene-0103", scenario={"lidar": {"channels": 16}}))
 
 
+
+@pytest.mark.parametrize("candidate_points", [600000, 300000])
+def test_study_rejects_duplicate_environment_before_queueing(sensor_settings, candidate_points):
+    with pytest.raises(ValueError, match="Duplicate environment"):
+        measured_spec = SensorStudySpec(
+            scenarios=[{"map": "Town01"}, {"map": "Town01", "lidar": {"points_per_second": candidate_points}}],
+            profiles=spec().profiles,
+        )
+        studies.create(measured_spec)
+    assert store.recent() == []
+
+
+def test_study_keeps_distinct_weather_environments():
+    measured_spec = SensorStudySpec(scenarios=[{"weather": "clear"}, {"weather": "fog"}], profiles=spec().profiles)
+    assert len(measured_spec.scenarios) == 2
+
+
 def test_study_only_enqueues_one_trial_and_advance_is_idempotent(sensor_settings):
     study = studies.create(spec())
     assert len(store.recent()) == 1
@@ -294,4 +311,60 @@ async def test_explicit_quality_controls_override_llm(client, sensor_settings, m
         },
     )
     assert invalid.status_code == 422
+    assert len(store.recent()) == 1
+
+
+@pytest.mark.asyncio
+async def test_agent_repairs_duplicate_environment_once_without_creating_rejected_jobs(sensor_settings, monkeypatch):
+    calls = []
+    valid = spec().model_dump()
+    invalid = {**valid, "scenarios": valid["scenarios"] * 2}
+
+    async def completion(messages, tools=None, choice=None, max_tokens=1800):
+        calls.append(messages.copy())
+        arguments = invalid if len(calls) == 1 else valid
+        return {"choices": [{"message": {"tool_calls": [{"id": f"call_{len(calls)}", "type": "function", "function": {
+            "name": "create_sensor_study", "arguments": json.dumps(arguments),
+        }}]}}], "usage": {"total_tokens": 10}}
+
+    monkeypatch.setattr(sensor_agent, "enabled", lambda: sensor_settings)
+    monkeypatch.setattr(sensor_agent, "completion", completion)
+    created = await sensor_agent.start("One environment, one candidate")
+    assert len(calls) == 2
+    assert calls[1][-1]["role"] == "tool" and "no study/job" in calls[1][-1]["content"]
+    assert len(store.recent()) == 1 and len(created["spec"]["scenarios"]) == 1
+    assert created["metadata"]["validation_repair_usage"] == {"total_tokens": 10}
+
+
+@pytest.mark.asyncio
+async def test_agent_duplicate_repair_is_bounded_and_leaves_no_job(sensor_settings, monkeypatch):
+    calls = []
+    valid = spec().model_dump()
+    invalid = {**valid, "scenarios": valid["scenarios"] * 2}
+
+    async def completion(messages, tools=None, choice=None, max_tokens=1800):
+        calls.append(messages)
+        return {"choices": [{"message": {"tool_calls": [{"id": "call_invalid", "type": "function", "function": {
+            "name": "create_sensor_study", "arguments": json.dumps(invalid),
+        }}]}}]}
+
+    monkeypatch.setattr(sensor_agent, "enabled", lambda: sensor_settings)
+    monkeypatch.setattr(sensor_agent, "completion", completion)
+    with pytest.raises(ValueError, match="Duplicate environment"):
+        await sensor_agent.start("One environment")
+    assert len(calls) == 2 and store.recent() == []
+
+
+def test_historical_duplicate_study_remains_readable_but_cannot_be_cloned(sensor_settings):
+    created = studies.create(spec())
+    studies.cancel(created["id"])
+    legacy = spec().model_dump()
+    legacy["scenarios"] *= 2
+    with studies.connection() as db:
+        db.execute("UPDATE sensor_studies SET spec=? WHERE id=?", (json.dumps(legacy), created["id"]))
+    saved = studies.get(created["id"])
+    assert saved["status"] == "cancelled" and len(saved["spec"]["scenarios"]) == 2
+    assert studies.recent()[0]["id"] == created["id"]
+    with pytest.raises(ValueError, match="Duplicate environment"):
+        studies.create(studies.parse_spec(legacy, stored=True))
     assert len(store.recent()) == 1

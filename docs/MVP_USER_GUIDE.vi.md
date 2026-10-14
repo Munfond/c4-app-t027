@@ -190,3 +190,8 @@ Xem [nghiệm thu từng tính năng](MVP_ACCEPTANCE_20261014.vi.md), [luồng n
 5. Local: chọn study `f5961716` trong Lượt đánh giá. Baseline occupied IoU 83,2%; 300k là 65,2%, 150k là 42,9%. Reference giống nhau, nên giữ cấu hình gốc. Đây là kiểm chứng thủ công 4 frame/cấu hình, không phải test PPO 20 frame.
 
 Các bước xem bản ghi không cần runner CI, simulator hoặc token LLM. Không tạo thí nghiệm mới chỉ để lấp thời gian demo.
+
+
+### Kiểm tra hội thoại ngày14/10
+
+Agent OpenRouter đã được kiểm tra thật ở luồng đề xuất, tạo study và tóm tắt số đo có sẵn. Môi trường (map/thời tiết/seed/camera) và cấu hình LiDAR ứng viên được tách riêng: cùng môi trường chỉ có một baseline, các cấu hình300k/150k nằm trong profiles. Nếu đề xuất bị trùng môi trường, agent có tối đa một lượt sửa; vẫn sai thì báo lỗi để dùng form, không tạo job từ đề xuất sai. Plan không tự chạy; worker mới thực hiện capture. Bản cloud chỉ đọc không tự bật hội thoại chỉ vì máy local đã có key.

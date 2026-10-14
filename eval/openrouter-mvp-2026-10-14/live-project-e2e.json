@@ -1,0 +1,532 @@
+{
+  "human_metadata_egress_consent": true,
+  "started_utc": "2026-10-14T10:30:12Z",
+  "checks": [
+    {
+      "name": "live_project_plan",
+      "http_status": 200,
+      "response": {
+        "spec": {
+          "source": "carla",
+          "replay": null,
+          "model_ids": [
+            "occupancy_lidar"
+          ],
+          "native_input_adapter": "raw",
+          "scenario": {
+            "map": "Town01",
+            "weather": "clear",
+            "vehicles": 2,
+            "pedestrians": 0,
+            "seed": 42,
+            "frames": 2,
+            "capture_interval": 0.5,
+            "timestep": 0.05,
+            "traffic_placement": "nearest_spawn",
+            "route_spawn_index": 0,
+            "route_kind": "spawn",
+            "lane_change_interval_seconds": null,
+            "lidar": {
+              "channels": 32,
+              "points_per_second": 600000,
+              "range_m": 100.0,
+              "upper_fov": 10.0,
+              "lower_fov": -30.0,
+              "mount_z": 2.0,
+              "pitch": 0.0
+            },
+            "camera": {
+              "fov": 90
+            }
+          },
+          "scene_id": null,
+          "capture_id": null,
+          "max_latency_ms": null
+        },
+        "usage": {
+          "prompt_tokens": 1919,
+          "completion_tokens": 158,
+          "total_tokens": 2077,
+          "cost": 0.00038265,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.00038265,
+            "upstream_inference_prompt_cost": 0.00028785,
+            "upstream_inference_completions_cost": 9.48e-05
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        },
+        "model": "openai/gpt-4o-mini",
+        "executed": false
+      }
+    },
+    {
+      "name": "live_project_study_tool",
+      "http_status": 201,
+      "response": {
+        "id": "bd8c4db213614af294ce1f3b7516d1f3",
+        "source": "carla",
+        "spec": {
+          "scenarios": [
+            {
+              "map": "Town01",
+              "weather": "clear",
+              "vehicles": 2,
+              "pedestrians": 0,
+              "seed": 42,
+              "frames": 2,
+              "capture_interval": 0.5,
+              "timestep": 0.05,
+              "traffic_placement": "random_spawn",
+              "route_spawn_index": 0,
+              "route_kind": "spawn",
+              "lane_change_interval_seconds": null,
+              "lidar": {
+                "channels": 32,
+                "points_per_second": 600000,
+                "range_m": 100.0,
+                "upper_fov": 10.0,
+                "lower_fov": -30.0,
+                "mount_z": 2.0,
+                "pitch": 0.0
+              },
+              "camera": {
+                "fov": 90
+              }
+            },
+            {
+              "map": "Town01",
+              "weather": "clear",
+              "vehicles": 2,
+              "pedestrians": 0,
+              "seed": 42,
+              "frames": 2,
+              "capture_interval": 0.5,
+              "timestep": 0.05,
+              "traffic_placement": "random_spawn",
+              "route_spawn_index": 0,
+              "route_kind": "spawn",
+              "lane_change_interval_seconds": null,
+              "lidar": {
+                "channels": 32,
+                "points_per_second": 300000,
+                "range_m": 100.0,
+                "upper_fov": 10.0,
+                "lower_fov": -30.0,
+                "mount_z": 2.0,
+                "pitch": 0.0
+              },
+              "camera": {
+                "fov": 90
+              }
+            }
+          ],
+          "profiles": [
+            {
+              "name": "profile1",
+              "lidar": {
+                "channels": 32,
+                "points_per_second": 300000,
+                "range_m": 100.0,
+                "upper_fov": 10.0,
+                "lower_fov": -30.0,
+                "mount_z": 2.0,
+                "pitch": 0.0
+              }
+            }
+          ],
+          "native_input_adapter": "raw",
+          "max_iou_drop": 0.02,
+          "min_occupied_iou": 0.3,
+          "min_object_iou": null,
+          "min_object_recall": null
+        },
+        "total_trials": 4,
+        "jobs": [
+          {
+            "id": "5363364947a04543884c3ca52bc62e58",
+            "environment": 0,
+            "profile": "baseline",
+            "status": "queued",
+            "stage": "queued",
+            "error": null,
+            "result": null
+          }
+        ],
+        "status": "running",
+        "checkpoint_sha256": "8d6c7155534906a50ca2f52b039696700072ff200768f0d91ead33c828e9f878",
+        "metadata": {
+          "model": "openai/gpt-4o-mini",
+          "usage": {
+            "prompt_tokens": 1385,
+            "completion_tokens": 322,
+            "total_tokens": 1707,
+            "cost": 0.00040095,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.00040095,
+              "upstream_inference_prompt_cost": 0.00020775,
+              "upstream_inference_completions_cost": 0.0001932
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "tool": "create_sensor_study",
+          "tool_call_id": "call_NJ2rJqnpVOK878D2N4100Jye",
+          "request": "Tạo một study nhỏ Town01 trời quang, 2 xe, không người đi bộ, 2 frame, seed42, baseline32 kênh600000điểm/giây100m; thử duy nhất một profile300000điểm/giây còn lại giữ nguyên, cameraFOV90. Không thay đổi model occupancy_lidar."
+        },
+        "summary": null
+      }
+    },
+    {
+      "name": "cancel_unexecuted_smoke_study",
+      "http_status": 200,
+      "response": {
+        "id": "bd8c4db213614af294ce1f3b7516d1f3",
+        "status": "cancelled"
+      }
+    },
+    {
+      "name": "existing_measured_study",
+      "http_status": 200,
+      "response": {
+        "id": "f5961716704a405391c5cf2fc8d10bd2",
+        "status": "completed",
+        "cached_summary": false
+      }
+    },
+    {
+      "name": "live_measured_summary_tools",
+      "http_status": 200,
+      "response": {
+        "comparison": {
+          "study_id": "f5961716704a405391c5cf2fc8d10bd2",
+          "environments": [
+            {
+              "environment": 0,
+              "scenario": {
+                "map": "Town01",
+                "weather": "clear",
+                "vehicles": 2,
+                "pedestrians": 0,
+                "seed": 42,
+                "frames": 4,
+                "capture_interval": 0.5,
+                "timestep": 0.05,
+                "traffic_placement": "nearest_spawn",
+                "route_spawn_index": 0,
+                "route_kind": "spawn",
+                "lane_change_interval_seconds": null,
+                "lidar": {
+                  "channels": 32,
+                  "points_per_second": 600000,
+                  "range_m": 100.0,
+                  "upper_fov": 10.0,
+                  "lower_fov": -30.0,
+                  "mount_z": 2.0,
+                  "pitch": 0.0
+                },
+                "camera": {
+                  "fov": 90
+                }
+              },
+              "trials": [
+                {
+                  "job_id": "94c84f09345540a4983067627ac2e921",
+                  "profile": "baseline",
+                  "status": "succeeded",
+                  "error": null,
+                  "occupied_iou": 0.831782657238556,
+                  "object_iou": 0.3984375,
+                  "object_recall": 0.9622641509433962,
+                  "object_quality_reasons": [],
+                  "iou_drop": 0.0,
+                  "reference_matches_baseline": true,
+                  "lidar_bytes_per_second": 4890560.0,
+                  "data_reduction_fraction": 0.0,
+                  "latency_model_only_ms": null
+                },
+                {
+                  "job_id": "1cb90d70df22496497a6bc0aab24e764",
+                  "profile": "lidar_300k",
+                  "status": "succeeded",
+                  "error": null,
+                  "occupied_iou": 0.6517403574788335,
+                  "object_iou": 0.2980392156862745,
+                  "object_recall": 0.7169811320754716,
+                  "object_quality_reasons": [],
+                  "iou_drop": 0.18004229975972252,
+                  "reference_matches_baseline": true,
+                  "lidar_bytes_per_second": 2441040.0,
+                  "data_reduction_fraction": 0.5008669763789833,
+                  "latency_model_only_ms": null
+                },
+                {
+                  "job_id": "58be0ab1d12942e3b6bfed0d5ee43e39",
+                  "profile": "lidar_150k",
+                  "status": "succeeded",
+                  "error": null,
+                  "occupied_iou": 0.42897513187641295,
+                  "object_iou": 0.18181818181818182,
+                  "object_recall": 0.4528301886792453,
+                  "object_quality_reasons": [
+                    "below_minimum_object_recall"
+                  ],
+                  "iou_drop": 0.4028075253621431,
+                  "reference_matches_baseline": true,
+                  "lidar_bytes_per_second": 1219840.0,
+                  "data_reduction_fraction": 0.7505725315710267,
+                  "latency_model_only_ms": null
+                }
+              ],
+              "provisional_selected": "baseline"
+            }
+          ],
+          "criterion": "Lowest sampled LiDAR byte rate within requested occupied/object quality constraints and IoU drop bound, exact reference match",
+          "limitations": [
+            "Exploratory two-dimensional occupancy proxy, not validated real-world sensor recommendation",
+            "Reference mismatch excludes trial from selection; more seeds/routes are needed",
+            "Data rate is not electricity or dollar cost; fixed BEV shape may keep model latency unchanged",
+            "Weather affects RGB; no physical LiDAR rain/fog degradation has been validated"
+          ]
+        },
+        "explanation": "Trong nghiên cứu f5961716704a405391c5cf2fc8d10bd2, ba cấu hình đã được thử nghiệm: baseline, lidar_300k và lidar_150k. Kết quả cho thấy:\n\n- **Baseline**: Occupied IoU là 0.83, Object IoU là 0.40, Object Recall là 0.96, với tốc độ LiDAR là 4,890,560 bytes/s.\n- **Lidar_300k**: Occupied IoU giảm xuống 0.65, Object IoU là 0.30, Object Recall là 0.72, tốc độ LiDAR là 2,441,040 bytes/s, nhưng không đạt yêu cầu về chất lượng.\n- **Lidar_150k**: Kết quả còn kém hơn với Occupied IoU 0.43, Object IoU 0.18, Object Recall 0.45, tốc độ LiDAR là 1,219,840 bytes/s, cũng không đủ tiêu chuẩn.\n\nCấu hình được chọn là **baseline** vì không tìm thấy cấu hình nào giảm dữ liệu tốt hơn mà vẫn đáp ứng yêu cầu chất lượng. Các thử nghiệm không đủ bằng chứng để khẳng định tối ưu toàn cục và cần thêm dữ liệu từ các kịch bản khác.",
+        "tool_trace": [
+          {
+            "tool": "read_sensor_study",
+            "tool_call_id": "call_hAoyw8Rm9mzgAzac9JklK5sr"
+          },
+          {
+            "tool": "compare_sensor_configs",
+            "tool_call_id": "call_fDbBWFFo00Mi4BDMM7kyhJHF"
+          }
+        ],
+        "usage": [
+          {
+            "prompt_tokens": 319,
+            "completion_tokens": 23,
+            "total_tokens": 342,
+            "cost": 6.165e-05,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 6.165e-05,
+              "upstream_inference_prompt_cost": 4.785e-05,
+              "upstream_inference_completions_cost": 1.38e-05
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          {
+            "prompt_tokens": 586,
+            "completion_tokens": 23,
+            "total_tokens": 609,
+            "cost": 0.0001017,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.0001017,
+              "upstream_inference_prompt_cost": 8.79e-05,
+              "upstream_inference_completions_cost": 1.38e-05
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          {
+            "prompt_tokens": 4408,
+            "completion_tokens": 274,
+            "total_tokens": 4682,
+            "cost": 0.0008256,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.0008256,
+              "upstream_inference_prompt_cost": 0.0006612,
+              "upstream_inference_completions_cost": 0.0001644
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          }
+        ],
+        "model": "openai/gpt-4o-mini"
+      }
+    }
+  ],
+  "created_study_id": "bd8c4db213614af294ce1f3b7516d1f3",
+  "result": "passed_after_duplicate_environment_fix",
+  "capture_or_training_executed": false,
+  "initial_study_issue": "Provider duplicated one physical context with candidate LiDAR in scenarios; smoke cancelled. Guard and one bounded correction added, then rechecked.",
+  "fixed_study_check": {
+    "status": 201,
+    "response": {
+      "id": "dad53bee79c845318bbe47c0c494a476",
+      "source": "carla",
+      "spec": {
+        "scenarios": [
+          {
+            "map": "Town01",
+            "weather": "clear",
+            "vehicles": 2,
+            "pedestrians": 0,
+            "seed": 42,
+            "frames": 2,
+            "capture_interval": 0.5,
+            "timestep": 0.05,
+            "traffic_placement": "random_spawn",
+            "route_spawn_index": 0,
+            "route_kind": "spawn",
+            "lane_change_interval_seconds": null,
+            "lidar": {
+              "channels": 32,
+              "points_per_second": 600000,
+              "range_m": 100.0,
+              "upper_fov": 10.0,
+              "lower_fov": -30.0,
+              "mount_z": 2.0,
+              "pitch": 0.0
+            },
+            "camera": {
+              "fov": 90
+            }
+          }
+        ],
+        "profiles": [
+          {
+            "name": "lidar_300k",
+            "lidar": {
+              "channels": 32,
+              "points_per_second": 300000,
+              "range_m": 100.0,
+              "upper_fov": 10.0,
+              "lower_fov": -30.0,
+              "mount_z": 2.0,
+              "pitch": 0.0
+            }
+          }
+        ],
+        "native_input_adapter": "raw",
+        "max_iou_drop": 0.02,
+        "min_occupied_iou": 0.3,
+        "min_object_iou": null,
+        "min_object_recall": null
+      },
+      "total_trials": 2,
+      "jobs": [
+        {
+          "id": "aefd9fc396a14e22b74f4e16223e831d",
+          "environment": 0,
+          "profile": "baseline",
+          "status": "queued",
+          "stage": "queued",
+          "error": null,
+          "result": null
+        }
+      ],
+      "status": "running",
+      "checkpoint_sha256": "8d6c7155534906a50ca2f52b039696700072ff200768f0d91ead33c828e9f878",
+      "metadata": {
+        "model": "openai/gpt-4o-mini",
+        "usage": {
+          "prompt_tokens": 1982,
+          "completion_tokens": 211,
+          "total_tokens": 2193,
+          "cost": 0.0002895,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 1792,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.0002895,
+            "upstream_inference_prompt_cost": 0.0001629,
+            "upstream_inference_completions_cost": 0.0001266
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        },
+        "validation_repair_usage": {
+          "prompt_tokens": 1473,
+          "completion_tokens": 439,
+          "total_tokens": 1912,
+          "cost": 0.00037875,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 1408,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.00037875,
+            "upstream_inference_prompt_cost": 0.00011535,
+            "upstream_inference_completions_cost": 0.0002634
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        },
+        "tool": "create_sensor_study",
+        "tool_call_id": "call_34G8eYpZbZzwVfnEhHDaqDXs",
+        "request": "Tạo study với ĐÚNG MỘT môi trường Town01 clear, seed42, 2 xe, 0 người, cameraFOV90,2frame. Scenario chỉ chứa baselineLiDAR32kênh600000điểm/giây100m. ĐÚNG MỘT profile tên lidar_300k với300000điểm/giây, mọi tham số khác giữ nguyên. Không thêm scenario cho profile."
+      },
+      "summary": null
+    }
+  },
+  "browser_qa": {
+    "history_readable": true,
+    "measured_summary_visible": true,
+    "baseline_retained": true,
+    "screenshot": "live-agent-browser.png"
+  },
+  "local_tests": "294 passed in39.91s"
+}

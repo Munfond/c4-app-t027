@@ -59,7 +59,7 @@ def trials(spec):
     return items
 
 
-def parse_spec(value):
+def parse_spec(value, *, stored=False):
     if isinstance(value, (ReplayStudySpec, SensorStudySpec)):
         return value
     if isinstance(value, str):
@@ -67,7 +67,7 @@ def parse_spec(value):
     return (
         ReplayStudySpec.model_validate(value)
         if value.get("source") == "dataset_replay"
-        else SensorStudySpec.model_validate(value)
+        else SensorStudySpec.model_validate(value, context={"stored_study": stored})
     )
 
 
@@ -105,6 +105,9 @@ def object_quality_reasons(spec, metrics):
 
 def create(spec, metadata=None):
     spec = parse_spec(spec)
+    if isinstance(spec, SensorStudySpec):
+        # Always enforce new command rules, even when copying a historical study object.
+        spec = SensorStudySpec.model_validate(spec.model_dump())
     if isinstance(spec, ReplayStudySpec):
         from src.services.experiment_registry import validate_spec
 
@@ -129,7 +132,7 @@ def get(ident):
         records = list(
             db.execute("SELECT ordinal,job_id FROM sensor_study_jobs WHERE study_id=? ORDER BY ordinal", (ident,))
         )
-    spec = parse_spec(row["spec"])
+    spec = parse_spec(row["spec"], stored=True)
     commands = trials(spec)
     jobs = []
     for record in records:
@@ -165,7 +168,7 @@ def advance(ident):
     study = get(ident)
     if study["status"] != "running" or any(j["status"] in ("queued", "running") for j in study["jobs"]):
         return study
-    parsed = parse_spec(study["spec"])
+    parsed = parse_spec(study["spec"], stored=True)
     if checkpoint_identity(parsed) != study["checkpoint_sha256"]:
         raise ValueError("Checkpoint changed during study; do not compare different weights")
     index = len(study["jobs"])

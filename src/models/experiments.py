@@ -2,7 +2,7 @@
 
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, Field, model_validator
+from pydantic import BaseModel, ConfigDict, Field, ValidationInfo, model_validator
 
 from src.models.replay import ReplayTrialSpec
 
@@ -126,7 +126,12 @@ class SensorStudySpec(BaseModel):
     min_object_recall: float | None = Field(default=None, ge=0, le=1)
 
     @model_validator(mode="after")
-    def bounded_study(self):
+    def bounded_study(self, info: ValidationInfo):
+        contexts = [scenario.model_dump(exclude={"lidar"}) for scenario in self.scenarios]
+        if not (info.context or {}).get("stored_study") and any(
+            context in contexts[:index] for index, context in enumerate(contexts)
+        ):
+            raise ValueError("Duplicate environment: LiDAR candidates belong in profiles, not scenarios")
         if len({profile.name for profile in self.profiles}) != len(self.profiles):
             raise ValueError("Profile names must be unique")
         if any(profile.name == "baseline" for profile in self.profiles):

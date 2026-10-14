@@ -31,17 +31,17 @@ Xem `HUONG_DAN_SU_DUNG.vi.md` để khởi động backend/frontend. Lab local: 
 - PPO giữ baseline trong testoffline và lượt inference20frame; chưa tìm được cấu hình tốt hơn được chứng minh. Không tune theo test đã xem.
 - Agent chọn một trong12inputLiDAR cho frame tiếp theo; không điều khiển xe.12sensor vẫn chạy, không có bằng chứng tiết kiệm điện.
 - CameraFOV60/90/110 chỉnh góc nhìn, không chỉnh điểm lấy nét. Camera chưa vào occupancyLiDAR.
-- Hội thoại LLM cần cấu hình API; hiện chưa nghiệm thu hội thoại end-to-end. Panel evidence, preset và preview dùng được không cần LLM.
+- Hội thoại LLM cần cấu hình API; luồng đề xuất/tạo study/tóm tắt số đo đã qua OpenRouter thật; xem phần kiểm tra cuối bên dưới. Panel evidence, preset và preview dùng được không cần LLM.
 - Mưa/sương mù preview RGB chưa là suy giảm LiDAR/radar vật lý. ROS2, MultiDiscrete, radaradapter và weatherrobustness chưa hoàn tất.
 - Seg3D tham chiếu không phải prediction; Risk chưa hiệu chuẩn; checkpoint official có thể đã thấy mini_val. Không khẳng định an toàn ngoài thực tế.
 - Town03 hiện lỗi Vulkan pipeline khi loadmap trên runtime này; rootcause chưa xác định. Workaround asyncPSO thử rồi bỏ vì không hiệu quả.
-- Đây là nghiệm thu local, chưa kiểm tra deploy domain mới của team trong lượt này. Source đang chuẩn bị push; trạng thái PR/merge phải đối chiếu GitHub thực tế.
+- Đây là nghiệm thu local, chưa kiểm tra deploy domain mới của team trong lượt này. Source đã push qua PR #22; trạng thái PR/merge phải đối chiếu GitHub thực tế.
 
 Thông báo phục hồi sau lỗi đã kiểm tra browser: từ retryTown03failed22e0db05, nút “Xem bản ghi đã hoàn tất” chọn captureTown01 5e811b1f succeeded20frame, camera/occupancy hiện lại. Bảng hiện occupied74,2%,object14,4%,object-cellrecall87,9%; đây là capture khác, không phải cặpPPO20.
 
 ## OpenRouter và kiểm tra bổ sung
 
-Kết nối cơ bản tới OpenRouter đã trả modelopenai/gpt-4o-mini và câu “Kết nối OpenRouter đã thành công”,34token. Key nằm trong .envignored, không trong report. Provider routing có test riêng ngăn gửi nhầm key. 284 test và Ruff đã qua trước bổ sung gói cloud/API chỉ đọc; bộ cuối gồm **288 test passed trong 46,25 giây**, Ruff/TypeScript/ESLint và production build đã qua. Các test gọi model được mock; không gọi chúng là liveLLMtool evidence. Liveplan/study/summary với metadata dự án đang chờ xác nhận egress do bộ duyệt tự động yêu cầu.
+Kết nối cơ bản tới OpenRouter đã trả modelopenai/gpt-4o-mini và câu “Kết nối OpenRouter đã thành công”,34token. Key nằm trong .envignored, không trong report. Provider routing có test riêng ngăn gửi nhầm key. 284 test và Ruff đã qua trước bổ sung gói cloud/API chỉ đọc; bộ cuối gồm **288 test passed trong 46,25 giây**, Ruff/TypeScript/ESLint và production build đã qua. Các test gọi model được mock; không gọi chúng là liveLLMtool evidence. Người dùng đã xác nhận egress; live plan/study/summary đã kiểm tra, xem kết quả cuối bên dưới.
 
 Đã sửa lỗi RAM9,999GiB bị hiển thị thành10GiB; UI mới hiển thị9,99, giữ nguyên guard10GiB. Tên PointPillars không còn gán cho export chỉ xác minh LiDARpretrained; fusion được ghi rõ hậu xử lý ở mức vật thể.
 
@@ -56,3 +56,12 @@ Gói perception cloud đã bổ sung Seg3D: 324 artifact / 81 frame, API đọc 
 
 
 Production chỉ đọc đã kiểm tra **browser thực tế**: bot không có form gọi LLM/tạo capture; mở PPO 20 frame, Play tới 20/20 (9,5 giây sim-time), chuyển Reference, ảnh camera frame 20 decode thành công. Desktop 1280px và mobile 390px không có overflow ngang. Evidence/screenshot: `eval/cloud-native-2026-10-14/browser-check.json`. Backend local được trả về development sau QA; không biến kết quả này thành xác nhận deploy Render.
+
+
+## OpenRouter live E2E sau xác nhận người dùng
+
+Đã gọi thật qua API backend local: plan HTTP200, tool tạo study HTTP201, đọc số đo và so sánh bằng `read_sensor_study` / `compare_sensor_configs`, summary HTTP200. Plan chỉ đề xuất (`executed=false`), đúng Town01/clear/2frame/seed42/FOV90/occupancy_lidar. Study smoke bị hủy ngay; không chạy CARLA/training hay tạo số đo giả. Summary đọc study đã hoàn tất `f5961716…`, giữ baseline theo occupied IoU83,18% so với65,17%/42,90%; không tuyên bố giảm điện/chi phí hoặc tối ưu toàn cục.
+
+Phát hiện model nhân một môi trường thành hai scenario chỉ khác mật độ LiDAR. Đã thêm guard từ chối trùng môi trường trước khi tạo job và đúng một vòng sửa đề xuất, không retry vô hạn. Kiểm thử live sau sửa trả đúng một scenario baseline600k và một profile300k; study đã hủy. Đây là kiểm chứng lập kế hoạch và đọc evidence thật, không phải chứng minh LLM điều khiển simulator hoặc cải thiện PPO. Evidence: `eval/openrouter-mvp-2026-10-14/live-project-e2e.json`. Không gửi raw ảnh/point cloud/trọng số hoặc credential trong payload dự án.
+
+Bộ kiểm tra cuối sau sửa agent/lịch sử: **294 test passed trong39,91 giây**, Ruff `src tests` qua. Browser bot CARLA đọc được lịch sử cũ, hiện summary OpenRouter với đúng số đo và giữ baseline. Study lịch sử trùng môi trường vẫn đọc được để audit, nhưng không được clone thành lệnh mới. Screenshot: `eval/openrouter-mvp-2026-10-14/live-agent-browser.png`.
