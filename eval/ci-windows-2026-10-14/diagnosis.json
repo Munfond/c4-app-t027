@@ -1,0 +1,21 @@
+{
+  "ci_run": 38493353954,
+  "backend_job": 115623450215,
+  "ci_failures": 8,
+  "causes": [
+    "CPU Torch missing in CI runtime",
+    "Unprotected byte-sealed eval files converted to CRLF by Git on Windows"
+  ],
+  "windows_checkout_simulation": {
+    "autocrlf": true,
+    "core_eol": "crlf",
+    "files_checked": 336,
+    "short_variants": 8,
+    "sparse_variants": 4,
+    "archives_ready": true
+  },
+  "unprotected_conversion_reproduced": true,
+  "reference_bytes_changed": false,
+  "cpu_torch_version": "2.7.1",
+  "source": "https://pytorch.org/get-started/previous-versions/"
+}
