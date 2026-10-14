@@ -32,12 +32,16 @@ jobs:
       # Real replay/worker tests execute the occupancy checkpoint on CPU.
       # Keep this out of the lightweight production web image; no CUDA required.
       - run: python -m pip install torch==2.7.1 --index-url https://download.pytorch.org/whl/cpu
+      - name: Verify original sealed evidence bytes
+        run: python -m scripts.verify_ci_evidence
       - run: python -m ruff check src/ tests/
       - run: python -m pytest tests/ -v --tb=short
         env:
           APP_ENV: test
           LANGCHAIN_TRACING_V2: "false"
   frontend:
+    # This repo has one team runner; fail early on backend evidence errors.
+    needs: backend
     runs-on: [self-hosted, Windows, X64, team-27]
     defaults:
       run:

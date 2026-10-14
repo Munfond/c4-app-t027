@@ -21,7 +21,7 @@ def archive(pilot):
 
 def artifact(name, pilot='short'):
     selected, _ = archive(pilot)
-    manifest = json.loads((selected / 'bundle-manifest.json').read_text())
+    manifest = json.loads((selected / 'bundle-manifest.json').read_text(encoding='utf-8'))
     members = manifest['files']
     if name not in members or not 1 <= len(members) <= 256:
         raise KeyError('Artifact not in evidence bundle')
@@ -37,10 +37,10 @@ def artifact(name, pilot='short'):
 def snapshot(pilot='short'):
     selected, archive_id = archive(pilot)
     suffix = '?pilot=' + pilot
-    manifest = json.loads((selected / 'bundle-manifest.json').read_text())
+    manifest = json.loads((selected / 'bundle-manifest.json').read_text(encoding='utf-8'))
     for name in manifest['files']:
         artifact(name, pilot)
-    summary = json.loads(artifact('summary.json', pilot).read_text())
+    summary = json.loads(artifact('summary.json', pilot).read_text(encoding='utf-8'))
     if (summary['status'] != 'completed_diagnostic_only' or summary['selection'] is not None
             or summary['measured_perception_replay_ready'] is not False):
         raise ValueError('Pilot must remain explicitly diagnostic, without a validated selection')
@@ -48,7 +48,7 @@ def snapshot(pilot='short'):
         directory = row['evidence_directory']
         report_path = artifact(directory + '/report.json', pilot)
         geometry_path = artifact(directory + '/geometry.json', pilot)
-        report, geometry = json.loads(report_path.read_text()), json.loads(geometry_path.read_text())
+        report, geometry = json.loads(report_path.read_text(encoding='utf-8')), json.loads(geometry_path.read_text(encoding='utf-8'))
         if (geometry.get('validated_detection_quality') is not False
                 or geometry.get('usable_for_rl_reward') is not False
                 or report.get('measured_perception_replay_ready') is not False):
@@ -64,7 +64,7 @@ def snapshot(pilot='short'):
         raise ValueError('Variants reference different captures')
     if pilot == 'sparse60' and len({tuple(row['frame_selection']['indices']) for row in summary['variants']}) != 1:
         raise ValueError('Sparse variants must use the same selected frames')
-    coverage = json.loads(artifact('gt-coverage-audit.json', pilot).read_text())
+    coverage = json.loads(artifact('gt-coverage-audit.json', pilot).read_text(encoding='utf-8'))
     if (coverage['capture_manifest_sha256'] != summary['variants'][0]['capture_manifest_sha256']
             or coverage['scene_precision_ready'] is not False or coverage['usable_for_rl_reward'] is not False):
         raise ValueError('GT audit must reference this capture and preserve incomplete-quality scope')
