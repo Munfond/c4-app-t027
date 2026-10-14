@@ -125,3 +125,39 @@ Chi tiết vận hành: [AI Agent runbook](docs/REPLAY_SENSOR_AGENT.vi.md).
 Worker advance cả hai nguồn trong scoped store. Capture download cũng dùng scoped root.
 `src/active_sensing` là core policy/shield/replay riêng, **chưa nối vào capture, API hoặc UI online**.
 Xem [bản đối chiếu](docs/AGENT_BRANCH_AUDIT.vi.md) để phân biệt agent thí nghiệm và policy RL.
+
+
+## Active Sensing MVP — cập nhật14/10/2026
+
+```mermaid
+flowchart LR
+  U[User / bot cạnh Lab] --> API[FastAPI / bounded experiment API]
+  API --> OR[OpenRouter hoặc OpenAI / prompt + schema]
+  OR --> V[Pydantic / catalog validation]
+  V --> Q[(Durable local job queue)]
+  Q --> W[Worker / một tick owner]
+  W --> C[CARLA / camera + LiDAR + reference]
+  C --> P[CPU occupancy / checkpoint và adapter sealed]
+  P --> E[Evaluator / reference hash / valid mask]
+  E --> J[(Metrics / trace / artifacts)]
+  J --> UI[Read-only preview / Model vs Reference]
+  J --> EX[Bounded explanation / evaluator quyết định]
+  EX --> OR
+  UI --> U
+  U --> R[Engineer review / evidence hash]
+  R --> J
+```
+
+Worker không chạy trong requestLLM và không cho LLM thực thi shell/path tùy ý. Provider được chọn tường minh; key của mỗi provider chỉ gửi tới host tương ứng. Prompt, schema và metadata cần thiết có thể gửi tới LLM; camera, rawpointcloud và weights không gửi trong luồng này. Lời giải thích không thay đổi metric hoặc lựa chọn Python.
+
+NativePPO đã train offline12action trên48capture/960outcome. Policy frozen gọi trong livecapture: chỉ rawsensor đang chọn + CPUlatency → action cho frame kế tiếp. Reference/actorGT không vào policy. Cả12sensor prespawn vẫn chạy; chỉ chọn input cho model, không chứng minh tiết kiệm điện. Cặp20frame có referenceSHA giống nhau và chất lượng bằng baseline; không retune theo test.
+
+Webcloud có thể phát lại artifact đã chuyển đúng; Renderfree không tự trở thành CARLAGPUworker. Keylocal và các asset ngoàiGit không tự xuất hiện khi auto-deploy. Xem `docs/MVP_USER_GUIDE.vi.md` và `docs/MVP_ACCEPTANCE_20261014.vi.md`.
+
+
+Production adds a separate read-only `/api/v1/evidence/*` surface for the sealed
+baseline/PPO recordings. It delegates to the same integrity-checked readers;
+no job creation, review write, arbitrary file path or LLM call is exposed there.
+Docker installs fixed artifact bundles before switching to the non-root user.
+Interactive experiment routes retain the production opt-in. A GitHub runner
+is CI infrastructure, not a simulator or an inference worker.

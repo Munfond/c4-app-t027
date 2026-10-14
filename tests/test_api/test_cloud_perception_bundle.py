@@ -18,10 +18,10 @@ async def test_cloud_bundle_serves_all_frames_without_raw_data(client, lab_setti
     catalog.write_bytes((ROOT / "data/lab/exports/L3E/samples.csv").read_bytes())
     manifest = install_bundle(ARCHIVE, lab_settings.lab_data_root / "cache/perception")
     assert len(manifest["tokens"]) == 81
-    assert len(manifest["files"]) == 243
+    assert len(manifest["files"]) == 324
     tasks = (await client.get("/api/v1/lab/perception/tasks")).json()["items"]
     assert {task["id"]: task["frame_count"] for task in tasks} == {
-        "seg3d": 0, "radar": 81, "occupancy": 81, "flow": 81,
+        "seg3d": 81, "radar": 81, "occupancy": 81, "flow": 81,
     }
     for task in manifest["tasks"]:
         for token in manifest["tokens"]:
@@ -31,7 +31,9 @@ async def test_cloud_bundle_serves_all_frames_without_raw_data(client, lab_setti
             assert payload["task"] == task and payload["sample_token"] == token
             assert payload["coordinates"]["frame"] == "ego"
     token = manifest["tokens"][0]
-    assert (await client.get(f"/api/v1/lab/frames/{token}/perception/seg3d")).status_code == 503
+    semantic = (await client.get(f"/api/v1/lab/frames/{token}/perception/seg3d")).json()
+    assert semantic["kind"] == "prediction"
+    assert semantic["points"] and semantic["source"]
     assert (await client.get("/api/v1/lab/frames/unknown/perception/radar")).status_code == 404
 
 

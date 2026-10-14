@@ -36,9 +36,21 @@ class Settings(BaseSettings):
         return self.camera_cache_dir or (self.lab_data_root / "cache/cameras")
 
     # LLM
+    llm_provider: Literal["openai", "openrouter"] = "openai"
     openai_api_key: str = ""
+    openrouter_api_key: str = ""
     model_name: str = "gpt-4o-mini"
     llm_temperature: float = Field(default=0.7, ge=0.0, le=2.0)
+
+    @property
+    def llm_api_key(self) -> str:
+        # Explicit provider selection prevents sending a key to the wrong host.
+        return self.openrouter_api_key if self.llm_provider == "openrouter" else self.openai_api_key
+
+    @property
+    def llm_base_url(self) -> str:
+        return "https://openrouter.ai/api/v1" if self.llm_provider == "openrouter" else "https://api.openai.com/v1"
+
     experiment_root: Path = PROJECT_ROOT / "data/experiments"
     native_input_adapter_manifest: Path = PROJECT_ROOT / "eval/recovery-mvp-2026-10-13/native-input-adapter.json"
     native_profile_pilot_report: Path = PROJECT_ROOT / "eval/recovery-mvp-2026-10-13/native-12-profile-audit.json"

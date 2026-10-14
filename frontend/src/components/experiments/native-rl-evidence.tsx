@@ -12,14 +12,15 @@ type Evidence = { ready: false; notice: string; phase: string; completed?: numbe
     no_improvement_over_full: boolean; no_improvement_over_best_fixed: boolean; profiles: { channels: number; points_per_second: number }[];
     test_results: Record<string, Metrics>; dataset_sha256: string; checkpoint_sha256: string; limitations: string[] } };
 type Review = { id: string; reviewer: string; verdict: string; notes: string };
-const base = "/api/v1/experiments/native-rl";
+const base = "/api/v1/evidence/native-rl";
+const reviewsBase = "/api/v1/experiments/native-rl";
 const pct = (v: number | null) => v == null ? "—" : `${(100 * v).toFixed(1)}%`;
 const phases: Record<string, string> = { capturing: "Đang thu dữ liệu", capture_completed: "Capture đủ · chờ kiểm định và training",
   measuring: "Đang đo feature + model trên CPU", audited: "Dữ liệu qua kiểm định · chờ training", training: "PPO đang học cấu hình sensor",
   measurement_incomplete: "Bộ đo chưa hoàn tất", training_incomplete: "Training chưa hoàn tất",
   incomplete_failed: "Capture chưa hoàn tất · cần xử lý lỗi", incomplete_interrupted: "Capture bị ngắt · giữ dữ liệu", unavailable: "Chưa có dữ liệu native" };
 
-export function NativeRlEvidence({ onPreview }: { onPreview: (job: string) => void }) {
+export function NativeRlEvidence({ onPreview, allowReviews = true }: { onPreview: (job: string) => void; allowReviews?: boolean }) {
   const [open, setOpen] = useState(false);
   const [data, setData] = useState<Evidence | null>(null);
   const [error, setError] = useState("");
@@ -40,8 +41,8 @@ export function NativeRlEvidence({ onPreview }: { onPreview: (job: string) => vo
         if (controller.signal.aborted) return;
         setData(value); setError("");
         if (!value.ready) timer = setTimeout(load, 5000);
-        else {
-          const response = await apiJson<{items: Review[]}>(`${base}/reviews`, controller.signal);
+        else if (allowReviews) {
+          const response = await apiJson<{items: Review[]}>(`${reviewsBase}/reviews`, controller.signal);
           if (!controller.signal.aborted) setReviews(response.items);
         }
       } catch (cause) {
@@ -50,7 +51,7 @@ export function NativeRlEvidence({ onPreview }: { onPreview: (job: string) => vo
     }
     void load();
     return () => { controller.abort(); clearTimeout(timer); };
-  }, [open, attempt]);
+  }, [open, attempt, allowReviews]);
   const report = data?.ready ? data.report : null;
   function label(id: string) {
     if (id === "ppo") return "Policy PPO";
@@ -97,13 +98,13 @@ export function NativeRlEvidence({ onPreview }: { onPreview: (job: string) => vo
       </details>
       {data?.ready && data.preview_job_id && <Button variant="secondary" onClick={() => onPreview((data as Extract<Evidence, {ready: true}>).preview_job_id!)}>Xem capture mặc định của test · 20 frame →</Button>}
       <a className="agent-tools-button" href={`${base}/report`} download>Tải báo cáo native PPO ↓</a>
-      <details><summary className="cursor-pointer py-2 text-xs">Engineer đánh giá kết luận native RL</summary>
+      {allowReviews && <details><summary className="cursor-pointer py-2 text-xs">Engineer đánh giá kết luận native RL</summary>
         <p className="agent-small">Phản hồi gắn với SHA báo cáo này, chưa tự train lại policy. Tên người đánh giá là tự khai báo.</p>
         <form className="grid gap-2" onSubmit={async event => {
           event.preventDefault(); if (!data?.ready) return;
           setSaving(true); setSaved(false); setError("");
           try {
-            const response = await fetch(`${base}/reviews`, {method: "POST", headers: {"Content-Type": "application/json"},
+            const response = await fetch(`${reviewsBase}/reviews`, {method: "POST", headers: {"Content-Type": "application/json"},
               body: JSON.stringify({evidence_sha256: data.evidence_sha256, reviewer, verdict, notes})});
             const result = await response.json();
             if (!response.ok) throw new Error(typeof result.detail === "string" ? result.detail : "Không lưu được đánh giá.");
@@ -118,7 +119,7 @@ export function NativeRlEvidence({ onPreview }: { onPreview: (job: string) => vo
           {saved && <p className="agent-small" role="status">Đã lưu cùng snapshot báo cáo.</p>}
         </form>
         {reviews.map(review => <details key={review.id}><summary className="cursor-pointer py-2 text-xs">{review.reviewer} · {({accept: "Đồng ý", reject: "Không đồng ý", needs_evidence: "Cần bằng chứng"} as Record<string,string>)[review.verdict]}</summary><p className="agent-small">{review.notes}</p></details>)}
-      </details>
+      </details>}
     </div>}
   </details>;
 }

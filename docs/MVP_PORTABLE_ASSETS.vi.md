@@ -1,3 +1,5 @@
+> Cập nhật 14/10: `deploy/artifacts/native-ppo-demo.zip` được Git track và Docker tự cài để phát lại cặp baseline/PPO 20 frame qua API chỉ đọc. Gói này không chứa toàn bộ dataset training. Các ZIP nghiên cứu lớn bên dưới vẫn dùng cho phục hồi/research, không cần chuyển toàn bộ lên Render để xem bản ghi.
+
 > Bổ sung14/10: [online selector và preview](NATIVE_ONLINE_SELECTOR.vi.md) có source/bundle và ZIP riêng trong thư mục rescue. ZIP này bổ sung hai smoke4frame và kế hoạch20frame, không thay các gói native13/10 hoặc bảy checkpoint perception. Đặt `NATIVE_ONLINE_ROOT=/absolute/path/P-027-restored/data` để đọc artifacts online.
 
 # Gói phục hồi và chuyển phần native/PPO sang máy khác

@@ -35,6 +35,24 @@ Xem `HUONG_DAN_SU_DUNG.vi.md` để khởi động backend/frontend. Lab local: 
 - Mưa/sương mù preview RGB chưa là suy giảm LiDAR/radar vật lý. ROS2, MultiDiscrete, radaradapter và weatherrobustness chưa hoàn tất.
 - Seg3D tham chiếu không phải prediction; Risk chưa hiệu chuẩn; checkpoint official có thể đã thấy mini_val. Không khẳng định an toàn ngoài thực tế.
 - Town03 hiện lỗi Vulkan pipeline khi loadmap trên runtime này; rootcause chưa xác định. Workaround asyncPSO thử rồi bỏ vì không hiệu quả.
-- Đây là nghiệm thu local, chưa kiểm tra deploy domain mới của team trong lượt này. Source mới lưu local, chưa push/merge.
+- Đây là nghiệm thu local, chưa kiểm tra deploy domain mới của team trong lượt này. Source đang chuẩn bị push; trạng thái PR/merge phải đối chiếu GitHub thực tế.
 
-Thông báo phục hồi sau lỗi đã compile/TS/lint pass; chưa thao tác browser nút “Xem bản ghi đã hoàn tất” trong lượt này vì usage còn3%. Đây là kiểm tra còn chờ, không ghi pass giả.
+Thông báo phục hồi sau lỗi đã kiểm tra browser: từ retryTown03failed22e0db05, nút “Xem bản ghi đã hoàn tất” chọn captureTown01 5e811b1f succeeded20frame, camera/occupancy hiện lại. Bảng hiện occupied74,2%,object14,4%,object-cellrecall87,9%; đây là capture khác, không phải cặpPPO20.
+
+## OpenRouter và kiểm tra bổ sung
+
+Kết nối cơ bản tới OpenRouter đã trả modelopenai/gpt-4o-mini và câu “Kết nối OpenRouter đã thành công”,34token. Key nằm trong .envignored, không trong report. Provider routing có test riêng ngăn gửi nhầm key. 284 test và Ruff đã qua trước bổ sung gói cloud/API chỉ đọc; bộ cuối gồm **288 test passed trong 46,25 giây**, Ruff/TypeScript/ESLint và production build đã qua. Các test gọi model được mock; không gọi chúng là liveLLMtool evidence. Liveplan/study/summary với metadata dự án đang chờ xác nhận egress do bộ duyệt tự động yêu cầu.
+
+Đã sửa lỗi RAM9,999GiB bị hiển thị thành10GiB; UI mới hiển thị9,99, giữ nguyên guard10GiB. Tên PointPillars không còn gán cho export chỉ xác minh LiDARpretrained; fusion được ghi rõ hậu xử lý ở mức vật thể.
+
+Toolcalling thật bằng dữ liệu tổng hợp công khai đã qua: add_numbers(2,3) trả5,94token; không gửi metadata dự án. Evidence: `eval/openrouter-mvp-2026-10-14/synthetic-tool.json`. Không dùng bài này thay cho nghiệm thu liveagent của dự án.
+
+
+## Kiểm chứng thủ công mới và gói cloud
+
+Study `f5961716704a405391c5cf2fc8d10bd2` đã chạy đủ ba capture Town01, clear, seed 42, FOV 90°, mỗi capture 4 frame. Không gọi LLM. Reference SHA bằng nhau cho cả ba lượt; occupied IoU lần lượt **83,18% / 65,17% / 42,90%** cho **600k / 300k / 150k**. 300k vượt mức giảm IoU cho phép; 150k còn dưới ngưỡng occupied và object-cell recall. Evaluator giữ baseline. Browser đã hiện đúng kết luận, số đo và nguồn; preview baseline/300k mở cùng frame cạnh bot. Evidence: `eval/openrouter-mvp-2026-10-14/manual-study.json`.
+
+Gói perception cloud đã bổ sung Seg3D: 324 artifact / 81 frame, API đọc đủ bốn task không cần raw dataset; 4 test bundle qua. Gói native mới giải nén sạch có 226 file; 12 HTTP check trên frame đầu/cuối của hai capture decode được PNG 640×360 và lưới 40.000 ô. Báo cáo native PPO kiểm tra seal thành công mà không import Torch/CARLA/SB3. Production vẫn trả 503 khi POST plan; không gọi LLM. Evidence: `eval/cloud-native-2026-10-14/restore-check.json`. Đây là kiểm chứng gói/runtime local, chưa xác nhận Render đã deploy source mới.
+
+
+Production chỉ đọc đã kiểm tra **browser thực tế**: bot không có form gọi LLM/tạo capture; mở PPO 20 frame, Play tới 20/20 (9,5 giây sim-time), chuyển Reference, ảnh camera frame 20 decode thành công. Desktop 1280px và mobile 390px không có overflow ngang. Evidence/screenshot: `eval/cloud-native-2026-10-14/browser-check.json`. Backend local được trả về development sau QA; không biến kết quả này thành xác nhận deploy Render.

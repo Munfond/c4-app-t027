@@ -5,6 +5,7 @@ from contextlib import asynccontextmanager, suppress
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from src.api.evidence import router as evidence_router
 from src.api.experiments import router as experiment_router
 from src.api.lab import router as lab_router
 from src.api.routes import router
@@ -55,6 +56,7 @@ app.add_middleware(
 
 app.include_router(router, prefix="/api/v1")
 app.include_router(experiment_router, prefix="/api/v1")
+app.include_router(evidence_router, prefix="/api/v1")
 app.include_router(lab_router, prefix="/api/v1")
 app.include_router(lab_router, prefix="/api")  # alias for /api/lab/...
 

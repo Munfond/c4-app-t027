@@ -15,6 +15,10 @@ async function request(path: string) {
 }
 
 async function initialize() {
+  const mode = await fetch("/api/v1/evidence/capabilities");
+  if (!mode.ok) throw new Error("Không kiểm tra được chế độ thí nghiệm.");
+  const capability = await mode.json() as { interactive_enabled: boolean };
+  if (!capability.interactive_enabled) throw new Error("Phiên bản xem kết quả; tạo thí nghiệm chưa được bật trên server này.");
   const saved = sessionStorage.getItem(key);
   if (saved) {
     try { await request(`/${saved}/touch`); return saved; }

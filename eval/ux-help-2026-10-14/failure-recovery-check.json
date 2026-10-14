@@ -1,0 +1,14 @@
+{
+  "case": "Failed CARLA capture recovery",
+  "failed_job_prefix": "22e0db05",
+  "button": "Xem bản ghi đã hoàn tất",
+  "selected_completed_job_prefix": "5e811b1f",
+  "frames": 20,
+  "status": "succeeded",
+  "occupied_iou_display": "74.2%",
+  "object_iou_display": "14.4%",
+  "recall_display": "87.9%",
+  "camera_frame": 1,
+  "result": "pass",
+  "new_job_created": false
+}

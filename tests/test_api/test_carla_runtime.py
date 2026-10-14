@@ -38,6 +38,13 @@ def test_healthy_hardware_is_not_a_worker_or_all_configurations_guarantee(runtim
     assert "worker" in value["notice"]
 
 
+def test_memory_display_cannot_appear_ready_when_launch_guard_rejects(runtime, monkeypatch):
+    monkeypatch.setattr(service, "require_memory_headroom", lambda _: 9.999)
+    value = service.probe()
+    assert value["hardware_ready"] is False
+    assert value["memory_available_gib"] == 9.99
+
+
 def test_external_or_missing_runtime_is_unknown_not_false_success(runtime):
     runtime.carla_server_executable = None
     assert service.probe()["hardware_ready"] is None

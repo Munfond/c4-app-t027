@@ -68,3 +68,8 @@ Hai plan ở trên đã chạy thành công và audit artifact đã seal. Giữ 
 PPO giữ action7 ở tất cả19quyết định. Confusion matrix bằng nhau; **chưa có cải thiện chất lượng hoặc cấu hình tốt hơn được chứng minh trong phép đối chiếu này**. Latency model-only p95 CPU là115,64ms đối chứng và105,66ms PPO; vì action/input giữ nguyên và chỉ đo mỗi lượt một lần, chênh lệch này không chứng minh tăng tốc do policy. Không retune theo test đã xem, không chuyển kết quả thành bằng chứng độ an toàn thực tế.
 
 Evidence: `eval/native-online-2026-10-14/paired20-comparison.json` và các report/audit sealed trong folder `full20-retry1`, `ppo20`. Trên Lab: bot→CARLA→PPO trong CARLA; phần đối chiếu hiển thị kết luận, hai nút preview và trace tải xuống. Không chạy lại lệnh vào output đã hoàn tất.
+
+
+## Xem trên server CPU sau khi deploy bản 14/10
+
+Gói `deploy/artifacts/native-ppo-demo.zip` chứa cặp baseline/PPO 20 frame và các seal cần thiết. Docker tự cài. API công khai chỉ đọc có prefix `/api/v1/evidence/native-online` với cùng report/camera/prediction/reference contract ở trên; native PPO report ở `/api/v1/evidence/native-rl`. API interactive `/experiments` vẫn opt-in, không được mở bằng việc xem preview. Browser production chỉ đọc đã phát đủ 20 frame và chuyển Reference; kiểm tra này là local, chưa xác nhận Render đã cập nhật.

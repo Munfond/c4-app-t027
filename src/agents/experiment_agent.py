@@ -32,8 +32,8 @@ def strict_schema(value):
 
 async def draft(state):
     settings = get_settings()
-    if not settings.experiment_agent_enabled or not settings.openai_api_key:
-        raise RuntimeError("Agent disabled or OPENAI_API_KEY missing; use the experiment form/API")
+    if not settings.experiment_agent_enabled or not settings.llm_api_key:
+        raise RuntimeError("Agent disabled or selected provider API key missing; use the experiment form/API")
     system = (
         "You draft bounded perception experiments for P-027 in Vietnamese. Call draft_experiment once. "
         "Do not invent model IDs, paths, maps, metrics or capabilities. CARLA only supports occupancy_lidar. "
@@ -71,9 +71,9 @@ async def draft(state):
     }
     async with httpx.AsyncClient(timeout=30) as client:
         response = await client.post(
-            "https://api.openai.com/v1/chat/completions",
+            settings.llm_base_url + "/chat/completions",
             json=payload,
-            headers={"Authorization": f"Bearer {settings.openai_api_key}"},
+            headers={"Authorization": f"Bearer {settings.llm_api_key}"},
         )
     if response.status_code != 200:
         raise RuntimeError(f"LLM provider returned HTTP {response.status_code}; no experiment was created")

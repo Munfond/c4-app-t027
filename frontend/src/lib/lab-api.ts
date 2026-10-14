@@ -35,10 +35,11 @@ export type DetectionFrame = {
 };
 
 export const MVP_MODEL_LABELS: Record<string, string> = {
-  official_lidar: "PointPillars · LiDAR pretrained",
+  // The export identifies the sensor/reference model, not a verified architecture.
+  official_lidar: "LiDAR pretrained",
   official_cl: "BEVFusion · Camera + LiDAR pretrained",
   crn: "CRN · Camera + Radar pretrained",
-  fused: "Fusion pretrained · Camera + LiDAR + Radar",
+  fused: "Hợp nhất hậu xử lý · Camera + LiDAR + Radar",
 };
 
 export function mvpModels(items: ModelInfo[]) {

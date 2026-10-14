@@ -49,7 +49,9 @@ export default function AgentPanel({ source, onSourceChange, onOpenTools, toolsO
   const { session, error: sessionError, start: startSession, loading: sessionLoading } = sessionState;
   const [runtime, setRuntime] = useState<RuntimeStatus | null>(null);
   const captureBlocked = source === "carla" && runtime?.hardware_ready === false;
+  const [interactive, setInteractive] = useState<boolean | null>(null);
   const [enabled, setEnabled] = useState(false);
+  const [provider, setProvider] = useState("");
   const [nativeAdapterAvailable, setNativeAdapterAvailable] = useState(false);
   const [message, setMessage] = useState("");
   const [cameraFov, setCameraFov] = useState(90);
@@ -80,18 +82,26 @@ export default function AgentPanel({ source, onSourceChange, onOpenTools, toolsO
   };
 
   useEffect(() => {
-    if (source === "dataset_replay" && !session) return;
+    const controller = new AbortController();
+    void apiJson<{ interactive_enabled: boolean }>("/api/v1/evidence/capabilities", controller.signal)
+      .then(value => { if (!controller.signal.aborted) setInteractive(value.interactive_enabled); })
+      .catch(cause => { if (!controller.signal.aborted) setError(String(cause)); });
+    return () => controller.abort();
+  }, []);
+
+  useEffect(() => {
+    if (interactive !== true || (source === "dataset_replay" && !session)) return;
     const controller = new AbortController();
     const suffix = source === "dataset_replay" ? `?session=${encodeURIComponent(session)}` : "";
     const path = source === "dataset_replay" ? "/replay/studies" : "/sensor-agent";
-    void Promise.all([apiJson<{ agent_enabled: boolean; native_input_adapters?: {id:string;available:boolean}[] }>(`${base}/registry`, controller.signal),
+    void Promise.all([apiJson<{ agent_enabled: boolean; agent_provider?: string; native_input_adapters?: {id:string;available:boolean}[] }>(`${base}/registry`, controller.signal),
       apiJson<{ items: Study[] }>(`${base}${path}${suffix}`, controller.signal)])
       .then(([registry, data]) => {
         if (controller.signal.aborted) return;
-        setEnabled(registry.agent_enabled); setNativeAdapterAvailable(!!registry.native_input_adapters?.some(adapter => adapter.id === "intensity_mean_experimental" && adapter.available)); setHistory(data.items.filter(item => item.source === source));
+        setEnabled(registry.agent_enabled); setProvider(registry.agent_provider ?? ""); setNativeAdapterAvailable(!!registry.native_input_adapters?.some(adapter => adapter.id === "intensity_mean_experimental" && adapter.available)); setHistory(data.items.filter(item => item.source === source));
       }).catch(cause => { if (!controller.signal.aborted) setError(String(cause)); });
     return () => controller.abort();
-  }, [source, session]);
+  }, [source, session, interactive]);
 
   useEffect(() => {
     if (!studyId || (source === "dataset_replay" && !session)) return;
@@ -166,25 +176,28 @@ export default function AgentPanel({ source, onSourceChange, onOpenTools, toolsO
       }}>{value === "carla" ? "CARLA" : "nuScenes replay"}</button>)}
     </div>
     <p className="agent-small">{source === "carla" ? "Mô phỏng CARLA · hiện hỗ trợ occupancy LiDAR." : "Dữ liệu ghi sẵn · LiDAR, radar và chất lượng ảnh."} PPO đã có lượt thử chọn LiDAR trong capture trực tiếp; yêu cầu chat vẫn chạy study riêng.</p>
-    {source === "carla" && <CarlaRuntimeNotice active={active} onStatus={setRuntime} compact />}
-    {!enabled && <p className="agent-notice" role="status">Chưa bật LLM hoặc chưa cấu hình API key. Bạn vẫn xem evidence và mở cấu hình nâng cao để chạy thủ công được.</p>}
-    {source === "dataset_replay" && sessionError && <p role="alert" className="agent-notice">{sessionError}{!session && <Button loading={sessionLoading} onClick={() => void startSession()}>Mở phiên replay mới</Button>}</p>}
+    {source === "carla" && interactive === true && <CarlaRuntimeNotice active={active} onStatus={setRuntime} compact />}
+    {interactive === true && !enabled && <p className="agent-notice" role="status">Chưa bật LLM hoặc chưa cấu hình API key. Bạn vẫn xem evidence và mở cấu hình nâng cao để chạy thủ công được.</p>}
+    {enabled && provider === "openrouter" && <p className="agent-small">Lời hỏi, cấu hình và số đo cần giải thích gửi tới OpenRouter. Luồng này không gửi ảnh camera, point cloud hoặc trọng số.</p>}
+    {interactive === true && source === "dataset_replay" && sessionError && <p role="alert" className="agent-notice">{sessionError}{!session && <Button loading={sessionLoading} onClick={() => void startSession()}>Mở phiên replay mới</Button>}</p>}
+    {interactive === false && <p className="agent-notice" role="status">Phiên bản xem kết quả: mở CARLA bên trên để xem capture, PPO và trace đã kiểm định. Tạo thí nghiệm và hội thoại cần backend được đội cấu hình riêng.</p>}
+    {interactive === null && !error && <p role="status" className="agent-small">Đang kiểm tra chế độ agent…</p>}
     {error && <p role="alert" className="agent-error">{error.replace(/^Error: /, "")}</p>}
-    <button type="button" className="agent-tools-button" aria-controls="agent-tools" aria-expanded={toolsOpen} onClick={() => onOpenTools()}><span>{source === "carla" ? "Cấu hình nâng cao" : "Lịch sử & kết quả replay"}</span><span aria-hidden="true">↗</span></button>
-    {source === "dataset_replay" && <button type="button" className="agent-text-button" onClick={() => onOpenTools(undefined, "manual")}>Cấu hình nâng cao · chạy checkpoint thủ công</button>}
+    <button type="button" className="agent-tools-button" disabled={interactive !== true} aria-controls="agent-tools" aria-expanded={toolsOpen} onClick={() => onOpenTools()}><span>{source === "carla" ? "Cấu hình nâng cao" : "Lịch sử & kết quả replay"}</span><span aria-hidden="true">↗</span></button>
+    {interactive === true && source === "dataset_replay" && <button type="button" className="agent-text-button" onClick={() => onOpenTools(undefined, "manual")}>Cấu hình nâng cao · chạy checkpoint thủ công</button>}
     {!!notes.trim() && <p className="agent-small">Lưu đánh giá engineer trước khi đổi nguồn.</p>}
-    <form className="agent-compose" onSubmit={event => { event.preventDefault(); void send(); }}>
+    {interactive === true && <form className="agent-compose" onSubmit={event => { event.preventDefault(); void send(); }}>
       <label htmlFor="dock-message">Bạn muốn kiểm chứng điều gì?</label>
       <textarea id="dock-message" rows={3} maxLength={2000} value={message} onChange={event => setMessage(event.target.value)} placeholder={source === "carla" ? "So sánh baseline với LiDAR 300.000 và 150.000 điểm/s ở Town01, 2 frame…" : "Thử giữ 50% điểm LiDAR/radar ở scene-0103, 2 frame; IoU giảm tối đa 0.02…"} />
       <Button type="submit" loading={busy} disabled={captureBlocked || !enabled || !message.trim() || running || (source === "dataset_replay" && !session)}>Gửi & kiểm chứng</Button>
       {source === "carla" && <button type="button" className="agent-text-button" disabled={busy || !enabled || !message.trim()} onClick={() => void send(true)}>Chỉ lập cấu hình để tôi kiểm tra trước</button>}
       <p className="agent-small">Gửi yêu cầu sẽ tạo lượt đo mới và dùng token LLM. Đọc evidence không gọi LLM.</p>
-    </form>
-    <OccupancyRlEvidence />
+    </form>}
+    {interactive === true && <OccupancyRlEvidence />}
     {source === "carla" && <NativeOnlineEvidence onPreview={onOpenOnline} />}
-    {source === "carla" && <NativeRlEvidence onPreview={onOpenCapture} />}
-    {source === "carla" && <NativeProfileEvidence onInspect={onInspect} />}
-    {source === "carla" && <section className="agent-panel-body" aria-label="Cấu hình camera nhanh">
+    {source === "carla" && <NativeRlEvidence onPreview={onOpenCapture} allowReviews={interactive === true} />}
+    {interactive === true && source === "carla" && <NativeProfileEvidence onInspect={onInspect} />}
+    {interactive === true && source === "carla" && <section className="agent-panel-body" aria-label="Cấu hình camera nhanh">
       <label className="agent-small" htmlFor="agent-camera-fov">Preset camera · không dùng token LLM</label>
       <select id="agent-camera-fov" className="w-full rounded-lg border border-[var(--line)] p-2 text-sm" value={cameraFov} onChange={event => setCameraFov(Number(event.target.value))}>
         <option value={60}>60° · Vật trước mặt lớn hơn, vùng nhìn hẹp</option>
@@ -198,7 +211,7 @@ export default function AgentPanel({ source, onSourceChange, onOpenTools, toolsO
       }}>Điền cấu hình để kiểm tra</Button>
       <p className="agent-small">Nút preset chỉ điền cấu hình, chưa tạo capture mới. FOV không ảnh hưởng prediction occupancy LiDAR; chưa có evidence chọn preset tốt nhất.</p>
     </section>}
-    {source === "carla" && <section className="agent-panel-body" aria-label="Kiểm chứng cấu hình có số đo">
+    {interactive === true && source === "carla" && <section className="agent-panel-body" aria-label="Kiểm chứng cấu hình có số đo">
       <Button disabled={captureBlocked || busy || running || !nativeAdapterAvailable} loading={busy} onClick={async () => {
         setBusy(true);setError("");
         try {
@@ -213,7 +226,7 @@ export default function AgentPanel({ source, onSourceChange, onOpenTools, toolsO
       <p className="agent-small">Baseline 600k so với 300k/150k điểm/s · 3 capture mới, 4 frame/capture. Căn chỉnh intensity thử nghiệm; kiểm tra cả occupied và object. Không dùng LLM, không tự train hoặc áp cấu hình lên xe.</p>
     </section>}
     {draft && <details open><summary>Cấu hình nháp · chưa chạy</summary><p className="agent-small">Cấu hình đã điền vào phần nâng cao cạnh bot. Kiểm tra rồi bấm Tạo thí nghiệm.</p><pre>{JSON.stringify(draft, null, 2)}</pre></details>}
-    <section className="agent-section" aria-label="Lịch sử và bằng chứng">
+    {interactive === true && <section className="agent-section" aria-label="Lịch sử và bằng chứng">
       <div className="agent-section-heading"><h3>Evidence</h3><span>Đo trước, kết luận sau</span></div>
       <label className="agent-small">Lượt đánh giá<select aria-label="Lượt đánh giá agent" value={study?.id ?? ""} onChange={event => { const item = history.find(item => item.id === event.target.value); if (item) choose(item); }}><option value="" disabled>Chọn lượt đã chạy</option>{history.map(item => <option key={item.id} value={item.id}>{item.id.slice(0, 8)} · {statuses[item.status] ?? item.status}</option>)}</select></label>
       {!study && <div className="agent-empty"><strong>Chưa chọn lượt đánh giá</strong><p>Tôi không thể khẳng định cấu hình nào tốt hơn khi chưa có số đo cùng tham chiếu. Chọn lịch sử hoặc tạo lượt kiểm chứng.</p></div>}
@@ -256,6 +269,6 @@ export default function AgentPanel({ source, onSourceChange, onOpenTools, toolsO
         </form>
         {reviews.map(review => <details key={review.id}><summary>{review.reviewer} · {({ accept: "Đồng ý", reject: "Không đồng ý", needs_evidence: "Cần bằng chứng" } as Record<string, string>)[review.verdict]}</summary><p>{review.notes}</p><p className="agent-small">{new Date(review.created_at * 1000).toLocaleString("vi-VN")}</p></details>)}
       </>}
-    </section>
+    </section>}
   </div>;
 }

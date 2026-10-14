@@ -16,8 +16,8 @@ from src.services import sensor_studies as studies
 
 def enabled():
     settings = get_settings()
-    if not settings.experiment_agent_enabled or not settings.openai_api_key:
-        raise RuntimeError("Set EXPERIMENT_AGENT_ENABLED=true and OPENAI_API_KEY on the server to test the LLM agent")
+    if not settings.experiment_agent_enabled or not settings.llm_api_key:
+        raise RuntimeError("Set EXPERIMENT_AGENT_ENABLED=true and the selected provider's OPENAI_API_KEY or OPENROUTER_API_KEY on the server")
     return settings
 
 
@@ -40,9 +40,9 @@ async def completion(messages, tools=None, choice=None, max_tokens=1800):
         payload.update(tools=tools, parallel_tool_calls=False, tool_choice=choice)
     async with httpx.AsyncClient(timeout=45) as client:
         response = await client.post(
-            "https://api.openai.com/v1/chat/completions",
+            settings.llm_base_url + "/chat/completions",
             json=payload,
-            headers={"Authorization": f"Bearer {settings.openai_api_key}"},
+            headers={"Authorization": f"Bearer {settings.llm_api_key}"},
         )
     if response.status_code != 200:
         raise RuntimeError(f"LLM provider HTTP {response.status_code}; inspect account/model/credits, no auto retry")

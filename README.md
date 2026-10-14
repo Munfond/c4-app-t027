@@ -5,7 +5,9 @@ Agent mở dưới dạng bot cạnh Lab; công cụ CARLA/nuScenes nằm trong 
 Bản phục hồi đã train PPO thật: nuScenes proxy3action và CARLA native12action từ48capture/960outcome. Native PPO chạy8.192bước; checkpoint chọn bằng validation, sau đó giữ nguyên khi inference trực tiếp trong CARLA. Đối chiếu20frame route112/seed212 đã hoàn tất với referenceSHA khớp: PPO giữ32kênh/600k ở19quyết định, occupiedIoU78,93% và objectIoU30,60%, bằng baseline. UI báo chưa cải thiện và cho xem hai capture, trace, nguồn kiểm chứng. Đây chưa là online training, tiết kiệm điện hoặc chứng minh ổn định ngoài thực tế. Town03 đang gặp crash Vulkan; giữ nguyên lượt lỗi, demo bằng các capture Town01 đã kiểm định. Hội thoại LLM cần cấu hình API riêng; đọc evidence và preview không cần LLM.
 
 - [Nghiệm thu MVP và luồng demo hiện tại](docs/MVP_ACCEPTANCE_20261014.vi.md)
-- [Hướng dẫn dùng Lab](docs/HUONG_DAN_SU_DUNG.vi.md)
+- [Bàn giao Vercel/Render, runner và kiểm tra sau deploy](docs/TEAM_HANDOFF_20261014.vi.md)
+- [Hướng dẫn MVP đầy đủ: user flow, agent, RL, setup và deploy](docs/MVP_USER_GUIDE.vi.md)
+- [Hướng dẫn dùng Lab nhanh](docs/HUONG_DAN_SU_DUNG.vi.md)
 - [PPO trực tiếp trong CARLA và đối chiếu20frame](docs/NATIVE_ONLINE_SELECTOR.vi.md)
 - [Khởi động local, phạm vi phục hồi và giới hạn](docs/MVP_RECOVERY_SCOPE.vi.md)
 - [Chuyển assets native/PPO sang máy khác](docs/MVP_PORTABLE_ASSETS.vi.md)

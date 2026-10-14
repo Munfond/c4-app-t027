@@ -12,9 +12,9 @@ import re
 import zipfile
 from pathlib import Path
 
-TASKS = ("radar", "occupancy", "flow")
+TASKS = ("radar", "occupancy", "flow", "seg3d")
 ROOT = Path(__file__).resolve().parents[1]
-NAME = re.compile(r"(radar|occupancy|flow)/[0-9a-f]{32}\.json")
+NAME = re.compile(r"(radar|occupancy|flow|seg3d)/[0-9a-f]{32}\.json")
 
 
 def build_bundle(lab_root: Path, archive: Path):

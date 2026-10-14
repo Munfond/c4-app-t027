@@ -5,7 +5,7 @@ import { apiJson } from "@/lib/lab-api";
 import { Button } from "@/components/ui/button";
 import { CapturePlayback } from "./capture-playback";
 
-const base = "/api/v1/experiments/native-online";
+const base = "/api/v1/evidence/native-online";
 type Profile = { channels: number; points_per_second: number };
 type Trace = { index: number; current_action: number; next_action: number; current_profile: Profile;
   applies_to_capture_index: number | null; cpu_feature_model_ms: number; cpu_policy_ms: number | null };

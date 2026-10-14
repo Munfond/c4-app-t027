@@ -1,5 +1,6 @@
 """Bounded read-only preflight for the manual UI, not a worker-readiness claim."""
 
+import math
 import sys
 import threading
 import time
@@ -51,7 +52,8 @@ def probe():
         "managed": True,
         "hardware_ready": ready,
         "gpu_ready": gpu_ok,
-        "memory_available_gib": round(available, 1) if available is not None else None,
+        # Never round a value below the launch guard up to that guard on the UI.
+        "memory_available_gib": math.floor(available * 100) / 100 if available is not None else None,
         "memory_required_gib": minimum,
         "server_present": server_ok,
         "notice": notice,
