@@ -18,5 +18,7 @@
     "production-desktop.png",
     "production-mobile.png"
   ],
-  "viewport_restored": true
+  "viewport_restored": true,
+  "final_development_header": "FRAME 01 / 40",
+  "dataset_index_preserved_in_tooltip": 41
 }

@@ -253,7 +253,7 @@ export function LabWorkspace() {
       </aside>
       <section aria-label="Quan sát và kết quả đồng bộ" className="lab-stage">
         <div className="stage-toolbar">
-          <div className="stage-context"><i aria-hidden="true" /><strong>{scene || "Đang tải"}</strong><span>/</span><span>{currentToken ? `FRAME ${String(activeFrame!.sample_idx).padStart(3, "0")}` : "—"}</span></div>
+          <div className="stage-context"><i aria-hidden="true" /><strong>{scene || "Đang tải"}</strong><span>/</span><span title={activeFrame ? `Mã frame trong dataset: #${activeFrame.sample_idx}` : undefined}>{currentToken ? `FRAME ${String(currentIndex + 1).padStart(2, "0")} / ${frames.length}` : "—"}</span></div>
           <div className="stage-tools">
             {workspace === "sensors" ? <div className="view-switch" role="group" aria-label="Dữ liệu cảm biến">
               <button type="button" aria-pressed={sensorView === "points"} onClick={() => { setPlaying(false); setSpatialReadyToken(null); setSensorView("points"); }}>LiDAR + Radar</button>
