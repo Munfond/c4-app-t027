@@ -1,0 +1,8 @@
+{
+  "simulated_crlf_mismatches": 309,
+  "restored_from_unfiltered_git_blobs": 311,
+  "after_mismatches": 0,
+  "source_seals_changed": false,
+  "both_archive_readers_ready": true,
+  "windows_observed_before_and_after_checkout_index": 310
+}
