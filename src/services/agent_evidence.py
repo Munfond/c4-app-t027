@@ -176,6 +176,10 @@ def review_connection(db):
 
 @contextmanager
 def connection():
+    if store.remote():
+        with store.connection() as db:
+            yield db
+        return
     # Keep review snapshots beyond temporary replay session cleanup. HTTP reads
     # still require access to the original study; this is an engineering archive.
     directory = store.get_settings().experiment_root

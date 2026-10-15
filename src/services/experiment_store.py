@@ -19,6 +19,10 @@ def root():
     return _scoped_root.get() or get_settings().experiment_root
 
 
+def remote():
+    return getattr(get_settings(), "experiment_execution_mode", "local") == "remote" and _scoped_root.get() is None
+
+
 @contextmanager
 def scope(path):
     token = _scoped_root.set(path)
@@ -30,6 +34,12 @@ def scope(path):
 
 @contextmanager
 def connection():
+    if remote():
+        from src.services.remote_database import connection as shared_connection
+
+        with shared_connection() as db:
+            yield db
+        return
     directory = root()
     directory.mkdir(parents=True, exist_ok=True)
     db = sqlite3.connect(directory / "jobs.sqlite3", timeout=30, isolation_level=None)
@@ -52,7 +62,10 @@ def decode(row):
     value["spec"] = json.loads(value["spec"])
     value["result"] = json.loads(value["result"]) if value["result"] else None
     value["capture_progress"] = None
-    if value["status"] == "running" and value["spec"]["request"]["source"] == "carla":
+    progress = value.pop("progress", None)
+    if progress:
+        value["capture_progress"] = json.loads(progress)
+    if not remote() and value["status"] == "running" and value["spec"]["request"]["source"] == "carla":
         try:
             progress = json.loads((root() / value["id"] / "capture/progress.json").read_text())
             completed, total = progress["completed"], progress["total"]
@@ -70,6 +83,9 @@ def decode(row):
 
 
 def create(spec, key=None, *, purpose="interactive"):
+    if remote() and (spec.source != "carla" or spec.capture_id or spec.model_ids != ["occupancy_lidar"]
+                     or purpose != "interactive"):
+        raise ValueError("Remote worker v1 accepts fresh CARLA occupancy_lidar trials only")
     if purpose not in ("interactive", "native_rl_collection"):
         raise ValueError("Unknown experiment purpose")
     validate_spec(spec)
@@ -121,6 +137,8 @@ def recent(*, include_research=True):
 
 
 def claim(owner):
+    if remote():
+        raise RuntimeError("Remote queues must be claimed through the authenticated worker API")
     with connection() as db:
         db.execute("BEGIN IMMEDIATE")
         # Never rerun a stale capture automatically: another simulator may still own that world.

@@ -6,8 +6,10 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from src.api.evidence import router as evidence_router
+from src.api.experiment_access import router as access_router
 from src.api.experiments import router as experiment_router
 from src.api.lab import router as lab_router
+from src.api.remote_workers import router as worker_router
 from src.api.routes import router
 from src.config import get_settings
 
@@ -22,6 +24,10 @@ async def lifespan(app: FastAPI):
         while True:
             try:
                 await asyncio.to_thread(sweep)
+                if settings.experiment_execution_mode == "remote":
+                    from src.services.remote_jobs import expire
+
+                    await asyncio.to_thread(expire)
             except Exception:
                 logging.getLogger(__name__).exception("Temporary session cleanup failed")
             await asyncio.sleep(5)
@@ -57,6 +63,8 @@ app.add_middleware(
 app.include_router(router, prefix="/api/v1")
 app.include_router(experiment_router, prefix="/api/v1")
 app.include_router(evidence_router, prefix="/api/v1")
+app.include_router(access_router, prefix="/api/v1")
+app.include_router(worker_router, prefix="/api/v1")
 app.include_router(lab_router, prefix="/api/v1")
 app.include_router(lab_router, prefix="/api")  # alias for /api/lab/...
 

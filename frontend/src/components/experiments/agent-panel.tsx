@@ -50,6 +50,9 @@ export default function AgentPanel({ source, onSourceChange, onOpenTools, toolsO
   const [runtime, setRuntime] = useState<RuntimeStatus | null>(null);
   const captureBlocked = source === "carla" && runtime?.hardware_ready === false;
   const [interactive, setInteractive] = useState<boolean | null>(null);
+  const [needsAccess, setNeedsAccess] = useState(false);
+  const [accessToken, setAccessToken] = useState("");
+  const [executionMode, setExecutionMode] = useState("local");
   const [enabled, setEnabled] = useState(false);
   const [provider, setProvider] = useState("");
   const [nativeAdapterAvailable, setNativeAdapterAvailable] = useState(false);
@@ -74,6 +77,7 @@ export default function AgentPanel({ source, onSourceChange, onOpenTools, toolsO
   const post = async <T,>(path: string, body: unknown = {}): Promise<T> => {
     const response = await fetch(url(path), { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
     const data = await response.json();
+    if (response.status === 401) { setNeedsAccess(true); setInteractive(false); }
     if (!response.ok) throw new Error(typeof data.detail === "string" ? data.detail : JSON.stringify(data.detail));
     return data as T;
   };
@@ -83,11 +87,19 @@ export default function AgentPanel({ source, onSourceChange, onOpenTools, toolsO
 
   useEffect(() => {
     const controller = new AbortController();
-    void apiJson<{ interactive_enabled: boolean }>("/api/v1/evidence/capabilities", controller.signal)
-      .then(value => { if (!controller.signal.aborted) setInteractive(value.interactive_enabled); })
+    void apiJson<{ interactive_enabled: boolean; access_required?: boolean; authenticated?: boolean; execution_mode?: string }>("/api/v1/evidence/capabilities", controller.signal)
+      .then(value => { if (!controller.signal.aborted) {
+        const locked = !!value.access_required && !value.authenticated;
+        setNeedsAccess(locked); setExecutionMode(value.execution_mode ?? "local");
+        setInteractive(value.interactive_enabled && !locked);
+      } })
       .catch(cause => { if (!controller.signal.aborted) setError(String(cause)); });
     return () => controller.abort();
   }, []);
+
+  useEffect(() => {
+    if (executionMode === "remote" && source !== "carla") onSourceChange("carla");
+  }, [executionMode, source, onSourceChange]);
 
   useEffect(() => {
     if (interactive !== true || (source === "dataset_replay" && !session)) return;
@@ -169,8 +181,16 @@ export default function AgentPanel({ source, onSourceChange, onOpenTools, toolsO
   };
   const running = study?.status === "running" || history.some(item => item.status === "running");
   return <div className="agent-panel-body">
+    {needsAccess && <form className="agent-compose" onSubmit={async event => {
+      event.preventDefault(); setBusy(true); setError("");
+      try {
+        const response = await fetch("/api/v1/experiment-access", { method: "POST", headers: {"Content-Type":"application/json"}, body: JSON.stringify({token: accessToken}) });
+        if (!response.ok) throw new Error("Mã truy cập không đúng hoặc backend chưa bật thí nghiệm.");
+        setAccessToken(""); setNeedsAccess(false); setInteractive(true);
+      } catch (cause) { setError(String(cause)); } finally { setBusy(false); }
+    }}><label htmlFor="experiment-access">Mã truy cập thí nghiệm</label><input id="experiment-access" type="password" autoComplete="off" minLength={32} maxLength={256} value={accessToken} onChange={event => setAccessToken(event.target.value)} /><Button type="submit" loading={busy}>Mở quyền chạy thí nghiệm</Button><p className="agent-small">Mã do đội cung cấp; không nhập API key LLM hoặc token worker.</p></form>}
     <div className="agent-source" role="group" aria-label="Nguồn thí nghiệm">
-      {(["carla", "dataset_replay"] as const).map(value => <button key={value} disabled={busy || !!notes.trim()} aria-pressed={source === value} onClick={() => {
+      {(["carla", "dataset_replay"] as const).map(value => <button key={value} disabled={busy || !!notes.trim() || (executionMode === "remote" && value === "dataset_replay")} aria-pressed={source === value} onClick={() => {
         if (value === source) return;
         onSourceChange(value); setStudy(null); setReport(null); setHistory([]); setReviews([]); setDraft(null); setError(""); current.current = "";
       }}>{value === "carla" ? "CARLA" : "nuScenes replay"}</button>)}
@@ -180,7 +200,7 @@ export default function AgentPanel({ source, onSourceChange, onOpenTools, toolsO
     {interactive === true && !enabled && <p className="agent-notice" role="status">Chưa bật LLM hoặc chưa cấu hình API key. Bạn vẫn xem evidence và mở cấu hình nâng cao để chạy thủ công được.</p>}
     {enabled && provider === "openrouter" && <p className="agent-small">Lời hỏi, cấu hình và số đo cần giải thích gửi tới OpenRouter. Luồng này không gửi ảnh camera, point cloud hoặc trọng số.</p>}
     {interactive === true && source === "dataset_replay" && sessionError && <p role="alert" className="agent-notice">{sessionError}{!session && <Button loading={sessionLoading} onClick={() => void startSession()}>Mở phiên replay mới</Button>}</p>}
-    {interactive === false && <p className="agent-notice" role="status">Phiên bản xem kết quả: mở CARLA bên trên để xem capture, PPO và trace đã kiểm định. Tạo thí nghiệm và hội thoại cần backend được đội cấu hình riêng.</p>}
+    {interactive === false && !needsAccess && <p className="agent-notice" role="status">Phiên bản xem kết quả: mở CARLA bên trên để xem capture, PPO và trace đã kiểm định. Tạo thí nghiệm và hội thoại cần backend được đội cấu hình riêng.</p>}
     {interactive === null && !error && <p role="status" className="agent-small">Đang kiểm tra chế độ agent…</p>}
     {error && <p role="alert" className="agent-error">{error.replace(/^Error: /, "")}</p>}
     <button type="button" className="agent-tools-button" disabled={interactive !== true} aria-controls="agent-tools" aria-expanded={toolsOpen} onClick={() => onOpenTools()}><span>{source === "carla" ? "Cấu hình nâng cao" : "Lịch sử & kết quả replay"}</span><span aria-hidden="true">↗</span></button>

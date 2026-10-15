@@ -1,5 +1,10 @@
 # Perception Lab · Team 27
 
+Remote CARLA worker (Render API + máy GPU cá nhân): xem
+[hướng dẫn cài đặt backend/worker chi tiết](docs/REMOTE_GPU_WORKER.vi.md).
+Chế độ mặc định vẫn local/playback; remote cần PostgreSQL, private S3-compatible
+storage và credentials riêng trước khi bật production interactive.
+
 Agent mở dưới dạng bot cạnh Lab; công cụ CARLA/nuScenes nằm trong workspace thay vì thêm tab riêng. LLM lập kế hoạch khi có cấu hình API; inference/evaluation và quyết định được kiểm chứng bằng artifact, không dùng lời LLM làm metric.
 
 Bản phục hồi đã train PPO thật: nuScenes proxy3action và CARLA native12action từ48capture/960outcome. Native PPO chạy8.192bước; checkpoint chọn bằng validation, sau đó giữ nguyên khi inference trực tiếp trong CARLA. Đối chiếu20frame route112/seed212 đã hoàn tất với referenceSHA khớp: PPO giữ32kênh/600k ở19quyết định, occupiedIoU78,93% và objectIoU30,60%, bằng baseline. UI báo chưa cải thiện và cho xem hai capture, trace, nguồn kiểm chứng. Đây chưa là online training, tiết kiệm điện hoặc chứng minh ổn định ngoài thực tế. Town03 đang gặp crash Vulkan; giữ nguyên lượt lỗi, demo bằng các capture Town01 đã kiểm định. Hội thoại LLM cần cấu hình API riêng; đọc evidence và preview không cần LLM.
@@ -245,9 +250,11 @@ planning và giải thích, không cần cho xem Lab hoặc CLI replay determini
 
 Replay giữ lịch sử phiên: refresh giữ, đóng tab/Kết thúc phiên dọn
 artifacts tạm theo lease. Tải báo cáo để giữ lâu dài. CLI QA giữ output riêng để resume.
-Engineer review lưu snapshot độc lập tại `EXPERIMENT_ROOT/engineer-feedback.sqlite3`;
-chưa tự dùng feedback để train lại hoặc thay đổi kết quả đo.
-Backend/worker phải dùng cùng EXPERIMENT_ROOT. Xem
+Ở chế độ local, engineer review lưu snapshot độc lập tại
+`EXPERIMENT_ROOT/engineer-feedback.sqlite3`; backend/worker dùng chung
+`EXPERIMENT_ROOT`. Chế độ remote lưu review/queue trong PostgreSQL và artifact
+trong bucket, worker dùng scratch riêng. Feedback chưa tự dùng để train lại
+hoặc thay đổi kết quả đo. Xem
 [runbook hiện tại](docs/REPLAY_SENSOR_AGENT.vi.md) trước khi chạy hoặc deploy.
 
 CARLA dùng form `/carla`; `/experiments` giữ kết quả replay. Cả hai dùng chung panel bot,

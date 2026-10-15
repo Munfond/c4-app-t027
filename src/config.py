@@ -78,6 +78,19 @@ class Settings(BaseSettings):
     experiment_agent_enabled: bool = False
     experiment_agent_model: str = "gpt-4o-mini"
     experiment_api_enabled_in_production: bool = False
+    experiment_execution_mode: Literal["local", "remote"] = "local"
+    experiment_access_token: str = ""
+    remote_worker_tokens: str = "{}"  # JSON {worker_id: token}; backend only.
+    remote_database_url: str = ""
+    remote_storage_endpoint: str = ""
+    remote_storage_region: str = "auto"
+    remote_storage_bucket: str = ""
+    remote_storage_access_key: str = ""
+    remote_storage_secret_key: str = ""
+    remote_storage_prefix: str = "p027-jobs"
+    remote_artifact_max_bytes: int = Field(default=32 * 1024 * 1024, ge=1024, le=128 * 1024 * 1024)
+    remote_job_max_bytes: int = Field(default=512 * 1024 * 1024, ge=1024, le=2 * 1024**3)
+    remote_lease_seconds: int = Field(default=120, ge=30, le=900)
     experiment_max_pending: int = Field(default=5, ge=1, le=50)
     # Optional local post-NMS camera detector; never supplied by API/LLM.
     replay_camera_onnx: Path | None = None

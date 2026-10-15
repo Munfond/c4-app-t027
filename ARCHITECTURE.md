@@ -1,5 +1,24 @@
 # Architecture · Perception Lab
 
+## Remote CARLA execution (optional)
+
+`EXPERIMENT_EXECUTION_MODE=remote` moves the existing CARLA study/job/review SQL
+surface into versioned `remote_*` PostgreSQL tables. A repository operator must
+run `python -m scripts.init_remote_worker` explicitly; Lab tables are unaffected.
+The browser signs in through an HttpOnly cookie. A GPU machine authenticates
+separately and polls `/api/v1/remote-workers/*`, receiving one frozen LiDAR
+occupancy trial with a lease. It executes the existing isolated local runner,
+heartbeats independently, then uploads bounded artifacts with signed S3 PUT
+URLs. The API verifies hashes and recomputes occupancy metrics from uploaded
+prediction/reference cells before publishing. Preview APIs read the private
+bucket, so no shared filesystem or inbound GPU-machine port is needed.
+
+Remote v1 serializes captures and stops the study on failure/expired lease;
+it never silently recaptures a world. Existing local/replay execution and sealed
+PPO playback remain independent. This protocol does not launch native online
+PPO training/inference jobs. See `docs/REMOTE_GPU_WORKER.vi.md` for setup and
+Windows external-server versus Linux managed-server limitations.
+
 Đối chiếu code ngày 04/10/2026: **offline inference → artifact theo frame → read-only API → browser renderer**. Model perception không chạy trong mỗi HTTP request. Máy chuẩn bị và máy phục vụ có thể cùng máy trong local.
 
 ## Components và data flow

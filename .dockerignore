@@ -3,6 +3,8 @@
 .env
 .venv
 .venv-lab
+.venv-worker
+.env.worker
 .venv-inference
 .venv-spatial
 frontend/

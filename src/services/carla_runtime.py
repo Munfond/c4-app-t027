@@ -61,6 +61,15 @@ def probe():
 
 
 def snapshot():
+    if getattr(get_settings(), "experiment_execution_mode", "local") == "remote":
+        from src.services.remote_jobs import workers
+
+        items = workers()
+        ready = any(w["online"] and w["ready"] for w in items)
+        return {"managed": False, "hardware_ready": None, "execution_mode": "remote",
+                "workers": items, "worker_online": ready,
+                "notice": "Worker GPU đã online; job sẽ được xử lý lần lượt." if ready else
+                "Worker GPU đang offline hoặc chưa sẵn sàng. Job mới sẽ xếp hàng chờ; bật worker để xử lý."}
     global _cached, _expires
     with _lock:
         if _cached is None or time.monotonic() >= _expires:

@@ -20,6 +20,7 @@ export type ExperimentSpec = {
 };
 type Spec = ExperimentSpec;
 type Registry = {
+  execution_mode?: "local" | "remote";
   native_input_adapters?: {id: string; available: boolean; label: string; notice?: string}[];
   models: { id: string; task: string; available: boolean; sources: string[] }[];
   maps: string[]; agent_enabled: boolean; agent_model: string; carla_client_installed: boolean;
@@ -145,14 +146,14 @@ export function ExperimentWorkspace({ source = "carla", initialSpec, initialJobI
     <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
       CARLA dùng occupancy LiDAR; camera giúp đối chiếu bối cảnh, chưa là input của model.
       <details className="mt-2"><summary className="cursor-pointer">Phạm vi môi trường và preset</summary><p className="mt-2">Mưa/sương mù mới đổi RGB, chưa đo độ bền sensor. Bảy checkpoint chạy trên nuScenes; radar CARLA chưa có adapter phù hợp. Preset MVP: Town01, 2 xe, 0 người. Map/traffic khác cần kiểm chứng riêng.</p></details>
-      {registry && !registry.carla_client_installed ? <p className="mt-2 font-medium">Backend chưa có CARLA client. Worker cần client/server riêng hoặc dùng nguồn nuScenes.</p> : null}
+      {registry && registry.execution_mode !== "remote" && !registry.carla_client_installed ? <p className="mt-2 font-medium">Backend chưa có CARLA client. Worker cần client/server riêng hoặc dùng nguồn nuScenes.</p> : null}
     </div>
     {error ? <p role="alert" className="rounded-lg bg-red-50 p-4 text-sm text-red-700">{error}</p> : null}
     <section className="grid gap-4 rounded-xl border border-[var(--line)] bg-white p-5">
       <div className="grid gap-3 sm:grid-cols-3">
         <Select label="Nguồn dữ liệu" value={spec.source} onChange={event => setSpec(previous => ({ ...previous,
           source: event.target.value as Spec["source"], scene_id: event.target.value === "nuscenes" ? "scene-0103" : null,
-          capture_id: null, native_input_adapter: "raw", model_ids: ["occupancy_lidar"], scenario: {...previous.scenario, ...(event.target.value === "nuscenes" ? {traffic_placement: "random_spawn",camera:{fov:90}} : {})} }))}><option value="carla">CARLA</option><option value="nuscenes">nuScenes mini-val</option></Select>
+          capture_id: null, native_input_adapter: "raw", model_ids: ["occupancy_lidar"], scenario: {...previous.scenario, ...(event.target.value === "nuscenes" ? {traffic_placement: "random_spawn",camera:{fov:90}} : {})} }))}><option value="carla">CARLA</option><option value="nuscenes" disabled={registry?.execution_mode === "remote"}>nuScenes mini-val</option></Select>
         {spec.source === "carla" ? <>
           <Select label="Map" value={spec.scenario.map} onChange={event => scenario("map", event.target.value)}>{(registry?.maps ?? ["Town01"]).map(map => <option key={map}>{map}</option>)}</Select>
           <Select label="Weather" value={spec.scenario.weather} onChange={event => scenario("weather", event.target.value)}>{["clear", "rain", "fog"].map(weather => <option key={weather}>{weather}</option>)}</Select>
@@ -200,7 +201,7 @@ export function ExperimentWorkspace({ source = "carla", initialSpec, initialJobI
       </div> : null}
       {chosen?.result ? <>
         <p className="text-xs text-[var(--muted)]">Đầu vào: {chosen.result.manifest.native_input_adapter?.id ?? "raw"}{chosen.result.manifest.native_input_adapter?.manifest_sha256 && <span className="ml-2 break-all font-mono">SHA {chosen.result.manifest.native_input_adapter.manifest_sha256}</span>}</p>
-        {chosen.spec.request.source === "carla" && frameCount === chosen.spec.request.scenario.frames && registry?.native_input_adapters?.some(adapter => adapter.id === "intensity_mean_experimental" && adapter.available) && <div className="flex flex-wrap items-center gap-3">
+        {registry?.execution_mode !== "remote" && chosen.spec.request.source === "carla" && frameCount === chosen.spec.request.scenario.frames && registry?.native_input_adapters?.some(adapter => adapter.id === "intensity_mean_experimental" && adapter.available) && <div className="flex flex-wrap items-center gap-3">
           <Button variant="secondary" onClick={() => {setSpec({...chosen.spec.request, capture_id: chosen.spec.request.capture_id ?? chosen.id, native_input_adapter: chosen.spec.request.native_input_adapter === "intensity_mean_experimental" ? "raw" : "intensity_mean_experimental"}); setError("");}}>Chuẩn bị đối chiếu cùng capture</Button>
           <span className="text-xs text-[var(--muted)]">Giữ camera/reference; đổi xử lý đầu vào. Bấm “Tạo thí nghiệm” để chạy.</span>
         </div>}

@@ -1,5 +1,9 @@
 # Bàn giao MVP cho team
 
+> Remote worker mới: [Render + máy GPU cá nhân](REMOTE_GPU_WORKER.vi.md).
+> Chỉ bật sau khi tạo schema queue PostgreSQL, private bucket và operator/worker
+> credentials. Không cần thay deployment playback hiện tại nếu chưa chạy job mới.
+
 ## 1. Repo và deploy phải cùng phiên bản
 
 Sau khi PR tích hợp được merge, kiểm tra Vercel **và** Render đều deploy đúng commit trên `main`. Vercel xanh không đồng nghĩa backend đã cập nhật.

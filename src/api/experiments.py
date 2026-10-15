@@ -5,7 +5,7 @@ from zipfile import BadZipFile
 
 import httpx
 from fastapi import APIRouter, Depends, Header, HTTPException, Path, Query, Request
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, Response
 
 from src.config import get_settings
 from src.models.experiments import AgentPlanRequest, EngineerReview, ExperimentSpec, SensorAgentRequest, SensorStudySpec
@@ -16,18 +16,25 @@ from src.services.experiment_registry import MODELS, registry, validate_spec
 from src.simulation.carla_bridge import client_available
 
 
-def require_experiment_access():
+def require_experiment_access(request: Request):
     settings = get_settings()
     if settings.app_env == "production" and not settings.experiment_api_enabled_in_production:
         raise HTTPException(
             503, "Experiments are opt-in in production; configure access control and writable storage first"
         )
+    from src.services.experiment_auth import require_operator
+
+    require_operator(request)
 
 
 async def session_scope(request: Request):
     from src.services import experiment_sessions as sessions
 
     ident = request.headers.get("x-experiment-session") or request.query_params.get("session")
+    if get_settings().experiment_execution_mode == "remote" and (
+        ident or "/replay/" in request.url.path or request.url.path.endswith("/sessions")
+    ):
+        raise HTTPException(422, "Remote worker v1 supports CARLA studies only; use local mode for dataset replay")
     if not ident:
         yield
         return
@@ -97,6 +104,7 @@ def experiment_registry():
 
     settings = get_settings()
     return {
+        "execution_mode": settings.experiment_execution_mode,
         "models": registry(),
         "native_input_adapters": catalog(),
         "carla_client_installed": client_available(settings),
@@ -521,6 +529,8 @@ def prediction(ident: ExperimentId, model_id: str, index: int = Path(ge=0, le=80
     job = experiment(ident)
     if model_id not in MODELS or model_id not in job["spec"]["request"]["model_ids"]:
         raise HTTPException(404, "Model not in experiment")
+    if store.remote():
+        return remote_json(ident, f"predictions/{model_id}/{index:04d}.json")
     path = store.root() / ident / "predictions" / model_id / f"{index:04d}.json"
     if not path.is_file():
         raise HTTPException(404, "Prediction not yet available")
@@ -546,6 +556,8 @@ def capture_camera(
         return FileResponse(path, media_type="image/jpeg")
     if spec["source"] != "carla":
         raise HTTPException(404, "Use processed nuScenes camera endpoint")
+    if store.remote():
+        return remote_response(ident, f"capture/frame_{index:04d}.png", "image/png")
     capture_id = spec.get("capture_id") or ident
     path = store.root() / capture_id / "capture" / f"frame_{index:04d}.png"
     if not path.is_file():
@@ -561,6 +573,8 @@ def capture_reference(ident: ExperimentId, index: int = Path(ge=0, le=80)):
         raise HTTPException(404, "Completed native reference not available")
     if index >= len(job["result"]["manifest"]["frames"]):
         raise HTTPException(404, "Reference frame not available")
+    if store.remote():
+        return remote_json(ident, f"references/{index:04d}.json")
     capture_id = spec.get("capture_id") or ident
     path = store.root() / capture_id / "capture" / f"frame_{index:04d}.npz"
     from src.services.capture_reference import read_reference
@@ -579,11 +593,32 @@ def capture_artifact(ident: ExperimentId, index: int = Path(ge=0, le=80), kind: 
     spec = job["spec"]["request"]
     if spec["source"] != "carla" or kind not in ("npz", "json", "png"):
         raise HTTPException(404, "Capture artifact not found")
+    if store.remote():
+        return remote_response(ident, f"capture/frame_{index:04d}.{kind}",
+                               {"npz": "application/octet-stream", "png": "image/png", "json": "application/json"}[kind])
     capture_id = spec.get("capture_id") or ident
     path = store.root() / capture_id / "capture" / f"frame_{index:04d}.{kind}"
     if not path.is_file():
         raise HTTPException(404, "Capture artifact not yet available")
     return FileResponse(path, filename=path.name)
+
+
+def remote_response(ident, path, media_type):
+    from src.services.remote_jobs import artifact
+    from src.services.remote_storage import StorageUnavailableError
+
+    try:
+        return Response(artifact(ident, path), media_type=media_type, headers={"Cache-Control": "private, no-store"})
+    except (FileNotFoundError, KeyError) as exc:
+        raise HTTPException(404, "Remote artifact not available") from exc
+    except ValueError as exc:
+        raise HTTPException(503, "Remote artifact failed integrity validation") from exc
+    except StorageUnavailableError as exc:
+        raise HTTPException(503, "Remote storage unavailable") from exc
+
+
+def remote_json(ident, path):
+    return json.loads(remote_response(ident, path, "application/json").body)
 
 
 @router.get("/{ident}/sensor-preview")

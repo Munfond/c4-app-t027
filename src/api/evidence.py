@@ -1,6 +1,6 @@
 """Public read-only simulator evidence. Interactive experiment guards remain separate."""
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Request
 
 from src.api import experiments
 from src.config import get_settings
@@ -9,9 +9,14 @@ router = APIRouter(prefix="/evidence", tags=["recorded-evidence"])
 
 
 @router.get("/capabilities")
-def capabilities():
+def capabilities(request: Request):
     settings = get_settings()
+    from src.services.experiment_auth import operator_authenticated
+
     return {
+        "execution_mode": settings.experiment_execution_mode,
+        "access_required": bool(settings.experiment_access_token) or settings.experiment_execution_mode == "remote",
+        "authenticated": operator_authenticated(request),
         "interactive_enabled": settings.app_env != "production" or settings.experiment_api_enabled_in_production,
         "playback_only": settings.app_env == "production" and not settings.experiment_api_enabled_in_production,
         "notice": "Recorded simulator output; not a live CARLA server or a real-world safety guarantee",

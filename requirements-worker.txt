@@ -1,0 +1,3 @@
+# Remote CARLA worker (Python 3.12); no RL training packages required.
+-r requirements-experiments.txt
+carla==0.9.16

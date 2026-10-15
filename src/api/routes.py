@@ -1,4 +1,4 @@
-from fastapi import APIRouter, File, HTTPException, UploadFile
+from fastapi import APIRouter, Depends, File, HTTPException, UploadFile
 from fastapi.concurrency import run_in_threadpool
 from fastapi.responses import Response
 
@@ -6,6 +6,7 @@ from src.agents.graph import agent
 from src.config import get_settings
 from src.models.schemas import ChatRequest, ChatResponse
 from src.services.anonymizer import InvalidImageError, UnavailableAnonymizerError, anonymize_bytes
+from src.services.experiment_auth import require_operator
 
 router = APIRouter()
 
@@ -28,7 +29,7 @@ async def anonymize_image(file: UploadFile = File(...)):
     return Response(result, media_type="image/jpeg", headers={"Cache-Control": "no-store"})
 
 
-@router.post("/chat", response_model=ChatResponse)
+@router.post("/chat", response_model=ChatResponse, dependencies=[Depends(require_operator)])
 async def chat(request: ChatRequest) -> ChatResponse:
     result = await agent.ainvoke({"query": request.message})
     return ChatResponse(response=result.get("response", ""), analysis=result.get("analysis", ""))
