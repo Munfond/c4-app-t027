@@ -22,14 +22,26 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          # Public upstream; the repository-scoped token avoids an expiring PAT.
           token: ${{ github.token }}
+          path: mirror
+
+      - name: Checkout private upstream
+        uses: actions/checkout@v4
+        with:
+          repository: AI20K-Build-Phase-Cohort-4/P-027
+          ref: main
+          fetch-depth: 0
+          token: ${{ secrets.SYNC_PAT }}
+          path: upstream
+          persist-credentials: false
 
       - name: Fetch and Merge from Upstream
+        working-directory: mirror
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git remote add upstream https://github.com/AI20K-Build-Phase-Cohort-4/P-027.git
+          # SYNC_PAT only reads the private source; GITHUB_TOKEN writes this mirror.
+          git remote add upstream ../upstream
           git fetch upstream main
           git checkout main
           # Preserve mirror deployment fixes; stop on conflicts instead of overwriting.
