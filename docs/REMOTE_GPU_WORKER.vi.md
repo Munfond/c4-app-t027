@@ -4,6 +4,9 @@ Tài liệu đi cùng chế độ `EXPERIMENT_EXECUTION_MODE=remote`. Đọc h�
 và chọn **một** cách cài worker theo hệ điều hành. Source có remote protocol;
 credentials, database, bucket và GPU phải được chuẩn bị trên môi trường thật.
 
+Máy worker dùng Ubuntu: xem [hướng dẫn từng bước dành cho người vận hành](WORKER_UBUNTU_STEP_BY_STEP.vi.md)
+với lệnh cài đặt, preflight, chạy thử, systemd và xử lý lỗi.
+
 ## 1. Phạm vi và kiến trúc
 
 ```text
