@@ -1,0 +1,78 @@
+{
+  "checked_utc": "2026-10-13T20:27:18.450590+00:00",
+  "release": "xP8FPMmSDZQhMJ9aeZLRL",
+  "browser": "User-opened working Lab tab; computer-use API, no security bypass",
+  "manual_cases": [
+    {
+      "case": "Open guide and choose all3sections",
+      "result": "pass",
+      "actual": "Native dialog shows Start/Read results/Agent-CARLA content"
+    },
+    {
+      "case": "Escape closes guide and restores focus",
+      "result": "pass",
+      "actual": "Focus returned to Hướng dẫn button"
+    },
+    {
+      "case": "Mobile390x844 and desktop1280x900",
+      "result": "pass",
+      "actual": "Dialog fits viewport; scrollable content and close/footer remain visible"
+    },
+    {
+      "case": "Guide opens CARLA agent beside workspace",
+      "result": "pass",
+      "actual": "CARLA selected; LLM-disabled notice remains truthful"
+    },
+    {
+      "case": "Frozen PPO4frame playback",
+      "result": "pass",
+      "actual": "Play reached4/4 at1.5simseconds; camera frame4 and current/next profile trace present"
+    },
+    {
+      "case": "Reference geometry",
+      "result": "pass",
+      "actual": "Actor199 shows13.8m ahead,0.3m right,6.3x2.4x2.1m and calibrated camera projection"
+    },
+    {
+      "case": "Manual capture and bot study hardware gate",
+      "result": "pass",
+      "actual": "GPU unavailable notice; Tạo thí nghiệm and Kiểm chứng2mứcLiDAR disabled; readonly preview stays usable"
+    },
+    {
+      "case": "Lab sensor playback interaction responsiveness",
+      "result": "limited",
+      "actual": "Frames advanced; several mouse/isolated-world automation commands timed out during playback. Keyboard Space paused atframe15. Guide opened normally after pause. Do not claim stable playback timing; recheck after GPU recovery."
+    }
+  ],
+  "tests": {
+    "repository_suite": 277,
+    "focused_runtime_lifecycle_api": 32,
+    "typescript": "passed",
+    "eslint_changed_components": "passed",
+    "production_build": "passed"
+  },
+  "css_recovery": {
+    "old_css": "6bc2fa9a55e8cdc4.css",
+    "old_output_missing": [
+      "usage-guide",
+      "sensor-view-toolbar",
+      "sensor-visibility"
+    ],
+    "fixed_by": "Preserved old build cache and rebuilt clean; compiled CSS contains allsentinels; launcher now refuses missing CSS"
+  },
+  "not_done": [
+    "CARLA20frame paired run remains blocked by GPU health/RAM",
+    "No claim of safe8GiB capture",
+    "No new training or policy improvement",
+    "No deployment/push/merge in this local recovery step"
+  ],
+  "runtime_actual": {
+    "managed": true,
+    "hardware_ready": false,
+    "gpu_ready": false,
+    "memory_available_gib": 6.6,
+    "memory_required_gib": 10.0,
+    "server_present": true,
+    "notice": "GPU NVIDIA chưa sẵn sàng. Kiểm tra nvidia-smi trước khi tạo capture; bạn vẫn xem được bản ghi đã có."
+  }
+}

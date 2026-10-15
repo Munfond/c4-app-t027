@@ -1,0 +1,25 @@
+{
+  "api_and_core_tests": "76 passed",
+  "frontend_build": "passed",
+  "browser_checks": [
+    "Three navigation links restored",
+    "FOV selector60degrees works",
+    "Play advanced1to8of41; elapsed13.0seconds reflects original gaps",
+    "Pause stops playback"
+  ],
+  "http": [
+    "health200",
+    "scenes200",
+    "models200",
+    "benchmarks200",
+    "prediction200",
+    "camera200",
+    "lab200",
+    "13 JS/CSS assets200"
+  ],
+  "limitations": [
+    "Native CARLA/FOV not run after recovery",
+    "Old detection capture checksum mismatch prevents measured RL admission",
+    "Current PPO verification is synthetic only"
+  ]
+}

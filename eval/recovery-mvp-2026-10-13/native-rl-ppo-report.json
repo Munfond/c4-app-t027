@@ -1,0 +1,1160 @@
+{
+  "kind": "native_occupancy_ppo_research_v1",
+  "status": "completed",
+  "algorithm": "PPO",
+  "dataset_sha256": "a2cc487aeb83fcde63f20b8a4d1cd92afe4eaf2f26cec6e97998c6689460cd6b",
+  "audit_sha256": "9f027b5424a7c5fe49c121403fe13a2c36434c8d68715e53b9c6802f63c2f813",
+  "training_plan_sha256": "3665f3847ad94240b8969d354a5d5dba04272c124f1f6daa46a893463482c14b",
+  "observation_abi": "native-current-profile-next-frame-v1",
+  "checkpoint_sha256": "8d6c7155534906a50ca2f52b039696700072ff200768f0d91ead33c828e9f878",
+  "adapter": {
+    "id": "intensity_mean_experimental",
+    "manifest_sha256": "e0338b8b1bd7963bedbbb499128f734e25c5dc1725c17f17eaca0440a520379a",
+    "gain": 0.06486433468844091,
+    "checkpoint_sha256": "8d6c7155534906a50ca2f52b039696700072ff200768f0d91ead33c828e9f878",
+    "notice": "Experimental input alignment; validated only on limited Town01 captures, not real-world safety"
+  },
+  "actual_steps": 8192,
+  "ppo_epoch_updates": 256,
+  "before_ppo_sha256": "2382ce85af03f2810e824b799c9a107d97d931fe5bc4fc8ba24e35bc55bd4c1c",
+  "after_ppo_sha256": "05b3a605fa48d50093f3e211e34a3eec7b0203508337a9b74eb52772fe0b1f29",
+  "selected_policy": "validation-policy-4096.zip",
+  "selected_policy_sha256": "96e2838f7f160e3277dda4a026b3cecd0cd68b4986bdcbef92062874cc7d9b8f",
+  "selected_policy_trained_steps": 4096,
+  "profiles": [
+    {
+      "channels": 16,
+      "points_per_second": 150000
+    },
+    {
+      "channels": 16,
+      "points_per_second": 300000
+    },
+    {
+      "channels": 16,
+      "points_per_second": 450000
+    },
+    {
+      "channels": 16,
+      "points_per_second": 600000
+    },
+    {
+      "channels": 32,
+      "points_per_second": 150000
+    },
+    {
+      "channels": 32,
+      "points_per_second": 300000
+    },
+    {
+      "channels": 32,
+      "points_per_second": 450000
+    },
+    {
+      "channels": 32,
+      "points_per_second": 600000
+    },
+    {
+      "channels": 64,
+      "points_per_second": 150000
+    },
+    {
+      "channels": 64,
+      "points_per_second": 300000
+    },
+    {
+      "channels": 64,
+      "points_per_second": 450000
+    },
+    {
+      "channels": 64,
+      "points_per_second": 600000
+    }
+  ],
+  "baseline_action": 7,
+  "validation": [
+    {
+      "actual_steps": 1024,
+      "ppo_epoch_updates": 32,
+      "mean_episode_reward": 0.41736644758416513,
+      "occupied_iou": 0.6591537007416024,
+      "object_iou": 0.29476584022038566,
+      "score": 0.476959770480994,
+      "confusion": [
+        [
+          41238,
+          706,
+          76
+        ],
+        [
+          6125,
+          12711,
+          527
+        ],
+        [
+          125,
+          40,
+          321
+        ]
+      ],
+      "decisions": 19,
+      "episodes": 1,
+      "bootstrap": [
+        {
+          "episode": "validation-route48-seed148",
+          "bootstrap_latency_ms": 80.98538799822563,
+          "bootstrap_action": 7
+        }
+      ],
+      "latency_p50_ms": 81.25979400210781,
+      "latency_p95_ms": 93.51236859656638,
+      "switches": 1,
+      "late": 0,
+      "action_counts": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 19,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0
+      }
+    },
+    {
+      "actual_steps": 2048,
+      "ppo_epoch_updates": 64,
+      "mean_episode_reward": 0.3750769945408732,
+      "occupied_iou": 0.5957749240270561,
+      "object_iou": 0.2731397459165154,
+      "score": 0.43445733497178574,
+      "confusion": [
+        [
+          41467,
+          420,
+          133
+        ],
+        [
+          7559,
+          11321,
+          483
+        ],
+        [
+          135,
+          50,
+          301
+        ]
+      ],
+      "decisions": 19,
+      "episodes": 1,
+      "bootstrap": [
+        {
+          "episode": "validation-route48-seed148",
+          "bootstrap_latency_ms": 80.98538799822563,
+          "bootstrap_action": 7
+        }
+      ],
+      "latency_p50_ms": 79.65886800229782,
+      "latency_p95_ms": 87.92846319774979,
+      "switches": 1,
+      "late": 0,
+      "action_counts": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 19,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0
+      }
+    },
+    {
+      "actual_steps": 3072,
+      "ppo_epoch_updates": 96,
+      "mean_episode_reward": 0.3750769945408732,
+      "occupied_iou": 0.5957749240270561,
+      "object_iou": 0.2731397459165154,
+      "score": 0.43445733497178574,
+      "confusion": [
+        [
+          41467,
+          420,
+          133
+        ],
+        [
+          7559,
+          11321,
+          483
+        ],
+        [
+          135,
+          50,
+          301
+        ]
+      ],
+      "decisions": 19,
+      "episodes": 1,
+      "bootstrap": [
+        {
+          "episode": "validation-route48-seed148",
+          "bootstrap_latency_ms": 80.98538799822563,
+          "bootstrap_action": 7
+        }
+      ],
+      "latency_p50_ms": 79.65886800229782,
+      "latency_p95_ms": 87.92846319774979,
+      "switches": 1,
+      "late": 0,
+      "action_counts": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 19,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0
+      }
+    },
+    {
+      "actual_steps": 4096,
+      "ppo_epoch_updates": 128,
+      "mean_episode_reward": 0.4727297443236827,
+      "occupied_iou": 0.7707698999565028,
+      "object_iou": 0.29498269896193774,
+      "score": 0.5328762994592202,
+      "confusion": [
+        [
+          41178,
+          778,
+          64
+        ],
+        [
+          3794,
+          14963,
+          606
+        ],
+        [
+          107,
+          38,
+          341
+        ]
+      ],
+      "decisions": 19,
+      "episodes": 1,
+      "bootstrap": [
+        {
+          "episode": "validation-route48-seed148",
+          "bootstrap_latency_ms": 80.98538799822563,
+          "bootstrap_action": 7
+        }
+      ],
+      "latency_p50_ms": 81.54959899547976,
+      "latency_p95_ms": 88.63786639849421,
+      "switches": 0,
+      "late": 0,
+      "action_counts": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 19,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0
+      }
+    },
+    {
+      "actual_steps": 5120,
+      "ppo_epoch_updates": 160,
+      "mean_episode_reward": 0.4727297443236827,
+      "occupied_iou": 0.7707698999565028,
+      "object_iou": 0.29498269896193774,
+      "score": 0.5328762994592202,
+      "confusion": [
+        [
+          41178,
+          778,
+          64
+        ],
+        [
+          3794,
+          14963,
+          606
+        ],
+        [
+          107,
+          38,
+          341
+        ]
+      ],
+      "decisions": 19,
+      "episodes": 1,
+      "bootstrap": [
+        {
+          "episode": "validation-route48-seed148",
+          "bootstrap_latency_ms": 80.98538799822563,
+          "bootstrap_action": 7
+        }
+      ],
+      "latency_p50_ms": 81.54959899547976,
+      "latency_p95_ms": 88.63786639849421,
+      "switches": 0,
+      "late": 0,
+      "action_counts": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 19,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0
+      }
+    },
+    {
+      "actual_steps": 6144,
+      "ppo_epoch_updates": 192,
+      "mean_episode_reward": 0.4727297443236827,
+      "occupied_iou": 0.7707698999565028,
+      "object_iou": 0.29498269896193774,
+      "score": 0.5328762994592202,
+      "confusion": [
+        [
+          41178,
+          778,
+          64
+        ],
+        [
+          3794,
+          14963,
+          606
+        ],
+        [
+          107,
+          38,
+          341
+        ]
+      ],
+      "decisions": 19,
+      "episodes": 1,
+      "bootstrap": [
+        {
+          "episode": "validation-route48-seed148",
+          "bootstrap_latency_ms": 80.98538799822563,
+          "bootstrap_action": 7
+        }
+      ],
+      "latency_p50_ms": 81.54959899547976,
+      "latency_p95_ms": 88.63786639849421,
+      "switches": 0,
+      "late": 0,
+      "action_counts": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 19,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0
+      }
+    },
+    {
+      "actual_steps": 7168,
+      "ppo_epoch_updates": 224,
+      "mean_episode_reward": 0.4727297443236827,
+      "occupied_iou": 0.7707698999565028,
+      "object_iou": 0.29498269896193774,
+      "score": 0.5328762994592202,
+      "confusion": [
+        [
+          41178,
+          778,
+          64
+        ],
+        [
+          3794,
+          14963,
+          606
+        ],
+        [
+          107,
+          38,
+          341
+        ]
+      ],
+      "decisions": 19,
+      "episodes": 1,
+      "bootstrap": [
+        {
+          "episode": "validation-route48-seed148",
+          "bootstrap_latency_ms": 80.98538799822563,
+          "bootstrap_action": 7
+        }
+      ],
+      "latency_p50_ms": 81.54959899547976,
+      "latency_p95_ms": 88.63786639849421,
+      "switches": 0,
+      "late": 0,
+      "action_counts": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 19,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0
+      }
+    },
+    {
+      "actual_steps": 8192,
+      "ppo_epoch_updates": 256,
+      "mean_episode_reward": 0.4727297443236827,
+      "occupied_iou": 0.7707698999565028,
+      "object_iou": 0.29498269896193774,
+      "score": 0.5328762994592202,
+      "confusion": [
+        [
+          41178,
+          778,
+          64
+        ],
+        [
+          3794,
+          14963,
+          606
+        ],
+        [
+          107,
+          38,
+          341
+        ]
+      ],
+      "decisions": 19,
+      "episodes": 1,
+      "bootstrap": [
+        {
+          "episode": "validation-route48-seed148",
+          "bootstrap_latency_ms": 80.98538799822563,
+          "bootstrap_action": 7
+        }
+      ],
+      "latency_p50_ms": 81.54959899547976,
+      "latency_p95_ms": 88.63786639849421,
+      "switches": 0,
+      "late": 0,
+      "action_counts": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 19,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0
+      }
+    }
+  ],
+  "test_results": {
+    "fixed_00": {
+      "mean_episode_reward": 0.24985321000838442,
+      "occupied_iou": 0.44694104560622916,
+      "object_iou": 0.06385869565217392,
+      "score": 0.25539987062920155,
+      "confusion": [
+        [
+          36143,
+          614,
+          119
+        ],
+        [
+          11654,
+          9471,
+          508
+        ],
+        [
+          43,
+          19,
+          47
+        ]
+      ],
+      "decisions": 19,
+      "episodes": 1,
+      "bootstrap": [
+        {
+          "episode": "test-route72-seed172",
+          "bootstrap_latency_ms": 91.97807800228475,
+          "bootstrap_action": 7
+        }
+      ],
+      "latency_p50_ms": 79.14399499713909,
+      "latency_p95_ms": 82.39376100173104,
+      "switches": 1,
+      "late": 0,
+      "action_counts": {
+        "0": 19,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0
+      }
+    },
+    "fixed_01": {
+      "mean_episode_reward": 0.2998124035541685,
+      "occupied_iou": 0.5493125330512956,
+      "object_iou": 0.05654450261780105,
+      "score": 0.3029285178345483,
+      "confusion": [
+        [
+          35926,
+          884,
+          66
+        ],
+        [
+          9241,
+          11612,
+          780
+        ],
+        [
+          36,
+          19,
+          54
+        ]
+      ],
+      "decisions": 19,
+      "episodes": 1,
+      "bootstrap": [
+        {
+          "episode": "test-route72-seed172",
+          "bootstrap_latency_ms": 91.97807800228475,
+          "bootstrap_action": 7
+        }
+      ],
+      "latency_p50_ms": 80.05857500393176,
+      "latency_p95_ms": 81.39334180013975,
+      "switches": 1,
+      "late": 0,
+      "action_counts": {
+        "0": 0,
+        "1": 19,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0
+      }
+    },
+    "fixed_02": {
+      "mean_episode_reward": 0.32496219410408844,
+      "occupied_iou": 0.5859573721603368,
+      "object_iou": 0.06963788300835655,
+      "score": 0.3277976275843467,
+      "confusion": [
+        [
+          35816,
+          981,
+          79
+        ],
+        [
+          8356,
+          12388,
+          889
+        ],
+        [
+          25,
+          9,
+          75
+        ]
+      ],
+      "decisions": 19,
+      "episodes": 1,
+      "bootstrap": [
+        {
+          "episode": "test-route72-seed172",
+          "bootstrap_latency_ms": 91.97807800228475,
+          "bootstrap_action": 7
+        }
+      ],
+      "latency_p50_ms": 80.58255299692973,
+      "latency_p95_ms": 82.64669080090243,
+      "switches": 1,
+      "late": 0,
+      "action_counts": {
+        "0": 0,
+        "1": 0,
+        "2": 19,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0
+      }
+    },
+    "fixed_03": {
+      "mean_episode_reward": 0.3356996175791919,
+      "occupied_iou": 0.607741089000656,
+      "object_iou": 0.07112970711297072,
+      "score": 0.3394353980568134,
+      "confusion": [
+        [
+          35753,
+          1051,
+          72
+        ],
+        [
+          7822,
+          12797,
+          1014
+        ],
+        [
+          24,
+          0,
+          85
+        ]
+      ],
+      "decisions": 19,
+      "episodes": 1,
+      "bootstrap": [
+        {
+          "episode": "test-route72-seed172",
+          "bootstrap_latency_ms": 91.97807800228475,
+          "bootstrap_action": 7
+        }
+      ],
+      "latency_p50_ms": 81.58936099789571,
+      "latency_p95_ms": 82.71253199563944,
+      "switches": 1,
+      "late": 0,
+      "action_counts": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 19,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0
+      }
+    },
+    "fixed_04": {
+      "mean_episode_reward": 0.26692910013950916,
+      "occupied_iou": 0.5037365194433258,
+      "object_iou": 0.05008347245409015,
+      "score": 0.27690999594870797,
+      "confusion": [
+        [
+          36271,
+          394,
+          211
+        ],
+        [
+          10424,
+          10930,
+          279
+        ],
+        [
+          61,
+          18,
+          30
+        ]
+      ],
+      "decisions": 19,
+      "episodes": 1,
+      "bootstrap": [
+        {
+          "episode": "test-route72-seed172",
+          "bootstrap_latency_ms": 91.97807800228475,
+          "bootstrap_action": 7
+        }
+      ],
+      "latency_p50_ms": 79.70167099847458,
+      "latency_p95_ms": 81.64097850312828,
+      "switches": 1,
+      "late": 0,
+      "action_counts": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 19,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0
+      }
+    },
+    "fixed_05": {
+      "mean_episode_reward": 0.379478851276009,
+      "occupied_iou": 0.691630731320954,
+      "object_iou": 0.07792207792207792,
+      "score": 0.38477640462151597,
+      "confusion": [
+        [
+          35892,
+          910,
+          74
+        ],
+        [
+          5996,
+          15281,
+          356
+        ],
+        [
+          28,
+          39,
+          42
+        ]
+      ],
+      "decisions": 19,
+      "episodes": 1,
+      "bootstrap": [
+        {
+          "episode": "test-route72-seed172",
+          "bootstrap_latency_ms": 91.97807800228475,
+          "bootstrap_action": 7
+        }
+      ],
+      "latency_p50_ms": 80.27455399860628,
+      "latency_p95_ms": 81.340027601982,
+      "switches": 1,
+      "late": 0,
+      "action_counts": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 19,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0
+      }
+    },
+    "fixed_06": {
+      "mean_episode_reward": 0.39666863615031317,
+      "occupied_iou": 0.7366893384742018,
+      "object_iou": 0.07057256990679095,
+      "score": 0.4036309541904964,
+      "confusion": [
+        [
+          35535,
+          1267,
+          74
+        ],
+        [
+          4714,
+          16351,
+          568
+        ],
+        [
+          23,
+          33,
+          53
+        ]
+      ],
+      "decisions": 19,
+      "episodes": 1,
+      "bootstrap": [
+        {
+          "episode": "test-route72-seed172",
+          "bootstrap_latency_ms": 91.97807800228475,
+          "bootstrap_action": 7
+        }
+      ],
+      "latency_p50_ms": 81.0814529977506,
+      "latency_p95_ms": 82.04865519874147,
+      "switches": 1,
+      "late": 0,
+      "action_counts": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 19,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0
+      }
+    },
+    "fixed_07": {
+      "mean_episode_reward": 0.43603824962913135,
+      "occupied_iou": 0.8139083976043776,
+      "object_iou": 0.060158910329171394,
+      "score": 0.4370336539667745,
+      "confusion": [
+        [
+          35409,
+          1415,
+          52
+        ],
+        [
+          2830,
+          18083,
+          720
+        ],
+        [
+          22,
+          34,
+          53
+        ]
+      ],
+      "decisions": 19,
+      "episodes": 1,
+      "bootstrap": [
+        {
+          "episode": "test-route72-seed172",
+          "bootstrap_latency_ms": 91.97807800228475,
+          "bootstrap_action": 7
+        }
+      ],
+      "latency_p50_ms": 81.87002400518395,
+      "latency_p95_ms": 83.94853590070852,
+      "switches": 0,
+      "late": 0,
+      "action_counts": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 19,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0
+      }
+    },
+    "fixed_08": {
+      "mean_episode_reward": 0.1884257789733236,
+      "occupied_iou": 0.39038891372373713,
+      "object_iou": 0.003976143141153081,
+      "score": 0.1971825284324451,
+      "confusion": [
+        [
+          36248,
+          504,
+          124
+        ],
+        [
+          12938,
+          8425,
+          270
+        ],
+        [
+          71,
+          36,
+          2
+        ]
+      ],
+      "decisions": 19,
+      "episodes": 1,
+      "bootstrap": [
+        {
+          "episode": "test-route72-seed172",
+          "bootstrap_latency_ms": 91.97807800228475,
+          "bootstrap_action": 7
+        }
+      ],
+      "latency_p50_ms": 79.53087100031553,
+      "latency_p95_ms": 83.02476209573796,
+      "switches": 1,
+      "late": 0,
+      "action_counts": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 19,
+        "9": 0,
+        "10": 0,
+        "11": 0
+      }
+    },
+    "fixed_09": {
+      "mean_episode_reward": 0.28124862288557756,
+      "occupied_iou": 0.5710991210512575,
+      "object_iou": 0.007407407407407408,
+      "score": 0.28925326422933245,
+      "confusion": [
+        [
+          35636,
+          1211,
+          29
+        ],
+        [
+          8571,
+          12795,
+          267
+        ],
+        [
+          46,
+          60,
+          3
+        ]
+      ],
+      "decisions": 19,
+      "episodes": 1,
+      "bootstrap": [
+        {
+          "episode": "test-route72-seed172",
+          "bootstrap_latency_ms": 91.97807800228475,
+          "bootstrap_action": 7
+        }
+      ],
+      "latency_p50_ms": 80.44291799888015,
+      "latency_p95_ms": 84.42255190238939,
+      "switches": 1,
+      "late": 0,
+      "action_counts": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 19,
+        "10": 0,
+        "11": 0
+      }
+    },
+    "fixed_10": {
+      "mean_episode_reward": 0.3234986245855831,
+      "occupied_iou": 0.6532196162046908,
+      "object_iou": 0.009685230024213076,
+      "score": 0.33145242311445194,
+      "confusion": [
+        [
+          35168,
+          1692,
+          16
+        ],
+        [
+          6390,
+          14955,
+          288
+        ],
+        [
+          34,
+          71,
+          4
+        ]
+      ],
+      "decisions": 19,
+      "episodes": 1,
+      "bootstrap": [
+        {
+          "episode": "test-route72-seed172",
+          "bootstrap_latency_ms": 91.97807800228475,
+          "bootstrap_action": 7
+        }
+      ],
+      "latency_p50_ms": 80.97087000351166,
+      "latency_p95_ms": 83.84269150192267,
+      "switches": 1,
+      "late": 0,
+      "action_counts": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 19,
+        "11": 0
+      }
+    },
+    "fixed_11": {
+      "mean_episode_reward": 0.351695897741027,
+      "occupied_iou": 0.7026606045297634,
+      "object_iou": 0.02100840336134454,
+      "score": 0.361834503945554,
+      "confusion": [
+        [
+          34864,
+          2008,
+          4
+        ],
+        [
+          5032,
+          16238,
+          363
+        ],
+        [
+          19,
+          80,
+          10
+        ]
+      ],
+      "decisions": 19,
+      "episodes": 1,
+      "bootstrap": [
+        {
+          "episode": "test-route72-seed172",
+          "bootstrap_latency_ms": 91.97807800228475,
+          "bootstrap_action": 7
+        }
+      ],
+      "latency_p50_ms": 81.0807149973698,
+      "latency_p95_ms": 84.33731580371384,
+      "switches": 1,
+      "late": 0,
+      "action_counts": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 19
+      }
+    },
+    "ppo": {
+      "mean_episode_reward": 0.43603824962913135,
+      "occupied_iou": 0.8139083976043776,
+      "object_iou": 0.060158910329171394,
+      "score": 0.4370336539667745,
+      "confusion": [
+        [
+          35409,
+          1415,
+          52
+        ],
+        [
+          2830,
+          18083,
+          720
+        ],
+        [
+          22,
+          34,
+          53
+        ]
+      ],
+      "decisions": 19,
+      "episodes": 1,
+      "bootstrap": [
+        {
+          "episode": "test-route72-seed172",
+          "bootstrap_latency_ms": 91.97807800228475,
+          "bootstrap_action": 7
+        }
+      ],
+      "latency_p50_ms": 81.87002400518395,
+      "latency_p95_ms": 83.94853590070852,
+      "switches": 0,
+      "late": 0,
+      "action_counts": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 19,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0
+      }
+    }
+  },
+  "no_improvement_over_full": true,
+  "best_test_fixed_for_comparison_only": "fixed_07",
+  "no_improvement_over_best_fixed": true,
+  "deployment_ready": false,
+  "limitations": [
+    "Small four-route Town01 research demonstration; no real-world or other-map claim",
+    "Only2 training episodes; no claim of broad generalization",
+    "WeatherRGB is not physical LiDAR weather corruption",
+    "No change to frozen nuScenes PPO report/policy; no training before independent matrix audit",
+    "Native reference covers observed semantic LiDAR cells only; no full 3D semantic GT",
+    "Offline recorded action matrix, no online switching dynamics or sensor power measurement",
+    "500ms research cadence is not an ADAS safety deadline",
+    "CPU timing includes features/model, excludes file IO, simulator and agent decision"
+  ],
+  "conclusion": "No better policy than full baseline on this research test; retain full configuration."
+}

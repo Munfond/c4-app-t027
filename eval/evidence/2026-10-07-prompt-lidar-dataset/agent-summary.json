@@ -1,0 +1,159 @@
+{
+  "comparison": {
+    "study_id": "b60f5a5b86b74fa58a4cfc0c6f97864a",
+    "environments": [
+      {
+        "environment": 0,
+        "scenario": {
+          "map": "Town01",
+          "weather": "clear",
+          "vehicles": 4,
+          "pedestrians": 0,
+          "seed": 42,
+          "frames": 20,
+          "capture_interval": 0.5,
+          "timestep": 0.05,
+          "route_spawn_index": 0,
+          "lidar": {
+            "channels": 32,
+            "points_per_second": 600000,
+            "range_m": 100.0,
+            "upper_fov": 10.0,
+            "lower_fov": -30.0,
+            "mount_z": 2.0,
+            "pitch": 0.0
+          }
+        },
+        "trials": [
+          {
+            "job_id": "03cb194fad834a44a8dd4918df9bbbf0",
+            "profile": "baseline",
+            "status": "succeeded",
+            "error": null,
+            "occupied_iou": 0.3376663412629091,
+            "iou_drop": 0.0,
+            "reference_matches_baseline": true,
+            "lidar_bytes_per_second": 4812144.0,
+            "data_reduction_fraction": 0.0,
+            "latency_model_only_ms": {
+              "p50": 124.06360000022687,
+              "p95": 148.53720999890356
+            }
+          },
+          {
+            "job_id": "27cb04c7fccb4601a67cdc8a30b03159",
+            "profile": "profile_points_reduction",
+            "status": "succeeded",
+            "error": null,
+            "occupied_iou": 0.29924183514774494,
+            "iou_drop": 0.03842450611516418,
+            "reference_matches_baseline": true,
+            "lidar_bytes_per_second": 2398847.9999999995,
+            "data_reduction_fraction": 0.5015012019590437,
+            "latency_model_only_ms": {
+              "p50": 133.6511999998038,
+              "p95": 150.82988500053034
+            }
+          },
+          {
+            "job_id": "6a34d692f6c94e66afcf1b167917b462",
+            "profile": "profile_channels_points_reduction",
+            "status": "succeeded",
+            "error": null,
+            "occupied_iou": 0.3008140586639101,
+            "iou_drop": 0.03685228259899903,
+            "reference_matches_baseline": true,
+            "lidar_bytes_per_second": 2391200.0,
+            "data_reduction_fraction": 0.5030905143320732,
+            "latency_model_only_ms": {
+              "p50": 127.26895000105287,
+              "p95": 139.44429000130185
+            }
+          },
+          {
+            "job_id": "003ce7e809614f8da0f7d5954876f81b",
+            "profile": "profile_range_points_reduction",
+            "status": "succeeded",
+            "error": null,
+            "occupied_iou": 0.22671089702808325,
+            "iou_drop": 0.11095544423482587,
+            "reference_matches_baseline": true,
+            "lidar_bytes_per_second": 1148608.0,
+            "data_reduction_fraction": 0.7613105509727057,
+            "latency_model_only_ms": {
+              "p50": 117.49744999997347,
+              "p95": 141.58883499903823
+            }
+          }
+        ],
+        "provisional_selected": "baseline"
+      }
+    ],
+    "criterion": "Lowest sampled LiDAR byte rate within absolute occupied-IoU drop bound, exact reference match",
+    "limitations": [
+      "Exploratory two-dimensional occupancy proxy, not validated real-world sensor recommendation",
+      "Reference mismatch excludes trial from selection; more seeds/routes are needed",
+      "Data rate is not electricity or dollar cost; fixed BEV shape may keep model latency unchanged",
+      "Weather affects RGB; no physical LiDAR rain/fog degradation has been validated"
+    ]
+  },
+  "explanation": "Báo cáo nghiên cứu với ID `b60f5a5b86b74fa58a4cfc0c6f97864a` đã hoàn thành và bao gồm bốn thử nghiệm với các cấu hình khác nhau. Dưới đây là tóm tắt và so sánh các kết quả:\n\n### Các Thử Nghiệm\n1. **Baseline**\n   - **IOU Occupied**: 0.3377\n   - **IOU Drop**: 0.0\n   - **Bytes per Second**: 4,812,144\n   - **Data Reduction Fraction**: 0.0\n   - **Latency (p50)**: 124.06 ms\n   - **Latency (p95)**: 148.54 ms\n\n2. **Profile Points Reduction**\n   - **IOU Occupied**: 0.2992\n   - **IOU Drop**: 0.0384\n   - **Bytes per Second**: 2,398,848\n   - **Data Reduction Fraction**: 50.15%\n   - **Latency (p50)**: 133.65 ms\n   - **Latency (p95)**: 150.83 ms\n\n3. **Profile Channels Points Reduction**\n   - **IOU Occupied**: 0.3008\n   - **IOU Drop**: 0.0369\n   - **Bytes per Second**: 2,391,200\n   - **Data Reduction Fraction**: 50.31%\n   - **Latency (p50)**: 127.27 ms\n   - **Latency (p95)**: 139.44 ms\n\n4. **Profile Range Points Reduction**\n   - **IOU Occupied**: 0.2267\n   - **IOU Drop**: 0.1109\n   - **Bytes per Second**: 1,148,608\n   - **Data Reduction Fraction**: 76.13%\n   - **Latency (p50)**: 117.50 ms\n   - **Latency (p95)**: 141.59 ms\n\n### So Sánh\n- **IOU Occupied**: Thử nghiệm Baseline có chỉ số IOU Occupied cao nhất (0.3377), trong khi thử nghiệm Range Points Reduction có chỉ số thấp nhất (0.2267).\n- **IOU Drop**: Thử nghiệm Baseline không có sự giảm IOU (0.0), trong khi thử nghiệm Range Points Reduction có sự giảm lớn nhất (0.1109).\n- **Bytes per Second**: Thử nghiệm Baseline tiêu tốn nhiều băng thông nhất (4,812,144 bytes/s), trong khi thử nghiệm Range Points Reduction tiêu tốn ít nhất (1,148,608 bytes/s).\n- **Data Reduction Fraction**: Thử nghiệm Range Points Reduction có tỷ lệ giảm dữ liệu cao nhất (76.13%), cho thấy hiệu quả trong việc giảm băng thông.\n- **Latency**: Thử nghiệm Range Points Reduction cũng có độ trễ trung bình (p50) thấp nhất (117.50 ms).\n\n### Kết Luận\nDựa trên tiêu chí \"Tỷ lệ byte LiDAR thấp nhất trong giới hạn giảm IOU đã chiếm\", thử nghiệm Baseline được chọn là cấu hình tạm thời. Tuy nhiên, cần lưu ý rằng các thử nghiệm không đủ bằng chứng thực tế để chứng minh tính an toàn và độ bền trong điều kiện thực tế, và các nhãn proxy cũng như thời tiết RGB không thể đảm bảo tính chính xác trong các tình huống thực tế.",
+  "tool_trace": [
+    {
+      "tool": "read_sensor_study",
+      "tool_call_id": "call_wtCGz3h158xd8CdJQfjDiCND"
+    },
+    {
+      "tool": "compare_sensor_configs",
+      "tool_call_id": "call_uJFZhTm4q1bUp7738ATNJMXC"
+    }
+  ],
+  "usage": [
+    {
+      "prompt_tokens": 178,
+      "completion_tokens": 28,
+      "total_tokens": 206,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    {
+      "prompt_tokens": 504,
+      "completion_tokens": 28,
+      "total_tokens": 532,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    {
+      "prompt_tokens": 1359,
+      "completion_tokens": 759,
+      "total_tokens": 2118,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    }
+  ],
+  "model": "gpt-4o-mini-2024-07-18"
+}

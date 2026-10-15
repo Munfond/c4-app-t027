@@ -1,0 +1,114 @@
+[
+  {
+    "path": "/api/v1/lab/frames/3e8750f331d7499e9b5123e9eb70f2e2/perception/radar",
+    "status": 200,
+    "points": 226,
+    "kind": null,
+    "model": "Measured radar"
+  },
+  {
+    "path": "/api/v1/lab/frames/3e8750f331d7499e9b5123e9eb70f2e2/perception/seg3d",
+    "status": 200,
+    "points": 34467,
+    "kind": "prediction",
+    "model": "SalsaNext \u00b7 Experimental transfer"
+  },
+  {
+    "path": "/api/v1/lab/frames/3e8750f331d7499e9b5123e9eb70f2e2/perception/occupancy",
+    "status": 200,
+    "points": 0,
+    "kind": null,
+    "model": "BEV Occupancy U-Net"
+  },
+  {
+    "path": "/api/v1/lab/frames/3e8750f331d7499e9b5123e9eb70f2e2/perception/flow",
+    "status": 200,
+    "points": 0,
+    "kind": null,
+    "model": "Temporal U-Net \u00b7 T4"
+  },
+  {
+    "path": "/api/v1/lab/frames/281b92269fd648d4b52d06ac06ca6d65/perception/radar",
+    "status": 200,
+    "points": 170,
+    "kind": null,
+    "model": "Measured radar"
+  },
+  {
+    "path": "/api/v1/lab/frames/281b92269fd648d4b52d06ac06ca6d65/perception/seg3d",
+    "status": 200,
+    "points": 34614,
+    "kind": "prediction",
+    "model": "SalsaNext \u00b7 Experimental transfer"
+  },
+  {
+    "path": "/api/v1/lab/frames/281b92269fd648d4b52d06ac06ca6d65/perception/occupancy",
+    "status": 200,
+    "points": 0,
+    "kind": null,
+    "model": "BEV Occupancy U-Net"
+  },
+  {
+    "path": "/api/v1/lab/frames/281b92269fd648d4b52d06ac06ca6d65/perception/flow",
+    "status": 200,
+    "points": 0,
+    "kind": null,
+    "model": "Temporal U-Net \u00b7 T4"
+  },
+  {
+    "path": "/api/v1/lab/frames/b5989651183643369174912bc5641d3b/perception/radar",
+    "status": 200,
+    "points": 142,
+    "kind": null,
+    "model": "Measured radar"
+  },
+  {
+    "path": "/api/v1/lab/frames/b5989651183643369174912bc5641d3b/perception/seg3d",
+    "status": 200,
+    "points": 34442,
+    "kind": "prediction",
+    "model": "SalsaNext \u00b7 Experimental transfer"
+  },
+  {
+    "path": "/api/v1/lab/frames/b5989651183643369174912bc5641d3b/perception/occupancy",
+    "status": 200,
+    "points": 0,
+    "kind": null,
+    "model": "BEV Occupancy U-Net"
+  },
+  {
+    "path": "/api/v1/lab/frames/b5989651183643369174912bc5641d3b/perception/flow",
+    "status": 200,
+    "points": 0,
+    "kind": null,
+    "model": "Temporal U-Net \u00b7 T4"
+  },
+  {
+    "path": "/api/v1/lab/frames/b4ff30109dd14c89b24789dc5713cf8c/perception/radar",
+    "status": 200,
+    "points": 120,
+    "kind": null,
+    "model": "Measured radar"
+  },
+  {
+    "path": "/api/v1/lab/frames/b4ff30109dd14c89b24789dc5713cf8c/perception/seg3d",
+    "status": 200,
+    "points": 33927,
+    "kind": "prediction",
+    "model": "SalsaNext \u00b7 Experimental transfer"
+  },
+  {
+    "path": "/api/v1/lab/frames/b4ff30109dd14c89b24789dc5713cf8c/perception/occupancy",
+    "status": 200,
+    "points": 0,
+    "kind": null,
+    "model": "BEV Occupancy U-Net"
+  },
+  {
+    "path": "/api/v1/lab/frames/b4ff30109dd14c89b24789dc5713cf8c/perception/flow",
+    "status": 200,
+    "points": 0,
+    "kind": null,
+    "model": "Temporal U-Net \u00b7 T4"
+  }
+]

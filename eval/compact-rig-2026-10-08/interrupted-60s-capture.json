@@ -1,0 +1,24 @@
+{
+  "status": "interrupted",
+  "complete": false,
+  "requested_frames": 1200,
+  "recorded_frame_metadata_files": 517,
+  "first_frame_id": 65,
+  "last_frame_id": 581,
+  "first_sim_timestamp_s": 5.305260661058128,
+  "last_sim_timestamp_s": 31.105261045508087,
+  "sim_timestamp_span_s": 25.80000038444996,
+  "sensor_stream_counts": [
+    20
+  ],
+  "missing_referenced_artifacts": [],
+  "artifact_checksums_verified": false,
+  "usable_for_rl_reward": false,
+  "metadata_boundary_sha256": {
+    "frame_00000.json": "26b691a6ed843455d0428cd8ae0414e299dab3b907082c1eef21fb55f2fdc4a0",
+    "frame_00516.json": "ddb9b9637f7d5874f9102882059c65d378415dfdcbd979e4edab8a694fb90ed4"
+  },
+  "interruption_metadata_sha256": "0c8bb26d904c2a715d8323545cea9368d15b9386f9a864eeeaad7c7e024e2400",
+  "raw_path": "data/active-sensing/rig-town01-60s-20261008",
+  "resume_is_new_episode_not_append": true
+}

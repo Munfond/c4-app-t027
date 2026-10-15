@@ -1,0 +1,17 @@
+{
+  "study_id": "b60f5a5b86b74fa58a4cfc0c6f97864a",
+  "prompt": "Tôi muốn tối ưu cấu hình LiDAR để giảm lượng dữ liệu nhưng giữ chất lượng output của checkpoint occupancy_lidar. Tạo dữ liệu CARLA Town01 trời quang, 4 xe, 0 người đi bộ, seed 42, 20 frame mỗi cấu hình. Baseline 32 kênh, 600000 điểm/giây, tầm quét 100m. Agent hãy tự đề xuất 3 profiles tiết kiệm dữ liệu: một profile chỉ giảm số điểm/giây, một profile giảm số kênh và số điểm/giây, một profile giảm tầm quét và số điểm/giây; giữ FOV và vị trí lắp như baseline. Chấp nhận occupied IoU giảm tối đa 0.02, chỉ chọn cấu hình khi dữ liệu tham chiếu khớp. Thu dữ liệu cho mỗi profile, chạy qua checkpoint và giải thích lựa chọn.",
+  "artifact_root": "D:\\CARLA\\runs\\prompt-lidar-dataset-20261007-002521",
+  "trials": [
+    {
+      "job_id": "03cb194fad834a44a8dd4918df9bbbf0",
+      "profile": "baseline",
+      "status": "queued"
+    }
+  ],
+  "checkpoint_id": "occupancy_lidar",
+  "checkpoint_sha256": "8d6c7155534906a50ca2f52b039696700072ff200768f0d91ead33c828e9f878",
+  "input": "NPZ x has 7 BEV channels; occupancy_lidar consumes channels 0,1,2,3",
+  "output": "200x200 occupancy classes: free, static, object",
+  "records": []
+}

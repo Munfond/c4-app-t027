@@ -1,0 +1,207 @@
+{
+  "recorded_at": "2026-10-07T20:24:43.556020+00:00",
+  "gpu": "RTX 2050 4096 MiB / driver 595.91.07",
+  "manual_flow": "CARLA Lab form -> API -> worker-owned fresh server -> isolated capture client -> checkpoint/cache -> web RGB/occupancy -> frame 1",
+  "trials": [
+    {
+      "id": "dac48e2c0f454f10947f7b171448ee56",
+      "status": "succeeded",
+      "duration_seconds": 32.126492738723755,
+      "server_version": "0.9.16",
+      "server_lifecycle": "fresh_process_per_capture",
+      "client_runtime": "isolated_matching_worker_python",
+      "reference_sha256": "0c11c7076ff5d5b6fee4e294f216485527e1a30e2431bca74b680d6dd4144ef1",
+      "input_sha256": "c9d40d7725fbd64efb5fd1afa2153e96732242f3e8ee5cbb5a8531e1344a50eb",
+      "sensor_frames": [
+        {
+          "id": "frame_0000",
+          "frame_id": 60,
+          "timestamp": 6.00768319144845
+        },
+        {
+          "id": "frame_0001",
+          "frame_id": 70,
+          "timestamp": 6.507683198899031
+        }
+      ],
+      "visible_actor_counts": [
+        0,
+        0
+      ],
+      "models": {
+        "occupancy_lidar": {
+          "metrics": {
+            "frame_count": 2,
+            "evaluated_cells": 9055,
+            "confusion": [
+              [
+                3083,
+                3395,
+                0
+              ],
+              [
+                405,
+                2172,
+                0
+              ],
+              [
+                0,
+                0,
+                0
+              ]
+            ],
+            "class_iou": {
+              "free": 0.4479151532761877,
+              "static": 0.3636972538513061,
+              "object": null
+            },
+            "miou_supported_classes": 0.40580620356374686,
+            "occupied_iou": 0.3636972538513061,
+            "object_recall": null,
+            "flow_epe_m_s": null,
+            "flow_valid_cells": 0,
+            "latency_model_only_ms": null,
+            "timed_frames": 0
+          },
+          "cache_hits": 2,
+          "checkpoint_sha256": "8d6c7155534906a50ca2f52b039696700072ff200768f0d91ead33c828e9f878",
+          "device": "cpu",
+          "torch": "2.14.1+cpu",
+          "hardware": "Linux-6.8.0-138-generic-x86_64-with-glibc2.35",
+          "timing_note": "Fresh inference frames only; no latency claim for cached predictions"
+        }
+      },
+      "files": [
+        {
+          "lidar_points": 15402,
+          "observed_cells": 4525,
+          "camera_http": 200,
+          "camera_shape": [
+            360,
+            640,
+            3
+          ],
+          "camera_std": 47.92374985508751
+        },
+        {
+          "lidar_points": 15265,
+          "observed_cells": 4530,
+          "camera_http": 200,
+          "camera_shape": [
+            360,
+            640,
+            3
+          ],
+          "camera_std": 47.344355311673446
+        }
+      ]
+    },
+    {
+      "id": "82108158f4d9493382a52535785dc459",
+      "status": "succeeded",
+      "duration_seconds": 32.37929821014404,
+      "server_version": "0.9.16",
+      "server_lifecycle": "fresh_process_per_capture",
+      "client_runtime": "isolated_matching_worker_python",
+      "reference_sha256": "0c11c7076ff5d5b6fee4e294f216485527e1a30e2431bca74b680d6dd4144ef1",
+      "input_sha256": "c9d40d7725fbd64efb5fd1afa2153e96732242f3e8ee5cbb5a8531e1344a50eb",
+      "sensor_frames": [
+        {
+          "id": "frame_0000",
+          "frame_id": 63,
+          "timestamp": 5.313138923142105
+        },
+        {
+          "id": "frame_0001",
+          "frame_id": 73,
+          "timestamp": 5.813138930592686
+        }
+      ],
+      "visible_actor_counts": [
+        0,
+        0
+      ],
+      "models": {
+        "occupancy_lidar": {
+          "metrics": {
+            "frame_count": 2,
+            "evaluated_cells": 9055,
+            "confusion": [
+              [
+                3083,
+                3395,
+                0
+              ],
+              [
+                405,
+                2172,
+                0
+              ],
+              [
+                0,
+                0,
+                0
+              ]
+            ],
+            "class_iou": {
+              "free": 0.4479151532761877,
+              "static": 0.3636972538513061,
+              "object": null
+            },
+            "miou_supported_classes": 0.40580620356374686,
+            "occupied_iou": 0.3636972538513061,
+            "object_recall": null,
+            "flow_epe_m_s": null,
+            "flow_valid_cells": 0,
+            "latency_model_only_ms": null,
+            "timed_frames": 0
+          },
+          "cache_hits": 2,
+          "checkpoint_sha256": "8d6c7155534906a50ca2f52b039696700072ff200768f0d91ead33c828e9f878",
+          "device": "cpu",
+          "torch": "2.14.1+cpu",
+          "hardware": "Linux-6.8.0-138-generic-x86_64-with-glibc2.35",
+          "timing_note": "Fresh inference frames only; no latency claim for cached predictions"
+        }
+      },
+      "files": [
+        {
+          "lidar_points": 15402,
+          "observed_cells": 4525,
+          "camera_http": 200,
+          "camera_shape": [
+            360,
+            640,
+            3
+          ],
+          "camera_std": 47.90951753643339
+        },
+        {
+          "lidar_points": 15265,
+          "observed_cells": 4530,
+          "camera_http": 200,
+          "camera_shape": [
+            360,
+            640,
+            3
+          ],
+          "camera_std": 47.35661764881126
+        }
+      ]
+    }
+  ],
+  "reference_matches": true,
+  "native_failure_found": "External persistent CARLA 0.9.16 process segfaults in landscape renderer on the second Town01 reload on this machine.",
+  "workaround": "Fresh server and isolated matching client per capture; leave external-server mode unchanged.",
+  "software_tests": {
+    "passed": 146
+  },
+  "llm_called": false,
+  "limitations": [
+    "Town01 two-frame software/capture smoke only; no long-run stability claim.",
+    "No visible traffic actors in this smoke; object recall/IoU are unavailable.",
+    "Static labels are a height proxy; these metrics are not a held-out benchmark.",
+    "Two repeat trials reuse validated checkpoint prediction cache; model timing is unavailable for cache hits.",
+    "Fresh server startup adds wall time and is excluded from latency_model_only_ms."
+  ]
+}

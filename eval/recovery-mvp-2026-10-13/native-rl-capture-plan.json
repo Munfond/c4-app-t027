@@ -1,0 +1,109 @@
+{
+  "kind": "native_occupancy_research_capture_plan_v1",
+  "profiles": [
+    {
+      "channels": 16,
+      "points_per_second": 150000
+    },
+    {
+      "channels": 16,
+      "points_per_second": 300000
+    },
+    {
+      "channels": 16,
+      "points_per_second": 450000
+    },
+    {
+      "channels": 16,
+      "points_per_second": 600000
+    },
+    {
+      "channels": 32,
+      "points_per_second": 150000
+    },
+    {
+      "channels": 32,
+      "points_per_second": 300000
+    },
+    {
+      "channels": 32,
+      "points_per_second": 450000
+    },
+    {
+      "channels": 32,
+      "points_per_second": 600000
+    },
+    {
+      "channels": 64,
+      "points_per_second": 150000
+    },
+    {
+      "channels": 64,
+      "points_per_second": 300000
+    },
+    {
+      "channels": 64,
+      "points_per_second": 450000
+    },
+    {
+      "channels": 64,
+      "points_per_second": 600000
+    }
+  ],
+  "episodes": [
+    {
+      "id": "train-route05-seed105",
+      "split": "train",
+      "route": 5,
+      "seed": 105
+    },
+    {
+      "id": "train-route22-seed122",
+      "split": "train",
+      "route": 22,
+      "seed": 122
+    },
+    {
+      "id": "validation-route48-seed148",
+      "split": "validation",
+      "route": 48,
+      "seed": 148
+    },
+    {
+      "id": "test-route72-seed172",
+      "split": "test",
+      "route": 72,
+      "seed": 172
+    }
+  ],
+  "frames_per_profile": 20,
+  "capture_interval": 0.5,
+  "baseline_action": 7,
+  "checkpoint_sha256": "8d6c7155534906a50ca2f52b039696700072ff200768f0d91ead33c828e9f878",
+  "adapter": {
+    "id": "intensity_mean_experimental",
+    "manifest_sha256": "e0338b8b1bd7963bedbbb499128f734e25c5dc1725c17f17eaca0440a520379a",
+    "gain": 0.06486433468844091,
+    "checkpoint_sha256": "8d6c7155534906a50ca2f52b039696700072ff200768f0d91ead33c828e9f878",
+    "notice": "Experimental input alignment; validated only on limited Town01 captures, not real-world safety"
+  },
+  "observation_policy": "Current profile raw sensor context + previous measured latency + previous action; no GT, route/seed IDs or counterfactual scores in actor",
+  "decision_timing": "Bootstrap full-profile frame0, action affects next recorded frame; score frames1..19; report bootstrap separately",
+  "label_policy": "Only semantic-LiDAR observed cells; static-height proxy + visible actor footprints",
+  "required_audit": [
+    "Exact reference across all12 profiles at every frame",
+    "Raw points/intensity reproduce features",
+    "All12 profiles completed for every split",
+    "Independent frame/raw artifact hashes",
+    "No pose/route/seed duplication across split",
+    "Reference object coverage measured, not claimed from requested population"
+  ],
+  "research_training_admitted": false,
+  "deployment_ready": false,
+  "limits": [
+    "Small four-route Town01 research demonstration; no real-world or other-map claim",
+    "Only2 training episodes; no claim of broad generalization",
+    "WeatherRGB is not physical LiDAR weather corruption",
+    "No change to frozen nuScenes PPO report/policy; no training before independent matrix audit"
+  ]
+}

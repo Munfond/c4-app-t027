@@ -1,0 +1,9 @@
+{
+  "status": "passed_proxy_replay_audit",
+  "dataset_sha256": "8c1a752afa67b76527a85a78600a085100af7b25016718ddf51058e01e19522f",
+  "raw_files_rehashed": 4348,
+  "frames": 404,
+  "outcomes_recomputed": 60,
+  "no_raw_sweep_split_overlap": true,
+  "scope": "occupancy proxy research only; not validated detection/real-driving safety"
+}

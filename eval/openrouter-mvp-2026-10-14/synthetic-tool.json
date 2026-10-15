@@ -1,0 +1,16 @@
+{
+  "kind": "live_synthetic_tool_compatibility_test",
+  "project_metadata_sent": false,
+  "model": "openai/gpt-4o-mini",
+  "tool": "add_numbers",
+  "arguments": {
+    "a": 2,
+    "b": 3
+  },
+  "output": 5,
+  "usage": {
+    "prompt_tokens": 85,
+    "completion_tokens": 9,
+    "total_tokens": 94
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "id": "68febdb5e23943f4a2b648f0af5a5b94",
+  "spec": {
+    "scenarios": [
+      {
+        "map": "Town01",
+        "weather": "clear",
+        "vehicles": 2,
+        "pedestrians": 0,
+        "seed": 42,
+        "frames": 2,
+        "capture_interval": 0.5,
+        "timestep": 0.05,
+        "route_spawn_index": 0,
+        "route_kind": "spawn",
+        "lane_change_interval_seconds": null,
+        "lidar": {
+          "channels": 32,
+          "points_per_second": 600000,
+          "range_m": 100.0,
+          "upper_fov": 10.0,
+          "lower_fov": -30.0,
+          "mount_z": 2.0,
+          "pitch": 0.0
+        }
+      }
+    ],
+    "profiles": [
+      {
+        "name": "profile_300k",
+        "lidar": {
+          "channels": 32,
+          "points_per_second": 300000,
+          "range_m": 100.0,
+          "upper_fov": 10.0,
+          "lower_fov": -30.0,
+          "mount_z": 2.0,
+          "pitch": 0.0
+        }
+      },
+      {
+        "name": "profile_150k",
+        "lidar": {
+          "channels": 32,
+          "points_per_second": 150000,
+          "range_m": 100.0,
+          "upper_fov": 10.0,
+          "lower_fov": -30.0,
+          "mount_z": 2.0,
+          "pitch": 0.0
+        }
+      }
+    ],
+    "max_iou_drop": 0.02
+  },
+  "total_trials": 3,
+  "jobs": [
+    {
+      "id": "5f2abe2fd5014f6ba0307fcf560d73e9",
+      "environment": 0,
+      "profile": "baseline",
+      "status": "queued",
+      "stage": "queued",
+      "error": null,
+      "result": null
+    }
+  ],
+  "status": "running",
+  "checkpoint_sha256": "8d6c7155534906a50ca2f52b039696700072ff200768f0d91ead33c828e9f878",
+  "metadata": {
+    "model": "gpt-4o-mini-2024-07-18",
+    "usage": {
+      "prompt_tokens": 1109,
+      "completion_tokens": 215,
+      "total_tokens": 1324,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "tool": "create_sensor_study",
+    "tool_call_id": "call_b6wYSkf2CnMrisc51RpdBOpa",
+    "request": "tìm mức  dữ liệu của lidar có thể chấp nhận được thấp nhất cho model đả bảo kết quả"
+  },
+  "summary": null
+}

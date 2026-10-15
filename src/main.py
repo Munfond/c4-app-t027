@@ -1,8 +1,12 @@
-from contextlib import asynccontextmanager
+import asyncio
+import logging
+from contextlib import asynccontextmanager, suppress
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from src.api.evidence import router as evidence_router
+from src.api.experiments import router as experiment_router
 from src.api.lab import router as lab_router
 from src.api.routes import router
 from src.config import get_settings
@@ -12,13 +16,29 @@ from src.config import get_settings
 async def lifespan(app: FastAPI):
     settings = get_settings()
     print(f"Starting {settings.app_name} in {settings.app_env} mode")
-    yield
+    async def clean_sessions():
+        from src.services.experiment_sessions import sweep
+
+        while True:
+            try:
+                await asyncio.to_thread(sweep)
+            except Exception:
+                logging.getLogger(__name__).exception("Temporary session cleanup failed")
+            await asyncio.sleep(5)
+
+    cleaner = asyncio.create_task(clean_sessions())
+    try:
+        yield
+    finally:
+        cleaner.cancel()
+        with suppress(asyncio.CancelledError):
+            await cleaner
     print("Shutting down...")
 
 
 app = FastAPI(
     title="P-027 Perception Lab",
-    description="Read-only nuScenes-mini lab API",
+    description="nuScenes-mini lab and optional CARLA experiment API",
     version="1.0.0",
     lifespan=lifespan,
 )
@@ -35,6 +55,8 @@ app.add_middleware(
 )
 
 app.include_router(router, prefix="/api/v1")
+app.include_router(experiment_router, prefix="/api/v1")
+app.include_router(evidence_router, prefix="/api/v1")
 app.include_router(lab_router, prefix="/api/v1")
 app.include_router(lab_router, prefix="/api")  # alias for /api/lab/...
 

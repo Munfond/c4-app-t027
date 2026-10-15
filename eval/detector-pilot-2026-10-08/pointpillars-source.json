@@ -1,0 +1,13 @@
+{
+  "model": "pointpillars",
+  "path": "hv_pointpillars_secfpn_sbn-all_4x8_2x_nus-3d_20210826_225857-f19d00a3.pth",
+  "sha256": "f19d00a38e6b775f38a45a9a3ca3ecaec20a5585a3caf44622423e2d5f75d5d0",
+  "bytes": 19778089,
+  "source": "https://github.com/open-mmlab/mmdetection3d/blob/v1.4.0/configs/pointpillars/README.md",
+  "download_url": "https://download.openmmlab.com/mmdetection3d/v1.0.0_models/pointpillars/hv_pointpillars_secfpn_sbn-all_4x8_2x_nus-3d/hv_pointpillars_secfpn_sbn-all_4x8_2x_nus-3d_20210826_225857-f19d00a3.pth",
+  "upstream_filename_fingerprint": "f19d00a3",
+  "loaded": false,
+  "upstream_filename_fingerprint_matches": true,
+  "identity_basis": "full SHA256 of official URL content; camera_lidar filename discrepancy audited 2026-10-08",
+  "note": "OpenMMLab implementation weights, not restored team/MIT weights; old metrics do not apply"
+}

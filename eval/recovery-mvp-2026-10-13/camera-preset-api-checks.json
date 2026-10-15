@@ -1,0 +1,150 @@
+[
+  {
+    "fov": 60,
+    "status": 200,
+    "body": {
+      "valid": true,
+      "spec": {
+        "source": "carla",
+        "replay": null,
+        "model_ids": [
+          "occupancy_lidar"
+        ],
+        "scenario": {
+          "map": "Town03",
+          "weather": "clear",
+          "vehicles": 8,
+          "pedestrians": 8,
+          "seed": 42,
+          "frames": 4,
+          "capture_interval": 0.5,
+          "timestep": 0.05,
+          "route_spawn_index": 0,
+          "route_kind": "spawn",
+          "lane_change_interval_seconds": null,
+          "lidar": {
+            "channels": 32,
+            "points_per_second": 600000,
+            "range_m": 100,
+            "upper_fov": 10,
+            "lower_fov": -30,
+            "mount_z": 2,
+            "pitch": 0
+          },
+          "camera": {
+            "fov": 60
+          }
+        },
+        "scene_id": null,
+        "capture_id": null,
+        "max_latency_ms": null
+      }
+    }
+  },
+  {
+    "fov": 90,
+    "status": 200,
+    "body": {
+      "valid": true,
+      "spec": {
+        "source": "carla",
+        "replay": null,
+        "model_ids": [
+          "occupancy_lidar"
+        ],
+        "scenario": {
+          "map": "Town03",
+          "weather": "clear",
+          "vehicles": 8,
+          "pedestrians": 8,
+          "seed": 42,
+          "frames": 4,
+          "capture_interval": 0.5,
+          "timestep": 0.05,
+          "route_spawn_index": 0,
+          "route_kind": "spawn",
+          "lane_change_interval_seconds": null,
+          "lidar": {
+            "channels": 32,
+            "points_per_second": 600000,
+            "range_m": 100,
+            "upper_fov": 10,
+            "lower_fov": -30,
+            "mount_z": 2,
+            "pitch": 0
+          },
+          "camera": {
+            "fov": 90
+          }
+        },
+        "scene_id": null,
+        "capture_id": null,
+        "max_latency_ms": null
+      }
+    }
+  },
+  {
+    "fov": 110,
+    "status": 200,
+    "body": {
+      "valid": true,
+      "spec": {
+        "source": "carla",
+        "replay": null,
+        "model_ids": [
+          "occupancy_lidar"
+        ],
+        "scenario": {
+          "map": "Town03",
+          "weather": "clear",
+          "vehicles": 8,
+          "pedestrians": 8,
+          "seed": 42,
+          "frames": 4,
+          "capture_interval": 0.5,
+          "timestep": 0.05,
+          "route_spawn_index": 0,
+          "route_kind": "spawn",
+          "lane_change_interval_seconds": null,
+          "lidar": {
+            "channels": 32,
+            "points_per_second": 600000,
+            "range_m": 100,
+            "upper_fov": 10,
+            "lower_fov": -30,
+            "mount_z": 2,
+            "pitch": 0
+          },
+          "camera": {
+            "fov": 110
+          }
+        },
+        "scene_id": null,
+        "capture_id": null,
+        "max_latency_ms": null
+      }
+    }
+  },
+  {
+    "fov": 75,
+    "status": 422,
+    "body": {
+      "detail": [
+        {
+          "type": "literal_error",
+          "loc": [
+            "body",
+            "scenario",
+            "camera",
+            "fov"
+          ],
+          "msg": "Input should be 60, 90 or 110",
+          "input": 75,
+          "ctx": {
+            "expected": "60, 90 or 110"
+          }
+        }
+      ]
+    }
+  }
+]

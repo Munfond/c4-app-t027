@@ -1,0 +1,132 @@
+{
+  "checked_utc": "2026-10-13T12:57:03.053457+00:00",
+  "frontend_release": "9a2jtUZvvDqOisuohyL9p",
+  "native_evidence_ready": true,
+  "selected_capture": "bc3ff6b1b0c047dba472ed86b770092e",
+  "job_created_by_preview": false,
+  "frames": [
+    {
+      "index": 0,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "index": 1,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "index": 2,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "index": 3,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "index": 4,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "index": 5,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "index": 6,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "index": 7,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "index": 8,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "index": 9,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "index": 10,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "index": 11,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "index": 12,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "index": 13,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "index": 14,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "index": 15,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "index": 16,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "index": 17,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "index": 18,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "index": 19,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    }
+  ],
+  "mismatched_review_hash_status": 409,
+  "review_rows_unchanged": true,
+  "browser_render_qa": false
+}

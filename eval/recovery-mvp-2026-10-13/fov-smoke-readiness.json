@@ -1,0 +1,26 @@
+[
+  {
+    "fov": 60,
+    "plan_validated": true,
+    "queued": false,
+    "captured": false
+  },
+  {
+    "fov": 90,
+    "plan_validated": true,
+    "queued": false,
+    "captured": false
+  },
+  {
+    "fov": 110,
+    "plan_validated": true,
+    "queued": false,
+    "captured": false
+  },
+  {
+    "kind": "native_smoke_blocked_before_queue",
+    "returncode": 1,
+    "output_created": false,
+    "reason": "RuntimeError: CARLA needs 10 GiB available RAM before launch; currently 9.0 GiB. Close applications before a fresh capture."
+  }
+]

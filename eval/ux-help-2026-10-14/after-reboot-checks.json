@@ -1,0 +1,35 @@
+{
+  "checked_utc": "2026-10-13T21:21:59.713507+00:00",
+  "checks": [
+    {
+      "case": "nuScenes 3D LiDAR/Radar Play",
+      "actual": "Advanced from frame01 to23 and30 of40; point counts updated",
+      "result": "pass"
+    },
+    {
+      "case": "Mouse Pause during nuScenes3D playback",
+      "actual": "Native mouse click changed control back to Play and status paused; no previous timeout",
+      "result": "pass"
+    },
+    {
+      "case": "Paired20 conclusion",
+      "actual": "Both rows78.9% occupied/30.6%object,19decisions32channel600k; explicit noimprovement",
+      "result": "pass"
+    },
+    {
+      "case": "PPO20 playback",
+      "actual": "Play reached20/20 at9.5s; camera alt changed to frame20; final note no next decision",
+      "result": "pass"
+    },
+    {
+      "case": "Frame20 Reference actor",
+      "actual": "Actor1986.1m ahead/.1mleft,5x2x1.5m; camera projectedreference overlay shown; notdetection disclaimer",
+      "result": "pass"
+    }
+  ],
+  "limits": [
+    "Browser checks verify listed interactions only, not FPS benchmark",
+    "Default narrow viewport tested this pass; prior guide desktop/mobile QA preserved",
+    "No external engineer feedback fabricated"
+  ]
+}

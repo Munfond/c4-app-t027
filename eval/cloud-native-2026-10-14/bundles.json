@@ -1,0 +1,14 @@
+{
+  "perception-mini-val.zip": {
+    "bytes": 19223704,
+    "sha256": "d83a0e10417865f98ab1eb8512a46ca6353e74b2d06993c4d5c9f03c2fa1b7f8",
+    "members": 325,
+    "crc_passed": true
+  },
+  "native-ppo-demo.zip": {
+    "bytes": 43594101,
+    "sha256": "5a27328a99d374fc95d3df04050ae045a43d846debe38ec18ae199c387cac45c",
+    "members": 227,
+    "crc_passed": true
+  }
+}

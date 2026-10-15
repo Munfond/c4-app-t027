@@ -1,0 +1,474 @@
+{
+  "kind": "measured_occupancy_proxy_ppo_research",
+  "status": "completed",
+  "algorithm": "PPO",
+  "objective": "occupancy_proxy_quality_and_cpu_latency",
+  "observation_abi": "occupancy-sensor-context-previous-latency-v1",
+  "dataset_sha256": "8c1a752afa67b76527a85a78600a085100af7b25016718ddf51058e01e19522f",
+  "checkpoint_sha256": "8d6c7155534906a50ca2f52b039696700072ff200768f0d91ead33c828e9f878",
+  "seed": 27,
+  "actual_steps": 12288,
+  "ppo_epoch_updates": 384,
+  "before_ppo_sha256": "d682b155a69f36dfa5f35f6c19c6e9c7d29522458cd1eedcaa0fd5695923a942",
+  "after_ppo_sha256": "7ee410bc333a087865a7f6562871ce233cc361d34b667480e67450cc1ed9bb60",
+  "selected_policy": "validation-policy-2048.zip",
+  "rule_training_density_threshold": 0.908117656184159,
+  "split_scenes": {
+    "train": [
+      "scene-0061",
+      "scene-0553",
+      "scene-0655",
+      "scene-0757",
+      "scene-0796",
+      "scene-1077"
+    ],
+    "validation": [
+      "scene-1094",
+      "scene-1100"
+    ],
+    "test": [
+      "scene-0103",
+      "scene-0916"
+    ]
+  },
+  "deadline_ms": 500,
+  "timing_scope": "cpu_wall_point_preprocessing_and_inference",
+  "profiles": [
+    1.0,
+    0.5,
+    0.25
+  ],
+  "results": {
+    "fixed_full": {
+      "frames": 81,
+      "scenes": 2,
+      "mean_scene_reward": 0.28294685950336845,
+      "occupied_iou": 0.40987704333175284,
+      "object_iou": 0.15989713107782214,
+      "latency_p50_ms": 91.004560999977,
+      "latency_p95_ms": 95.74281599998358,
+      "deadline_misses": 0,
+      "switches": 0,
+      "action_counts": {
+        "0": 81,
+        "1": 0,
+        "2": 0
+      },
+      "confusion": [
+        [
+          3022769,
+          31965,
+          10089
+        ],
+        [
+          23307,
+          62026,
+          2037
+        ],
+        [
+          62832,
+          8996,
+          15979
+        ]
+      ]
+    },
+    "fixed_half": {
+      "frames": 81,
+      "scenes": 2,
+      "mean_scene_reward": 0.23776823194930227,
+      "occupied_iou": 0.3499846047827808,
+      "object_iou": 0.12485007534674882,
+      "latency_p50_ms": 89.52373800002533,
+      "latency_p95_ms": 93.35963000000902,
+      "deadline_misses": 0,
+      "switches": 2,
+      "action_counts": {
+        "0": 0,
+        "1": 81,
+        "2": 0
+      },
+      "confusion": [
+        [
+          3035391,
+          21068,
+          8364
+        ],
+        [
+          35617,
+          50375,
+          1378
+        ],
+        [
+          67950,
+          7678,
+          12179
+        ]
+      ]
+    },
+    "fixed_quarter": {
+      "frames": 81,
+      "scenes": 2,
+      "mean_scene_reward": 0.1733407879967946,
+      "occupied_iou": 0.26436781609195403,
+      "object_iou": 0.08206680670538326,
+      "latency_p50_ms": 87.90595100003884,
+      "latency_p95_ms": 95.48034199997346,
+      "deadline_misses": 0,
+      "switches": 2,
+      "action_counts": {
+        "0": 0,
+        "1": 0,
+        "2": 81
+      },
+      "confusion": [
+        [
+          3044250,
+          12451,
+          8122
+        ],
+        [
+          50035,
+          36148,
+          1187
+        ],
+        [
+          73392,
+          6445,
+          7970
+        ]
+      ]
+    },
+    "rule": {
+      "frames": 81,
+      "scenes": 2,
+      "mean_scene_reward": 0.24739222873487443,
+      "occupied_iou": 0.3658462765369704,
+      "object_iou": 0.13560321770347092,
+      "latency_p50_ms": 89.79051500000423,
+      "latency_p95_ms": 92.98184300007506,
+      "deadline_misses": 0,
+      "switches": 28,
+      "action_counts": {
+        "0": 23,
+        "1": 58,
+        "2": 0
+      },
+      "confusion": [
+        [
+          3031847,
+          23954,
+          9022
+        ],
+        [
+          32502,
+          53366,
+          1502
+        ],
+        [
+          66523,
+          7950,
+          13334
+        ]
+      ]
+    },
+    "ppo": {
+      "frames": 81,
+      "scenes": 2,
+      "mean_scene_reward": 0.28294685950336845,
+      "occupied_iou": 0.40987704333175284,
+      "object_iou": 0.15989713107782214,
+      "latency_p50_ms": 91.004560999977,
+      "latency_p95_ms": 95.74281599998358,
+      "deadline_misses": 0,
+      "switches": 0,
+      "action_counts": {
+        "0": 81,
+        "1": 0,
+        "2": 0
+      },
+      "confusion": [
+        [
+          3022769,
+          31965,
+          10089
+        ],
+        [
+          23307,
+          62026,
+          2037
+        ],
+        [
+          62832,
+          8996,
+          15979
+        ]
+      ]
+    }
+  },
+  "validation": [
+    {
+      "steps": 2048,
+      "ppo_epoch_updates": 60,
+      "frames": 80,
+      "scenes": 2,
+      "mean_scene_reward": 0.7838758431373618,
+      "occupied_iou": 0.7151977991638401,
+      "object_iou": 0.8625099566333304,
+      "latency_p50_ms": 90.85559650003461,
+      "latency_p95_ms": 93.72522479999361,
+      "deadline_misses": 0,
+      "switches": 0,
+      "action_counts": {
+        "0": 80,
+        "1": 0,
+        "2": 0
+      },
+      "confusion": [
+        [
+          2997168,
+          28022,
+          4136
+        ],
+        [
+          23812,
+          105802,
+          11
+        ],
+        [
+          1797,
+          270,
+          38982
+        ]
+      ]
+    },
+    {
+      "steps": 4096,
+      "ppo_epoch_updates": 124,
+      "frames": 80,
+      "scenes": 2,
+      "mean_scene_reward": 0.7838758431373618,
+      "occupied_iou": 0.7151977991638401,
+      "object_iou": 0.8625099566333304,
+      "latency_p50_ms": 90.85559650003461,
+      "latency_p95_ms": 93.72522479999361,
+      "deadline_misses": 0,
+      "switches": 0,
+      "action_counts": {
+        "0": 80,
+        "1": 0,
+        "2": 0
+      },
+      "confusion": [
+        [
+          2997168,
+          28022,
+          4136
+        ],
+        [
+          23812,
+          105802,
+          11
+        ],
+        [
+          1797,
+          270,
+          38982
+        ]
+      ]
+    },
+    {
+      "steps": 6144,
+      "ppo_epoch_updates": 188,
+      "frames": 80,
+      "scenes": 2,
+      "mean_scene_reward": 0.7838758431373618,
+      "occupied_iou": 0.7151977991638401,
+      "object_iou": 0.8625099566333304,
+      "latency_p50_ms": 90.85559650003461,
+      "latency_p95_ms": 93.72522479999361,
+      "deadline_misses": 0,
+      "switches": 0,
+      "action_counts": {
+        "0": 80,
+        "1": 0,
+        "2": 0
+      },
+      "confusion": [
+        [
+          2997168,
+          28022,
+          4136
+        ],
+        [
+          23812,
+          105802,
+          11
+        ],
+        [
+          1797,
+          270,
+          38982
+        ]
+      ]
+    },
+    {
+      "steps": 8192,
+      "ppo_epoch_updates": 252,
+      "frames": 80,
+      "scenes": 2,
+      "mean_scene_reward": 0.7838758431373618,
+      "occupied_iou": 0.7151977991638401,
+      "object_iou": 0.8625099566333304,
+      "latency_p50_ms": 90.85559650003461,
+      "latency_p95_ms": 93.72522479999361,
+      "deadline_misses": 0,
+      "switches": 0,
+      "action_counts": {
+        "0": 80,
+        "1": 0,
+        "2": 0
+      },
+      "confusion": [
+        [
+          2997168,
+          28022,
+          4136
+        ],
+        [
+          23812,
+          105802,
+          11
+        ],
+        [
+          1797,
+          270,
+          38982
+        ]
+      ]
+    },
+    {
+      "steps": 10240,
+      "ppo_epoch_updates": 316,
+      "frames": 80,
+      "scenes": 2,
+      "mean_scene_reward": 0.7838758431373618,
+      "occupied_iou": 0.7151977991638401,
+      "object_iou": 0.8625099566333304,
+      "latency_p50_ms": 90.85559650003461,
+      "latency_p95_ms": 93.72522479999361,
+      "deadline_misses": 0,
+      "switches": 0,
+      "action_counts": {
+        "0": 80,
+        "1": 0,
+        "2": 0
+      },
+      "confusion": [
+        [
+          2997168,
+          28022,
+          4136
+        ],
+        [
+          23812,
+          105802,
+          11
+        ],
+        [
+          1797,
+          270,
+          38982
+        ]
+      ]
+    },
+    {
+      "steps": 12288,
+      "ppo_epoch_updates": 380,
+      "frames": 80,
+      "scenes": 2,
+      "mean_scene_reward": 0.7838758431373618,
+      "occupied_iou": 0.7151977991638401,
+      "object_iou": 0.8625099566333304,
+      "latency_p50_ms": 90.85559650003461,
+      "latency_p95_ms": 93.72522479999361,
+      "deadline_misses": 0,
+      "switches": 0,
+      "action_counts": {
+        "0": 80,
+        "1": 0,
+        "2": 0
+      },
+      "confusion": [
+        [
+          2997168,
+          28022,
+          4136
+        ],
+        [
+          23812,
+          105802,
+          11
+        ],
+        [
+          1797,
+          270,
+          38982
+        ]
+      ]
+    },
+    {
+      "steps": 12288,
+      "ppo_epoch_updates": 384,
+      "after_final_update": true,
+      "frames": 80,
+      "scenes": 2,
+      "mean_scene_reward": 0.7838758431373618,
+      "occupied_iou": 0.7151977991638401,
+      "object_iou": 0.8625099566333304,
+      "latency_p50_ms": 90.85559650003461,
+      "latency_p95_ms": 93.72522479999361,
+      "deadline_misses": 0,
+      "switches": 0,
+      "action_counts": {
+        "0": 80,
+        "1": 0,
+        "2": 0
+      },
+      "confusion": [
+        [
+          2997168,
+          28022,
+          4136
+        ],
+        [
+          23812,
+          105802,
+          11
+        ],
+        [
+          1797,
+          270,
+          38982
+        ]
+      ]
+    }
+  ],
+  "highest_reward_baseline_or_policy": "fixed_full",
+  "no_improvement_over_full": true,
+  "best_baseline": "fixed_full",
+  "no_improvement_over_best_baseline": true,
+  "conclusion": "PPO did not improve on full input; retain full baseline in this experiment.",
+  "limitations": [
+    "Static labels use LiDAR persistence proxy; free includes unobserved cells",
+    "Object footprint labels are annotations, not full 3D occupancy ground truth",
+    "500ms deadline follows recorded keyframe cadence; not an ADAS safety deadline",
+    "Recorded full LiDAR is acquired before thinning; no physical sensor power/capture savings",
+    "Fixed-grid U-Net compute may not decrease with fewer points; no improvement is a valid result",
+    "Quality labels and counterfactual outcomes excluded from PPO observations",
+    "Policy scenes isolated; checkpoint pretraining overlap not independently audited",
+    "Not online CARLA, no weather robustness or failed-sensor test",
+    "Only two policy test scenes; no broad generalization claim",
+    "Validation selects checkpoint; test is not used for further training or tuning",
+    "GT proxy metrics do not certify perception safety or collision avoidance"
+  ]
+}

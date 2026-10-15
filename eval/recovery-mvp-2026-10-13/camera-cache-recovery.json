@@ -1,0 +1,4865 @@
+{
+  "provenance": "historical processed camera cache; not rerun anonymizer",
+  "files": [
+    {
+      "file": "a1289b27ca1d41deb6fc982be9a3d03c_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "990ae48dc25cc2b7a2adf3b26a6a559722160ad320af49a1c4b41878799b26fa",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/a1289b27ca1d41deb6fc982be9a3d03c_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "9cdbf5ff7f294549aea0a4307e5d104a_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "45eba66410f94331c8716059ab145babaaea2b0acdc5554b4852ebd7da2cac0a",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/9cdbf5ff7f294549aea0a4307e5d104a_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "b4ff30109dd14c89b24789dc5713cf8c_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "1eec78418059ee96b0dd72cc83615d846b4fa76dee113214c4b93ae54291c149",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/b4ff30109dd14c89b24789dc5713cf8c_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "c5f58c19249d4137ae063b0e9ecd8b8e_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "3b80511e6d2c7d3f67494b14daf1856a1a4a3965fe7096a487b18476c4a75f1e",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/c5f58c19249d4137ae063b0e9ecd8b8e_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "700c1a25559b4433be532de3475e58a9_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "f987d510190b8c13a0240ff24fa30a63d902b59a8797713210953285f9e9c049",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/700c1a25559b4433be532de3475e58a9_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "700c1a25559b4433be532de3475e58a9_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "c5efb46c6cc03f3e264ee92c7f9882472c05eb3935806726fc9482e3b47d6749",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/700c1a25559b4433be532de3475e58a9_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "f4f86af4da3b49e79497deda5c5f223a_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "84a362679fc56214633cb73c20fe7eebb02443b154e273513b6cc3f61c862e99",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/f4f86af4da3b49e79497deda5c5f223a_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "6832e717621341568c759151b5974512_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "66007486c325e12175e263760ffeb5c951fcf2a049a58e183bbabdf16e0d3002",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/6832e717621341568c759151b5974512_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "6832e717621341568c759151b5974512_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "628efffd489fa6bd1ed080d116979ef4da6a104257d8672ecacfdb003008f48c",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/6832e717621341568c759151b5974512_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "6832e717621341568c759151b5974512_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "8bdfd4578d21de597cabb8b98945bc7736ba7658b4c1e8c38ce9b928de57111c",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/6832e717621341568c759151b5974512_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "fa65a298c01f44e7a182bbf9e5fe3697_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "5de73b0aef374a6f8ad763c9cde9d61b9bffb273579a22acfe8b390174019d2a",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/fa65a298c01f44e7a182bbf9e5fe3697_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "fa65a298c01f44e7a182bbf9e5fe3697_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "10665dff201910478424c7968b636c04a8e90a9c61838259da01b70b86852ab9",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/fa65a298c01f44e7a182bbf9e5fe3697_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "796b1988dd254f74bf2fb19ba9c5b8c6_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "c26e8f19c66529197786b3465fb52815ac8e950f043091a9a1459b14eac48205",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/796b1988dd254f74bf2fb19ba9c5b8c6_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "0d0700a2284e477db876c3ee1d864668_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "e0341ec999fcdd377a675fa4bf80c75d8883748f31bc986e1cfa293eef29e282",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/0d0700a2284e477db876c3ee1d864668_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "0d0700a2284e477db876c3ee1d864668_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "beec9196a7573229a8bcc8ae8a6c72699c164afa34b13cc1a1a30c3e1956cf07",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/0d0700a2284e477db876c3ee1d864668_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "de7593d76648450e947ba0c203dee1b0_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "e026be83c89a28d6c9326bf14d4dfda40bc9f58e6a8f097b6dddc215aebcc053",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/de7593d76648450e947ba0c203dee1b0_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "f753d3f87e5b40af87ff2cbf7c8e7082_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "4e7da251d3c1cce7faa4518460469d58a07f62fab9a82d50326c4ce0dfb6cec2",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/f753d3f87e5b40af87ff2cbf7c8e7082_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "b5989651183643369174912bc5641d3b_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "345bf61267cb5fc2d5a0a1c861c360254605e36e7106d5bc6fd7e1c1624546dd",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/b5989651183643369174912bc5641d3b_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "b5989651183643369174912bc5641d3b_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "4dba28093ffe9700874974b322dc47339d3b8962769e12bc3156607393d11258",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/b5989651183643369174912bc5641d3b_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "0bb62a68055249e381b039bf54b0ccf8_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "c31d68b578df503fb51cabbcfa83552cd5db8c460353cc9cad8d2dc11261bdf9",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/0bb62a68055249e381b039bf54b0ccf8_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "0bb62a68055249e381b039bf54b0ccf8_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "0393f85a67b8f3a4df29721a1c7edef3e68fc95fb7b95a2e5205aa8daaede041",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/0bb62a68055249e381b039bf54b0ccf8_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "07fad91090c746ccaa1b2bdb55329e20_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "d7206aba381274f5e770072d972c05b8c73080c4f3c8bc09a439e0b5ddf4540b",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/07fad91090c746ccaa1b2bdb55329e20_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "07fad91090c746ccaa1b2bdb55329e20_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "1c1eb27cde440397a8456f90be12b9a39dc3076d30539b4ff88403fa71da8beb",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/07fad91090c746ccaa1b2bdb55329e20_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "07fad91090c746ccaa1b2bdb55329e20_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "d9787f798205a064900c1257b86cc46cb1781fc16d57ab4b2e0dd06c13b3100e",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/07fad91090c746ccaa1b2bdb55329e20_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "ae5004bf4ebb4db0a84cb3c27bd398d1_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "6cf0044065ad2f0bee262f562fa91807a3fd6f4a2ff5ee32973b8a68e28a3f5d",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/ae5004bf4ebb4db0a84cb3c27bd398d1_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "ae5004bf4ebb4db0a84cb3c27bd398d1_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "a6c17b9b58e618c1466e809df26063c8c4ac142ffacf6d05a1b739d2117a54f8",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/ae5004bf4ebb4db0a84cb3c27bd398d1_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "ac8b4d49731d43289579f014cb7c97ef_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "6ce5266bc6ecfc10d00a44f58da31103204655f56cc81d21aada40e25cf798d6",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/ac8b4d49731d43289579f014cb7c97ef_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "c1eed31234b94e9f8e22fbf3428b0ac2_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "494e2f78a8a10841989b1cbc3fab48237493261c53b71c69d9279b8712b20e74",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/c1eed31234b94e9f8e22fbf3428b0ac2_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "a5afebb0aa5e4d7c95665788ce51ec58_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "063b010b3f0a941bbfa2cc73347492425a3e0553d7614fc7095a8ad61b1057b3",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/a5afebb0aa5e4d7c95665788ce51ec58_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "d8251bbc2105497ab8ec80827d4429aa_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "e87d99a78b23c62b29fabf36d86f0f862ed3e0723e630973325c42dbc2045406",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/d8251bbc2105497ab8ec80827d4429aa_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "a771effa2a2648d78096c3e92b95b129_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "45ac299f6d16e893ba8227d298f2f970498ea9f8e937d536e99999c1ce9b34a5",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/a771effa2a2648d78096c3e92b95b129_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "858a1ece22cf45d9bc71e42336604b78_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "244ff454343305176da793defd62b87f71ff9af9bbd7edd646f3a92dcae31876",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/858a1ece22cf45d9bc71e42336604b78_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "372725a4b00e49c78d6d0b1c4a38b6e0_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "f083bb4d73aaea16c9da549badc5a83d9b69a8adb8c0a1b285308bf7b3b82371",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/372725a4b00e49c78d6d0b1c4a38b6e0_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "61a7bd24f88a46c2963280d8b13ac675_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "d2752b6cf4678bdfdddb030c4ace21c5c9b5e9fe96093510ae89942b0df288e9",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/61a7bd24f88a46c2963280d8b13ac675_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "609d5177362340458a3bfd4949cd1e64_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "813b34fb3b1f6be4993727dd5bc5091a6a7a6172e6aeebfdf478b72b4a59f24a",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/609d5177362340458a3bfd4949cd1e64_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "a19a80c905674faab7203a3a4e0f5246_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "6c6e859de8dbe78d96f783de92d6da0163e9eb30e12353911d306cc562913166",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/a19a80c905674faab7203a3a4e0f5246_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "b6c420c3a5bd4a219b1cb82ee5ea0aa7_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "d7c8b36fb274445c6be389f8ce6397d581202827a15a4c2d786177dafc7b75eb",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/b6c420c3a5bd4a219b1cb82ee5ea0aa7_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "b6c420c3a5bd4a219b1cb82ee5ea0aa7_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "e0ea105d2de125d8e20e831b0bfb1c0ab45fc1afc5aaa0abedb15b90d4a9a42f",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/b6c420c3a5bd4a219b1cb82ee5ea0aa7_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "6ff9723a60bf4e14b328b3b19f04dc32_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "3c49f9d9f2916c6235b9fed3606f0878fcc5aeb1b462ce2c08261b2bceb4129a",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/6ff9723a60bf4e14b328b3b19f04dc32_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "6ff9723a60bf4e14b328b3b19f04dc32_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "d2788960965db183cbaca01af328b73fcbb599234c6970e4e2bdd142017f7242",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/6ff9723a60bf4e14b328b3b19f04dc32_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "06be0e3b665c44fa8d17d9f4770bdf9c_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "3aed0f6e344a328d44036ccebeca09e7681519c663f25b854fb7edbc9574c8b7",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/06be0e3b665c44fa8d17d9f4770bdf9c_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "06be0e3b665c44fa8d17d9f4770bdf9c_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "7daafd7f6439327138af37253c3926379b90e6e15398b1735c749d87c35e44ac",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/06be0e3b665c44fa8d17d9f4770bdf9c_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "06be0e3b665c44fa8d17d9f4770bdf9c_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "eb57a60657e28c9223bfb44066b97679ed24facd8b7547909f0de2c535893235",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/06be0e3b665c44fa8d17d9f4770bdf9c_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "b22fa0b3c34f47b6a360b60f35d5d567_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "45d02e675bf93982ea4103bc04961ddfa6574a8cd6f9327243d719550ab04411",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/b22fa0b3c34f47b6a360b60f35d5d567_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "9ee4020153674b9e9943d395ff8cfdf3_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "410bb8941241d5b65ad2ffe3e2adbaa73dfd57de05ade3e6957c019103fe45d1",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/9ee4020153674b9e9943d395ff8cfdf3_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "5b03af7a953245b5a3b23191ed4da62a_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "b2e117d4e999a7d7bfc07bb6a32c926d530e011c92204354508e8d5c9a276c3d",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/5b03af7a953245b5a3b23191ed4da62a_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "d0ecf474e0e64950aa265cd44b9c9d75_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "4a2aee25bafb4c8c96de2c6e55208609b566dddaee99a70c341f9cc0ca475833",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/d0ecf474e0e64950aa265cd44b9c9d75_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "6bfd42cf0aba4f1a94ec11fa43e2dd92_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "1ddb29694f19e8e6412564959bfe9cc903058d6b5e87a96d6fad0f6281f495b7",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/6bfd42cf0aba4f1a94ec11fa43e2dd92_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "6bfd42cf0aba4f1a94ec11fa43e2dd92_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "6f75b1208c5b9dac06a972e810ee42af7d8ee64e33ff7c3f6b8a10885ca1dd74",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/6bfd42cf0aba4f1a94ec11fa43e2dd92_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "6bfd42cf0aba4f1a94ec11fa43e2dd92_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "39063b0ded56f3bd955f0ee563cf2af30ae4e39a55dcc4ca39f76baeede3d2d9",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/6bfd42cf0aba4f1a94ec11fa43e2dd92_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "61d9340c5ad8418dafe7a4af1b96e6b9_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "94e8077f032ff3ef09b90443d4ac0214eff364a917bf32bf36f852f4ddee846a",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/61d9340c5ad8418dafe7a4af1b96e6b9_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "9e7683e8586542a1b6032980c45f15ce_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "3b6d9a0e81407dea033a3c6edc2c73dfebba59469a0813951bc20defe061e177",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/9e7683e8586542a1b6032980c45f15ce_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "9e7683e8586542a1b6032980c45f15ce_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "81ba522eb183c11b9ab115dbe98530a33d9bb8e8ccb3ea63c9e52a68316423f3",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/9e7683e8586542a1b6032980c45f15ce_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "8cd36e9531fb4eba8e6ac1d666c4641c_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "11f8cdb1a30b24818f75db3ce7dcfb55342678255f6c6280b3a48419a8e134f6",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/8cd36e9531fb4eba8e6ac1d666c4641c_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "4b894442c95141f9affd731d9da7b43c_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "09aeb2868689ccce735ab54e37edae64a648518e4e5dbd92a760a33a4b1bbdb3",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/4b894442c95141f9affd731d9da7b43c_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "4b894442c95141f9affd731d9da7b43c_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "60d2be308c72afc7cdc35a34790ccbff6725633e26f60d947ff567da709a4b93",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/4b894442c95141f9affd731d9da7b43c_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "e63b83b436a0479db7362338cdfab118_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "a5e12741520284e7a31827abc6bb906a519d2adfb969297cbf037e22157ebc6e",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/e63b83b436a0479db7362338cdfab118_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "c567f9b8e9f34817acdc9c49d791c557_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "a99a0da7030ad0074e3623c987de9c41441c2e7c18045f98fc1fa8a8f0a12509",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/c567f9b8e9f34817acdc9c49d791c557_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "8e352d4a6c6f40c8ad4f10a3d2c3f158_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "0c3c62ee5fc8b8cdfe0378187f26ecc6967c4efe95c5e31c1101bcd8e43bb629",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/8e352d4a6c6f40c8ad4f10a3d2c3f158_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "841dd6709e9b4d7c9d6bf888f1fe6d7e_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "dd255544272cc0b2ab01e2a2e61ff73ee25906457b72b9c800945b1abf122d48",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/841dd6709e9b4d7c9d6bf888f1fe6d7e_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "e54b784a608644a2804fcf800c7499f7_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "8b498a5cc023517e864385088ff414023ace6998738bdea496187d292fdc4221",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/e54b784a608644a2804fcf800c7499f7_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "4cf5d6c3f6ab42aab23f67b5a9782d1a_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "9fdea50fb5b6d0435f7c4620d1c1c40b08d925f3b44ffd603fb56b0684b682bf",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/4cf5d6c3f6ab42aab23f67b5a9782d1a_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "38a28a3aaf2647f2a8c0e90e31267bf8_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "5d7f89a9884699b2b7e755730b058c9e35861db370f1f060bb82a8b7005d106a",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/38a28a3aaf2647f2a8c0e90e31267bf8_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "f40544fd4f5d42abbcfa948eeaf86850_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "cf7c868d24a33f759aaba2ebdc4fb7fa0f074bc31e2af3d6e229af9caa5457c3",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/f40544fd4f5d42abbcfa948eeaf86850_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "f40544fd4f5d42abbcfa948eeaf86850_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "9d54f5652b2b25fdfb454fb1a6fea14faf5a6234bb7777107f9791c876676108",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/f40544fd4f5d42abbcfa948eeaf86850_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "cb4e6195faad467094fbd4d0a9e960e9_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "6fec5dba551aa76307c7955d73a440183ccaa4950807aa398606f505ade853f4",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/cb4e6195faad467094fbd4d0a9e960e9_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "b4ff30109dd14c89b24789dc5713cf8c_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "195ddff1097c660c5bf99fbc53e06798ad60f5a35e2fb709da2a96c9483ba13e",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/b4ff30109dd14c89b24789dc5713cf8c_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "7f594234e8034228b1a7d727f1981e09_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "a7c19d4b3011b6d4161c9be54f519ff7ed4344963222c2933b0aa4505b85631c",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/7f594234e8034228b1a7d727f1981e09_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "3950bd41f74548429c0f7700ff3d8269_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "b782830936ef2e78d217597bea5263681a3db9b2dabae7264346ad49b0ca4440",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/3950bd41f74548429c0f7700ff3d8269_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "700c1a25559b4433be532de3475e58a9_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "f8df5a742d647a4225b31aa9dc4aad5b3ec1a5d52cb0a07cf5815e192a429e4d",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/700c1a25559b4433be532de3475e58a9_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "700c1a25559b4433be532de3475e58a9_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "a9b08c24af158a29b2df1109dc6a4ed43c2ecb9bbf0bb6cc5490078aa49f2eef",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/700c1a25559b4433be532de3475e58a9_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "a1289b27ca1d41deb6fc982be9a3d03c_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "8ae4c3883469f32bf766e7c55f258c70d8a089ae1b3a8b93c44d6fc3bcbea55f",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/a1289b27ca1d41deb6fc982be9a3d03c_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "e6e877f31dd447199b56cae07f86daad_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "256b703ee70411c15cab9fa25ab2b0a88fa5aba847578710fa97bb5dbf444308",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/e6e877f31dd447199b56cae07f86daad_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "c5f58c19249d4137ae063b0e9ecd8b8e_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "8b0d778cddbcd2e15eb2650edfc0849ba1030f51ea46f41ec8bd71a763f28ab7",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/c5f58c19249d4137ae063b0e9ecd8b8e_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "f4f86af4da3b49e79497deda5c5f223a_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "d651cdf086efeae308a689b790fbc88577649cbf446a1eea0de11403d935641f",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/f4f86af4da3b49e79497deda5c5f223a_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "b6b0d9f2f2e14a3aaa2c8aedeb1edb69_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "7ab126b4399be033e625c7413fb152919a438622c08a8a32c488cbae8a8c708c",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/b6b0d9f2f2e14a3aaa2c8aedeb1edb69_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "f753d3f87e5b40af87ff2cbf7c8e7082_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "a92d24ed0b3e76c5c2f7df15371a71a3b260626c985be649448c81d94149a88e",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/f753d3f87e5b40af87ff2cbf7c8e7082_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "f753d3f87e5b40af87ff2cbf7c8e7082_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "2fcde44a692dd2c5362708d55b94977521c4189b50fcf51099550f30e40798c5",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/f753d3f87e5b40af87ff2cbf7c8e7082_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "ac8b4d49731d43289579f014cb7c97ef_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "a02751010879699260c3122d6d6b7cfb1f7dd5e4dbce3cd020a35d56ca082dd3",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/ac8b4d49731d43289579f014cb7c97ef_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "c1eed31234b94e9f8e22fbf3428b0ac2_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "3614db2261ed20caaddc38ee93dfec652bfe40c92452f757718f1e8411254540",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/c1eed31234b94e9f8e22fbf3428b0ac2_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "edba7d0cf1c64d2a9c8a5ebddab507a9_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "31c3e2dc8fa2c1d5e7ff0ed3374fb39fd7df8e6776fe0e4456157855213e4922",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/edba7d0cf1c64d2a9c8a5ebddab507a9_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "5b7cb170eee6468aa1fdbd3abcf63c5a_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "febcc6ef4c304e6faa2a60766efcd7ff92c75b55d06c5a7e51741be2e007b2cb",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/5b7cb170eee6468aa1fdbd3abcf63c5a_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "d8251bbc2105497ab8ec80827d4429aa_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "d92d2d14218e41447d21e59e1dca92954ea94d436b287ce2adad1f8e4d9f652a",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/d8251bbc2105497ab8ec80827d4429aa_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "858a1ece22cf45d9bc71e42336604b78_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "1c9afbb8ca91b7592c28daad7f3cec72bd432bac337da4ef2439c08ee125a0bf",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/858a1ece22cf45d9bc71e42336604b78_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "61a7bd24f88a46c2963280d8b13ac675_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "745321cb3c0609cbd9d42402e70cd7414d715a1b51333f1d3fa3b422ea6d26fa",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/61a7bd24f88a46c2963280d8b13ac675_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "609d5177362340458a3bfd4949cd1e64_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "66cc2850f94ebd08b2dbf77bf6ba5a9451911d7680e8880a5d57b9efd137b308",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/609d5177362340458a3bfd4949cd1e64_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "609d5177362340458a3bfd4949cd1e64_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "97fd3b7b3343a9d9afa31005e34399d9f3118b1306016181a89bf084b031a9be",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/609d5177362340458a3bfd4949cd1e64_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "b1303058fa624645b753d7283d70de45_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "a0850f5e0a9a3382a2c52861d0f19e222b7807169e16dabde6228d1d6919f740",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/b1303058fa624645b753d7283d70de45_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "a19a80c905674faab7203a3a4e0f5246_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "322dd58363bb266e215093b7cb01481e92c715d41d2a37c4c8d3fccdc4cf9bb8",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/a19a80c905674faab7203a3a4e0f5246_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "8092909473464f80b9f791a4d31ddcb8_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "14bcec24572e36cd8039e15c5c3a5aca7c1f4112d2c6378395e13fbc8f39931e",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/8092909473464f80b9f791a4d31ddcb8_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "8092909473464f80b9f791a4d31ddcb8_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "e1e5aaf2502e530666ebfe890556dd93e033b0824332eda007b982a9da4f4f84",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/8092909473464f80b9f791a4d31ddcb8_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "6ff9723a60bf4e14b328b3b19f04dc32_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "2635deaa0d758d3eec884211df3b333733247882c66fcabccfc30fa66eb3b1d6",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/6ff9723a60bf4e14b328b3b19f04dc32_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "06be0e3b665c44fa8d17d9f4770bdf9c_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "3bf7e236a9f099576933cf169ea622c780c9f73f67a74b28ccb50b6795e107f9",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/06be0e3b665c44fa8d17d9f4770bdf9c_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "9ee4020153674b9e9943d395ff8cfdf3_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "4cd1556211318a62d4981b78b78f053f783dd01f3a83a3e788d332ab77771304",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/9ee4020153674b9e9943d395ff8cfdf3_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "5b03af7a953245b5a3b23191ed4da62a_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "d17ae40d0e1b7ed3983735843d3106cebeeed0a5ea7da805415c444c7cd0974d",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/5b03af7a953245b5a3b23191ed4da62a_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "9e7683e8586542a1b6032980c45f15ce_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "06b1e2361c5502e228dda7065e9fda455a2c4cabbbbf84fcde68af0b99fdcaca",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/9e7683e8586542a1b6032980c45f15ce_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "44237858a539457da65822bfcf58c414_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "a1e92e8d5c6312c67a95b364c01e4c5a5e15acbf5f347fac01a7c4f8d02eb153",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/44237858a539457da65822bfcf58c414_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "8cd36e9531fb4eba8e6ac1d666c4641c_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "5203b34a066922c5922152e7f6586d168104973fb9e02d31c80cbb9608cfa67b",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/8cd36e9531fb4eba8e6ac1d666c4641c_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "e00dc15130dc44e796687baadd076ae4_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "7a43e3606b5d03f4f3155e7fe71aca556b65c9ea52393770f8b8461cd7de84c3",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/e00dc15130dc44e796687baadd076ae4_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "e63b83b436a0479db7362338cdfab118_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "f52d4fbd83737f6176f992b1c263f29ce5ca594dbe12ce9b3add7e37db81b465",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/e63b83b436a0479db7362338cdfab118_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "8e352d4a6c6f40c8ad4f10a3d2c3f158_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "a80ce035444bc15d28a5da5ac9961b38b87005a44a63908c98ee844531bc460c",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/8e352d4a6c6f40c8ad4f10a3d2c3f158_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "8e352d4a6c6f40c8ad4f10a3d2c3f158_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "c72ad3aed008409cf5b32a3cd35c6a99d70ce5f3dba97eb3616048882684330f",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/8e352d4a6c6f40c8ad4f10a3d2c3f158_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "841dd6709e9b4d7c9d6bf888f1fe6d7e_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "86618f1e3c20be19f2c30ef1c25de77de398c567527b6f88e67e5772a4a2d2d9",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/841dd6709e9b4d7c9d6bf888f1fe6d7e_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "6d9984d09d52479e837da2fd09e192cc_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "ff8f0b09a5dc6d9c213519ef26ae4bb9fdd6b782386cebbbe869430ed9cf4df4",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/6d9984d09d52479e837da2fd09e192cc_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "6402fd1ffaf041d0b9162bd92a7ba0a2_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "d95e68ee93bc07bc539ffb5dee47f4555bdd010152b417afa84540685f409bbf",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/6402fd1ffaf041d0b9162bd92a7ba0a2_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "6402fd1ffaf041d0b9162bd92a7ba0a2_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "6c0b8ed57c53aeb3240cd5a5fea814485cd9b7a33cf69fa16086cfefd21d23fd",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/6402fd1ffaf041d0b9162bd92a7ba0a2_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "ce94ef7a0522468e81c0e2b3a2f1e12d_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "80a3b9c17ff3521841a140584585edb11814c9076247a1b720f18bf7b5587035",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/ce94ef7a0522468e81c0e2b3a2f1e12d_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "9fcdc52b791045e99c623c5fc643331f_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "d3e81adceb30235424881b6097b660c2cdbbdaedba90053e1f4c68de8e30e617",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/9fcdc52b791045e99c623c5fc643331f_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "1c9a906c40f6417bbe1cea06d6e55501_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "753b14ebdad383bc90d42b11477053df629c360e53a0d6bbb7d6a8c9a0f1a646",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/1c9a906c40f6417bbe1cea06d6e55501_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "a771effa2a2648d78096c3e92b95b129_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "e281eebbf5cafb92b1514363527b9fc19301f4857aec8be8f06cf05f502ed833",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/a771effa2a2648d78096c3e92b95b129_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "b9ea04a6121d4a8bb00199b885aa5ef0_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "6ce36970ecec753ce311ba1ad72558061058c48cf0a9d5fcfcd46a41934c08bb",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/b9ea04a6121d4a8bb00199b885aa5ef0_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "87e772078a494d42bd34cd16172808bc_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "7fd29168310fd414cfd2ee8ceb54dbd1007aea3fe34f313a6079b242909b0b4a",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/87e772078a494d42bd34cd16172808bc_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "f40544fd4f5d42abbcfa948eeaf86850_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "d4fcf14aad2d27c4cda144058f158891474c6c592925f4ac27e2317db9979d95",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/f40544fd4f5d42abbcfa948eeaf86850_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "f40544fd4f5d42abbcfa948eeaf86850_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "d504b726fdd73f2913346514297e4d945faae2c3dd8f680fc82bb5a24abee3a2",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/f40544fd4f5d42abbcfa948eeaf86850_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "3e8750f331d7499e9b5123e9eb70f2e2_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "17cbc4513a4e288fc40a76528505cdfe2d560517dec4d505816434606318c8b2",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/3e8750f331d7499e9b5123e9eb70f2e2_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "c5f58c19249d4137ae063b0e9ecd8b8e_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "6bff237d77e276ecbbb6e171cf08b634129499077e84a15e28897ff18fd84723",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/c5f58c19249d4137ae063b0e9ecd8b8e_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "f4f86af4da3b49e79497deda5c5f223a_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "9666fa1a54cc7034d58463914651294f92a1b8a604c58ccad3b4506e881e0717",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/f4f86af4da3b49e79497deda5c5f223a_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "cb4e6195faad467094fbd4d0a9e960e9_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "07561feaae04689891ebb2119603c02956fc28d153721f5a0657bb13d1ee54e8",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/cb4e6195faad467094fbd4d0a9e960e9_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "1c9a906c40f6417bbe1cea06d6e55501_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "4016eac14e9cc416d0a48e9e544cf06b340f35b1de301c1dabcb19b7b2f8823d",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/1c9a906c40f6417bbe1cea06d6e55501_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "747aa46b9a4641fe90db05d97db2acea_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "80da7ff481f9915b6d4a69754bd45cc3b59b85c3c8eacfd96949ee6cb7d037a7",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/747aa46b9a4641fe90db05d97db2acea_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "700c1a25559b4433be532de3475e58a9_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "5d32304009ff8e327f590801b3e7a500ff3e9f913d01150844bd665765623dae",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/700c1a25559b4433be532de3475e58a9_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "a1289b27ca1d41deb6fc982be9a3d03c_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "2ed101930813e4caf535bc0ebd4b2a1111a340ece0496b03c434783b13c8ce7a",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/a1289b27ca1d41deb6fc982be9a3d03c_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "0d0700a2284e477db876c3ee1d864668_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "f08a5e8c6df357a14ab09a5d777a972ec21f1d4a63c0f195236794fefa218d3f",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/0d0700a2284e477db876c3ee1d864668_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "3950bd41f74548429c0f7700ff3d8269_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "e08faa93d028a89236ae23e9cef5999582347a50cf0a6dda6fe8d136b74c38a6",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/3950bd41f74548429c0f7700ff3d8269_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "700c1a25559b4433be532de3475e58a9_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "686f2374d488708612be57ceb3e20095b9836adb5de873c8e8fcedf2ebc244fa",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/700c1a25559b4433be532de3475e58a9_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "a98fba72bde9433fb882032d18aedb2e_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "316dda30e9029fe7521050381654ba924cec295ed342278f23d4b43f9253bdf5",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/a98fba72bde9433fb882032d18aedb2e_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "3950bd41f74548429c0f7700ff3d8269_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "6680addbda5a1a824c7648a5861c39780a7e6ac40ce919a3f62ee7355a63a6a9",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/3950bd41f74548429c0f7700ff3d8269_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "a98fba72bde9433fb882032d18aedb2e_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "ef18a5a85036d8b9ecc618b67ef367b072a2937d080e878620c160aa39a96722",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/a98fba72bde9433fb882032d18aedb2e_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "3950bd41f74548429c0f7700ff3d8269_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "39c4f3b0d6d897c59e457cf608c5e4ca16a10acc527d803f4d289f8eb6228278",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/3950bd41f74548429c0f7700ff3d8269_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "e6e877f31dd447199b56cae07f86daad_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "2b86195ce9bddb9a721606dab59903348943edb2a6f404b3d053b4772c88f062",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/e6e877f31dd447199b56cae07f86daad_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "6832e717621341568c759151b5974512_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "53b10543ccdd1c40ec3dd841b6c5ccaf54631591bc63e16df9954005076ef116",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/6832e717621341568c759151b5974512_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "de7593d76648450e947ba0c203dee1b0_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "8a0754770cdcba6e00677a6cb33b637aaf1948c2400def436004ee5ab79cfb17",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/de7593d76648450e947ba0c203dee1b0_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "b22fa0b3c34f47b6a360b60f35d5d567_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "8bee76ea52b0b08d064fef99dd25c9a65cde80afbc6b9f2a939e0480127418fd",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/b22fa0b3c34f47b6a360b60f35d5d567_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "048a45dd2cf54aa5808d8ccc85731d44_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "a09b4895a5e5cb055062d0153b05c67f5282fe76a59fa3a7b74cd29b55f9d3e2",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/048a45dd2cf54aa5808d8ccc85731d44_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "0bb62a68055249e381b039bf54b0ccf8_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "3fbafa04517c43191ec9b2408aea03fe37493048155ae7330536b166f297596a",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/0bb62a68055249e381b039bf54b0ccf8_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "07fad91090c746ccaa1b2bdb55329e20_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "42e7897a465979c72f9bbf18f12484ac7f951d6efd3a3e335ec97b695c755cf8",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/07fad91090c746ccaa1b2bdb55329e20_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "07fad91090c746ccaa1b2bdb55329e20_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "8952c59f2ba7f6d1aa7ca6fbc182c7f2e54b607d938752fe7417c6cb75c57c23",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/07fad91090c746ccaa1b2bdb55329e20_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "07fad91090c746ccaa1b2bdb55329e20_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "152a455d0dc12f690550312c4ba1b1d4fde272ea4c99ac188dbc7eb3f49bc10c",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/07fad91090c746ccaa1b2bdb55329e20_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "ac8b4d49731d43289579f014cb7c97ef_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "e9cb7fbcda472b7300793e7ed7ff52753bfd20170e851be0f7bfda3dbc8b6de6",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/ac8b4d49731d43289579f014cb7c97ef_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "ac8b4d49731d43289579f014cb7c97ef_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "4742ecc8f8450f9a4c7b1b5e476b5220e9d0a901ad6d8a4c50009d2c73a27081",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/ac8b4d49731d43289579f014cb7c97ef_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "ac8b4d49731d43289579f014cb7c97ef_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "60b82beccbdf23321832b9ad22a59775de6cb3a1588e25d3c1c7a38754a15738",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/ac8b4d49731d43289579f014cb7c97ef_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "5b7cb170eee6468aa1fdbd3abcf63c5a_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "e8db3d5cebec0e9f2ae49a05cc141a06e6e5a4bb864d8876b5ff421cbc6d0b76",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/5b7cb170eee6468aa1fdbd3abcf63c5a_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "5b7cb170eee6468aa1fdbd3abcf63c5a_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "c308aa331160885bca377f907c63bb5dc854f6988af9f59ea293209c7092f49f",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/5b7cb170eee6468aa1fdbd3abcf63c5a_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "a771effa2a2648d78096c3e92b95b129_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "99e36af8628426da65d147cd4c52f582b6c7395a08595744e051e3b2f326331b",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/a771effa2a2648d78096c3e92b95b129_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "048a45dd2cf54aa5808d8ccc85731d44_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "ef0e66080fb95deaf3f3e5c1fcc58ea65050c625fcd67dae71a9d53ea6eebd75",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/048a45dd2cf54aa5808d8ccc85731d44_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "372725a4b00e49c78d6d0b1c4a38b6e0_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "bf9252a5ac25502d2b4242960d80203a3e161ffd87567d4eb499023a8c5d8116",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/372725a4b00e49c78d6d0b1c4a38b6e0_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "61a7bd24f88a46c2963280d8b13ac675_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "b00e30107b15a1d105bdbfe89de7f6042c59fe091f360be22e7229768b489c48",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/61a7bd24f88a46c2963280d8b13ac675_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "b1303058fa624645b753d7283d70de45_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "5dcf593caa7e7ce73e55f6766c2713557e33aef8e44d0b0995bbb196eaf29f75",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/b1303058fa624645b753d7283d70de45_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "8092909473464f80b9f791a4d31ddcb8_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "77d670fc54ce16be5d7d3bb34c1afe9bf5211f67b9354228fbcea145ad267029",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/8092909473464f80b9f791a4d31ddcb8_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "6ff9723a60bf4e14b328b3b19f04dc32_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "779e45f741afbca6017080747711d7673b695035e5216ca3bb634357588de991",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/6ff9723a60bf4e14b328b3b19f04dc32_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "06be0e3b665c44fa8d17d9f4770bdf9c_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "05261f8d56bb3d1fd8fd5e3695afa5d950fe0cf91a078c3dd5ebda5c92edc872",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/06be0e3b665c44fa8d17d9f4770bdf9c_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "9150678870764c1b87a649a25939c61b_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "8085548c594f5cf6b314f81d873490ded50ef362a5038d159772b09c657c34e2",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/9150678870764c1b87a649a25939c61b_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "9150678870764c1b87a649a25939c61b_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "651cdcf350ddef93c5aea5b5ba1a71eaf0d08a501a11ee56fe90880f9a91aef0",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/9150678870764c1b87a649a25939c61b_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "8573a885a7cb41d185c05029eeb9a54e_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "35261b939ba145e87595837cff2e7c8a54f94fac8f60af2e3fbe1993060de398",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/8573a885a7cb41d185c05029eeb9a54e_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "0a0d6b8c2e884134a3b48df43d54c36a_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "9f02bed34c223c3e42c2deecdd54204e6fe34c0248b30404b1b25dd729cf51dd",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/0a0d6b8c2e884134a3b48df43d54c36a_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "8e9c2cba0ee74056aa3746e8391d54a9_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "a5956bfb18d38d9b5bfe3b6804f0f092b20e97afe2f49fa6e453f7d455599914",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/8e9c2cba0ee74056aa3746e8391d54a9_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "9ee4020153674b9e9943d395ff8cfdf3_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "249f0f00bb1fb464b129dad1386383cfb427d230ebbf485654a8c132e68f9c16",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/9ee4020153674b9e9943d395ff8cfdf3_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "456ec36cb4a44ca78f36fbd90c0c34fa_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "48c152170f482a089d0e82eace94e55739eab51739819ab93efae8c28617a886",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/456ec36cb4a44ca78f36fbd90c0c34fa_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "456ec36cb4a44ca78f36fbd90c0c34fa_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "6eca977a4379ec68c8140cf99b07f0482e4c8f9f545e5cf6e1e8462a265b5008",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/456ec36cb4a44ca78f36fbd90c0c34fa_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "0af0feb5b1394b928dd13d648de898f5_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "a3be5942e237ccd889d205fb22dd2c0986c9bf263005d2adae37ba15caf8f60e",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/0af0feb5b1394b928dd13d648de898f5_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "0af0feb5b1394b928dd13d648de898f5_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "bc5645a2573ce4192ca97cfb0643faa1daf710335656a46933d33cfd8e681e84",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/0af0feb5b1394b928dd13d648de898f5_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "0af0feb5b1394b928dd13d648de898f5_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "e22209eb201a2291b12f7d5860b46903b1b6641e0d115b60c9a59cd7e0a6c2e6",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/0af0feb5b1394b928dd13d648de898f5_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "61d9340c5ad8418dafe7a4af1b96e6b9_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "c94d1e7d5ce2b3b6525f81d1cafa5564a4265cea099f3b5a7e8750114c4e935f",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/61d9340c5ad8418dafe7a4af1b96e6b9_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "9e7683e8586542a1b6032980c45f15ce_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "b553ee115b46bc2379e6d0f900a51cc0d047bab7c6ca1778c350a8525951f48c",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/9e7683e8586542a1b6032980c45f15ce_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "9e7683e8586542a1b6032980c45f15ce_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "8d122388f6414b32da36c9fbf446772b8c6de0bc7b54f2c3af5027b68845c323",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/9e7683e8586542a1b6032980c45f15ce_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "cc57c1ea80fe46a7abddfdb15654c872_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "0ac1aef387c8ebe450ccad28c07e1e934d972c13fce51ed729af228781b39220",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/cc57c1ea80fe46a7abddfdb15654c872_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "55c258972acb4300a3a6077a531ab050_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "7f7424eef24e053b818bf0b85a345f7a750ebe1880a5784e03b449622b79a83c",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/55c258972acb4300a3a6077a531ab050_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "55c258972acb4300a3a6077a531ab050_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "bf80814e9cdf432ab0491d718c5ead5770a5e35561e8ad2ad3558528dc6824b8",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/55c258972acb4300a3a6077a531ab050_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "44237858a539457da65822bfcf58c414_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "8ecd4f25eac2f225f0c659b94a5d5758636e1cb30262a97501614cf91497b6dc",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/44237858a539457da65822bfcf58c414_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "44237858a539457da65822bfcf58c414_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "1e157d4f404d100b649aca5d3e5a575564322795ec353df2ef233bbce804d191",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/44237858a539457da65822bfcf58c414_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "8cd36e9531fb4eba8e6ac1d666c4641c_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "186932e48caf8ea662825606b0e19ef000fb980aecbe56075d3c40bb1c4a67fb",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/8cd36e9531fb4eba8e6ac1d666c4641c_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "8cd36e9531fb4eba8e6ac1d666c4641c_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "2e29d8e605871d6f3017d6113e30b34a18414ef3893790cef4175a09d57d6e67",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/8cd36e9531fb4eba8e6ac1d666c4641c_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "e00dc15130dc44e796687baadd076ae4_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "9e7804a0c6f733af4d0bb5ca259534c0ca4c8ed3181eb7cdfd1a61a803eea7ac",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/e00dc15130dc44e796687baadd076ae4_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "e54b784a608644a2804fcf800c7499f7_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "22a44bf8ae7f7d90721bff39e86f8e0cbeb5226401b02bfdb8254578d22dc770",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/e54b784a608644a2804fcf800c7499f7_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "6d9984d09d52479e837da2fd09e192cc_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "66a1b5490892f1fccca34d474d9b8fc22442a65e36ef7f94ea98920e3bdb7f1a",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/6d9984d09d52479e837da2fd09e192cc_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "6d9984d09d52479e837da2fd09e192cc_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "fbd09d75f8cd3b0ae0f6417acf3052f6bdc909d0199f0682ea554ab3a3ac6f81",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/6d9984d09d52479e837da2fd09e192cc_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "6d9984d09d52479e837da2fd09e192cc_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "d07a621ea68734cd31f4fb3a3d3f4bd0c6cc15ef46c2178fccb01c84b0c2f85f",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/6d9984d09d52479e837da2fd09e192cc_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "ce94ef7a0522468e81c0e2b3a2f1e12d_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "3a20155a2c674e0c6e6293c95001a678cd365c55c9f7c10c9f21a11367357aa2",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/ce94ef7a0522468e81c0e2b3a2f1e12d_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "1c9a906c40f6417bbe1cea06d6e55501_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "08bb0b939040057a14d391f4122124b4f8c5112efddacb455c9704f43deb3a46",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/1c9a906c40f6417bbe1cea06d6e55501_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "b9ea04a6121d4a8bb00199b885aa5ef0_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "bf602828d9f0d79ecf7aeec131a0da5468fb00fba3ee40d172f68f932a391e21",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/b9ea04a6121d4a8bb00199b885aa5ef0_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "87e772078a494d42bd34cd16172808bc_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "69b5f21bcf4bed1466b61b2632764a156610ea8d9dd0d0d20b71a36c3d5fd26d",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/87e772078a494d42bd34cd16172808bc_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "f40544fd4f5d42abbcfa948eeaf86850_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "ab0d50f5797f7066ea6d8c2ece8bac37e19948cdcd5c0046a879e95b2b42a4c2",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/f40544fd4f5d42abbcfa948eeaf86850_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "281b92269fd648d4b52d06ac06ca6d65_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "3e230b74a956a9f23d191638057a91a9e5e58a3a233f0a57e68e26907738666d",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/281b92269fd648d4b52d06ac06ca6d65_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "b4ff30109dd14c89b24789dc5713cf8c_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "67a9faed053993fcd95d3d4740003a13aaf44c02c225f6905ce18207264f1649",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/b4ff30109dd14c89b24789dc5713cf8c_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "0bb62a68055249e381b039bf54b0ccf8_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "52253f1064a766654b1cb7d3b7b19f3c51075658f0efd8dc9ade6aeab58cb6ca",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/0bb62a68055249e381b039bf54b0ccf8_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "cb4e6195faad467094fbd4d0a9e960e9_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "96411b7c0618eccf49dc3695166f2f078c7f755a1f3534b51d8754c4ae16d1a8",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/cb4e6195faad467094fbd4d0a9e960e9_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "fa65a298c01f44e7a182bbf9e5fe3697_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "309519fe4d3d50240d73f9a162350a2d144eef8735f56b444daa1092a97dd96f",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/fa65a298c01f44e7a182bbf9e5fe3697_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "c1eed31234b94e9f8e22fbf3428b0ac2_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "b5b3c09f4e97b4b76cd15e2b09c0d5603da802c1fd132fff2b57ea55c0e7874f",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/c1eed31234b94e9f8e22fbf3428b0ac2_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "c59e60042a8643e899008da2e446acca_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "09f377ab90171ae507064f67c1a232458a8554400f1c35081596ed141dbba091",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/c59e60042a8643e899008da2e446acca_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "048a45dd2cf54aa5808d8ccc85731d44_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "809d7f264ea366a5489ae43b77d1524d4c01bc4b21956842a6a06ddcb13c541a",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/048a45dd2cf54aa5808d8ccc85731d44_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "747aa46b9a4641fe90db05d97db2acea_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "4d371ccd8e4dec6239ae534305573b426e25b58937242cc663eef304ad25b671",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/747aa46b9a4641fe90db05d97db2acea_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "7f594234e8034228b1a7d727f1981e09_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "50712190a9245e46534704d46437d6058210e9c6d83af28094e6364d05962b70",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/7f594234e8034228b1a7d727f1981e09_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "796b1988dd254f74bf2fb19ba9c5b8c6_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "921f930d01a1313eaecaefc11032bed84bc8739aa80b03b8b1bfa8b89437704a",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/796b1988dd254f74bf2fb19ba9c5b8c6_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "b22fa0b3c34f47b6a360b60f35d5d567_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "a9267fd16a6327e3184a4991a60d554369e1c4b5c2f574a2803bbe18ff23fa41",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/b22fa0b3c34f47b6a360b60f35d5d567_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "b6b0d9f2f2e14a3aaa2c8aedeb1edb69_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "cb96d44f411297c710e45034aba885d492c9484fc0d2ed9879f07d0aac79a6ee",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/b6b0d9f2f2e14a3aaa2c8aedeb1edb69_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "7f594234e8034228b1a7d727f1981e09_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "cd17bf1c771155ffd5af4104247be4a408fc484609b9ece9628c6c4800b4c494",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/7f594234e8034228b1a7d727f1981e09_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "9cdbf5ff7f294549aea0a4307e5d104a_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "a7e57e3651a9ae4fe551470efa0c15d9c879f0eaba38c5d0311d68e1d806b043",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/9cdbf5ff7f294549aea0a4307e5d104a_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "796b1988dd254f74bf2fb19ba9c5b8c6_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "fe94205e0d8ec3ed47270156db92f68fd68a67b629eb334a95ec4e78396ab2ee",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/796b1988dd254f74bf2fb19ba9c5b8c6_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "f4f86af4da3b49e79497deda5c5f223a_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "98516d3bfc2d8bca6fc351016dd1abffebec21357205778530d3a8fc06e0f222",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/f4f86af4da3b49e79497deda5c5f223a_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "edba7d0cf1c64d2a9c8a5ebddab507a9_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "415e65ed0ff69e4256dd1ffa1046aa3df85dd371b485fe562c49f598d1ad1968",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/edba7d0cf1c64d2a9c8a5ebddab507a9_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "a5afebb0aa5e4d7c95665788ce51ec58_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "55cd7177ebee43e94c47c541f176b619451b0d2c1991dfbc7ab960f8746909d1",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/a5afebb0aa5e4d7c95665788ce51ec58_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "5b7cb170eee6468aa1fdbd3abcf63c5a_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "25936b643bd41090a0e7d479764bc306efd0bb17536241f43300fc5543aeeef1",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/5b7cb170eee6468aa1fdbd3abcf63c5a_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "5b7cb170eee6468aa1fdbd3abcf63c5a_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "0c8dd2ad44b2d812dff40f84aaa72aaeb9940aee9c2c676c7dde842b54e3efb9",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/5b7cb170eee6468aa1fdbd3abcf63c5a_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "048a45dd2cf54aa5808d8ccc85731d44_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "ecdcc9f2f94fc88a6a41d9108a6fe612e4364461c0ea7162f9b5e0110aa1185a",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/048a45dd2cf54aa5808d8ccc85731d44_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "b1303058fa624645b753d7283d70de45_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "58550d4719289d3bd787de76ba4cee4247e2ceab1029e18a053d5ec3fe940c52",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/b1303058fa624645b753d7283d70de45_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "b1303058fa624645b753d7283d70de45_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "f4737344c2cbbd19ec42048d0e7a64ac9099c089a3b99d2dcd8e7d74e680240b",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/b1303058fa624645b753d7283d70de45_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "8092909473464f80b9f791a4d31ddcb8_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "12f59a90aadb549fd1c8fd984a06d7a5c73163a19854ec9629a01c97b6d3e52b",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/8092909473464f80b9f791a4d31ddcb8_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "8092909473464f80b9f791a4d31ddcb8_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "6b5d7a6d6198dc3213d281d2a192617c5b4b654d6d8c43d40aa0c6617ebbb10c",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/8092909473464f80b9f791a4d31ddcb8_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "e174cb43655f49dab7ffa27b973670e3_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "d190a0c446f19f2ca704a684aafc68878ebdac13a2e947080a44fd6191db5461",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/e174cb43655f49dab7ffa27b973670e3_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "9150678870764c1b87a649a25939c61b_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "9ba5278b1cdc7b78d880ce68f1502875702d4aef343fce64ea12aa440f3df843",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/9150678870764c1b87a649a25939c61b_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "0a0d6b8c2e884134a3b48df43d54c36a_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "47324a58a21eeea787df819286f2f304eec5504ba269864f65b48028a302444b",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/0a0d6b8c2e884134a3b48df43d54c36a_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "0a0d6b8c2e884134a3b48df43d54c36a_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "5cc396c1f50bf8723344c52551075c60ab2b0ed702f3ffa5055a223f42950a28",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/0a0d6b8c2e884134a3b48df43d54c36a_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "0a0d6b8c2e884134a3b48df43d54c36a_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "7ab98007cb8f6a9968eb04eacefee50b5ac787cb6976a1bc3b0c81cc2e6fe4e7",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/0a0d6b8c2e884134a3b48df43d54c36a_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "8e9c2cba0ee74056aa3746e8391d54a9_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "4f6229bf39f80ca0ad407821afdb705b259d9574e651552f3b59a1a4ae7d9f48",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/8e9c2cba0ee74056aa3746e8391d54a9_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "8e9c2cba0ee74056aa3746e8391d54a9_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "3381192dfa951704c12d4011c2128d4cb186611acd33f6fab541ad2b7e1eebb8",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/8e9c2cba0ee74056aa3746e8391d54a9_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "9ee4020153674b9e9943d395ff8cfdf3_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "dedbf9cab682643d0d96b7787691a32ddbd0415880344427824a4115dd71abee",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/9ee4020153674b9e9943d395ff8cfdf3_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "456ec36cb4a44ca78f36fbd90c0c34fa_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "c5c787d004d7e762aa58ea75c05c26d530eb252b98e1e6909d56bcc2dd943998",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/456ec36cb4a44ca78f36fbd90c0c34fa_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "6bfd42cf0aba4f1a94ec11fa43e2dd92_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "fe6bb2f935108e63679aeb37043e0cba740a67863cb28c9454a54fe53b66bb84",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/6bfd42cf0aba4f1a94ec11fa43e2dd92_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "61d9340c5ad8418dafe7a4af1b96e6b9_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "75e5537f4453f55c1fd3e774e198d16744c4eb20fd5cf6881c467fa4ce9d3e56",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/61d9340c5ad8418dafe7a4af1b96e6b9_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "61d9340c5ad8418dafe7a4af1b96e6b9_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "a07628487a67c0c83b12fbb814b46401438f99f2a51a1cdfe6309906b9083d65",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/61d9340c5ad8418dafe7a4af1b96e6b9_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "9e7683e8586542a1b6032980c45f15ce_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "95965da3feef1c222aefa44ed9c409c527ca420edd3c29fcededd0a741067c2f",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/9e7683e8586542a1b6032980c45f15ce_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "55c258972acb4300a3a6077a531ab050_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "b10581061bca3e9b27a1651be5ca426d53e36d3dae4d3a78e571919345f2e523",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/55c258972acb4300a3a6077a531ab050_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "7bebe3c9be714f02837f8617c56df122_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "8837de7dc350cb5d35a86b7e4103caf288d3bc63472ee76559e4f643ce270acf",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/7bebe3c9be714f02837f8617c56df122_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "7bebe3c9be714f02837f8617c56df122_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "2a42eff792ff79c0ce305b274e5ae6dfc90b106e077b53cf8679aa497f2832c0",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/7bebe3c9be714f02837f8617c56df122_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "4b894442c95141f9affd731d9da7b43c_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "83a11d58c6c6b731e3c591394efb3b3da9ecf1da7267995ee3ecd38deda4fca0",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/4b894442c95141f9affd731d9da7b43c_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "e00dc15130dc44e796687baadd076ae4_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "929d5f0e7e1ba002ccf1081087daace0b96f102454b7ad099ebbc3d1494718aa",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/e00dc15130dc44e796687baadd076ae4_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "e63b83b436a0479db7362338cdfab118_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "484334b6f8e2bb8e93cd0db4bf911e10d7ef2d15ca0df79f5ff13157cd286b12",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/e63b83b436a0479db7362338cdfab118_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "c567f9b8e9f34817acdc9c49d791c557_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "a3899e9a35b60f6eb50e93737f7bc732adaadacf3035328b80c2e8c8da272c80",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/c567f9b8e9f34817acdc9c49d791c557_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "8e352d4a6c6f40c8ad4f10a3d2c3f158_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "cfc23fc44abc4e91b5ea5b84305e347b9bf8c6b3a0cdabc148f7949878d6c9b3",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/8e352d4a6c6f40c8ad4f10a3d2c3f158_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "8e352d4a6c6f40c8ad4f10a3d2c3f158_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "f1daef28f773c40fbf246d19c5974328aef635ff0deff73a3066f9061ab369af",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/8e352d4a6c6f40c8ad4f10a3d2c3f158_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "4cf5d6c3f6ab42aab23f67b5a9782d1a_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "c0d0baac42e98376582b0b4259ba29dd0cf5745959e2eee3947f36c32c405392",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/4cf5d6c3f6ab42aab23f67b5a9782d1a_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "38a28a3aaf2647f2a8c0e90e31267bf8_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "4232f214f5ba425820075f9fd615c685b232f8432963e99bfab82d0d68e7ffd4",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/38a28a3aaf2647f2a8c0e90e31267bf8_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "6402fd1ffaf041d0b9162bd92a7ba0a2_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "941ccca5113e61d7c18c9d1089f4624fb168c45b6cd56c2f0fd3d1574db2077a",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/6402fd1ffaf041d0b9162bd92a7ba0a2_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "ce94ef7a0522468e81c0e2b3a2f1e12d_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "1b47851924f939e785b031188e2037df2c06820b11ef7de30f89b0d38c833820",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/ce94ef7a0522468e81c0e2b3a2f1e12d_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "ce94ef7a0522468e81c0e2b3a2f1e12d_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "aef35750ddb7472b10f84c919a7d1eed846d3d339399c6f58cd33f739bd446a0",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/ce94ef7a0522468e81c0e2b3a2f1e12d_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "a771effa2a2648d78096c3e92b95b129_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "72082a40726693a197147d5af1ec62599ba785b6f79a1ce2fc5f74ef306ed828",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/a771effa2a2648d78096c3e92b95b129_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "b9ea04a6121d4a8bb00199b885aa5ef0_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "05438f45a428649a4c2822c60838e09309e9dd895153c60942159b1959a80b9d",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/b9ea04a6121d4a8bb00199b885aa5ef0_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "cb4e6195faad467094fbd4d0a9e960e9_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "7039d236b84fd9d7bef2147ff99c5f61be270f2e8eaa7f63c165cb6ffd098764",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/cb4e6195faad467094fbd4d0a9e960e9_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "3950bd41f74548429c0f7700ff3d8269_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "c4024a62202a78be8296d48ee470cd0c6835c2375f9554434d941fabd5a3f35a",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/3950bd41f74548429c0f7700ff3d8269_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "fa65a298c01f44e7a182bbf9e5fe3697_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "e6ea2977d38388100ad74201fb4d30ca481f031e88a7f882379c9d6909a73b38",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/fa65a298c01f44e7a182bbf9e5fe3697_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "b5989651183643369174912bc5641d3b_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "03e21f1c6b400367a1969fae99b46a8538164a42aa95bb9810c7acb6f6c0524d",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/b5989651183643369174912bc5641d3b_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "609d5177362340458a3bfd4949cd1e64_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "f97f14550573a01305422c572191deb3a7dacbcd9e7d75577fa52d4f856831c6",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/609d5177362340458a3bfd4949cd1e64_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "a98fba72bde9433fb882032d18aedb2e_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "fdd093e8acc5d062e00bf50838d3d1f2cc9d5213e31e1c82f6265da352d0362d",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/a98fba72bde9433fb882032d18aedb2e_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "747aa46b9a4641fe90db05d97db2acea_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "7dfea7b86703a680ba1a8567a13417ffab766f25e3526af729953e57ff598c07",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/747aa46b9a4641fe90db05d97db2acea_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "372725a4b00e49c78d6d0b1c4a38b6e0_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "7f6d4751e02f211155b4497ad660c05edeada6c1eb7a0c244908a982829d70ab",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/372725a4b00e49c78d6d0b1c4a38b6e0_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "d8251bbc2105497ab8ec80827d4429aa_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "b39961874601f469163daff15aa97576419f2e3e2f7f2cad7873b82a9f4136cb",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/d8251bbc2105497ab8ec80827d4429aa_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "372725a4b00e49c78d6d0b1c4a38b6e0_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "70749f587ba0a685ccd5297a160ea77726ec675694fd94aec4578de450ccf755",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/372725a4b00e49c78d6d0b1c4a38b6e0_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "858a1ece22cf45d9bc71e42336604b78_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "3be3e9708c20b72b4a496a95acd07fcaba6e1dccda894df6ddd1a0954df81c4c",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/858a1ece22cf45d9bc71e42336604b78_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "ae5004bf4ebb4db0a84cb3c27bd398d1_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "312e039adfea4df3eba5db603f139dc40c9c554301ae0bf3c28a4450575e51b8",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/ae5004bf4ebb4db0a84cb3c27bd398d1_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "de7593d76648450e947ba0c203dee1b0_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "1936f266d415772de680ff1b996499e6ac284b30b143c4e31d20d749c6f047de",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/de7593d76648450e947ba0c203dee1b0_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "ae5004bf4ebb4db0a84cb3c27bd398d1_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "342d04f08a07724949955b34a89769aa352c75cab8647b7693c0bb7d52d9ecad",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/ae5004bf4ebb4db0a84cb3c27bd398d1_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "d8251bbc2105497ab8ec80827d4429aa_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "e84ca551058385981a125149d80c22eee63aaeef656c10d1cfc6c26ebd7fc9ef",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/d8251bbc2105497ab8ec80827d4429aa_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "c59e60042a8643e899008da2e446acca_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "03e8fd7b86b683010c1bbed182ba9c34c4182f280f479852c68b7383765f9df6",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/c59e60042a8643e899008da2e446acca_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "a19a80c905674faab7203a3a4e0f5246_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "36abbe0ad558a3ca4fe434f707dc0e6d2d2403d825f0c93ec761fe8f6b481ac4",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/a19a80c905674faab7203a3a4e0f5246_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "a19a80c905674faab7203a3a4e0f5246_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "fa31ec8a94482167cf2134be761528c4ac8f82355955000ceeb067cd2efb3fa8",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/a19a80c905674faab7203a3a4e0f5246_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "e174cb43655f49dab7ffa27b973670e3_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "e47ee4eac13f9cdd3ca5d3e340db08891b0c54a25ccacff7375b74c6411f8d0c",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/e174cb43655f49dab7ffa27b973670e3_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "e174cb43655f49dab7ffa27b973670e3_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "4eb266bac6521b460a40b3977ff3a518a3b9a16824d030790e5e0d89bcf433f8",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/e174cb43655f49dab7ffa27b973670e3_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "e174cb43655f49dab7ffa27b973670e3_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "e824afd4e47ea66fb05f3a89ebbceb09139c153843b0bbb6d8062c1e4865dc98",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/e174cb43655f49dab7ffa27b973670e3_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "9150678870764c1b87a649a25939c61b_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "99157d15e81704a09177f72300a8724e48d1116598027d1788a75176816ec42f",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/9150678870764c1b87a649a25939c61b_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "8573a885a7cb41d185c05029eeb9a54e_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "008703ab22f81f2ad695cf92a40bf3f89547c3f0397b8bdb4703d601c85f07e0",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/8573a885a7cb41d185c05029eeb9a54e_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "8573a885a7cb41d185c05029eeb9a54e_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "71d45c7db4dbe6ad2e3f7b04daf303b5ea12d34dd1c8f30e8a94cf9b79ceba40",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/8573a885a7cb41d185c05029eeb9a54e_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "fdc39b23ab4242eda6ec5e1e6574fe33_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "ef7c0dd1d6153645414ce4fcedcb20490e020be8e051364cec9c19105a768d64",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/fdc39b23ab4242eda6ec5e1e6574fe33_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "5b03af7a953245b5a3b23191ed4da62a_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "7bef7ce60ba35947259cfc70996703cde1d39d8fe56f5778940dd1514eaba8e5",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/5b03af7a953245b5a3b23191ed4da62a_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "d0ecf474e0e64950aa265cd44b9c9d75_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "bf688858fdfbc7f2a8e15c8f906fb6c6a80a7e208e77c1cc78cafeb387189de3",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/d0ecf474e0e64950aa265cd44b9c9d75_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "456ec36cb4a44ca78f36fbd90c0c34fa_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "2eaad76bc4fb83739eba51e8f040b722061b3706b5f788ed638daa639c44d7cb",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/456ec36cb4a44ca78f36fbd90c0c34fa_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "6bfd42cf0aba4f1a94ec11fa43e2dd92_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "dd0f6d823b0020cc8d68d9235e461ec3133416b33c6459df44d66ca0ae35d8a3",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/6bfd42cf0aba4f1a94ec11fa43e2dd92_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "61d9340c5ad8418dafe7a4af1b96e6b9_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "83b9cdcfdb11357b8a02037af49dc82e5221e4f1e2b2c902a098ae7655ed15e4",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/61d9340c5ad8418dafe7a4af1b96e6b9_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "55c258972acb4300a3a6077a531ab050_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "9b5d003e0a2fc53ea0a06da35664f4f5bd29ae7a75ffabb7a14015b67e528b57",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/55c258972acb4300a3a6077a531ab050_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "44237858a539457da65822bfcf58c414_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "babb376b9725c11c63a53f78cba2429bc29c03b3e748079ce355a214c918cab9",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/44237858a539457da65822bfcf58c414_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "8cd36e9531fb4eba8e6ac1d666c4641c_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "d2de0f54888830ca1692cef014d3ffac1b410e21aafeaca1624ac448a40b9eb6",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/8cd36e9531fb4eba8e6ac1d666c4641c_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "7bebe3c9be714f02837f8617c56df122_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "7255d8b26ad9d5e738564d500ed6966b127cccfc641ae0db3f6049cb27c3319e",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/7bebe3c9be714f02837f8617c56df122_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "c567f9b8e9f34817acdc9c49d791c557_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "2ec87943bada02fb017c13d71c7dbf3c76a35789e03a8052e17653eadbb9c9a0",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/c567f9b8e9f34817acdc9c49d791c557_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "8e352d4a6c6f40c8ad4f10a3d2c3f158_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "bff3b09e1d3ca7991295a4b9caae4c63cab2b9cacb3f9d615818296206048a5b",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/8e352d4a6c6f40c8ad4f10a3d2c3f158_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "841dd6709e9b4d7c9d6bf888f1fe6d7e_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "39d9a21bef3d619391aafa6c52a11fa8570537a0c7ee1e63eb8dbcb5045bce3a",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/841dd6709e9b4d7c9d6bf888f1fe6d7e_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "cc57c1ea80fe46a7abddfdb15654c872_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "25f1c50477bb26eecad52ea2fa054b06cce490615a02e22ba571a2c1c6ec49a0",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/cc57c1ea80fe46a7abddfdb15654c872_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "6d9984d09d52479e837da2fd09e192cc_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "3aec28d37804de3fc6b01e14410d5c89c30addfaf29abbb7aff9a489f11b2a4a",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/6d9984d09d52479e837da2fd09e192cc_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "38a28a3aaf2647f2a8c0e90e31267bf8_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "d8f11c4ec1092015123a7e24ea31b7c63efe1fd33905ff5e32a0c094654e55bf",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/38a28a3aaf2647f2a8c0e90e31267bf8_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "6402fd1ffaf041d0b9162bd92a7ba0a2_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "ecb4d43d884129ed337cba931e9c8414d9e8278f1574b963f4b9d535458f5fea",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/6402fd1ffaf041d0b9162bd92a7ba0a2_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "9fcdc52b791045e99c623c5fc643331f_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "ea2e27ac06ab0034e40cbf385c531fa0a7a41e0dc3a1054dad55efcf567b1332",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/9fcdc52b791045e99c623c5fc643331f_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "9fcdc52b791045e99c623c5fc643331f_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "8ea640b183fb85f9112e92319bf7c2adc9111cff372d64af3bee856e09b5bb4c",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/9fcdc52b791045e99c623c5fc643331f_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "9fcdc52b791045e99c623c5fc643331f_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "71fab9d65661c26fbb09c1f78b9939ae12109c31a1466791a08d20a9ab298b0e",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/9fcdc52b791045e99c623c5fc643331f_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "281b92269fd648d4b52d06ac06ca6d65_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "4d7160044b664b655d5f1a3ebeac225b6db4e4228ce470728b6d784a0a8302ea",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/281b92269fd648d4b52d06ac06ca6d65_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "281b92269fd648d4b52d06ac06ca6d65_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "56a7ca80cea6c827133d5e8bb2542cf655e9b1c761ff071637fcb4d096e1ecf1",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/281b92269fd648d4b52d06ac06ca6d65_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "de7593d76648450e947ba0c203dee1b0_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "69ae33bdd9d02d416e544df4920319f3d61361874c44c352ba3179acfaaf5d6f",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/de7593d76648450e947ba0c203dee1b0_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "0a0d6b8c2e884134a3b48df43d54c36a_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "dbb25a7cf9fac35c0bfa726bb30ac59479279dbcf3bd9f5dbd4ee40823cfe8f5",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/0a0d6b8c2e884134a3b48df43d54c36a_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "7f594234e8034228b1a7d727f1981e09_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "bf28b6680601dc5d783007a5093fbad49643cf51e5953eaa77b87f133074a908",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/7f594234e8034228b1a7d727f1981e09_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "b5989651183643369174912bc5641d3b_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "8245559483daa4cc8e9b63f16291cc20153a98a35e9690a9ae46531025ee3ed8",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/b5989651183643369174912bc5641d3b_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "b6b0d9f2f2e14a3aaa2c8aedeb1edb69_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "bf78b571c127499d98191df7d8b40df1c8559307a31fd37d02a531c163d14c69",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/b6b0d9f2f2e14a3aaa2c8aedeb1edb69_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "609d5177362340458a3bfd4949cd1e64_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "7f78b216e7b76228034275691834f3babf0c3f73d2caeff98a396dc43e8344f8",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/609d5177362340458a3bfd4949cd1e64_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "858a1ece22cf45d9bc71e42336604b78_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "0839207ef16aca681d1a39d0bb100dcae5ea6863ea3c0e590891ab180c282704",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/858a1ece22cf45d9bc71e42336604b78_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "e6e877f31dd447199b56cae07f86daad_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "14d892c8796f9489d69452d1697cd54372671ebd23c344bc6789dbcd34d09dfa",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/e6e877f31dd447199b56cae07f86daad_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "858a1ece22cf45d9bc71e42336604b78_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "62865d6f9f72367394bd8cfc83df57c98219250b4f9576d12f54a987777c2170",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/858a1ece22cf45d9bc71e42336604b78_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "ae5004bf4ebb4db0a84cb3c27bd398d1_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "a31f079c937d95c781c9b706319bbcf9217d3e82343f93a4327c771698879c41",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/ae5004bf4ebb4db0a84cb3c27bd398d1_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "b1303058fa624645b753d7283d70de45_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "664df0755d976f3e2e78aa69e0c501f9d95d49689113e7813d2c7d319b3ab20d",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/b1303058fa624645b753d7283d70de45_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "0bb62a68055249e381b039bf54b0ccf8_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "a8df8947e9f27314c6029de9f8e4e54cda35988f6fe656a0c56004aae0808fa7",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/0bb62a68055249e381b039bf54b0ccf8_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "372725a4b00e49c78d6d0b1c4a38b6e0_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "ee648ea28625f92714dc5935b32b458b57e04f46a63ec269aab58202910b6a43",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/372725a4b00e49c78d6d0b1c4a38b6e0_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "3e8750f331d7499e9b5123e9eb70f2e2_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "5e149a2149a9ed5c169a2fd97d68615784df00dbba699e2d50dcbdcc16e75454",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/3e8750f331d7499e9b5123e9eb70f2e2_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "0d0700a2284e477db876c3ee1d864668_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "4db32456fcd154ae8154e9c76e8e71cfa5ce59235b9bdfaaa5bb146bdaf66b39",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/0d0700a2284e477db876c3ee1d864668_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "9cdbf5ff7f294549aea0a4307e5d104a_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "0c4ae13801654af9db5b35c32b050ef721a072ce08864d502c4f7c231a7d7da2",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/9cdbf5ff7f294549aea0a4307e5d104a_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "b6b0d9f2f2e14a3aaa2c8aedeb1edb69_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "9824879a3160ed5ee81f5835b190b11ca7b8a7446ce691b2e01cf4de724d88b4",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/b6b0d9f2f2e14a3aaa2c8aedeb1edb69_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "b1303058fa624645b753d7283d70de45_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "c11b2ce809ef0113304f3c19206e4889273a00e99c8315b32c8010983c1909fe",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/b1303058fa624645b753d7283d70de45_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "796b1988dd254f74bf2fb19ba9c5b8c6_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "95d50ebe7884d1e5544eb0e21feb52f89aa4fd5003f9842997212f74ec0babda",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/796b1988dd254f74bf2fb19ba9c5b8c6_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "c1eed31234b94e9f8e22fbf3428b0ac2_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "dc98aefc4602136276b1c3077e02f32a387dfc8ad6ed29e7cbb4b042c4a53c5b",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/c1eed31234b94e9f8e22fbf3428b0ac2_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "796b1988dd254f74bf2fb19ba9c5b8c6_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "9e8e392492884549301cdb67b2c1079415ff49447ff216fb9a6e4cb607e64f72",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/796b1988dd254f74bf2fb19ba9c5b8c6_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "0d0700a2284e477db876c3ee1d864668_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "f990df53f60bfefc1d9a6041a7774adab5c53453ef653fdc963e559da65a4d58",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/0d0700a2284e477db876c3ee1d864668_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "747aa46b9a4641fe90db05d97db2acea_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "ba61f783debc648af5d29d3be968ab0ae984fad38ff47c22e45a73fb11abbbad",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/747aa46b9a4641fe90db05d97db2acea_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "a5afebb0aa5e4d7c95665788ce51ec58_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "2a17b00cbc998827700aed8eb089d72bacf94882ee60b80aed870ff1b360fd68",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/a5afebb0aa5e4d7c95665788ce51ec58_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "c59e60042a8643e899008da2e446acca_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "837b575e755e58fa739dd5c312e2071a7097f13c1074c60ad085446b9bdeae95",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/c59e60042a8643e899008da2e446acca_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "5b7cb170eee6468aa1fdbd3abcf63c5a_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "cf58f81a824333079dc17c507ab16bede927b5465aed6ae4aebc00f02bf0d306",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/5b7cb170eee6468aa1fdbd3abcf63c5a_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "a5afebb0aa5e4d7c95665788ce51ec58_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "94566a0710c6e6845bacd743ed4de030a971cafc8769ac8c5dbfd1f5a3188e4f",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/a5afebb0aa5e4d7c95665788ce51ec58_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "6832e717621341568c759151b5974512_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "09c1a045c802bfa375784b55fca092b7ed774324bc4f2c95d319868666cd8f68",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/6832e717621341568c759151b5974512_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "c59e60042a8643e899008da2e446acca_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "122de15e4c7e499cfd7c770a0538cdb6dfbe53be8c29453c78559890df754d06",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/c59e60042a8643e899008da2e446acca_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "cb4e6195faad467094fbd4d0a9e960e9_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "6390a71c30c2b95a58d7b550818626ca02d780cfd441cfe5a7a2c54189525aef",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/cb4e6195faad467094fbd4d0a9e960e9_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "0d0700a2284e477db876c3ee1d864668_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "16e29a469e00e3a4c1d474fb93df04bddced37b5cdcd3f0b089d02c305ec555e",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/0d0700a2284e477db876c3ee1d864668_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "edba7d0cf1c64d2a9c8a5ebddab507a9_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "855b04258abcc358ffc6f3b41018342805a2a7e51e2e28d51eeaac065a881960",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/edba7d0cf1c64d2a9c8a5ebddab507a9_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "a1289b27ca1d41deb6fc982be9a3d03c_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "f7e7adf853113412c0a795de9ea7e4a2c4dce47387016cf2f12ffc67ed12c939",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/a1289b27ca1d41deb6fc982be9a3d03c_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "747aa46b9a4641fe90db05d97db2acea_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "a050c2fbf91c76eefe95c07675a84b53aba03f483953580c157db666474f3a1c",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/747aa46b9a4641fe90db05d97db2acea_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "b6c420c3a5bd4a219b1cb82ee5ea0aa7_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "6b618b01a0ac126539f5d1757de1cdeaaba8d48fe1e9766d1485856d0e487a3e",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/b6c420c3a5bd4a219b1cb82ee5ea0aa7_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "b6c420c3a5bd4a219b1cb82ee5ea0aa7_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "796e8a191fbb93e295d0e3b4aea2fe350155528367a4855b6a208981312a3bb1",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/b6c420c3a5bd4a219b1cb82ee5ea0aa7_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "8092909473464f80b9f791a4d31ddcb8_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "4fa6f329f938d2a88c3587b18448c6df2947a955add9ccc77773e1b76ba14454",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/8092909473464f80b9f791a4d31ddcb8_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "e174cb43655f49dab7ffa27b973670e3_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "3657d573504fb44da1d8d6a5cfea8903f2c26c5f34bc068735f8159875a4a11c",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/e174cb43655f49dab7ffa27b973670e3_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "6ff9723a60bf4e14b328b3b19f04dc32_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "7caa81f7bcee3538ee89637677dee3aa2dccdeace4b9efccb9d4370c73da1765",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/6ff9723a60bf4e14b328b3b19f04dc32_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "9150678870764c1b87a649a25939c61b_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "3e9a64d5a2444b6486fc3565c6554dd9d2d920c0bf6893cea786ab362051276e",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/9150678870764c1b87a649a25939c61b_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "8573a885a7cb41d185c05029eeb9a54e_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "bfc591d9f5324e11ff18573b912431bf31e249d1145a6650adf07e2e19611be3",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/8573a885a7cb41d185c05029eeb9a54e_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "8573a885a7cb41d185c05029eeb9a54e_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "2089ca83c0a54e040d1275adb98adbceb11a134567efeec1e14c126bdf75023a",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/8573a885a7cb41d185c05029eeb9a54e_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "b22fa0b3c34f47b6a360b60f35d5d567_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "0487bd26a453ed40b99dd0f58281159ebba5d9a5856e1b62d4ed2857d811a960",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/b22fa0b3c34f47b6a360b60f35d5d567_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "0a0d6b8c2e884134a3b48df43d54c36a_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "07a58a29319ba4901769ae432b69aee42c1cfedce9b24d24a5634d746789e7ad",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/0a0d6b8c2e884134a3b48df43d54c36a_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "8e9c2cba0ee74056aa3746e8391d54a9_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "0fc4f2f11740f3e6040e5f1c60361250c18c3f52a9fcdcb8591e326b427f7948",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/8e9c2cba0ee74056aa3746e8391d54a9_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "fdc39b23ab4242eda6ec5e1e6574fe33_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "d2ce6bc46269e106ed800fb133c95b460c2ff806c332e1419c4d67e9dd25b3cf",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/fdc39b23ab4242eda6ec5e1e6574fe33_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "5b03af7a953245b5a3b23191ed4da62a_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "071965e1a78b37c8edfdb1e6e292db9c675ac1874c2fa46e8fc3062ceb98f764",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/5b03af7a953245b5a3b23191ed4da62a_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "5b03af7a953245b5a3b23191ed4da62a_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "c873a18eab693bc84d6e9e7ab1d3c9ed9ec9ca3664743b38e5615ec1246a0937",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/5b03af7a953245b5a3b23191ed4da62a_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "d0ecf474e0e64950aa265cd44b9c9d75_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "8ff250a04bd0aff20f4e06fd4e38749720a93c8b0520c81b654e229ac94ab7c1",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/d0ecf474e0e64950aa265cd44b9c9d75_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "6bfd42cf0aba4f1a94ec11fa43e2dd92_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "3c1b89c7b230e228192db788a3b0e2fe128f5ff6d515ba742c7c07c4a1842535",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/6bfd42cf0aba4f1a94ec11fa43e2dd92_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "0af0feb5b1394b928dd13d648de898f5_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "4a94bd66680a2aff741dc587586ddb5b15f649f566904864d2a52efac978c194",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/0af0feb5b1394b928dd13d648de898f5_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "4b894442c95141f9affd731d9da7b43c_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "43cf4cc307e2bf8527025919444ee87cc2a28de9f6922bd5af6a0030216ff930",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/4b894442c95141f9affd731d9da7b43c_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "e63b83b436a0479db7362338cdfab118_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "ae541de0cf6754c30f885baa7d44ffc1ecdf1a59557bc1809b35b90195539d40",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/e63b83b436a0479db7362338cdfab118_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "841dd6709e9b4d7c9d6bf888f1fe6d7e_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "c61b936e5cc1a539a998b75cf34e07afd065c436dfe16a405e4ce7c822a7bb1a",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/841dd6709e9b4d7c9d6bf888f1fe6d7e_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "e54b784a608644a2804fcf800c7499f7_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "c34d9929ff9c5ab716e7fb866aa90f3d8bae8c54eaf290f6684bf07072e332f3",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/e54b784a608644a2804fcf800c7499f7_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "4cf5d6c3f6ab42aab23f67b5a9782d1a_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "fc4831284307de99893917d55c462cd1a431714e929c067ac96186ac91336fc9",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/4cf5d6c3f6ab42aab23f67b5a9782d1a_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "4cf5d6c3f6ab42aab23f67b5a9782d1a_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "0ba5daa7fbb617094fe1bc33dc98434e6189e5079ee2a153aaeaf31824530f39",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/4cf5d6c3f6ab42aab23f67b5a9782d1a_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "38a28a3aaf2647f2a8c0e90e31267bf8_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "39e4ea08b8c8b352760bbea23d4e58fbd6b14439770aaf2b3c31c9563bd59fa5",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/38a28a3aaf2647f2a8c0e90e31267bf8_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "38a28a3aaf2647f2a8c0e90e31267bf8_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "327c209cb692c1ea33be5a034fd3d811bbff00cfe1cdf0531428e4125819a927",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/38a28a3aaf2647f2a8c0e90e31267bf8_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "6402fd1ffaf041d0b9162bd92a7ba0a2_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "ef68a0bb1ff967d1a959ea7a3bcf7d1bdcb736875e4ab4f6aaf87f573bfff43f",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/6402fd1ffaf041d0b9162bd92a7ba0a2_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "b9ea04a6121d4a8bb00199b885aa5ef0_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "0c8433da08a8d4f1e341a01288d5b7b55c61c0018e222bd76d5608265f54e686",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/b9ea04a6121d4a8bb00199b885aa5ef0_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "87e772078a494d42bd34cd16172808bc_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "8cd750e16a03ac14b30bd271e60f172bd1b0f942aaaaf2ae63f95a72128b9db0",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/87e772078a494d42bd34cd16172808bc_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "281b92269fd648d4b52d06ac06ca6d65_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "f21b1afc3d54562fb88f8875fe4a4885cddf07b94e57e9107bcffc20a482becd",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/281b92269fd648d4b52d06ac06ca6d65_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "de7593d76648450e947ba0c203dee1b0_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "3dc858419268d9a04b7d56a260dbe11ba98a3d67be60bcd0c41c748d75e29d47",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/de7593d76648450e947ba0c203dee1b0_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "3e8750f331d7499e9b5123e9eb70f2e2_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "5c6c90a00378bf1754027f77712e9f31433b4bda68852b9ca3c0d39ad4152ffe",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/3e8750f331d7499e9b5123e9eb70f2e2_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "9ee4020153674b9e9943d395ff8cfdf3_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "db8cb88a390f8a047f114386e4c379021ff64ddca754bb5bac942a77a8b7eec6",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/9ee4020153674b9e9943d395ff8cfdf3_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "a98fba72bde9433fb882032d18aedb2e_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "fc963c789fe0af0bcce08e58a1d06e38e31422deb74699d95c4fd44ad14e6c5b",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/a98fba72bde9433fb882032d18aedb2e_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "b4ff30109dd14c89b24789dc5713cf8c_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "4c64ae7bad87b056130349c5bba61d5efd59df711a3dad0a933840cc0ef7d92d",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/b4ff30109dd14c89b24789dc5713cf8c_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "b22fa0b3c34f47b6a360b60f35d5d567_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "423ca3b5642ae66951fe86e0f74754884d76d37afbf75281b710e66868c8255f",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/b22fa0b3c34f47b6a360b60f35d5d567_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "f753d3f87e5b40af87ff2cbf7c8e7082_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "eecf5920070d7f6113cb0f0b1db545d386d52b3a2bea187cdec18bb176f17993",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/f753d3f87e5b40af87ff2cbf7c8e7082_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "ac8b4d49731d43289579f014cb7c97ef_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "d7f80df8927d8df1a27d090d1c6b45d18c5679b2a7c5207dad3dfc2cf46966dd",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/ac8b4d49731d43289579f014cb7c97ef_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "9ee4020153674b9e9943d395ff8cfdf3_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "e81669f48c60db9201fe73644a7f102c8093ab6820d99d0093fcb7d0a553a61d",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/9ee4020153674b9e9943d395ff8cfdf3_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "c5f58c19249d4137ae063b0e9ecd8b8e_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "dc9ea2a95d86701fceddd207c145e47dee31080cd6bc1a83b7549fb4170d06dd",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/c5f58c19249d4137ae063b0e9ecd8b8e_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "796b1988dd254f74bf2fb19ba9c5b8c6_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "cfea2f1fb3790d64936e558276f3841cacbe019c87630af719d030fdb3072198",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/796b1988dd254f74bf2fb19ba9c5b8c6_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "f4f86af4da3b49e79497deda5c5f223a_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "81ccf5a81853a400fc018a810fcc4934218ffb4f282d7e68bce9a6f68b6446f1",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/f4f86af4da3b49e79497deda5c5f223a_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "a5afebb0aa5e4d7c95665788ce51ec58_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "40887fab9521b40699e8c9ea55e4a3d5f6e1479b937852f6f17313e785df76c2",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/a5afebb0aa5e4d7c95665788ce51ec58_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "7f594234e8034228b1a7d727f1981e09_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "562de4fc52e04e1f4160e619852853a484cd7470f1d9c08ac8ea1a09f2653423",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/7f594234e8034228b1a7d727f1981e09_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "3950bd41f74548429c0f7700ff3d8269_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "a9e1a73101d1e4573b1cd778cda98d535f52cae338a25f37e87544634e546a4c",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/3950bd41f74548429c0f7700ff3d8269_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "f753d3f87e5b40af87ff2cbf7c8e7082_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "ebd88715f092d8bd5ed4db52b0535bc533241d580cf8b383f4fe41d680ae933a",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/f753d3f87e5b40af87ff2cbf7c8e7082_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "b5989651183643369174912bc5641d3b_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "3db83c4322eb31c555539e0b4614bb4ec7f1fa689d2b74f6af72689925652893",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/b5989651183643369174912bc5641d3b_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "61a7bd24f88a46c2963280d8b13ac675_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "55fed355387865e2100744d7a5f14a2693954cb2c5d0e21b4c7530174a809b21",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/61a7bd24f88a46c2963280d8b13ac675_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "ae5004bf4ebb4db0a84cb3c27bd398d1_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "9f12d60fb48b532520bf8ff5336c48a9378596cc161e26e645b8e9ac490bd04b",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/ae5004bf4ebb4db0a84cb3c27bd398d1_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "609d5177362340458a3bfd4949cd1e64_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "912156dc3338649e2ee771d1a5cc2d4f1c2faa91e4092b75a8ae9ba11773a271",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/609d5177362340458a3bfd4949cd1e64_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "55c258972acb4300a3a6077a531ab050_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "3dbef1d381f6416168c420ef9669288f1e68dfda4b97fc4cc0b8a1b9a017b915",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/55c258972acb4300a3a6077a531ab050_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "1c9a906c40f6417bbe1cea06d6e55501_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "a8cb3e08afb003cee43ed86bff06e6f791204f4b1c0fdcbac10276761b511ca3",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/1c9a906c40f6417bbe1cea06d6e55501_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "c5f58c19249d4137ae063b0e9ecd8b8e_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "44864b1a8b18779cd72551733f0e59e166851ab62c1dfc5c4c1706d6af4e9348",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/c5f58c19249d4137ae063b0e9ecd8b8e_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "3e8750f331d7499e9b5123e9eb70f2e2_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "2abcb97acbd4c591eebf3b612f3599c6e9fa2e6a5b3ee1cf5c61c93a0699d184",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/3e8750f331d7499e9b5123e9eb70f2e2_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "372725a4b00e49c78d6d0b1c4a38b6e0_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "3be9febf688de00041ef4e2bf8e34198f334fd8d1f43e65de685b8d1a062d881",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/372725a4b00e49c78d6d0b1c4a38b6e0_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "8573a885a7cb41d185c05029eeb9a54e_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "6e39bdb00b9356406cfe6c3dbe1752ca00e6ec0e575edb20fbcaca6c6263810a",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/8573a885a7cb41d185c05029eeb9a54e_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "06be0e3b665c44fa8d17d9f4770bdf9c_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "6906a4602c89915574d2e2fd18ea66fe4aaa76ecf100f05c7ceb67b6b9309a21",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/06be0e3b665c44fa8d17d9f4770bdf9c_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "048a45dd2cf54aa5808d8ccc85731d44_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "0a1e5c299542a18197e2a687255306427f443bb05d193748b15c5d1e9ccb1418",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/048a45dd2cf54aa5808d8ccc85731d44_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "a98fba72bde9433fb882032d18aedb2e_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "242144cee46e5a8ea0ff45b191da1c9806d4bc8fa9bc59529d040b7e628617c2",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/a98fba72bde9433fb882032d18aedb2e_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "a19a80c905674faab7203a3a4e0f5246_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "899fb5fea95e8a215da96768841b6d6bf24ef69b5dc73d14f8b9911a55c03468",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/a19a80c905674faab7203a3a4e0f5246_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "8e9c2cba0ee74056aa3746e8391d54a9_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "efe01cc52ecf59ee9a80d36dbc19644bfc894532024795bb5e89656336da03e7",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/8e9c2cba0ee74056aa3746e8391d54a9_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "d0ecf474e0e64950aa265cd44b9c9d75_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "db8a0900e4c8e90c33b56a1ca927ab342d7f001f5ca0aadd606542ae4ad7fb52",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/d0ecf474e0e64950aa265cd44b9c9d75_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "a5afebb0aa5e4d7c95665788ce51ec58_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "7af7504c94576e33832bee0ac14d46d3b8f0171f0be1f73dcc8896ed75fbcf87",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/a5afebb0aa5e4d7c95665788ce51ec58_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "e174cb43655f49dab7ffa27b973670e3_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "e78d18820e7d8dad7e53e4aa4d96cd1927c0a58630575ff577a32de35aa7785d",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/e174cb43655f49dab7ffa27b973670e3_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "9cdbf5ff7f294549aea0a4307e5d104a_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "1b4a8bb6ddf850e5cb36d51a7a6893df0fe42e6752a5d89fa8ced486f4f449c0",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/9cdbf5ff7f294549aea0a4307e5d104a_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "8cd36e9531fb4eba8e6ac1d666c4641c_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "9adfefe6cf0eebe91d11fafc18f06449bcbbf764dccf219c9455bf79e4eacb0b",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/8cd36e9531fb4eba8e6ac1d666c4641c_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "7bebe3c9be714f02837f8617c56df122_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "cc1655b178adcf44c9c4b49cf51803d34e84e95b7ad63ebf84cf28b4d61d52ff",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/7bebe3c9be714f02837f8617c56df122_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "4b894442c95141f9affd731d9da7b43c_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "15d66b84b86f4844eb7728998e7c86a2c9dcd10c41645db1835bf9fe83c3f35f",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/4b894442c95141f9affd731d9da7b43c_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "e00dc15130dc44e796687baadd076ae4_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "69712a5090ae77b227ef61222c04eb44a6fc0d19acd073e6ceea9481897ee40e",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/e00dc15130dc44e796687baadd076ae4_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "e00dc15130dc44e796687baadd076ae4_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "5f80d326b8250fda2db6dda14c5d25ce146c83fa6b190bf4ac82d029b36bc2df",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/e00dc15130dc44e796687baadd076ae4_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "c567f9b8e9f34817acdc9c49d791c557_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "5310bfd29e7aafa44dc15aee9324a7764a787443401b65b5fba42278afe13746",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/c567f9b8e9f34817acdc9c49d791c557_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "c567f9b8e9f34817acdc9c49d791c557_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "a406123a53465a3e2b63c3807e3713b2f44242f1e61176a863ff22b28b9275f1",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/c567f9b8e9f34817acdc9c49d791c557_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "cc57c1ea80fe46a7abddfdb15654c872_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "e01ea353230d14fa851497de4db3cfd41b99609ad29bf96d07691040302f76c5",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/cc57c1ea80fe46a7abddfdb15654c872_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "4cf5d6c3f6ab42aab23f67b5a9782d1a_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "ab28c864c641557889e2b7b978c6f5dd07fc229645fb63305533b69f19b369cb",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/4cf5d6c3f6ab42aab23f67b5a9782d1a_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "38a28a3aaf2647f2a8c0e90e31267bf8_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "a8d92458df36b0ea029852ab393b6df75cd14f8d12208dd29d52c8969bf9df0a",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/38a28a3aaf2647f2a8c0e90e31267bf8_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "9fcdc52b791045e99c623c5fc643331f_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "60f42f70a4bf43f5b7d778284bb03535f657cfc84d66301dc1dadcb4d800700c",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/9fcdc52b791045e99c623c5fc643331f_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "1c9a906c40f6417bbe1cea06d6e55501_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "c162bcc83a989651baadab7033eabce8fdca7e85779029c41c533ba0c520e42c",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/1c9a906c40f6417bbe1cea06d6e55501_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "a771effa2a2648d78096c3e92b95b129_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "dd9a8fad07a3acc0eb9734f919dd54589cc564825331a78cddfc67fccd992c06",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/a771effa2a2648d78096c3e92b95b129_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "b9ea04a6121d4a8bb00199b885aa5ef0_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "78cc6fde1ae37e66b7fe862c33c1e8bd5d79bbcd6ab7ea419f9ff2d901edc1ec",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/b9ea04a6121d4a8bb00199b885aa5ef0_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "87e772078a494d42bd34cd16172808bc_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "8b0828996c6f9b8201f98553156d0c793cbdc974c07641008d74cfcfc4d8dedb",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/87e772078a494d42bd34cd16172808bc_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "c1eed31234b94e9f8e22fbf3428b0ac2_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "e3408e5b3bb77c054a894fb28bc751483a5c9db1e133e0ffc70bace3f730f885",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/c1eed31234b94e9f8e22fbf3428b0ac2_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "b6b0d9f2f2e14a3aaa2c8aedeb1edb69_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "5ffd6cba0c504d71f1ed67a6ceb1ebbda2922316fde0f160261dc6ac3ddb5573",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/b6b0d9f2f2e14a3aaa2c8aedeb1edb69_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "c59e60042a8643e899008da2e446acca_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "9a12bad497c2aed4b7ce8febca8413e5e9b961ac5ffaf9e5069e3480b701c8fd",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/c59e60042a8643e899008da2e446acca_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "456ec36cb4a44ca78f36fbd90c0c34fa_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "43cfb96d2d5b40863833a905fddeb089d847439f131a08cf5fcbbc9587b6f95d",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/456ec36cb4a44ca78f36fbd90c0c34fa_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "e6e877f31dd447199b56cae07f86daad_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "2af0e3f2d9eb477405386c65d9533b7303f2bedd08c3aa53a742a3eeeef42457",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/e6e877f31dd447199b56cae07f86daad_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "6832e717621341568c759151b5974512_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "3d32237f270c577c7502a9119e01b8f8e1d044afeb1dd8e2e203de789e982286",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/6832e717621341568c759151b5974512_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "c1eed31234b94e9f8e22fbf3428b0ac2_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "96f58e7107665890e9912904c0e2e341fac1377f3f937bf5bd34b74146c00a36",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/c1eed31234b94e9f8e22fbf3428b0ac2_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "b4ff30109dd14c89b24789dc5713cf8c_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "03e71e0d434daa202d653e37d617a1b5329e64b4c0d2cb9ba04b25208633d045",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/b4ff30109dd14c89b24789dc5713cf8c_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "8e9c2cba0ee74056aa3746e8391d54a9_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "939b527988547b510b97c7690ca84551de0c8adcf832663212cfd84461d18753",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/8e9c2cba0ee74056aa3746e8391d54a9_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "a19a80c905674faab7203a3a4e0f5246_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "66f1d3a7d07769f51f9a862e5071e3f2c7be3196f703566e07cdf420f9180f76",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/a19a80c905674faab7203a3a4e0f5246_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "9150678870764c1b87a649a25939c61b_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "88b1d9126a48d1599558d5117e623faac0088f9434abd0e3b3f95b4c08914707",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/9150678870764c1b87a649a25939c61b_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "b22fa0b3c34f47b6a360b60f35d5d567_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "4f849f03001817988e1cec341adc544aeb827f4f7255813100ee1259d53b48cb",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/b22fa0b3c34f47b6a360b60f35d5d567_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "b4ff30109dd14c89b24789dc5713cf8c_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "71773145dea1d455b62724f7f68c6bfe743001b868cc48f99d7236ef5361384f",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/b4ff30109dd14c89b24789dc5713cf8c_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "5b03af7a953245b5a3b23191ed4da62a_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "f0c16cb3b2596d7946b38f78e39bf64ec4ed397fbb75efe1cc958929d099dd88",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/5b03af7a953245b5a3b23191ed4da62a_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "fa65a298c01f44e7a182bbf9e5fe3697_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "2f1a94b7ac24cb485fdc0e3ca04639f4dec5c37098de48154fa301ea8b700cda",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/fa65a298c01f44e7a182bbf9e5fe3697_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "fdc39b23ab4242eda6ec5e1e6574fe33_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "eb4bc81faadb5b9330aa331e08ecf65554983898d3988bc78007f25109d6108d",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/fdc39b23ab4242eda6ec5e1e6574fe33_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "e6e877f31dd447199b56cae07f86daad_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "6c27f9ed059216cbbfdfb4241a8a73fab93d54aba14784141c348dd098d38b3f",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/e6e877f31dd447199b56cae07f86daad_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "7bebe3c9be714f02837f8617c56df122_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "296fcdd36df70a65ab9963ed813b417e6dec80ba26fa00ba8c875ed53b16143d",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/7bebe3c9be714f02837f8617c56df122_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "7bebe3c9be714f02837f8617c56df122_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "d0626fbb1fbffda47a816423b2f68728652272e65e84707f52395ebd055a13a3",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/7bebe3c9be714f02837f8617c56df122_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "7f594234e8034228b1a7d727f1981e09_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "80458166dd0289b5ff430e7e3d25e9c5b0fd17777a21a8879cf38cb5d98c1030",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/7f594234e8034228b1a7d727f1981e09_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "b6b0d9f2f2e14a3aaa2c8aedeb1edb69_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "24a251de259f5f8e5965d8ce2196b879719627b9bb8ae58d83210ff9b396f27c",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/b6b0d9f2f2e14a3aaa2c8aedeb1edb69_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "0bb62a68055249e381b039bf54b0ccf8_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "579fcb2e05e36ebce60d41059996b7c65801de0bc34f8c41fb8402a373e75ebd",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/0bb62a68055249e381b039bf54b0ccf8_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "d8251bbc2105497ab8ec80827d4429aa_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "e83545b6cacbd84b17dc4991e3a6213e1cad673d8cb813df60fa21a22ccf21ee",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/d8251bbc2105497ab8ec80827d4429aa_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "44237858a539457da65822bfcf58c414_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "67d962783a4c403a4bcf2b468bd71086955694b9b8ec21240d4410ab22cd2536",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/44237858a539457da65822bfcf58c414_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "fdc39b23ab4242eda6ec5e1e6574fe33_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "74eb04654194aeaba51093fa1babcd346c590aa3964bc211af7796edcf292c80",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/fdc39b23ab4242eda6ec5e1e6574fe33_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "6ff9723a60bf4e14b328b3b19f04dc32_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "520b2f8cdfc9aa51a9c6ccdeb762ae7971e5c3468f0c7bfa84820368fd5b0930",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/6ff9723a60bf4e14b328b3b19f04dc32_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "e6e877f31dd447199b56cae07f86daad_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "f2393237a5e1b6b97029e660fcbef992fab88fa13e67f15834eae0f0696c8561",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/e6e877f31dd447199b56cae07f86daad_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "f4f86af4da3b49e79497deda5c5f223a_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "02f2ec8d346f794eb7771338b6801123dc34739f1d8c817539984518068346a2",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/f4f86af4da3b49e79497deda5c5f223a_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "fdc39b23ab4242eda6ec5e1e6574fe33_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "95ca5ddd3df48e5094097bc0695eb4efbdd9e5f779ce6288d024362a5cf43915",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/fdc39b23ab4242eda6ec5e1e6574fe33_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "048a45dd2cf54aa5808d8ccc85731d44_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "3053c3ccd6ffb7024440093d075bc5218a62d77cfc76ed30019632043ac07570",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/048a45dd2cf54aa5808d8ccc85731d44_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "61a7bd24f88a46c2963280d8b13ac675_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "e67766159dd427fbb8c525c257062eabdb54ad2874e900da23debef8d464d05b",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/61a7bd24f88a46c2963280d8b13ac675_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "61d9340c5ad8418dafe7a4af1b96e6b9_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "259e2243e6894de977506bc2f5e34c3fc6fad6ab23506d0b58bcff6fb4bc7334",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/61d9340c5ad8418dafe7a4af1b96e6b9_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "456ec36cb4a44ca78f36fbd90c0c34fa_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "93367afefce0efb2b732f41ac12005e5790afef9c6c8dc16424c581bd13c3e65",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/456ec36cb4a44ca78f36fbd90c0c34fa_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "44237858a539457da65822bfcf58c414_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "b2e5c297e404d9b7717e81de39051e7af818f249efd0eb442feb078421277908",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/44237858a539457da65822bfcf58c414_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "cc57c1ea80fe46a7abddfdb15654c872_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "70fc6cf3580833c62d6993e3198b821767dd2a7af50e9a430fc2a33bbbb6d9cb",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/cc57c1ea80fe46a7abddfdb15654c872_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "e00dc15130dc44e796687baadd076ae4_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "ebe71159d33c986c2c9951b021059329f4d25f7deea3718b0ab8ffdf72bd1537",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/e00dc15130dc44e796687baadd076ae4_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "841dd6709e9b4d7c9d6bf888f1fe6d7e_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "7b94c857fa509743780035bbde86480829b28a8dc96f0e6dd6c4b261fb8f6cd2",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/841dd6709e9b4d7c9d6bf888f1fe6d7e_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "e54b784a608644a2804fcf800c7499f7_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "cfd2b0f6ac6ad4c5f450748134d90c3739c31d80e31b55068837208cf43930b2",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/e54b784a608644a2804fcf800c7499f7_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "e54b784a608644a2804fcf800c7499f7_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "c971201d1f9cfcc20c7373e980848fa8ff6a6506b8635f88d6974a8873371c17",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/e54b784a608644a2804fcf800c7499f7_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "cc57c1ea80fe46a7abddfdb15654c872_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "805ab4f4b08d79260441cc3ddce452c524f9235cf0aea716a89f5a5b9ea2abcd",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/cc57c1ea80fe46a7abddfdb15654c872_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "6d9984d09d52479e837da2fd09e192cc_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "24e4b75b87756ba985f57f9716c8da417ea34945d5b9b46f27ca6ddf1bd52aa8",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/6d9984d09d52479e837da2fd09e192cc_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "6402fd1ffaf041d0b9162bd92a7ba0a2_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "2c3f4c7b0af7b27426ef0db8b2c81864d15f2a43a2dfa3950a8d6561128c70e5",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/6402fd1ffaf041d0b9162bd92a7ba0a2_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "ce94ef7a0522468e81c0e2b3a2f1e12d_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "75aecc4afa0bbdb7aedd0221edf81ead25c9de60ce7063dc79e39820455d665a",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/ce94ef7a0522468e81c0e2b3a2f1e12d_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "87e772078a494d42bd34cd16172808bc_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "8d388560fc23b7162eac23df1e6383b45ba8879bed4f72cf9936f0268ad4c3d1",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/87e772078a494d42bd34cd16172808bc_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "87e772078a494d42bd34cd16172808bc_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "5aa9afde01ed67e425b5d15c935738254eeba013a46f5ac6790a8b9d1bf51630",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/87e772078a494d42bd34cd16172808bc_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "f40544fd4f5d42abbcfa948eeaf86850_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "88aab2a6984b45e51733658f55ea025a61be3fc2b020e27313a481bdaf7d5627",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/f40544fd4f5d42abbcfa948eeaf86850_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "281b92269fd648d4b52d06ac06ca6d65_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "085cac8e6c48c5a378ac62779f0cdc448f1e5c178ecd8ed9ce1f07183840f03a",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/281b92269fd648d4b52d06ac06ca6d65_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "e63b83b436a0479db7362338cdfab118_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "2f5afa4e839eabd5fe35176ef75158e83f543134f05361e67ecbc4eee553bad9",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/e63b83b436a0479db7362338cdfab118_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "d8251bbc2105497ab8ec80827d4429aa_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "0cbef44b9de2c6ea5b2a5b9d819a96aa5821e394d3bac396a0e76149b71de668",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/d8251bbc2105497ab8ec80827d4429aa_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "55c258972acb4300a3a6077a531ab050_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "f4722a4398d34884bac87958ce0a9d1e3a6e5f6663e0c80e480d3c4c0614468d",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/55c258972acb4300a3a6077a531ab050_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "0af0feb5b1394b928dd13d648de898f5_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "106099101aaf7223572a230caf2fcc0b03803722a1234ee784e06611cfeee463",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/0af0feb5b1394b928dd13d648de898f5_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "d0ecf474e0e64950aa265cd44b9c9d75_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "7e6c28cf5a3acee7ec3edcebebed87bd9a46c964ffeb0fa75b5be66c5ad5a1ff",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/d0ecf474e0e64950aa265cd44b9c9d75_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "fdc39b23ab4242eda6ec5e1e6574fe33_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "08d5fe1e84159a1594d8a6820e201283c885b06cd57642b82b5d64c455e0c154",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/fdc39b23ab4242eda6ec5e1e6574fe33_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "b5989651183643369174912bc5641d3b_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "794ea601c1efecfa1489d46a9501a7e5454d2eb051e4545737ce3ebc80021bf5",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/b5989651183643369174912bc5641d3b_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "0af0feb5b1394b928dd13d648de898f5_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "42097d42f591021206708b518111714f9be83b9db88e303df2ed279d3262abc1",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/0af0feb5b1394b928dd13d648de898f5_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "fa65a298c01f44e7a182bbf9e5fe3697_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "aeae2c02981d19de5f7d9f8a6fe350dc5b67dd7946f747255ae3aff4f0e8eec9",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/fa65a298c01f44e7a182bbf9e5fe3697_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "a1289b27ca1d41deb6fc982be9a3d03c_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "9708919af3e214611608e2b7db1a30770c3aef8eb3cd26512c310f3742f1c2fb",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/a1289b27ca1d41deb6fc982be9a3d03c_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "f753d3f87e5b40af87ff2cbf7c8e7082_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "ff96e5def448ee809c580ee0f1354e428276f3ab2865c5e955d4931ef6e28ad0",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/f753d3f87e5b40af87ff2cbf7c8e7082_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "edba7d0cf1c64d2a9c8a5ebddab507a9_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "7f66f89afa0ed83be59e0c52730a46f593495498a1f4a3a04d1bb15625b43e2f",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/edba7d0cf1c64d2a9c8a5ebddab507a9_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "edba7d0cf1c64d2a9c8a5ebddab507a9_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "a8fe603f50302aa2e6f0ec935b2411d25142f1609766bef7c5e9103497c45497",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/edba7d0cf1c64d2a9c8a5ebddab507a9_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "9cdbf5ff7f294549aea0a4307e5d104a_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "babce3d8f77ae1830bf42e4ad8c011cf080f12bef98d03142d61e7feb5b24f4b",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/9cdbf5ff7f294549aea0a4307e5d104a_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "3e8750f331d7499e9b5123e9eb70f2e2_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "5c3984c15f32cb20a99ffc5001465157bcaac62872086fe5d73ebb2315cb170c",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/3e8750f331d7499e9b5123e9eb70f2e2_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "c5f58c19249d4137ae063b0e9ecd8b8e_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "57bb20b480c035f3965f8f2ddabf02ee1cef8bcd28d6d9730c07f7d1a60c7369",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/c5f58c19249d4137ae063b0e9ecd8b8e_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "61a7bd24f88a46c2963280d8b13ac675_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "a585a717d0af5c68c6f00dc074685c5481f1497d5f1444cf8abae0b4b9eb3f9c",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/61a7bd24f88a46c2963280d8b13ac675_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "3e8750f331d7499e9b5123e9eb70f2e2_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "9298140c01bd7f5e51aeeb5a509179ee8b4bb2484c2d08c2a5e2633d64afa40b",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/3e8750f331d7499e9b5123e9eb70f2e2_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "a98fba72bde9433fb882032d18aedb2e_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "b8d615fd695b39e2f2c3e910ae3bf9904c5019dd6b5587284d500a710e1a2889",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/a98fba72bde9433fb882032d18aedb2e_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "cb4e6195faad467094fbd4d0a9e960e9_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "e24f0e619c817cb5a1edd317dce9c2eae72a7272b8dc7d08cd3c680667dc9d7f",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/cb4e6195faad467094fbd4d0a9e960e9_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "858a1ece22cf45d9bc71e42336604b78_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "f163fd9fbc747d13bfa9c3fc1b05606f34799714acb07fa07adb434a9efbc705",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/858a1ece22cf45d9bc71e42336604b78_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "b6c420c3a5bd4a219b1cb82ee5ea0aa7_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "f89c6fb11b1f62aa431ceffa451da7fa9bf25c16a920a6fd13fa14b4746375ef",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/b6c420c3a5bd4a219b1cb82ee5ea0aa7_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "e63b83b436a0479db7362338cdfab118_CAM_BACK.jpg",
+      "status": "restored",
+      "sha256": "45cabcbb09a14a49119be75c2c0d142210825ae6b1ca924e39dce9be6d12afd6",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/e63b83b436a0479db7362338cdfab118_CAM_BACK.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "de7593d76648450e947ba0c203dee1b0_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "a220e20590714c7d8530c274d8b0fb7aa078d0b8e9a2dbe3106b7559c7551d91",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/de7593d76648450e947ba0c203dee1b0_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "d0ecf474e0e64950aa265cd44b9c9d75_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "badb6877c04fdc926671f499c76b7af25153ed0c81de49156273835e4c920cab",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/d0ecf474e0e64950aa265cd44b9c9d75_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "c59e60042a8643e899008da2e446acca_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "b1d2cffbd3b32eac99cfe7a5ac0d1298bc6c49b024bfcf305b053641ea66f4ba",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/c59e60042a8643e899008da2e446acca_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "edba7d0cf1c64d2a9c8a5ebddab507a9_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "5ed1c07549ea1c708a5645969ce6265fe863149b0bb19f90735b42bd0c784a1d",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/edba7d0cf1c64d2a9c8a5ebddab507a9_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "b6c420c3a5bd4a219b1cb82ee5ea0aa7_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "42f91415977e31e9c79bea7bec35b4c6180c453a38a2b3d86456f0097cbdc684",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/b6c420c3a5bd4a219b1cb82ee5ea0aa7_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "9cdbf5ff7f294549aea0a4307e5d104a_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "197b585c1116bafd17dad8c45ffbe5122d2e49e4ad1e4518fdcad44474bb6778",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/9cdbf5ff7f294549aea0a4307e5d104a_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "1c9a906c40f6417bbe1cea06d6e55501_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "334e6083f47362c77ffe452fec06c001a031eeb317f8eda70db8a4e32837cf5a",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/1c9a906c40f6417bbe1cea06d6e55501_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "a771effa2a2648d78096c3e92b95b129_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "9ea1134da4a6826c49689fef9dab5e463ab5299d2c8e0a59d3645162d125db8e",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/a771effa2a2648d78096c3e92b95b129_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "a1289b27ca1d41deb6fc982be9a3d03c_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "5cf9e6f433b8adfc4a1b2c4e882914d09d13ced21e55f59ec2a730456d72cf7b",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/a1289b27ca1d41deb6fc982be9a3d03c_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "4b894442c95141f9affd731d9da7b43c_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "a32c2676551d1b5b53e0e3da80242752f1542f6edcd9ede892305ea448734894",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/4b894442c95141f9affd731d9da7b43c_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "747aa46b9a4641fe90db05d97db2acea_CAM_FRONT_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "c91a13165fe31102f79db635d761a8a593c6f1c0ee08a3bdd1098310befa5968",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/747aa46b9a4641fe90db05d97db2acea_CAM_FRONT_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "c567f9b8e9f34817acdc9c49d791c557_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "f82fbe3f91667a18217355c3b220a275c4f2551b8576d8b01a6413d5c01085b1",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/c567f9b8e9f34817acdc9c49d791c557_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "841dd6709e9b4d7c9d6bf888f1fe6d7e_CAM_FRONT.jpg",
+      "status": "restored",
+      "sha256": "f9bf7caf457bd19ae2660bcbe39b58e6c8e64cff13fd18dd6d4ebe9409b46640",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/841dd6709e9b4d7c9d6bf888f1fe6d7e_CAM_FRONT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "e54b784a608644a2804fcf800c7499f7_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "c7133f63b6513cd4414b0b0731f39490fb6b47f9bdfb04d4c0514f8a82311c9b",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/e54b784a608644a2804fcf800c7499f7_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "cc57c1ea80fe46a7abddfdb15654c872_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "e7c2b4cf47bde42384db937000e28ccff4f0f80f742c400e35620dc84e55fb6e",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/cc57c1ea80fe46a7abddfdb15654c872_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "4cf5d6c3f6ab42aab23f67b5a9782d1a_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "dba179e4f40b159a26fd466072f7868fb35f393f34b983d56b8f3abd647c973b",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/4cf5d6c3f6ab42aab23f67b5a9782d1a_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "ce94ef7a0522468e81c0e2b3a2f1e12d_CAM_BACK_RIGHT.jpg",
+      "status": "restored",
+      "sha256": "6e6fa224848b1fe0e8a02e124baf95f671f1c62ca06b263135771c56b90d5286",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/ce94ef7a0522468e81c0e2b3a2f1e12d_CAM_BACK_RIGHT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "9fcdc52b791045e99c623c5fc643331f_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "aec00a11139abccc4f412a077f5f1aee04b7608bc41b4b65a7068c45ce4f03dd",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/9fcdc52b791045e99c623c5fc643331f_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "b9ea04a6121d4a8bb00199b885aa5ef0_CAM_FRONT_LEFT.jpg",
+      "status": "restored",
+      "sha256": "6dff6c86bc466aa0a3af0b031bd3521568e3d3808c2aa8b0f61703b1acf5f273",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/b9ea04a6121d4a8bb00199b885aa5ef0_CAM_FRONT_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "281b92269fd648d4b52d06ac06ca6d65_CAM_BACK_LEFT.jpg",
+      "status": "restored",
+      "sha256": "6207f8cc22fa032cba8676cf7ced34ee4ecf45580a201bf46e27e316eab1c494",
+      "source": "workspace/P-027-ui-shell/data/lab/cache/cameras/281b92269fd648d4b52d06ac06ca6d65_CAM_BACK_LEFT.jpg",
+      "size": [
+        1600,
+        900
+      ]
+    }
+  ]
+}

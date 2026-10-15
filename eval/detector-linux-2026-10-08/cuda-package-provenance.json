@@ -1,0 +1,14 @@
+{
+  "source": "https://conda.anaconda.org/nvidia/linux-64/repodata.json",
+  "packages": {
+    "cuda-nvcc-12.1.105-0.tar.bz2": "bb8176dd6595206ac393c03a54d10643bdfa2101af8285f3e48caa73be0ef4d7",
+    "cuda-cudart-dev-12.1.105-0.tar.bz2": "eaf9ea2d6a606eb2883a356a24afe04c0075d802054524d9c4c6c10bbeef40de",
+    "cuda-cudart-12.1.105-0.tar.bz2": "8ce27449a0a1d98630b8b13669590a34b04bccf11bf9a98151a40541f7edf7ba",
+    "cuda-cccl-12.1.109-0.tar.bz2": "b3aacf23055a5b0a2b8e52adbb59933775209e14274457dfb8673a3cf5f60ccb"
+  },
+  "headers_only": {
+    "libcublas-dev-12.1.3.1-0.tar.bz2": "8ef2656ee6dc7b596f31a2149881e3bcc9e23d72574a00fbae0aa65542be324f",
+    "libcusolver-dev-11.4.5.107-0.tar.bz2": "b033ec659a10b265c5725ce4823173b26f632c4d0df06a4c649eaa941d95168c",
+    "libcusparse-dev-12.1.0.106-0.tar.bz2": "da7b401d9e95a73006dc28afdab5985ab14d948eacbdc826fbc6af7cf2fd0d0d"
+  }
+}

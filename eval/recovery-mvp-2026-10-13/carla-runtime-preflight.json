@@ -1,0 +1,11 @@
+{
+  "kind": "carla_file_preflight_not_capture_evidence",
+  "binary_exists": true,
+  "libraries": 14,
+  "invalid_elf": [],
+  "memory_launch_status": "CARLA needs 10 GiB available RAM before launch; currently 9.1 GiB. Close applications before a fresh capture.",
+  "available_ram_gib": null,
+  "disk_free_gib": 10.994037628173828,
+  "native_capture_verified": false,
+  "binary_sha256": "03bcd413615fa1fc61a5b846342dbdc4e6b3541320a40d6bf17ff927039731f9"
+}

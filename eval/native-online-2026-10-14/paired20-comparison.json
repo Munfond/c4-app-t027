@@ -1,0 +1,142 @@
+{
+  "checked_utc": "2026-10-13T21:19:18.429818+00:00",
+  "kind": "frozen_online_paired20_evidence_v1",
+  "baseline_id": "full20-retry1",
+  "ppo_id": "ppo20",
+  "frames_each": 20,
+  "route": 112,
+  "seed": 212,
+  "reference_sha256": "a18beebb75c27a73cde8d8b39a817537146ad08be02ec1ae9d394dc92e4b3d48",
+  "reference_exact_match": true,
+  "baseline_report_sha256": "1a91df250e84c31c81e83a51d83050de65db2af33a704d4a12a686271ce72f54",
+  "ppo_report_sha256": "87de4ccb896fe860df6cc74f6083b57dbd6e02cb1b250cf158bdd5ecf9ee1ce3",
+  "artifact_audit_sha256": [
+    "fdba9713e2bd9f7404f3ff7d98f7bdb780953b7480752c00cb07c60eea2a994d",
+    "8bb3775000ea54dd0b41d47ba5e894944a81e0f3fd2e4bba85afbe8c2cb2e054"
+  ],
+  "policy_sha256": "96e2838f7f160e3277dda4a026b3cecd0cd68b4986bdcbef92062874cc7d9b8f",
+  "current_actions": [
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7
+  ],
+  "decision_actions": [
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7
+  ],
+  "baseline_metrics": {
+    "frame_count": 20,
+    "evaluated_cells": 61322,
+    "confusion": [
+      [
+        43559,
+        636,
+        34
+      ],
+      [
+        3024,
+        12858,
+        740
+      ],
+      [
+        48,
+        42,
+        381
+      ]
+    ],
+    "class_iou": {
+      "free": 0.9208896217838947,
+      "static": 0.7432369942196532,
+      "object": 0.3060240963855422
+    },
+    "miou_supported_classes": 0.6567169041296966,
+    "occupied_iou": 0.7893373867026966,
+    "object_recall": 0.8089171974522293,
+    "flow_epe_m_s": null,
+    "flow_valid_cells": 0,
+    "latency_model_only_ms": {
+      "p50": 87.61881200000232,
+      "p95": 115.64372899995448
+    },
+    "timed_frames": 20
+  },
+  "ppo_metrics": {
+    "frame_count": 20,
+    "evaluated_cells": 61322,
+    "confusion": [
+      [
+        43559,
+        636,
+        34
+      ],
+      [
+        3024,
+        12858,
+        740
+      ],
+      [
+        48,
+        42,
+        381
+      ]
+    ],
+    "class_iou": {
+      "free": 0.9208896217838947,
+      "static": 0.7432369942196532,
+      "object": 0.3060240963855422
+    },
+    "miou_supported_classes": 0.6567169041296966,
+    "occupied_iou": 0.7893373867026966,
+    "object_recall": 0.8089171974522293,
+    "flow_epe_m_s": null,
+    "flow_valid_cells": 0,
+    "latency_model_only_ms": {
+      "p50": 87.9303985000206,
+      "p95": 105.6554193499892
+    },
+    "timed_frames": 20
+  },
+  "quality_equal": true,
+  "conclusion": "PPO kept profile7 on all19 decisions; no quality improvement over fixed32channel600k for this preregistered20frame capture",
+  "limits": [
+    "Inference online, no online training",
+    "12 LiDAR streams remain enabled, no sensor power saving",
+    "Only observed semantic reference cells evaluated",
+    "Single Town01 clear heldout route; not weather/radar/real driving validation",
+    "CPU timing variation with identical action/input is not evidence of PPO speedup"
+  ]
+}

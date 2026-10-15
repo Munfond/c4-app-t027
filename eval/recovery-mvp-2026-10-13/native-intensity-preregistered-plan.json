@@ -1,0 +1,29 @@
+{
+  "kind": "experimental_input_mean_alignment_not_sensor_control",
+  "gain": 0.06486433468844091,
+  "fitted_without_labels": true,
+  "input_domain_diagnostic_sha256": "89ea223ed530dd94e45d8ee2e7a7a613eb1e3d93ef08d6369c2d9a17a4022638",
+  "heldout_capture_plan": [
+    {
+      "route_spawn_index": 17,
+      "seed": 73
+    },
+    {
+      "route_spawn_index": 31,
+      "seed": 97
+    }
+  ],
+  "map": "Town01",
+  "weather": "clear",
+  "vehicles": 2,
+  "pedestrians": 0,
+  "frames": 4,
+  "traffic_placement": "nearest_spawn",
+  "checkpoint_change": false,
+  "runtime_enabled": false,
+  "limitations": [
+    "Pixel intensity gain is only a diagnostic approximation; CARLA distance attenuation is not measured material reflectance",
+    "No hyperparameter search on heldout outputs",
+    "Same map only; no claim of real-world or other-map generalization"
+  ]
+}

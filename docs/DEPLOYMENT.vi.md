@@ -2,6 +2,23 @@
 
 MVP phục vụ artifact tính sẵn; không cần GPU nếu camera/perception/environment cache đầy đủ. Cấu hình dưới đây là hướng dẫn vận hành; [evidence 04/10/2026](../eval/results/report.md) chỉ kiểm thử **local**, không xác nhận VPS/domain/HTTPS hoạt động.
 
+## AI Agent Occupancy: triển khai riêng với worker
+
+Mục 04 `/experiments` không cần CARLA. Ngoài FE/API cần worker PyTorch,
+ba checkpoint occupancy, raw nuScenes-mini và cùng EXPERIMENT_ROOT có quyền ghi.
+Bundle perception của Lab không thay raw dataset hoặc worker. Hướng dẫn Compose
+Lab bên dưới không tự cài inference dependencies hay khởi động worker agent.
+
+API production mặc định tắt experiments. Chỉ bật
+`EXPERIMENT_API_ENABLED_IN_PRODUCTION` khi đã kiểm soát truy cập/quota/budget.
+Key LLM ở backend, không truyền sang FE. Phiên tạm không thay thế xác thực.
+Camera preview agent đọc raw ảnh, không qua anonymizer Lab; không mở raw cho công chúng.
+
+API/worker phải truy cập cùng vùng lưu tạm. SQLite/lease hiện phù hợp deployment
+có shared local storage, chưa tự scale thành các replica có filesystem riêng.
+Redeploy cần restart cả API/worker; phiên hết hạn được dọn khi khởi động lại.
+Chi tiết: [runbook agent](REPLAY_SENSOR_AGENT.vi.md).
+
 ## Windows VPS · native processes
 
 Dùng Python 3.12, Node 22.x và Caddy; backend/frontend setup theo [README](../README.md). Data đặt ngoài checkout, ví dụ `C:/apps/lab`, `C:/apps/nuscenes`. Root `.env` override roots; frontend `.env.local` dùng `API_INTERNAL_URL=http://127.0.0.1:8000` trước khi build.

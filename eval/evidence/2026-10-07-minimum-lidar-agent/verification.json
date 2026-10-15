@@ -1,0 +1,10 @@
+{
+  "prompt": "tìm mức  dữ liệu của lidar có thể chấp nhận được thấp nhất cho model đả bảo kết quả",
+  "study_id": "68febdb5e23943f4a2b648f0af5a5b94",
+  "records_verified": 6,
+  "all_trials_succeeded": true,
+  "all_references_match": true,
+  "selected": "baseline",
+  "max_iou_drop": 0.02,
+  "scope": "Town01, 2 vehicles, 2 frames per profile, seed 42; candidate comparison only, no adaptive search or global minimum proof"
+}

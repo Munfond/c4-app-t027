@@ -1,0 +1,536 @@
+{
+  "kind": "CARLA_single_sweep_detector_smoke",
+  "status": "succeeded",
+  "source_sha": "fe25f7a51d36e3702f961e198894580d83c4387b",
+  "model_variant": "pointpillars",
+  "checkpoint_sha256": "f19d00a38e6b775f38a45a9a3ca3ecaec20a5585a3caf44622423e2d5f75d5d0",
+  "tracked_upstream_source_clean": true,
+  "upstream_filename_fingerprint_matches": true,
+  "source_config_sha256": "1ffe085179a48b1bf47e15c12674fe0d58d518cb117ce7a2b7fa10dbbdbd4db1",
+  "resolved_config_sha256": "2bee9d77f6c3f65224a355d4c46362c2d9e1eedf8551fdf988c23dded6db8292",
+  "capture_manifest_sha256": "599e7e41d05bc119e28cf764a4690f683ed0ac93133f7a07601218bda8d0e645",
+  "torch": "2.1.0+cu121",
+  "cuda": "12.1",
+  "gpu": "NVIDIA GeForce RTX 2050",
+  "amp": true,
+  "intensity_policy": "raw",
+  "sweeps": 1,
+  "input_feature_names": [
+    "x",
+    "y",
+    "z",
+    "time_lag"
+  ],
+  "input_lidar_channels": 64,
+  "input_lidar_sensor": "LIDAR_TOP_64",
+  "smoke_script_sha256": "f289bec5fbef31df99f2e966377a305ab1f2037a21e771f510ece2b58ee2138a",
+  "image_policy": null,
+  "adapter_sha256": "557f7f9008951d6206dccc7fe66e8ee22ee0067d58504812da02ad78c0da86e2",
+  "strict_checkpoint_loading": true,
+  "keep_fraction": 1,
+  "sampling_seed": 7,
+  "sampling_algorithm": "numpy.default_rng(seed+frame_id), sorted subset indices",
+  "sampling_abi": "numpy-default-rng-sorted-subset-v1",
+  "frame_selection": {
+    "kind": "fixed_index_stride",
+    "stride": 60,
+    "indices": [
+      0,
+      60,
+      120,
+      180,
+      240,
+      300,
+      360,
+      420,
+      480,
+      540,
+      600,
+      660,
+      720,
+      780,
+      840,
+      900,
+      960,
+      1020,
+      1080,
+      1140
+    ],
+    "sim_timestamp_span_s": 57.00000084936619
+  },
+  "cuda_activity_measurement": true,
+  "score_threshold": 0.3,
+  "frames": [
+    {
+      "index": 0,
+      "frame_id": 63,
+      "timestamp": 5.448255100287497,
+      "input_lidar_sensor": "LIDAR_TOP_64",
+      "input_lidar_artifact": {
+        "path": "inputs/frame_00000/LIDAR_TOP_64.npz",
+        "bytes": 409023,
+        "sha256": "18527fcb6a9afacf857b1aa559a4f2dd261b9863f17223371d03b9eb8ddfd9be"
+      },
+      "input_points": 30687,
+      "input_sha256": "aa75369d4275f23674eaaff783a9437f3c68ae4e3bbb2510d042caca2c1880c1",
+      "cuda_work": {
+        "cuda_activity_sum_ms": 57.036,
+        "cuda_activity_count": 1138,
+        "scope": "detector forward pipeline kernels/copies only; separate profiled pass"
+      },
+      "gpu_event_elapsed_ms": 69.14559936523438,
+      "camera_artifacts": {},
+      "wall_inference_ms": 70.75081400034833,
+      "warmup_excluded": true,
+      "boxes_above_threshold": 5
+    },
+    {
+      "index": 60,
+      "frame_id": 123,
+      "timestamp": 8.44825514499098,
+      "input_lidar_sensor": "LIDAR_TOP_64",
+      "input_lidar_artifact": {
+        "path": "inputs/frame_00060/LIDAR_TOP_64.npz",
+        "bytes": 391172,
+        "sha256": "f2a8a9027281a417c5c8b624cf672bee601e4feddb62bcb491498a257973673f"
+      },
+      "input_points": 30447,
+      "input_sha256": "ac3d34d6bce3148b12bef954561207a2ab50d6c2190bee34c1556389888977fd",
+      "cuda_work": {
+        "cuda_activity_sum_ms": 49.757,
+        "cuda_activity_count": 1138,
+        "scope": "detector forward pipeline kernels/copies only; separate profiled pass"
+      },
+      "gpu_event_elapsed_ms": 62.88137435913086,
+      "camera_artifacts": {},
+      "wall_inference_ms": 62.93603999984043,
+      "warmup_excluded": true,
+      "boxes_above_threshold": 3
+    },
+    {
+      "index": 120,
+      "frame_id": 183,
+      "timestamp": 11.448255189694464,
+      "input_lidar_sensor": "LIDAR_TOP_64",
+      "input_lidar_artifact": {
+        "path": "inputs/frame_00120/LIDAR_TOP_64.npz",
+        "bytes": 363797,
+        "sha256": "8ae14970b1af73cdf60a308184d4e43f80e43f0280270979c06da113135afdbf"
+      },
+      "input_points": 30311,
+      "input_sha256": "e9d8a3ea21420269ee783f57fabcfca6b5612488a942e7b1ed5da71c278a249b",
+      "cuda_work": {
+        "cuda_activity_sum_ms": 55.016,
+        "cuda_activity_count": 1138,
+        "scope": "detector forward pipeline kernels/copies only; separate profiled pass"
+      },
+      "gpu_event_elapsed_ms": 69.58428955078125,
+      "camera_artifacts": {},
+      "wall_inference_ms": 69.66696999916167,
+      "warmup_excluded": true,
+      "boxes_above_threshold": 7
+    },
+    {
+      "index": 180,
+      "frame_id": 243,
+      "timestamp": 14.448255234397948,
+      "input_lidar_sensor": "LIDAR_TOP_64",
+      "input_lidar_artifact": {
+        "path": "inputs/frame_00180/LIDAR_TOP_64.npz",
+        "bytes": 362590,
+        "sha256": "5e976bc13e72a0eecf9ba002d8d761b1173a8441078ba937af0984d5301d952f"
+      },
+      "input_points": 30260,
+      "input_sha256": "b8b50be04861a77e8278f96f173ca554d3a0787b9387bcc5c6fa4a5705fbb072",
+      "cuda_work": {
+        "cuda_activity_sum_ms": 53.897,
+        "cuda_activity_count": 1138,
+        "scope": "detector forward pipeline kernels/copies only; separate profiled pass"
+      },
+      "gpu_event_elapsed_ms": 67.20057678222656,
+      "camera_artifacts": {},
+      "wall_inference_ms": 67.25111500054481,
+      "warmup_excluded": true,
+      "boxes_above_threshold": 4
+    },
+    {
+      "index": 240,
+      "frame_id": 303,
+      "timestamp": 17.44825527910143,
+      "input_lidar_sensor": "LIDAR_TOP_64",
+      "input_lidar_artifact": {
+        "path": "inputs/frame_00240/LIDAR_TOP_64.npz",
+        "bytes": 362151,
+        "sha256": "52b599d4d369f92310e828b91a7b6cb37c0ff5d96c8be3c890c78f31eae691e4"
+      },
+      "input_points": 30177,
+      "input_sha256": "c8c61eb75e7308fa20c6538d4d909105d6c803e1595038cd9e9f43c09d0127fd",
+      "cuda_work": {
+        "cuda_activity_sum_ms": 54.166,
+        "cuda_activity_count": 1138,
+        "scope": "detector forward pipeline kernels/copies only; separate profiled pass"
+      },
+      "gpu_event_elapsed_ms": 67.50902557373047,
+      "camera_artifacts": {},
+      "wall_inference_ms": 67.55539100049646,
+      "warmup_excluded": true,
+      "boxes_above_threshold": 2
+    },
+    {
+      "index": 300,
+      "frame_id": 363,
+      "timestamp": 20.448255323804915,
+      "input_lidar_sensor": "LIDAR_TOP_64",
+      "input_lidar_artifact": {
+        "path": "inputs/frame_00300/LIDAR_TOP_64.npz",
+        "bytes": 358232,
+        "sha256": "d9d7a56192c7c21d08b12086e7c491b8d655739aa3f92f38991a8b2a2140d2b6"
+      },
+      "input_points": 29988,
+      "input_sha256": "cfd5e020b6455ec88756f9b0e84344365a45e10617c73b3dae60c0e183dd251a",
+      "cuda_work": {
+        "cuda_activity_sum_ms": 55.199,
+        "cuda_activity_count": 1138,
+        "scope": "detector forward pipeline kernels/copies only; separate profiled pass"
+      },
+      "gpu_event_elapsed_ms": 70.25305938720703,
+      "camera_artifacts": {},
+      "wall_inference_ms": 70.3081720002956,
+      "warmup_excluded": true,
+      "boxes_above_threshold": 5
+    },
+    {
+      "index": 360,
+      "frame_id": 423,
+      "timestamp": 23.4482553685084,
+      "input_lidar_sensor": "LIDAR_TOP_64",
+      "input_lidar_artifact": {
+        "path": "inputs/frame_00360/LIDAR_TOP_64.npz",
+        "bytes": 369543,
+        "sha256": "db70f18232cf1124c08da7be3543cc45bbef531de1e6d137ad2cf033e1ff8e1c"
+      },
+      "input_points": 29053,
+      "input_sha256": "f363a3a3201bb26a419f5b181fcae265ecd8c65e6b139403c636de5a25ae0ebd",
+      "cuda_work": {
+        "cuda_activity_sum_ms": 54.624,
+        "cuda_activity_count": 1138,
+        "scope": "detector forward pipeline kernels/copies only; separate profiled pass"
+      },
+      "gpu_event_elapsed_ms": 67.73446655273438,
+      "camera_artifacts": {},
+      "wall_inference_ms": 67.78295000003709,
+      "warmup_excluded": true,
+      "boxes_above_threshold": 1
+    },
+    {
+      "index": 420,
+      "frame_id": 483,
+      "timestamp": 26.448255413211882,
+      "input_lidar_sensor": "LIDAR_TOP_64",
+      "input_lidar_artifact": {
+        "path": "inputs/frame_00420/LIDAR_TOP_64.npz",
+        "bytes": 373906,
+        "sha256": "286a2bc06e383bc12ca20b5bf7c067d661d364e18811e167fbbcdf9b44cbbf7e"
+      },
+      "input_points": 28630,
+      "input_sha256": "ac33d826c9701ae4bed39b02ad0494e57faea7a5d62f76c6bbd0a8fb70eacb1a",
+      "cuda_work": {
+        "cuda_activity_sum_ms": 54.716,
+        "cuda_activity_count": 1136,
+        "scope": "detector forward pipeline kernels/copies only; separate profiled pass"
+      },
+      "gpu_event_elapsed_ms": 68.35088348388672,
+      "camera_artifacts": {},
+      "wall_inference_ms": 68.3967320001102,
+      "warmup_excluded": true,
+      "boxes_above_threshold": 4
+    },
+    {
+      "index": 480,
+      "frame_id": 543,
+      "timestamp": 29.448255457915366,
+      "input_lidar_sensor": "LIDAR_TOP_64",
+      "input_lidar_artifact": {
+        "path": "inputs/frame_00480/LIDAR_TOP_64.npz",
+        "bytes": 333599,
+        "sha256": "b3bc8f07e869c5ea61b292d1b681021a95ab758f50bd49f76fdd2b9ff5dce2b5"
+      },
+      "input_points": 29027,
+      "input_sha256": "816e07a4663a20170c68df92a55ef18bacfcb4f10ea5ee7e8ffa35a404f01753",
+      "cuda_work": {
+        "cuda_activity_sum_ms": 51.375,
+        "cuda_activity_count": 1134,
+        "scope": "detector forward pipeline kernels/copies only; separate profiled pass"
+      },
+      "gpu_event_elapsed_ms": 65.57881927490234,
+      "camera_artifacts": {},
+      "wall_inference_ms": 65.63528299921018,
+      "warmup_excluded": true,
+      "boxes_above_threshold": 2
+    },
+    {
+      "index": 540,
+      "frame_id": 603,
+      "timestamp": 32.44825550261885,
+      "input_lidar_sensor": "LIDAR_TOP_64",
+      "input_lidar_artifact": {
+        "path": "inputs/frame_00540/LIDAR_TOP_64.npz",
+        "bytes": 302057,
+        "sha256": "8350013aa063680cb2108b2d03fb6883da104e57703646e9e74539000cc546d0"
+      },
+      "input_points": 29218,
+      "input_sha256": "f88d96279c3d776ae4b8b205d44931265ee61968132839a518a34dfc59dcaaed",
+      "cuda_work": {
+        "cuda_activity_sum_ms": 50.119,
+        "cuda_activity_count": 1138,
+        "scope": "detector forward pipeline kernels/copies only; separate profiled pass"
+      },
+      "gpu_event_elapsed_ms": 64.03392028808594,
+      "camera_artifacts": {},
+      "wall_inference_ms": 64.08326900054817,
+      "warmup_excluded": true,
+      "boxes_above_threshold": 4
+    },
+    {
+      "index": 600,
+      "frame_id": 663,
+      "timestamp": 35.44825554732233,
+      "input_lidar_sensor": "LIDAR_TOP_64",
+      "input_lidar_artifact": {
+        "path": "inputs/frame_00600/LIDAR_TOP_64.npz",
+        "bytes": 302702,
+        "sha256": "4d19f04b45456a175ae27a41a266539daade3f9d2889a599f6acf1467eca96c0"
+      },
+      "input_points": 28882,
+      "input_sha256": "7aff3e49762f2e7d61690e8d741a51573d2e4ba5ed8cc6a795bbfe4255c4dcfb",
+      "cuda_work": {
+        "cuda_activity_sum_ms": 48.246,
+        "cuda_activity_count": 1085,
+        "scope": "detector forward pipeline kernels/copies only; separate profiled pass"
+      },
+      "gpu_event_elapsed_ms": 61.181888580322266,
+      "camera_artifacts": {},
+      "wall_inference_ms": 61.230137000165996,
+      "warmup_excluded": true,
+      "boxes_above_threshold": 2
+    },
+    {
+      "index": 660,
+      "frame_id": 723,
+      "timestamp": 38.448255592025816,
+      "input_lidar_sensor": "LIDAR_TOP_64",
+      "input_lidar_artifact": {
+        "path": "inputs/frame_00660/LIDAR_TOP_64.npz",
+        "bytes": 294979,
+        "sha256": "81298ff061d7109daa54ddfb41074bf99fb3b5b2bc1d6962f2f5aa67dd1370c9"
+      },
+      "input_points": 28167,
+      "input_sha256": "8b1ea8d5278d1b2b09bf422dcce11a271718515b7b4ecd9f60c521f151e859d2",
+      "cuda_work": {
+        "cuda_activity_sum_ms": 51.007,
+        "cuda_activity_count": 1138,
+        "scope": "detector forward pipeline kernels/copies only; separate profiled pass"
+      },
+      "gpu_event_elapsed_ms": 65.57266998291016,
+      "camera_artifacts": {},
+      "wall_inference_ms": 65.62376500005485,
+      "warmup_excluded": true,
+      "boxes_above_threshold": 3
+    },
+    {
+      "index": 720,
+      "frame_id": 783,
+      "timestamp": 41.4482556367293,
+      "input_lidar_sensor": "LIDAR_TOP_64",
+      "input_lidar_artifact": {
+        "path": "inputs/frame_00720/LIDAR_TOP_64.npz",
+        "bytes": 281953,
+        "sha256": "9997f19ecf5a107a2418a511aa5214114366846ca078bc715e62f1b8cc67e782"
+      },
+      "input_points": 27920,
+      "input_sha256": "cea3a9f83e217c7ffce818f84a7a22ea811f268a6f085906626c5ca8da9d36ac",
+      "cuda_work": {
+        "cuda_activity_sum_ms": 45.452,
+        "cuda_activity_count": 1085,
+        "scope": "detector forward pipeline kernels/copies only; separate profiled pass"
+      },
+      "gpu_event_elapsed_ms": 58.41020965576172,
+      "camera_artifacts": {},
+      "wall_inference_ms": 58.4564370001317,
+      "warmup_excluded": true,
+      "boxes_above_threshold": 4
+    },
+    {
+      "index": 780,
+      "frame_id": 843,
+      "timestamp": 44.448255681432784,
+      "input_lidar_sensor": "LIDAR_TOP_64",
+      "input_lidar_artifact": {
+        "path": "inputs/frame_00780/LIDAR_TOP_64.npz",
+        "bytes": 295301,
+        "sha256": "a0bceec5157ae669b2e2328478dd868d7081d82e3fe71a98e3fe50343245d9b1"
+      },
+      "input_points": 28365,
+      "input_sha256": "f6debdce08600c80dd0423b8a58a69aacd164954d9dc834f6fcd4cccc19d3070",
+      "cuda_work": {
+        "cuda_activity_sum_ms": 46.164,
+        "cuda_activity_count": 1136,
+        "scope": "detector forward pipeline kernels/copies only; separate profiled pass"
+      },
+      "gpu_event_elapsed_ms": 59.39241409301758,
+      "camera_artifacts": {},
+      "wall_inference_ms": 59.44080299923371,
+      "warmup_excluded": true,
+      "boxes_above_threshold": 3
+    },
+    {
+      "index": 840,
+      "frame_id": 903,
+      "timestamp": 47.44825572613627,
+      "input_lidar_sensor": "LIDAR_TOP_64",
+      "input_lidar_artifact": {
+        "path": "inputs/frame_00840/LIDAR_TOP_64.npz",
+        "bytes": 310918,
+        "sha256": "685bc3142b74688cdbbd35a8d51f5b82dd7dc118a3e6757689c91a1cacf229ab"
+      },
+      "input_points": 29325,
+      "input_sha256": "d0c0a66efe9637e77002022d6738c59f32f3a020325a0e127676f901d239c9cf",
+      "cuda_work": {
+        "cuda_activity_sum_ms": 47.284,
+        "cuda_activity_count": 1085,
+        "scope": "detector forward pipeline kernels/copies only; separate profiled pass"
+      },
+      "gpu_event_elapsed_ms": 60.05878448486328,
+      "camera_artifacts": {},
+      "wall_inference_ms": 60.10502599929168,
+      "warmup_excluded": true,
+      "boxes_above_threshold": 2
+    },
+    {
+      "index": 900,
+      "frame_id": 963,
+      "timestamp": 50.44825577083975,
+      "input_lidar_sensor": "LIDAR_TOP_64",
+      "input_lidar_artifact": {
+        "path": "inputs/frame_00900/LIDAR_TOP_64.npz",
+        "bytes": 295454,
+        "sha256": "7e58a4df28d566d57c9e5b681f5c471f4d113437527109e1f556121364621407"
+      },
+      "input_points": 29231,
+      "input_sha256": "4cf28b67e4cb720ae1d80fc3d6b727d83f332c02217c434f9ab01d8a201519ac",
+      "cuda_work": {
+        "cuda_activity_sum_ms": 49.403,
+        "cuda_activity_count": 1138,
+        "scope": "detector forward pipeline kernels/copies only; separate profiled pass"
+      },
+      "gpu_event_elapsed_ms": 63.56409454345703,
+      "camera_artifacts": {},
+      "wall_inference_ms": 63.62397399971087,
+      "warmup_excluded": true,
+      "boxes_above_threshold": 3
+    },
+    {
+      "index": 960,
+      "frame_id": 1023,
+      "timestamp": 53.448255815543234,
+      "input_lidar_sensor": "LIDAR_TOP_64",
+      "input_lidar_artifact": {
+        "path": "inputs/frame_00960/LIDAR_TOP_64.npz",
+        "bytes": 348951,
+        "sha256": "15b98edc980bca38801ee4d544e75542163613a3a38a9d576788940f07785db4"
+      },
+      "input_points": 29084,
+      "input_sha256": "bce890261268c0ec10cc062012cba1551fa700b53eeee02153b0cb1197eeaa8a",
+      "cuda_work": {
+        "cuda_activity_sum_ms": 46.332,
+        "cuda_activity_count": 1138,
+        "scope": "detector forward pipeline kernels/copies only; separate profiled pass"
+      },
+      "gpu_event_elapsed_ms": 60.087745666503906,
+      "camera_artifacts": {},
+      "wall_inference_ms": 60.13912599883042,
+      "warmup_excluded": true,
+      "boxes_above_threshold": 2
+    },
+    {
+      "index": 1020,
+      "frame_id": 1083,
+      "timestamp": 56.44825586024672,
+      "input_lidar_sensor": "LIDAR_TOP_64",
+      "input_lidar_artifact": {
+        "path": "inputs/frame_01020/LIDAR_TOP_64.npz",
+        "bytes": 337958,
+        "sha256": "aa122018858abe766efa0e36807ca072af7ee8d54f0944d6ec72f42ac906b45d"
+      },
+      "input_points": 28634,
+      "input_sha256": "768dd60a7b2a1eac3983a27b2c1904d945bddddd818f255be9c00e8953d72f7f",
+      "cuda_work": {
+        "cuda_activity_sum_ms": 48.47,
+        "cuda_activity_count": 1138,
+        "scope": "detector forward pipeline kernels/copies only; separate profiled pass"
+      },
+      "gpu_event_elapsed_ms": 62.28656005859375,
+      "camera_artifacts": {},
+      "wall_inference_ms": 62.333356001545326,
+      "warmup_excluded": true,
+      "boxes_above_threshold": 3
+    },
+    {
+      "index": 1080,
+      "frame_id": 1143,
+      "timestamp": 59.4482559049502,
+      "input_lidar_sensor": "LIDAR_TOP_64",
+      "input_lidar_artifact": {
+        "path": "inputs/frame_01080/LIDAR_TOP_64.npz",
+        "bytes": 389437,
+        "sha256": "11944fbfdbe47c03bf2cd04f668b7a561149edf4acd27b4c9bf125841926ffbc"
+      },
+      "input_points": 28955,
+      "input_sha256": "d2b9447b3a881674bb35abb6bc7ea542f6b4b437f72d27bc87f454b5bcbfc3d4",
+      "cuda_work": {
+        "cuda_activity_sum_ms": 52.008,
+        "cuda_activity_count": 1138,
+        "scope": "detector forward pipeline kernels/copies only; separate profiled pass"
+      },
+      "gpu_event_elapsed_ms": 65.86685180664062,
+      "camera_artifacts": {},
+      "wall_inference_ms": 65.91132100038521,
+      "warmup_excluded": true,
+      "boxes_above_threshold": 4
+    },
+    {
+      "index": 1140,
+      "frame_id": 1203,
+      "timestamp": 62.448255949653685,
+      "input_lidar_sensor": "LIDAR_TOP_64",
+      "input_lidar_artifact": {
+        "path": "inputs/frame_01140/LIDAR_TOP_64.npz",
+        "bytes": 328727,
+        "sha256": "529c37209530d8469e23b95059b954995ddc64460c9fe5428cbe65e00c386e18"
+      },
+      "input_points": 31172,
+      "input_sha256": "d9f1ca40f759a3e2778c13925068edf1e07f6c06226e0aca815f53241b025826",
+      "cuda_work": {
+        "cuda_activity_sum_ms": 50.411,
+        "cuda_activity_count": 1085,
+        "scope": "detector forward pipeline kernels/copies only; separate profiled pass"
+      },
+      "gpu_event_elapsed_ms": 63.62550354003906,
+      "camera_artifacts": {},
+      "wall_inference_ms": 63.69119699957082,
+      "warmup_excluded": true,
+      "boxes_above_threshold": 2
+    }
+  ],
+  "peak_allocated_bytes": 445113344,
+  "peak_reserved_bytes": 994050048,
+  "measured_perception_replay_ready": false,
+  "limitations": [
+    "No detection quality score: GT coverage/class mapping not validated",
+    "Single-sweep distribution differs from training; no fake padded history",
+    "CARLA intensity is not calibrated to nuScenes",
+    "CUDA event elapsed includes stream idle gaps/CPU dispatch; not total GPU work/window",
+    "Monitoring/profile switching/other tasks not timed; cannot claim agent GPU savings",
+    "Simulator stopped before inference to release VRAM; not closed-loop real-time performance"
+  ]
+}

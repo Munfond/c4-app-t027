@@ -13,6 +13,7 @@ venv/
 .venv-lab/
 .venv-inference/
 .venv-spatial/
+.venv-experiments
 Ultralytics/
 weights/
 *.pt
@@ -64,3 +65,9 @@ out/
 # AI logs — tracked structure, ignored content
 .ai-log/*.jsonl
 .ai-log/archive/
+
+# Isolated review runtime
+.venv-review/
+
+# Recovery runtimes stay local
+.venv-recovery*/

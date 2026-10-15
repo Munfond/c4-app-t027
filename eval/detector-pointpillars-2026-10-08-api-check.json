@@ -1,0 +1,39 @@
+{
+  "checked_at_utc": "2026-10-08T01:02:47.067917+00:00",
+  "checks": [
+    {
+      "url": "http://127.0.0.1:8000/health",
+      "status": 200,
+      "bytes": 35
+    },
+    {
+      "url": "http://127.0.0.1:3111/carla",
+      "status": 200,
+      "bytes": 17944
+    },
+    {
+      "url": "http://127.0.0.1:3111/api/v1/experiments/detector-pilot",
+      "status": 200,
+      "bytes": 10823,
+      "variants": 8,
+      "evidence_sha256": "83b712da279ad6998fa95994290fce1815f671e98ae1bfafb3e3ffdff6b1fba9"
+    },
+    {
+      "url": "http://127.0.0.1:3111/api/v1/experiments/detector-pilot/reviews",
+      "status": 200,
+      "bytes": 12,
+      "review_count": 0
+    },
+    {
+      "url": "http://127.0.0.1:3111/api/v1/experiments/detector-pilot/artifacts/gt-coverage-audit.json",
+      "status": 200,
+      "bytes": 64243
+    },
+    {
+      "url": "http://127.0.0.1:3111/api/v1/experiments/detector-pilot/artifacts/pilot-comparison-8.png",
+      "status": 200,
+      "bytes": 143135
+    }
+  ],
+  "ui_render_reviewed": false
+}

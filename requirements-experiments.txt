@@ -1,0 +1,4 @@
+# Separate worker environment; no facenet/YOLO/torchvision required by these U-Nets.
+-r requirements-web.txt
+torch>=2.2,<3
+# Dataset replay needs raw nuScenes-mini; no CARLA client/server is required.

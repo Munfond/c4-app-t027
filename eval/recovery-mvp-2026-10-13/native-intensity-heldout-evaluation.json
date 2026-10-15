@@ -1,0 +1,200 @@
+{
+  "kind": "heldout_same_map_input_adapter_diagnostic",
+  "preregistered_plan_sha256": "d25faf91ca674d464ca4a6590e1f6db71dcb1056d44b572c477ad3caf8e91188",
+  "checkpoint_sha256": "8d6c7155534906a50ca2f52b039696700072ff200768f0d91ead33c828e9f878",
+  "checkpoint_unchanged": true,
+  "runtime_adapter_enabled": false,
+  "native_rl_admitted": false,
+  "results": [
+    {
+      "route": 17,
+      "seed": 73,
+      "capture_id": "e337aa138cfd475389cf3322399702e1",
+      "raw_npz_sha256": {
+        "frame_0000.npz": "ba5e7fb0534f9c0ed74b272eaa04f0eff05ae250aa73ec09e3212f9750b6f62f",
+        "frame_0001.npz": "d500aa09a9ef30bb679cb2f1ae985bf060d6cc58bfb031249688f302a3301f1b",
+        "frame_0002.npz": "609525b63868b81747621048ebf0b1c875a998a74fa2dc858d1bffe319c8d4f3",
+        "frame_0003.npz": "a321259bbadb9adf33e1a0e8ae7002ab93176ff4238b382949f0a4713b1389e9"
+      },
+      "visible_actor_counts": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "results": {
+        "raw_input": {
+          "frame_count": 4,
+          "evaluated_cells": 12477,
+          "confusion": [
+            [
+              3818,
+              6071,
+              0
+            ],
+            [
+              352,
+              2092,
+              10
+            ],
+            [
+              2,
+              132,
+              0
+            ]
+          ],
+          "class_iou": {
+            "free": 0.37274236063653227,
+            "static": 0.24165415270879056,
+            "object": 0.0
+          },
+          "miou_supported_classes": 0.2047988377817743,
+          "occupied_iou": 0.25799745929091117,
+          "object_recall": 0.0,
+          "flow_epe_m_s": null,
+          "flow_valid_cells": 0,
+          "latency_model_only_ms": {
+            "p50": 79.9712574989826,
+            "p95": 81.69924725043529
+          },
+          "timed_frames": 4
+        },
+        "experimental_mean_alignment": {
+          "frame_count": 4,
+          "evaluated_cells": 12477,
+          "confusion": [
+            [
+              9801,
+              49,
+              39
+            ],
+            [
+              533,
+              1421,
+              500
+            ],
+            [
+              5,
+              15,
+              114
+            ]
+          ],
+          "class_iou": {
+            "free": 0.9399635561522969,
+            "static": 0.5643367752184273,
+            "object": 0.16939078751857356
+          },
+          "miou_supported_classes": 0.5578970396297659,
+          "occupied_iou": 0.7660687593423019,
+          "object_recall": 0.8507462686567164,
+          "flow_epe_m_s": null,
+          "flow_valid_cells": 0,
+          "latency_model_only_ms": {
+            "p50": 79.93116299985559,
+            "p95": 82.18107059838076
+          },
+          "timed_frames": 4
+        }
+      }
+    },
+    {
+      "route": 31,
+      "seed": 97,
+      "capture_id": "99330c0624564dc888fef6f9ef3adce1",
+      "raw_npz_sha256": {
+        "frame_0000.npz": "68434d399f76a14b817c3194677112f3067a0b7171266415be947eb25daa9592",
+        "frame_0001.npz": "96eed00f5fead52ef7b9a0bb1985369536b2068c65b7989f10db46f6b71f49fc",
+        "frame_0002.npz": "a89d2f078ef64ea4f46672ba775d0401d1bf52c1cebc5466bb82769417335a49",
+        "frame_0003.npz": "7db353654f7ec483b3883091396eefa2b4749a87a5168c32dd842dfd8fe11412"
+      },
+      "visible_actor_counts": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "results": {
+        "raw_input": {
+          "frame_count": 4,
+          "evaluated_cells": 9893,
+          "confusion": [
+            [
+              2276,
+              4722,
+              0
+            ],
+            [
+              363,
+              2379,
+              2
+            ],
+            [
+              12,
+              139,
+              0
+            ]
+          ],
+          "class_iou": {
+            "free": 0.30869388308693885,
+            "static": 0.3128205128205128,
+            "object": 0.0
+          },
+          "miou_supported_classes": 0.20717146530248387,
+          "occupied_iou": 0.33083891295785745,
+          "object_recall": 0.0,
+          "flow_epe_m_s": null,
+          "flow_valid_cells": 0,
+          "latency_model_only_ms": {
+            "p50": 80.69467099994654,
+            "p95": 81.0953463515034
+          },
+          "timed_frames": 4
+        },
+        "experimental_mean_alignment": {
+          "frame_count": 4,
+          "evaluated_cells": 9893,
+          "confusion": [
+            [
+              6784,
+              202,
+              12
+            ],
+            [
+              371,
+              2297,
+              76
+            ],
+            [
+              18,
+              0,
+              133
+            ]
+          ],
+          "class_iou": {
+            "free": 0.9183701096520915,
+            "static": 0.7797012898845893,
+            "object": 0.5564853556485355
+          },
+          "miou_supported_classes": 0.751518918395072,
+          "occupied_iou": 0.8060469604374397,
+          "object_recall": 0.8807947019867549,
+          "flow_epe_m_s": null,
+          "flow_valid_cells": 0,
+          "latency_model_only_ms": {
+            "p50": 79.71644700046454,
+            "p95": 80.6945425008962
+          },
+          "timed_frames": 4
+        }
+      }
+    }
+  ],
+  "limitations": [
+    "Pixel intensity gain is only a diagnostic approximation; CARLA distance attenuation is not measured material reflectance",
+    "No hyperparameter search on heldout outputs",
+    "Same map only; no claim of real-world or other-map generalization",
+    "Only8frames, two routes of sameTown01",
+    "No runtime promotion or native PPO training from this diagnostic",
+    "Model p95 excludes preprocessing/simulator/IO"
+  ]
+}

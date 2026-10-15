@@ -1,0 +1,84 @@
+{
+  "fresh_restore": true,
+  "mode": "production_read_only",
+  "files_installed": 226,
+  "triplets": [
+    {
+      "run": "full20-retry1",
+      "index": 0,
+      "task": "prediction",
+      "status": 200
+    },
+    {
+      "run": "full20-retry1",
+      "index": 0,
+      "task": "reference",
+      "status": 200
+    },
+    {
+      "run": "full20-retry1",
+      "index": 0,
+      "task": "camera",
+      "status": 200
+    },
+    {
+      "run": "full20-retry1",
+      "index": 19,
+      "task": "prediction",
+      "status": 200
+    },
+    {
+      "run": "full20-retry1",
+      "index": 19,
+      "task": "reference",
+      "status": 200
+    },
+    {
+      "run": "full20-retry1",
+      "index": 19,
+      "task": "camera",
+      "status": 200
+    },
+    {
+      "run": "ppo20",
+      "index": 0,
+      "task": "prediction",
+      "status": 200
+    },
+    {
+      "run": "ppo20",
+      "index": 0,
+      "task": "reference",
+      "status": 200
+    },
+    {
+      "run": "ppo20",
+      "index": 0,
+      "task": "camera",
+      "status": 200
+    },
+    {
+      "run": "ppo20",
+      "index": 19,
+      "task": "prediction",
+      "status": 200
+    },
+    {
+      "run": "ppo20",
+      "index": 19,
+      "task": "reference",
+      "status": 200
+    },
+    {
+      "run": "ppo20",
+      "index": 19,
+      "task": "camera",
+      "status": 200
+    }
+  ],
+  "native_ppo_ready": true,
+  "interactive_post_status": 503,
+  "torch_loaded": false,
+  "carla_loaded": false,
+  "llm_called": false
+}

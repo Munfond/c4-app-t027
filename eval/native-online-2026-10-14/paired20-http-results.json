@@ -1,0 +1,285 @@
+{
+  "checked_pairs": 40,
+  "results": [
+    {
+      "run": "full20-retry1",
+      "frame": 0,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "run": "full20-retry1",
+      "frame": 1,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "run": "full20-retry1",
+      "frame": 2,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "run": "full20-retry1",
+      "frame": 3,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "run": "full20-retry1",
+      "frame": 4,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "run": "full20-retry1",
+      "frame": 5,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "run": "full20-retry1",
+      "frame": 6,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "run": "full20-retry1",
+      "frame": 7,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "run": "full20-retry1",
+      "frame": 8,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "run": "full20-retry1",
+      "frame": 9,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "run": "full20-retry1",
+      "frame": 10,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "run": "full20-retry1",
+      "frame": 11,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "run": "full20-retry1",
+      "frame": 12,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "run": "full20-retry1",
+      "frame": 13,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "run": "full20-retry1",
+      "frame": 14,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "run": "full20-retry1",
+      "frame": 15,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "run": "full20-retry1",
+      "frame": 16,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "run": "full20-retry1",
+      "frame": 17,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "run": "full20-retry1",
+      "frame": 18,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "run": "full20-retry1",
+      "frame": 19,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "run": "ppo20",
+      "frame": 0,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "run": "ppo20",
+      "frame": 1,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "run": "ppo20",
+      "frame": 2,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "run": "ppo20",
+      "frame": 3,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "run": "ppo20",
+      "frame": 4,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "run": "ppo20",
+      "frame": 5,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "run": "ppo20",
+      "frame": 6,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "run": "ppo20",
+      "frame": 7,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "run": "ppo20",
+      "frame": 8,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "run": "ppo20",
+      "frame": 9,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "run": "ppo20",
+      "frame": 10,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "run": "ppo20",
+      "frame": 11,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "run": "ppo20",
+      "frame": 12,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "run": "ppo20",
+      "frame": 13,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "run": "ppo20",
+      "frame": 14,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "run": "ppo20",
+      "frame": 15,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "run": "ppo20",
+      "frame": 16,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "run": "ppo20",
+      "frame": 17,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "run": "ppo20",
+      "frame": 18,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    },
+    {
+      "run": "ppo20",
+      "frame": 19,
+      "camera_decoded": true,
+      "prediction_cells": 40000,
+      "reference_cells": 40000
+    }
+  ]
+}

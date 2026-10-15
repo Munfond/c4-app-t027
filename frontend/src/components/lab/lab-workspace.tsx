@@ -42,6 +42,7 @@ export function LabWorkspace() {
   const [sensorView, setSensorView] = useState<"points" | "camera">("points");
   const [showLidar, setShowLidar] = useState(true);
   const [showRadar, setShowRadar] = useState(true);
+  const [segmentLidar, setSegmentLidar] = useState(false);
   const [taskStatus, setTaskStatus] = useState<TaskStatus[]>([]);
   const [playing, setPlaying] = useState(false);
   const [speed, setSpeed] = useState<PlaybackSpeed>(1);
@@ -133,8 +134,13 @@ export function LabWorkspace() {
 
   useEffect(() => {
     const pauseWhenHidden = () => { if (document.hidden) setPlaying(false); };
+    const pauseForExperiment = () => setPlaying(false);
     document.addEventListener("visibilitychange", pauseWhenHidden);
-    return () => document.removeEventListener("visibilitychange", pauseWhenHidden);
+    window.addEventListener("p027-pause-lab", pauseForExperiment);
+    return () => {
+      document.removeEventListener("visibilitychange", pauseWhenHidden);
+      window.removeEventListener("p027-pause-lab", pauseForExperiment);
+    };
   }, []);
 
   useEffect(() => {
@@ -151,12 +157,13 @@ export function LabWorkspace() {
       void detectionFrames.get(key, () => apiJson<DetectionFrame>(detectionUrl(next, model, threshold))).catch(() => {});
       if (spatialMode === "3d") void loadEnvironmentFrame(next).catch(() => {});
     } else if (workspace === "sensors" && sensorView === "points") {
-      void loadEnvironmentFrame(next).catch(() => {});
+      if (segmentLidar) void loadPerception(next, "seg3d").catch(() => {});
+      else void loadEnvironmentFrame(next).catch(() => {});
       void loadPerception(next, "radar").catch(() => {});
     } else if (workspace === "results" && task !== "detection") {
       void loadPerception(next, task).catch(() => {});
     }
-  }, [readyForPlayback, upcomingFrame, detectionActive, workspace, sensorView, task, model, threshold, refresh, spatialMode]);
+  }, [readyForPlayback, upcomingFrame, detectionActive, workspace, sensorView, segmentLidar, task, model, threshold, refresh, spatialMode]);
 
   const seek = (index: number) => {
     const selected = frames[index];
@@ -232,11 +239,7 @@ export function LabWorkspace() {
                 {[0.3, 0.5, 0.7].map(value => <button key={value} type="button" aria-pressed={threshold === value} onClick={() => { setPlaying(false); setThreshold(value); }}>{value.toFixed(2)}</button>)}
               </div></fieldset>
             </> : <p className="task-availability">{availability ? `${availability.frame_count}/${availability.total_frames} frame có đầu ra ${TASKS.find(item => item.id === task)?.label.split(" · ")[0]}.` : "Đang kiểm tra đầu ra theo frame…"}</p>}
-          </> : workspace === "sensors" ? <fieldset className="sensor-layer-controls"><legend>Lớp điểm hiển thị</legend>
-            <label><input type="checkbox" checked={showLidar} onChange={event => setShowLidar(event.target.checked)} /><i style={{ background: "#8dc7c4" }} />LiDAR</label>
-            <label><input type="checkbox" checked={showRadar} onChange={event => setShowRadar(event.target.checked)} /><i style={{ background: "#ffbb72" }} />Radar</label>
-            <p>Ẩn lớp chỉ thay đổi hiển thị, không chạy lại mô hình với cảm biến khác.</p>
-          </fieldset> : <p className="task-availability">Risk dùng nguồn Classical LiDAR hoặc Oracle tham chiếu; độc lập với mô hình Detection đang chọn.</p>}
+          </> : workspace === "sensors" ? <p className="task-availability">{sensorView === "points" ? "Bật/tắt LiDAR và Radar ngay trên khung điểm. Chọn Phân đoạn để tô màu LiDAR theo lớp ngữ nghĩa." : "Camera 360° cùng frame với LiDAR và Radar."}</p> : <p className="task-availability">Risk dùng nguồn Classical LiDAR hoặc Oracle tham chiếu; độc lập với mô hình Detection đang chọn.</p>}
         </div>
         {detectionActive ? <dl className="inspector-measures">
           <div><dt>Vật cản hiển thị</dt><dd>{viewerFrame ? viewerFrame.detections.length : "—"}</dd></div>
@@ -250,7 +253,7 @@ export function LabWorkspace() {
       </aside>
       <section aria-label="Quan sát và kết quả đồng bộ" className="lab-stage">
         <div className="stage-toolbar">
-          <div className="stage-context"><i aria-hidden="true" /><strong>{scene || "Đang tải"}</strong><span>/</span><span>{currentToken ? `FRAME ${String(activeFrame!.sample_idx).padStart(3, "0")}` : "—"}</span></div>
+          <div className="stage-context"><i aria-hidden="true" /><strong>{scene || "Đang tải"}</strong><span>/</span><span title={activeFrame ? `Mã frame trong dataset: #${activeFrame.sample_idx}` : undefined}>{currentToken ? `FRAME ${String(currentIndex + 1).padStart(2, "0")} / ${frames.length}` : "—"}</span></div>
           <div className="stage-tools">
             {workspace === "sensors" ? <div className="view-switch" role="group" aria-label="Dữ liệu cảm biến">
               <button type="button" aria-pressed={sensorView === "points"} onClick={() => { setPlaying(false); setSpatialReadyToken(null); setSensorView("points"); }}>LiDAR + Radar</button>
@@ -269,7 +272,7 @@ export function LabWorkspace() {
         </Select></div> : null}
         <div className="stage-canvas" data-content={workspace === "sensors" && sensorView === "camera" ? "camera" : workspace === "risk" ? "risk" : "spatial"}>
           {!currentToken ? <div role="status" className="stage-message">{error || "Đang tải danh sách frame…"}</div>
-            : workspace === "sensors" ? sensorView === "camera" ? <CameraPanel sampleToken={currentToken} onFrameReady={setSpatialReadyToken} /> : <SensorWorkspace key={refresh} token={currentToken} lidar={showLidar} radar={showRadar} onReady={setSpatialReadyToken} />
+            : workspace === "sensors" ? sensorView === "camera" ? <CameraPanel sampleToken={currentToken} onFrameReady={setSpatialReadyToken} /> : <SensorWorkspace key={refresh} token={currentToken} lidar={showLidar} radar={showRadar} segmented={segmentLidar} onLidarChange={setShowLidar} onRadarChange={setShowRadar} onSegmentChange={value => { setPlaying(false); setSpatialReadyToken(null); setSegmentLidar(value); }} onReady={setSpatialReadyToken} onError={stopOnSpatialError} />
             : workspace === "risk" ? <RiskHeatmap sampleToken={currentToken} onFrameReady={setSpatialReadyToken} onFrameError={stopOnSpatialError} />
             : task !== "detection" ? <PerceptionWorkspace key={refresh} token={currentToken} task={task} unavailable={availability?.frame_count === 0} onReady={setSpatialReadyToken} onError={stopOnSpatialError} />
             : spatialMode === "3d" ? <SpatialViewer key={refresh} frame={viewerFrame} sampleToken={currentToken} nextToken={upcomingFrame?.sample_token} requestError={error || null} onFrameReady={setSpatialReadyToken} onFrameError={stopOnSpatialError} />

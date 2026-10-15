@@ -1,0 +1,17 @@
+{
+  "kind": "rebuildable_installer_cache_cleanup",
+  "installed_sdk_preserved": true,
+  "raw_data_and_checkpoints_preserved": true,
+  "files": [
+    {
+      "path": "data/runtime/downloads/cuda-nvcc-12.1.105-0.tar.bz2",
+      "bytes": 54927996,
+      "sha256": "bb8176dd6595206ac393c03a54d10643bdfa2101af8285f3e48caa73be0ef4d7"
+    },
+    {
+      "path": "data/runtime/downloads/libcusparse-dev-12.1.0.106-0.tar.bz2",
+      "bytes": 177887991,
+      "sha256": "da7b401d9e95a73006dc28afdab5985ab14d948eacbdc826fbc6af7cf2fd0d0d"
+    }
+  ]
+}

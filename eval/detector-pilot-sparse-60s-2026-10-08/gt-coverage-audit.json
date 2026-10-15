@@ -1,0 +1,53 @@
+{
+  "kind": "full_minute_GT_observability_diagnostic",
+  "frames": 1200,
+  "source_manifest_sha256": "599e7e41d05bc119e28cf764a4690f683ed0ac93133f7a07601218bda8d0e645",
+  "source_audit_path": "data/active-sensing/gt-coverage-60s-20261008.json",
+  "source_audit_sha256": "72667f2e57669854da3bbcbc8dc0457e90b65aa604e985ddac1f3c5b0908bc3e",
+  "scopes": {
+    "all_engine_actor_boxes": {
+      "reference_visible_target_frame_instances": 5299,
+      "input_zero_return_instances": {
+        "LIDAR_TOP": 1161,
+        "LIDAR_TOP_keep_50": 1374,
+        "LIDAR_TOP_64": 285,
+        "LIDAR_TOP_64_keep_50": 625
+      }
+    },
+    "radius_54m": {
+      "reference_visible_target_frame_instances": 3484,
+      "input_zero_return_instances": {
+        "LIDAR_TOP": 103,
+        "LIDAR_TOP_keep_50": 150,
+        "LIDAR_TOP_64": 8,
+        "LIDAR_TOP_64_keep_50": 23
+      }
+    },
+    "proposed_braking_roi": {
+      "reference_visible_target_frame_instances": 69,
+      "input_zero_return_instances": {
+        "LIDAR_TOP": 0,
+        "LIDAR_TOP_keep_50": 0,
+        "LIDAR_TOP_64": 0,
+        "LIDAR_TOP_64_keep_50": 0
+      }
+    }
+  },
+  "max_ego_speed_mps": 8.480580725179246,
+  "proposed_roi_formula": "max(5m, v*0.5s + v^2/(2*4m/s^2)); draft, not validated braking guarantee",
+  "unannotated_semantic_target_ids": [],
+  "actor_annotation_scope": "world_vehicle_walker_actors",
+  "evaluator_only": true,
+  "actor_feature": false,
+  "scene_precision_ready": false,
+  "usable_for_rl_reward": false,
+  "limitations": [
+    "Correlated engine target/frame counts, not independent object count or detection recall",
+    "A box containing input returns does not prove model detectability or correct semantic label",
+    "Independent semantic64 reference visibility differs from selected-sensor observability",
+    "Static/parked mesh mapping and ontology remain unvalidated; no events or sim-to-real guarantee"
+  ],
+  "capture_manifest_sha256": "599e7e41d05bc119e28cf764a4690f683ed0ac93133f7a07601218bda8d0e645",
+  "reference_visible_instances_without_32_box_returns": 1161,
+  "reference_visible_instances_without_64_box_returns": 285
+}

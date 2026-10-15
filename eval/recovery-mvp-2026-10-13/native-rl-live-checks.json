@@ -1,0 +1,33 @@
+{
+  "checked_utc": "2026-10-13T12:37:22.272783+00:00",
+  "frontend_release": "2KCsFJNP462_mO0_t1mPL",
+  "checks": [
+    {
+      "url": "http://127.0.0.1:8000/health",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:3111/lab",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8000/api/v1/experiments/native-rl",
+      "status": 200,
+      "ready": true
+    },
+    {
+      "url": "http://127.0.0.1:3111/api/v1/experiments/native-rl",
+      "status": 200,
+      "ready": true
+    },
+    {
+      "url": "http://127.0.0.1:3111/api/v1/experiments/native-rl/report",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:3111/api/v1/experiments/occupancy-rl",
+      "status": 200
+    }
+  ],
+  "browser_render_qa": false
+}

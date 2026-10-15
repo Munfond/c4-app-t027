@@ -1,0 +1,44 @@
+[
+  {
+    "path": "/api/v1/lab/models",
+    "status": 200,
+    "keys": [
+      "items",
+      "limitations"
+    ]
+  },
+  {
+    "path": "/api/v1/lab/scenes",
+    "status": 200,
+    "keys": [
+      "items"
+    ]
+  },
+  {
+    "path": "/api/v1/lab/capabilities",
+    "status": 200,
+    "keys": [
+      "schema_version",
+      "frame_catalog",
+      "raw_metadata_present",
+      "anonymizer_enabled",
+      "plate_weights_present",
+      "camera_cache_present",
+      "camera_policy",
+      "live_inference",
+      "matlab_live",
+      "models",
+      "coordinates"
+    ]
+  },
+  {
+    "path": "/api/v1/lab/benchmarks",
+    "status": 200,
+    "keys": [
+      "split",
+      "frame_count",
+      "sections",
+      "limitations"
+    ]
+  }
+]

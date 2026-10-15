@@ -1,0 +1,1048 @@
+{
+  "source": "carla",
+  "server_version": "0.9.16",
+  "pedestrian_seed_supported": true,
+  "route_evidence": {
+    "policy": "autopilot spawn-index route",
+    "original_spawn_index": 0,
+    "traffic_placement": "nearest_spawn"
+  },
+  "ego_actor_id": 197,
+  "realized_vehicles": 8,
+  "realized_pedestrians": 0,
+  "lane_change_requests": [],
+  "observed_lane_changes": [],
+  "schema_version": 1,
+  "kind": "carla_raw_sensor_episode",
+  "status": "complete",
+  "rig_options": {
+    "width": 640,
+    "height": 360,
+    "fov": 100,
+    "include_64": true,
+    "traffic_placement": "nearest_spawn"
+  },
+  "frames": [
+    {
+      "id": "frame_00000",
+      "frame_id": 64,
+      "timestamp": 6.339498344808817,
+      "metadata": {
+        "path": "frame_00000.json",
+        "bytes": 41157,
+        "sha256": "7d72aa001a96f4093f557446c6b2106ee67961818773e5af9e0589dc6c4eb480"
+      },
+      "visible_actor_count": 8
+    },
+    {
+      "id": "frame_00001",
+      "frame_id": 65,
+      "timestamp": 6.389498345553875,
+      "metadata": {
+        "path": "frame_00001.json",
+        "bytes": 40965,
+        "sha256": "bfeb6ceb611638a04f19572442ea33edac1a86922e204b00de1f8382c8c1cc08"
+      },
+      "visible_actor_count": 8
+    },
+    {
+      "id": "frame_00002",
+      "frame_id": 66,
+      "timestamp": 6.439498346298933,
+      "metadata": {
+        "path": "frame_00002.json",
+        "bytes": 41298,
+        "sha256": "7d405d27f47d2bcbf3a7b90e8fbddc13da285640154cd20552bb5cec85b2dc77"
+      },
+      "visible_actor_count": 8
+    },
+    {
+      "id": "frame_00003",
+      "frame_id": 67,
+      "timestamp": 6.489498347043991,
+      "metadata": {
+        "path": "frame_00003.json",
+        "bytes": 41207,
+        "sha256": "ae2244778cac2fb3448a2e222fd04278437bc57626daa16a503266ebf3f5b380"
+      },
+      "visible_actor_count": 8
+    },
+    {
+      "id": "frame_00004",
+      "frame_id": 68,
+      "timestamp": 6.539498347789049,
+      "metadata": {
+        "path": "frame_00004.json",
+        "bytes": 41253,
+        "sha256": "581a6068bd501cefae4462e325d71f2a0a675e4b561f93cdce4ce97f8be754d8"
+      },
+      "visible_actor_count": 8
+    },
+    {
+      "id": "frame_00005",
+      "frame_id": 69,
+      "timestamp": 6.589498348534107,
+      "metadata": {
+        "path": "frame_00005.json",
+        "bytes": 41054,
+        "sha256": "1c85709a1237f6c6d32eb5e3266661d053af96105d5227c74f91f1f0cdcffe37"
+      },
+      "visible_actor_count": 8
+    },
+    {
+      "id": "frame_00006",
+      "frame_id": 70,
+      "timestamp": 6.639498349279165,
+      "metadata": {
+        "path": "frame_00006.json",
+        "bytes": 40992,
+        "sha256": "334efd09c1be76fdf988221af36ca5f636015d3f4660cce143637c4feda9d673"
+      },
+      "visible_actor_count": 8
+    },
+    {
+      "id": "frame_00007",
+      "frame_id": 71,
+      "timestamp": 6.689498350024223,
+      "metadata": {
+        "path": "frame_00007.json",
+        "bytes": 41145,
+        "sha256": "0223524187e09a4a2e4e79a51fae7d871e1b25e92bb4568e9e6cfe0ced98079e"
+      },
+      "visible_actor_count": 8
+    },
+    {
+      "id": "frame_00008",
+      "frame_id": 72,
+      "timestamp": 6.739498350769281,
+      "metadata": {
+        "path": "frame_00008.json",
+        "bytes": 40974,
+        "sha256": "64aef0a4c13f2a9d25bb3e4cf4bab0eade907e07be33be9b82d5c76e070502f7"
+      },
+      "visible_actor_count": 8
+    },
+    {
+      "id": "frame_00009",
+      "frame_id": 73,
+      "timestamp": 6.7894983515143394,
+      "metadata": {
+        "path": "frame_00009.json",
+        "bytes": 40946,
+        "sha256": "b34df5ce4e61b390747e504b8fca7f4b303b8d67a2496144fd9392ba5eb58c27"
+      },
+      "visible_actor_count": 8
+    },
+    {
+      "id": "frame_00010",
+      "frame_id": 74,
+      "timestamp": 6.8394983522593975,
+      "metadata": {
+        "path": "frame_00010.json",
+        "bytes": 41103,
+        "sha256": "a9870594ebed16bf6ccf27e47db7b2cf6273a13eb8646e7f9bc3f54e9a36323c"
+      },
+      "visible_actor_count": 8
+    },
+    {
+      "id": "frame_00011",
+      "frame_id": 75,
+      "timestamp": 6.889498353004456,
+      "metadata": {
+        "path": "frame_00011.json",
+        "bytes": 41198,
+        "sha256": "6edf4c5d6d0ea67c1812244e0810aa5fcbfb5f9498b63486c666c80d0da68597"
+      },
+      "visible_actor_count": 8
+    },
+    {
+      "id": "frame_00012",
+      "frame_id": 76,
+      "timestamp": 6.939498353749514,
+      "metadata": {
+        "path": "frame_00012.json",
+        "bytes": 41155,
+        "sha256": "3e459318f1a814dc10ad32382efa656b01609bfce21fdafce5d2df0ed76b0aeb"
+      },
+      "visible_actor_count": 8
+    },
+    {
+      "id": "frame_00013",
+      "frame_id": 77,
+      "timestamp": 6.989498354494572,
+      "metadata": {
+        "path": "frame_00013.json",
+        "bytes": 41020,
+        "sha256": "83ab5586ff871ba028a0abdfe3662a851aa7a207bdd981e9989a4847e121b5ff"
+      },
+      "visible_actor_count": 8
+    },
+    {
+      "id": "frame_00014",
+      "frame_id": 78,
+      "timestamp": 7.03949835523963,
+      "metadata": {
+        "path": "frame_00014.json",
+        "bytes": 41136,
+        "sha256": "f7790844977214c8bdd934a71ad1071bb5ed56bc1b463fbddd84ad6a6e109296"
+      },
+      "visible_actor_count": 8
+    },
+    {
+      "id": "frame_00015",
+      "frame_id": 79,
+      "timestamp": 7.089498355984688,
+      "metadata": {
+        "path": "frame_00015.json",
+        "bytes": 41067,
+        "sha256": "341ffe46fada83932e8ddcfd93ddec46e0f9aa823906c5ebe2228ddf6ca36d7d"
+      },
+      "visible_actor_count": 8
+    },
+    {
+      "id": "frame_00016",
+      "frame_id": 80,
+      "timestamp": 7.139498356729746,
+      "metadata": {
+        "path": "frame_00016.json",
+        "bytes": 41127,
+        "sha256": "c068d906ae641556e79aac768bff72b4f060cd73f620315761e5f813146bc62e"
+      },
+      "visible_actor_count": 8
+    },
+    {
+      "id": "frame_00017",
+      "frame_id": 81,
+      "timestamp": 7.189498357474804,
+      "metadata": {
+        "path": "frame_00017.json",
+        "bytes": 41260,
+        "sha256": "2ba2683978845fbbb46709d57497bed8b9dd2bbabd1f2d7cfe82ceaa9eb2514f"
+      },
+      "visible_actor_count": 8
+    },
+    {
+      "id": "frame_00018",
+      "frame_id": 82,
+      "timestamp": 7.239498358219862,
+      "metadata": {
+        "path": "frame_00018.json",
+        "bytes": 41226,
+        "sha256": "bb8d5abe06dd74cd7036c4e7a4ac3468b8e6f96f972bae92eada4ddfa9f12002"
+      },
+      "visible_actor_count": 8
+    },
+    {
+      "id": "frame_00019",
+      "frame_id": 83,
+      "timestamp": 7.28949835896492,
+      "metadata": {
+        "path": "frame_00019.json",
+        "bytes": 41149,
+        "sha256": "c1ba7aa1d9a0c5235fa2d8c04266dd6c0634d4ecea6d531ccbd249c1761101e8"
+      },
+      "visible_actor_count": 8
+    }
+  ],
+  "scenario": {
+    "map": "Town01",
+    "weather": "clear",
+    "vehicles": 8,
+    "pedestrians": 0,
+    "seed": 7,
+    "frames": 20,
+    "capture_interval": 0.05,
+    "timestep": 0.05,
+    "route_spawn_index": 0,
+    "route_kind": "spawn",
+    "lane_change_interval_seconds": null,
+    "lidar": {
+      "channels": 32,
+      "points_per_second": 600000,
+      "range_m": 100,
+      "upper_fov": 10,
+      "lower_fov": -30,
+      "mount_z": 2,
+      "pitch": 0
+    }
+  },
+  "sensor_specs": {
+    "CAM_FRONT": [
+      "sensor.camera.rgb",
+      {
+        "image_size_x": "640",
+        "image_size_y": "360",
+        "fov": "100"
+      }
+    ],
+    "GT_CAM_FRONT": [
+      "sensor.camera.semantic_segmentation",
+      {
+        "image_size_x": "640",
+        "image_size_y": "360",
+        "fov": "100"
+      }
+    ],
+    "CAM_FRONT_LEFT": [
+      "sensor.camera.rgb",
+      {
+        "image_size_x": "640",
+        "image_size_y": "360",
+        "fov": "100"
+      }
+    ],
+    "GT_CAM_FRONT_LEFT": [
+      "sensor.camera.semantic_segmentation",
+      {
+        "image_size_x": "640",
+        "image_size_y": "360",
+        "fov": "100"
+      }
+    ],
+    "CAM_FRONT_RIGHT": [
+      "sensor.camera.rgb",
+      {
+        "image_size_x": "640",
+        "image_size_y": "360",
+        "fov": "100"
+      }
+    ],
+    "GT_CAM_FRONT_RIGHT": [
+      "sensor.camera.semantic_segmentation",
+      {
+        "image_size_x": "640",
+        "image_size_y": "360",
+        "fov": "100"
+      }
+    ],
+    "CAM_BACK": [
+      "sensor.camera.rgb",
+      {
+        "image_size_x": "640",
+        "image_size_y": "360",
+        "fov": "100"
+      }
+    ],
+    "GT_CAM_BACK": [
+      "sensor.camera.semantic_segmentation",
+      {
+        "image_size_x": "640",
+        "image_size_y": "360",
+        "fov": "100"
+      }
+    ],
+    "CAM_BACK_LEFT": [
+      "sensor.camera.rgb",
+      {
+        "image_size_x": "640",
+        "image_size_y": "360",
+        "fov": "100"
+      }
+    ],
+    "GT_CAM_BACK_LEFT": [
+      "sensor.camera.semantic_segmentation",
+      {
+        "image_size_x": "640",
+        "image_size_y": "360",
+        "fov": "100"
+      }
+    ],
+    "CAM_BACK_RIGHT": [
+      "sensor.camera.rgb",
+      {
+        "image_size_x": "640",
+        "image_size_y": "360",
+        "fov": "100"
+      }
+    ],
+    "GT_CAM_BACK_RIGHT": [
+      "sensor.camera.semantic_segmentation",
+      {
+        "image_size_x": "640",
+        "image_size_y": "360",
+        "fov": "100"
+      }
+    ],
+    "RADAR_FRONT": [
+      "sensor.other.radar",
+      {
+        "range": "100",
+        "horizontal_fov": "90",
+        "vertical_fov": "30",
+        "points_per_second": "1500"
+      }
+    ],
+    "RADAR_FRONT_LEFT": [
+      "sensor.other.radar",
+      {
+        "range": "100",
+        "horizontal_fov": "90",
+        "vertical_fov": "30",
+        "points_per_second": "1500"
+      }
+    ],
+    "RADAR_FRONT_RIGHT": [
+      "sensor.other.radar",
+      {
+        "range": "100",
+        "horizontal_fov": "90",
+        "vertical_fov": "30",
+        "points_per_second": "1500"
+      }
+    ],
+    "RADAR_BACK_LEFT": [
+      "sensor.other.radar",
+      {
+        "range": "100",
+        "horizontal_fov": "90",
+        "vertical_fov": "30",
+        "points_per_second": "1500"
+      }
+    ],
+    "RADAR_BACK_RIGHT": [
+      "sensor.other.radar",
+      {
+        "range": "100",
+        "horizontal_fov": "90",
+        "vertical_fov": "30",
+        "points_per_second": "1500"
+      }
+    ],
+    "LIDAR_TOP": [
+      "sensor.lidar.ray_cast",
+      {
+        "range": "100",
+        "channels": "32",
+        "points_per_second": "600000",
+        "rotation_frequency": "20.0",
+        "upper_fov": "10",
+        "lower_fov": "-30"
+      }
+    ],
+    "GT_LIDAR": [
+      "sensor.lidar.ray_cast_semantic",
+      {
+        "range": "100",
+        "channels": "64",
+        "points_per_second": "1200000",
+        "rotation_frequency": "20.0",
+        "upper_fov": "10",
+        "lower_fov": "-30"
+      }
+    ],
+    "LIDAR_TOP_64": [
+      "sensor.lidar.ray_cast",
+      {
+        "range": "100",
+        "channels": "64",
+        "points_per_second": "1200000",
+        "rotation_frequency": "20.0",
+        "upper_fov": "10",
+        "lower_fov": "-30"
+      }
+    ]
+  },
+  "sensor_poses_carla": {
+    "CAM_FRONT": [
+      1.5,
+      0,
+      1.7,
+      0
+    ],
+    "GT_CAM_FRONT": [
+      1.5,
+      0,
+      1.7,
+      0
+    ],
+    "CAM_FRONT_LEFT": [
+      1,
+      -0.7,
+      1.7,
+      -55
+    ],
+    "GT_CAM_FRONT_LEFT": [
+      1,
+      -0.7,
+      1.7,
+      -55
+    ],
+    "CAM_FRONT_RIGHT": [
+      1,
+      0.7,
+      1.7,
+      55
+    ],
+    "GT_CAM_FRONT_RIGHT": [
+      1,
+      0.7,
+      1.7,
+      55
+    ],
+    "CAM_BACK": [
+      -1.2,
+      0,
+      1.7,
+      180
+    ],
+    "GT_CAM_BACK": [
+      -1.2,
+      0,
+      1.7,
+      180
+    ],
+    "CAM_BACK_LEFT": [
+      -1,
+      -0.7,
+      1.7,
+      -125
+    ],
+    "GT_CAM_BACK_LEFT": [
+      -1,
+      -0.7,
+      1.7,
+      -125
+    ],
+    "CAM_BACK_RIGHT": [
+      -1,
+      0.7,
+      1.7,
+      125
+    ],
+    "GT_CAM_BACK_RIGHT": [
+      -1,
+      0.7,
+      1.7,
+      125
+    ],
+    "RADAR_FRONT": [
+      2,
+      0,
+      0.7,
+      0
+    ],
+    "RADAR_FRONT_LEFT": [
+      1.7,
+      -0.7,
+      0.7,
+      -45
+    ],
+    "RADAR_FRONT_RIGHT": [
+      1.7,
+      0.7,
+      0.7,
+      45
+    ],
+    "RADAR_BACK_LEFT": [
+      -1.7,
+      -0.7,
+      0.7,
+      -135
+    ],
+    "RADAR_BACK_RIGHT": [
+      -1.7,
+      0.7,
+      0.7,
+      135
+    ],
+    "LIDAR_TOP": [
+      0,
+      0,
+      2,
+      0
+    ],
+    "GT_LIDAR": [
+      0,
+      0,
+      2,
+      0
+    ],
+    "LIDAR_TOP_64": [
+      0,
+      0,
+      2,
+      0
+    ]
+  },
+  "sensor_element_counts": {
+    "CAM_FRONT": [
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400
+    ],
+    "GT_CAM_FRONT": [
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400
+    ],
+    "CAM_FRONT_LEFT": [
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400
+    ],
+    "GT_CAM_FRONT_LEFT": [
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400
+    ],
+    "CAM_FRONT_RIGHT": [
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400
+    ],
+    "GT_CAM_FRONT_RIGHT": [
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400
+    ],
+    "CAM_BACK": [
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400
+    ],
+    "GT_CAM_BACK": [
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400
+    ],
+    "CAM_BACK_LEFT": [
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400
+    ],
+    "GT_CAM_BACK_LEFT": [
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400
+    ],
+    "CAM_BACK_RIGHT": [
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400
+    ],
+    "GT_CAM_BACK_RIGHT": [
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400,
+      230400
+    ],
+    "RADAR_FRONT": [
+      52,
+      55,
+      61,
+      54,
+      57,
+      60,
+      56,
+      53,
+      57,
+      59,
+      51,
+      59,
+      58,
+      51,
+      55,
+      56,
+      51,
+      55,
+      57,
+      55
+    ],
+    "RADAR_FRONT_LEFT": [
+      75,
+      75,
+      75,
+      75,
+      75,
+      75,
+      75,
+      75,
+      75,
+      75,
+      75,
+      75,
+      75,
+      75,
+      75,
+      75,
+      75,
+      75,
+      75,
+      75
+    ],
+    "RADAR_FRONT_RIGHT": [
+      75,
+      75,
+      75,
+      75,
+      75,
+      75,
+      75,
+      75,
+      75,
+      75,
+      75,
+      75,
+      75,
+      75,
+      75,
+      75,
+      75,
+      75,
+      75,
+      75
+    ],
+    "RADAR_BACK_LEFT": [
+      75,
+      74,
+      73,
+      73,
+      74,
+      75,
+      74,
+      75,
+      75,
+      75,
+      74,
+      74,
+      74,
+      75,
+      75,
+      75,
+      74,
+      73,
+      75,
+      73
+    ],
+    "RADAR_BACK_RIGHT": [
+      68,
+      69,
+      71,
+      73,
+      65,
+      73,
+      68,
+      68,
+      71,
+      69,
+      72,
+      70,
+      70,
+      68,
+      68,
+      69,
+      65,
+      69,
+      68,
+      70
+    ],
+    "LIDAR_TOP": [
+      15358,
+      15478,
+      15231,
+      15175,
+      15244,
+      15205,
+      15230,
+      15344,
+      15391,
+      15190,
+      15291,
+      15260,
+      15391,
+      15260,
+      15146,
+      15181,
+      15192,
+      15129,
+      15261,
+      15136
+    ],
+    "GT_LIDAR": [
+      55762,
+      55732,
+      55680,
+      55692,
+      55709,
+      55709,
+      55714,
+      55729,
+      55693,
+      55666,
+      55669,
+      55662,
+      55646,
+      55622,
+      55597,
+      55589,
+      55535,
+      55548,
+      55556,
+      55538
+    ],
+    "LIDAR_TOP_64": [
+      30687,
+      30721,
+      30466,
+      30603,
+      30686,
+      30644,
+      30574,
+      30663,
+      30842,
+      30535,
+      30380,
+      30618,
+      30493,
+      30569,
+      30635,
+      30320,
+      30474,
+      30535,
+      30603,
+      30475
+    ]
+  },
+  "sensor_raw_payload_bytes": {
+    "CAM_FRONT": 18432000,
+    "GT_CAM_FRONT": 18432000,
+    "CAM_FRONT_LEFT": 18432000,
+    "GT_CAM_FRONT_LEFT": 18432000,
+    "CAM_FRONT_RIGHT": 18432000,
+    "GT_CAM_FRONT_RIGHT": 18432000,
+    "CAM_BACK": 18432000,
+    "GT_CAM_BACK": 18432000,
+    "CAM_BACK_LEFT": 18432000,
+    "GT_CAM_BACK_LEFT": 18432000,
+    "CAM_BACK_RIGHT": 18432000,
+    "GT_CAM_BACK_RIGHT": 18432000,
+    "RADAR_FRONT": 17792,
+    "RADAR_FRONT_LEFT": 24000,
+    "RADAR_FRONT_RIGHT": 24000,
+    "RADAR_BACK_LEFT": 23760,
+    "RADAR_BACK_RIGHT": 22144,
+    "LIDAR_TOP": 4881488,
+    "GT_LIDAR": 26713152,
+    "LIDAR_TOP_64": 9784368
+  },
+  "coordinate_systems": {
+    "raw": "CARLA x-forward/y-right/z-up",
+    "ego_lab": "x-forward/y-left/z-up, bounding-box bottom origin",
+    "camera_optical": "x-right/y-down/z-forward"
+  },
+  "artifact_bytes": 122880347,
+  "perception_ready": false,
+  "measured_gpu_work": false,
+  "limitations": [
+    "Synthetic CARLA geometry/calibration, not nuScenes-equivalent rig or calibrated hardware",
+    "Radar supplies radial velocity only; RCS and full compensated velocity are unavailable",
+    "Semantic LiDAR is an independent reference; labels are not point-aligned to input LiDAR",
+    "Weather changes rendered RGB; no validated weather degradation model for LiDAR/radar",
+    "GT is engine actor boxes and visible semantic surfaces, not complete occupancy/free-space truth",
+    "Actor population may be outside ego ROI; inspect per-frame visible_actor_count",
+    "No detector adapter, GPU perception timing, trained policy, or ROS publication in this capture"
+  ]
+}

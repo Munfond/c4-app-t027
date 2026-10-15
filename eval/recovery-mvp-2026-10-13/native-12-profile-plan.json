@@ -1,0 +1,282 @@
+{
+  "kind": "12_profile_native_lidar_integration_pilot",
+  "profiles": [
+    {
+      "channels": 16,
+      "points_per_second": 150000
+    },
+    {
+      "channels": 16,
+      "points_per_second": 300000
+    },
+    {
+      "channels": 16,
+      "points_per_second": 450000
+    },
+    {
+      "channels": 16,
+      "points_per_second": 600000
+    },
+    {
+      "channels": 32,
+      "points_per_second": 150000
+    },
+    {
+      "channels": 32,
+      "points_per_second": 300000
+    },
+    {
+      "channels": 32,
+      "points_per_second": 450000
+    },
+    {
+      "channels": 32,
+      "points_per_second": 600000
+    },
+    {
+      "channels": 64,
+      "points_per_second": 150000
+    },
+    {
+      "channels": 64,
+      "points_per_second": 300000
+    },
+    {
+      "channels": 64,
+      "points_per_second": 450000
+    },
+    {
+      "channels": 64,
+      "points_per_second": 600000
+    }
+  ],
+  "existing_study": "c34f2411c1f84da886d0770b589dd6c7",
+  "additional_studies": [
+    {
+      "scenarios": [
+        {
+          "map": "Town01",
+          "weather": "clear",
+          "vehicles": 2,
+          "pedestrians": 0,
+          "seed": 42,
+          "frames": 4,
+          "capture_interval": 0.5,
+          "timestep": 0.05,
+          "traffic_placement": "nearest_spawn",
+          "route_spawn_index": 0,
+          "route_kind": "spawn",
+          "lane_change_interval_seconds": null,
+          "lidar": {
+            "channels": 32,
+            "points_per_second": 600000,
+            "range_m": 100,
+            "upper_fov": 10,
+            "lower_fov": -30,
+            "mount_z": 2,
+            "pitch": 0
+          },
+          "camera": {
+            "fov": 90
+          }
+        }
+      ],
+      "profiles": [
+        {
+          "name": "channels16_150k",
+          "lidar": {
+            "channels": 16,
+            "points_per_second": 150000,
+            "range_m": 100,
+            "upper_fov": 10,
+            "lower_fov": -30,
+            "mount_z": 2,
+            "pitch": 0
+          }
+        },
+        {
+          "name": "channels16_300k",
+          "lidar": {
+            "channels": 16,
+            "points_per_second": 300000,
+            "range_m": 100,
+            "upper_fov": 10,
+            "lower_fov": -30,
+            "mount_z": 2,
+            "pitch": 0
+          }
+        },
+        {
+          "name": "channels16_450k",
+          "lidar": {
+            "channels": 16,
+            "points_per_second": 450000,
+            "range_m": 100,
+            "upper_fov": 10,
+            "lower_fov": -30,
+            "mount_z": 2,
+            "pitch": 0
+          }
+        }
+      ],
+      "native_input_adapter": "intensity_mean_experimental",
+      "max_iou_drop": 0.02,
+      "min_occupied_iou": 0.5,
+      "min_object_iou": 0.1,
+      "min_object_recall": 0.5
+    },
+    {
+      "scenarios": [
+        {
+          "map": "Town01",
+          "weather": "clear",
+          "vehicles": 2,
+          "pedestrians": 0,
+          "seed": 42,
+          "frames": 4,
+          "capture_interval": 0.5,
+          "timestep": 0.05,
+          "traffic_placement": "nearest_spawn",
+          "route_spawn_index": 0,
+          "route_kind": "spawn",
+          "lane_change_interval_seconds": null,
+          "lidar": {
+            "channels": 32,
+            "points_per_second": 600000,
+            "range_m": 100,
+            "upper_fov": 10,
+            "lower_fov": -30,
+            "mount_z": 2,
+            "pitch": 0
+          },
+          "camera": {
+            "fov": 90
+          }
+        }
+      ],
+      "profiles": [
+        {
+          "name": "channels16_600k",
+          "lidar": {
+            "channels": 16,
+            "points_per_second": 600000,
+            "range_m": 100,
+            "upper_fov": 10,
+            "lower_fov": -30,
+            "mount_z": 2,
+            "pitch": 0
+          }
+        },
+        {
+          "name": "channels32_450k",
+          "lidar": {
+            "channels": 32,
+            "points_per_second": 450000,
+            "range_m": 100,
+            "upper_fov": 10,
+            "lower_fov": -30,
+            "mount_z": 2,
+            "pitch": 0
+          }
+        },
+        {
+          "name": "channels64_150k",
+          "lidar": {
+            "channels": 64,
+            "points_per_second": 150000,
+            "range_m": 100,
+            "upper_fov": 10,
+            "lower_fov": -30,
+            "mount_z": 2,
+            "pitch": 0
+          }
+        }
+      ],
+      "native_input_adapter": "intensity_mean_experimental",
+      "max_iou_drop": 0.02,
+      "min_occupied_iou": 0.5,
+      "min_object_iou": 0.1,
+      "min_object_recall": 0.5
+    },
+    {
+      "scenarios": [
+        {
+          "map": "Town01",
+          "weather": "clear",
+          "vehicles": 2,
+          "pedestrians": 0,
+          "seed": 42,
+          "frames": 4,
+          "capture_interval": 0.5,
+          "timestep": 0.05,
+          "traffic_placement": "nearest_spawn",
+          "route_spawn_index": 0,
+          "route_kind": "spawn",
+          "lane_change_interval_seconds": null,
+          "lidar": {
+            "channels": 32,
+            "points_per_second": 600000,
+            "range_m": 100,
+            "upper_fov": 10,
+            "lower_fov": -30,
+            "mount_z": 2,
+            "pitch": 0
+          },
+          "camera": {
+            "fov": 90
+          }
+        }
+      ],
+      "profiles": [
+        {
+          "name": "channels64_300k",
+          "lidar": {
+            "channels": 64,
+            "points_per_second": 300000,
+            "range_m": 100,
+            "upper_fov": 10,
+            "lower_fov": -30,
+            "mount_z": 2,
+            "pitch": 0
+          }
+        },
+        {
+          "name": "channels64_450k",
+          "lidar": {
+            "channels": 64,
+            "points_per_second": 450000,
+            "range_m": 100,
+            "upper_fov": 10,
+            "lower_fov": -30,
+            "mount_z": 2,
+            "pitch": 0
+          }
+        },
+        {
+          "name": "channels64_600k",
+          "lidar": {
+            "channels": 64,
+            "points_per_second": 600000,
+            "range_m": 100,
+            "upper_fov": 10,
+            "lower_fov": -30,
+            "mount_z": 2,
+            "pitch": 0
+          }
+        }
+      ],
+      "native_input_adapter": "intensity_mean_experimental",
+      "max_iou_drop": 0.02,
+      "min_occupied_iou": 0.5,
+      "min_object_iou": 0.1,
+      "min_object_recall": 0.5
+    }
+  ],
+  "native_rl_admitted": false,
+  "purpose": "Prepare physical Discrete profile catalog and audit paired references; not RL training",
+  "limits": [
+    "One Town01 route only, 4 frames/profile",
+    "Three profiles were already measured before expanding this pilot; not an unseen test",
+    "No reward tuning, native training, other-map/weather robustness or safety claim"
+  ]
+}

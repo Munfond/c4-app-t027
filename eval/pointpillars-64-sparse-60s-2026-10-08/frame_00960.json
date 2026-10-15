@@ -1,0 +1,86 @@
+{
+  "index": 960,
+  "frame_id": 1023,
+  "timestamp": 53.448255815543234,
+  "input_lidar_sensor": "LIDAR_TOP_64",
+  "input_lidar_artifact": {
+    "path": "inputs/frame_00960/LIDAR_TOP_64.npz",
+    "bytes": 348951,
+    "sha256": "15b98edc980bca38801ee4d544e75542163613a3a38a9d576788940f07785db4"
+  },
+  "input_points": 29084,
+  "input_sha256": "bce890261268c0ec10cc062012cba1551fa700b53eeee02153b0cb1197eeaa8a",
+  "cuda_work": {
+    "cuda_activity_sum_ms": 46.332,
+    "cuda_activity_count": 1138,
+    "scope": "detector forward pipeline kernels/copies only; separate profiled pass"
+  },
+  "boxes": [
+    {
+      "center_ego": [
+        -26.025725516967768,
+        -0.12150802473246358,
+        0.9047578049153073
+      ],
+      "size_lwh": [
+        5.06185245513916,
+        2.0238447189331055,
+        1.8901774883270264
+      ],
+      "rotation_ego": [
+        [
+          0.9878367781639099,
+          -0.15549440681934357,
+          0.0
+        ],
+        [
+          0.15549440681934357,
+          0.9878367781639099,
+          0.0
+        ],
+        [
+          2.403614907330133e-21,
+          -4.38722727583089e-22,
+          1.0
+        ]
+      ],
+      "score": 0.332763671875,
+      "class_name": "car"
+    },
+    {
+      "center_ego": [
+        -26.129584464721674,
+        -0.189676024119251,
+        0.9667403173893674
+      ],
+      "size_lwh": [
+        5.449099540710449,
+        2.1587815284729004,
+        2.0090842247009277
+      ],
+      "rotation_ego": [
+        [
+          0.9894500970840454,
+          -0.14487411081790924,
+          0.0
+        ],
+        [
+          0.14487411081790924,
+          0.9894500970840454,
+          0.0
+        ],
+        [
+          2.408188967854128e-21,
+          -4.1287782738855394e-22,
+          1.0
+        ]
+      ],
+      "score": 0.7138671875,
+      "class_name": "truck"
+    }
+  ],
+  "gpu_event_elapsed_ms": 60.087745666503906,
+  "camera_artifacts": {},
+  "wall_inference_ms": 60.13912599883042,
+  "warmup_excluded": true
+}

@@ -1,0 +1,83 @@
+{
+  "study_id": "cf2a9a32615149cd81371531e7844ac6",
+  "environments": [
+    {
+      "environment": 0,
+      "scenario": {
+        "map": "Town01",
+        "weather": "clear",
+        "vehicles": 2,
+        "pedestrians": 0,
+        "seed": 42,
+        "frames": 2,
+        "capture_interval": 0.5,
+        "timestep": 0.05,
+        "route_spawn_index": 0,
+        "lidar": {
+          "channels": 32,
+          "points_per_second": 600000,
+          "range_m": 100.0,
+          "upper_fov": 10.0,
+          "lower_fov": -30.0,
+          "mount_z": 2.0,
+          "pitch": 0.0
+        }
+      },
+      "trials": [
+        {
+          "job_id": "4d0206789d2f4803bdf34d0aba8ca1bb",
+          "profile": "baseline",
+          "status": "succeeded",
+          "error": null,
+          "occupied_iou": 0.3320977253580455,
+          "iou_drop": 0.0,
+          "reference_matches_baseline": true,
+          "lidar_bytes_per_second": 4898720.0,
+          "data_reduction_fraction": 0.0,
+          "latency_model_only_ms": {
+            "p50": 111.26379999950586,
+            "p95": 119.83558000010817
+          }
+        },
+        {
+          "job_id": "11e7c9a576c34f3e9847c1791483d450",
+          "profile": "profile_300k",
+          "status": "succeeded",
+          "error": null,
+          "occupied_iou": 0.29578558943484173,
+          "iou_drop": 0.03631213592320376,
+          "reference_matches_baseline": true,
+          "lidar_bytes_per_second": 2432640.0,
+          "data_reduction_fraction": 0.5034131364927981,
+          "latency_model_only_ms": {
+            "p50": 126.23890000031679,
+            "p95": 126.63517000055435
+          }
+        },
+        {
+          "job_id": "bd93a0d9348046bd81d05b5f136050fb",
+          "profile": "profile_150k",
+          "status": "succeeded",
+          "error": null,
+          "occupied_iou": 0.23115236585918045,
+          "iou_drop": 0.10094535949886504,
+          "reference_matches_baseline": true,
+          "lidar_bytes_per_second": 1224480.0,
+          "data_reduction_fraction": 0.7500408269915406,
+          "latency_model_only_ms": {
+            "p50": 102.13300000032177,
+            "p95": 105.41062000029342
+          }
+        }
+      ],
+      "provisional_selected": "baseline"
+    }
+  ],
+  "criterion": "Lowest sampled LiDAR byte rate within absolute occupied-IoU drop bound, exact reference match",
+  "limitations": [
+    "Exploratory two-dimensional occupancy proxy, not validated real-world sensor recommendation",
+    "Reference mismatch excludes trial from selection; more seeds/routes are needed",
+    "Data rate is not electricity or dollar cost; fixed BEV shape may keep model latency unchanged",
+    "Weather affects RGB; no physical LiDAR rain/fog degradation has been validated"
+  ]
+}

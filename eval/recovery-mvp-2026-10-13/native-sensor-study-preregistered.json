@@ -1,0 +1,71 @@
+{
+  "kind": "bounded_native_sensor_study",
+  "spec": {
+    "scenarios": [
+      {
+        "map": "Town01",
+        "weather": "clear",
+        "vehicles": 2,
+        "pedestrians": 0,
+        "seed": 42,
+        "frames": 4,
+        "capture_interval": 0.5,
+        "timestep": 0.05,
+        "traffic_placement": "nearest_spawn",
+        "route_spawn_index": 0,
+        "route_kind": "spawn",
+        "lane_change_interval_seconds": null,
+        "lidar": {
+          "channels": 32,
+          "points_per_second": 600000,
+          "range_m": 100,
+          "upper_fov": 10,
+          "lower_fov": -30,
+          "mount_z": 2,
+          "pitch": 0
+        },
+        "camera": {
+          "fov": 90
+        }
+      }
+    ],
+    "profiles": [
+      {
+        "name": "lidar_300k",
+        "lidar": {
+          "channels": 32,
+          "points_per_second": 300000,
+          "range_m": 100,
+          "upper_fov": 10,
+          "lower_fov": -30,
+          "mount_z": 2,
+          "pitch": 0
+        }
+      },
+      {
+        "name": "lidar_150k",
+        "lidar": {
+          "channels": 32,
+          "points_per_second": 150000,
+          "range_m": 100,
+          "upper_fov": 10,
+          "lower_fov": -30,
+          "mount_z": 2,
+          "pitch": 0
+        }
+      }
+    ],
+    "native_input_adapter": "intensity_mean_experimental",
+    "max_iou_drop": 0.02,
+    "min_occupied_iou": 0.5,
+    "min_object_iou": 0.1,
+    "min_object_recall": 0.5
+  },
+  "purpose": "Measured physical point-rate comparison, not native RL admission",
+  "limitations": [
+    "Single Town01 scene, four frames per profile; integration/research only",
+    "Input adapter fixed from earlier training-only mean alignment; no fitting on this study",
+    "No GPU savings or real-world weather robustness claim",
+    "All profiles require exact reference match plus occupied/object quality thresholds"
+  ]
+}

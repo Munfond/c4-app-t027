@@ -1,0 +1,153 @@
+{
+  "kind": "CARLA_single_sweep_detector_smoke",
+  "status": "succeeded",
+  "source_sha": "fe25f7a51d36e3702f961e198894580d83c4387b",
+  "model_variant": "camera_lidar",
+  "checkpoint_sha256": "e68c6c084d8971f4f879751b0ed3981f575c24ee3cf385a1e39197c26a9bb3ab",
+  "upstream_filename_fingerprint_matches": false,
+  "source_config_sha256": "57cf5ef7230ba2180a1ef893baaa2558fa162e722da4c505899c7e7e82ac6e1a",
+  "resolved_config_sha256": "9c0d58af4f0318927f81d7f499eab640dae19254f4865fe77a278d8e74571dda",
+  "capture_manifest_sha256": "c72255c929c32d55c07fa1ec48ba0dc4504cf4142b2316714eabbc8ee7f581b3",
+  "torch": "2.1.0+cu121",
+  "cuda": "12.1",
+  "gpu": "NVIDIA GeForce RTX 2050",
+  "amp": false,
+  "intensity_policy": "raw",
+  "sweeps": 1,
+  "image_policy": {
+    "resize": 1.1,
+    "final_hw": [
+      256,
+      704
+    ],
+    "policy": "uniform cover + bottom/center crop; upstream ImageAug3D updates img_aug_matrix",
+    "input_wh": [
+      640,
+      360
+    ],
+    "camera_order": [
+      "CAM_FRONT",
+      "CAM_FRONT_RIGHT",
+      "CAM_FRONT_LEFT",
+      "CAM_BACK",
+      "CAM_BACK_LEFT",
+      "CAM_BACK_RIGHT"
+    ]
+  },
+  "adapter_sha256": "9ea3ce8c9973b1f9b18b89c1d7918612d4dbe5cc4a09259b194011750a0a10a4",
+  "strict_checkpoint_loading": true,
+  "keep_fraction": 1,
+  "sampling_seed": 7,
+  "sampling_algorithm": "numpy.default_rng(seed+frame_id), sorted subset indices",
+  "cuda_activity_measurement": true,
+  "score_threshold": 0.3,
+  "frames": [
+    {
+      "index": 0,
+      "frame_id": 64,
+      "timestamp": 6.339498344808817,
+      "input_points": 15358,
+      "input_sha256": "d3646911b2d584985bc6e4449f1472717221824683073b13bd9be58e0db07d06",
+      "cuda_work": {
+        "cuda_activity_sum_ms": 442.127,
+        "cuda_activity_count": 1964,
+        "scope": "detector forward pipeline kernels/copies only; separate profiled pass"
+      },
+      "gpu_event_elapsed_ms": 542.1475830078125,
+      "camera_artifacts": {
+        "CAM_FRONT": {
+          "path": "inputs/frame_00000/CAM_FRONT.png",
+          "bytes": 340604,
+          "sha256": "9cf8f81c073352ec88016260597f10550714557b48b3cdcba938962e37afcdf7"
+        },
+        "CAM_FRONT_RIGHT": {
+          "path": "inputs/frame_00000/CAM_FRONT_RIGHT.png",
+          "bytes": 296339,
+          "sha256": "9fb429586fa7505c2dd8a91f9b057e2197ccd7bba7bb34a998042afe3ec7e63f"
+        },
+        "CAM_FRONT_LEFT": {
+          "path": "inputs/frame_00000/CAM_FRONT_LEFT.png",
+          "bytes": 418393,
+          "sha256": "dc20fc717babc7d3c60be564016efa29810600ffd03c8ef3be4d3e4ee0e95ee9"
+        },
+        "CAM_BACK": {
+          "path": "inputs/frame_00000/CAM_BACK.png",
+          "bytes": 362243,
+          "sha256": "8da2dfb2284ba143fe0b190a6cc498655a49e20aca1598e2e86a62d68c23f3da"
+        },
+        "CAM_BACK_LEFT": {
+          "path": "inputs/frame_00000/CAM_BACK_LEFT.png",
+          "bytes": 422195,
+          "sha256": "afcae83ba752d357b4b15b637c68dbc699f720767d25a457ea14941dda1a72ee"
+        },
+        "CAM_BACK_RIGHT": {
+          "path": "inputs/frame_00000/CAM_BACK_RIGHT.png",
+          "bytes": 297496,
+          "sha256": "965b0fd2d6820a7388d69367631299334c143ef4366ac6c9d9ff30dfa459b336"
+        }
+      },
+      "wall_inference_ms": 543.8834930000667,
+      "warmup_excluded": true,
+      "boxes_above_threshold": 4
+    },
+    {
+      "index": 1,
+      "frame_id": 65,
+      "timestamp": 6.389498345553875,
+      "input_points": 15478,
+      "input_sha256": "123b7e458438c400000964e5e17abef3a55af35b97470d6ac91c9094dc3b4da5",
+      "cuda_work": {
+        "cuda_activity_sum_ms": 442.672,
+        "cuda_activity_count": 1964,
+        "scope": "detector forward pipeline kernels/copies only; separate profiled pass"
+      },
+      "gpu_event_elapsed_ms": 547.7527465820312,
+      "camera_artifacts": {
+        "CAM_FRONT": {
+          "path": "inputs/frame_00001/CAM_FRONT.png",
+          "bytes": 340721,
+          "sha256": "a0ee7c9edd123a556085a161a630681ac174dc78c6d98f4ad5369d0f8f5338fe"
+        },
+        "CAM_FRONT_RIGHT": {
+          "path": "inputs/frame_00001/CAM_FRONT_RIGHT.png",
+          "bytes": 296872,
+          "sha256": "bd0b2c1497d5519411d40e593f9ca62c492b2fe32dd8f39a6c305dc81cb751ac"
+        },
+        "CAM_FRONT_LEFT": {
+          "path": "inputs/frame_00001/CAM_FRONT_LEFT.png",
+          "bytes": 415716,
+          "sha256": "fa71d9aad49ca260ac71f64a28ae6b374b80a8b2a5a86247c50824aa98016dab"
+        },
+        "CAM_BACK": {
+          "path": "inputs/frame_00001/CAM_BACK.png",
+          "bytes": 367478,
+          "sha256": "844c52cdeeaf8272d0b8a684c6a1dd5dbb81cc69bf43af4cdd047c41b8bd2d33"
+        },
+        "CAM_BACK_LEFT": {
+          "path": "inputs/frame_00001/CAM_BACK_LEFT.png",
+          "bytes": 427081,
+          "sha256": "768b7a310a7bae992a3a05223b6899162b9dbad3be2cb7f64da5f743cc843903"
+        },
+        "CAM_BACK_RIGHT": {
+          "path": "inputs/frame_00001/CAM_BACK_RIGHT.png",
+          "bytes": 297735,
+          "sha256": "c3be633136de8eca64b29dde56a9c6c6152aae8933109b869990a4e9326b5f97"
+        }
+      },
+      "wall_inference_ms": 547.8278970003885,
+      "warmup_excluded": true,
+      "boxes_above_threshold": 4
+    }
+  ],
+  "peak_allocated_bytes": 2146234368,
+  "peak_reserved_bytes": 2644508672,
+  "measured_perception_replay_ready": false,
+  "limitations": [
+    "No detection quality score: GT coverage/class mapping not validated",
+    "Single-sweep distribution differs from training; no fake padded history",
+    "CARLA intensity is not calibrated to nuScenes",
+    "CUDA event elapsed includes stream idle gaps/CPU dispatch; not total GPU work/window",
+    "Monitoring/profile switching/other tasks not timed; cannot claim agent GPU savings",
+    "Simulator stopped before inference to release VRAM; not closed-loop real-time performance"
+  ]
+}

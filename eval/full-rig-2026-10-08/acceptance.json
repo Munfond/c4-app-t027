@@ -1,0 +1,294 @@
+{
+  "kind": "real_carla_sensor_capture_and_gate_smoke",
+  "source_directory": "data/active-sensing/rig-nearby-20261008",
+  "verification": {
+    "status": "verified",
+    "frames": 20,
+    "sensors": 20,
+    "duration_between_first_last_s": 0.9500000141561031,
+    "element_totals": {
+      "GT_CAM_FRONT": 4608000,
+      "LIDAR_TOP_64": 611523,
+      "GT_CAM_BACK_LEFT": 4608000,
+      "GT_CAM_FRONT_LEFT": 4608000,
+      "CAM_FRONT": 4608000,
+      "CAM_BACK_RIGHT": 4608000,
+      "GT_LIDAR": 1113048,
+      "CAM_FRONT_RIGHT": 4608000,
+      "CAM_FRONT_LEFT": 4608000,
+      "CAM_BACK_LEFT": 4608000,
+      "GT_CAM_BACK_RIGHT": 4608000,
+      "RADAR_BACK_RIGHT": 1384,
+      "RADAR_FRONT_LEFT": 1500,
+      "RADAR_FRONT_RIGHT": 1500,
+      "GT_CAM_FRONT_RIGHT": 4608000,
+      "LIDAR_TOP": 305093,
+      "RADAR_FRONT": 1112,
+      "RADAR_BACK_LEFT": 1485,
+      "CAM_BACK": 4608000,
+      "GT_CAM_BACK": 4608000
+    },
+    "manifest_sha256": "c72255c929c32d55c07fa1ec48ba0dc4504cf4142b2316714eabbc8ee7f581b3",
+    "perception_ready": false
+  },
+  "first_frame_observation": {
+    "timestamp_s": 6.339498344808817,
+    "speed_mps": 4.854428571193964,
+    "camera_brightness": 0.7514332334200541,
+    "camera_contrast": 0.19490141669909158,
+    "lidar_return_ratio": 0.5119333333333334,
+    "radar_targets": 345,
+    "camera_health": "ok",
+    "lidar_health": "ok",
+    "radar_health": "ok",
+    "nearest_detection_m": null,
+    "min_ttc_s": null,
+    "new_near_target": false,
+    "age_ms": 0.0,
+    "valid": true
+  },
+  "visible_actor_counts": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+  ],
+  "profile_gate_checks": [
+    {
+      "profile_id": "official_lidar-5hz",
+      "selected_sensor_families": [
+        "lidar"
+      ],
+      "scheduler_slots": 5,
+      "detector_inference_executed": false
+    },
+    {
+      "profile_id": "official_lidar-5hz-seg",
+      "selected_sensor_families": [
+        "lidar"
+      ],
+      "scheduler_slots": 5,
+      "detector_inference_executed": false
+    },
+    {
+      "profile_id": "official_lidar-10hz",
+      "selected_sensor_families": [
+        "lidar"
+      ],
+      "scheduler_slots": 10,
+      "detector_inference_executed": false
+    },
+    {
+      "profile_id": "official_lidar-10hz-seg",
+      "selected_sensor_families": [
+        "lidar"
+      ],
+      "scheduler_slots": 10,
+      "detector_inference_executed": false
+    },
+    {
+      "profile_id": "official_lidar-20hz",
+      "selected_sensor_families": [
+        "lidar"
+      ],
+      "scheduler_slots": 20,
+      "detector_inference_executed": false
+    },
+    {
+      "profile_id": "official_lidar-20hz-seg",
+      "selected_sensor_families": [
+        "lidar"
+      ],
+      "scheduler_slots": 20,
+      "detector_inference_executed": false
+    },
+    {
+      "profile_id": "official_cl-5hz",
+      "selected_sensor_families": [
+        "camera",
+        "lidar"
+      ],
+      "scheduler_slots": 5,
+      "detector_inference_executed": false
+    },
+    {
+      "profile_id": "official_cl-5hz-seg",
+      "selected_sensor_families": [
+        "camera",
+        "lidar"
+      ],
+      "scheduler_slots": 5,
+      "detector_inference_executed": false
+    },
+    {
+      "profile_id": "official_cl-10hz",
+      "selected_sensor_families": [
+        "camera",
+        "lidar"
+      ],
+      "scheduler_slots": 10,
+      "detector_inference_executed": false
+    },
+    {
+      "profile_id": "official_cl-10hz-seg",
+      "selected_sensor_families": [
+        "camera",
+        "lidar"
+      ],
+      "scheduler_slots": 10,
+      "detector_inference_executed": false
+    },
+    {
+      "profile_id": "official_cl-20hz",
+      "selected_sensor_families": [
+        "camera",
+        "lidar"
+      ],
+      "scheduler_slots": 20,
+      "detector_inference_executed": false
+    },
+    {
+      "profile_id": "official_cl-20hz-seg",
+      "selected_sensor_families": [
+        "camera",
+        "lidar"
+      ],
+      "scheduler_slots": 20,
+      "detector_inference_executed": false
+    },
+    {
+      "profile_id": "crn-5hz",
+      "selected_sensor_families": [
+        "camera",
+        "radar"
+      ],
+      "scheduler_slots": 5,
+      "detector_inference_executed": false
+    },
+    {
+      "profile_id": "crn-5hz-seg",
+      "selected_sensor_families": [
+        "camera",
+        "radar"
+      ],
+      "scheduler_slots": 5,
+      "detector_inference_executed": false
+    },
+    {
+      "profile_id": "crn-10hz",
+      "selected_sensor_families": [
+        "camera",
+        "radar"
+      ],
+      "scheduler_slots": 10,
+      "detector_inference_executed": false
+    },
+    {
+      "profile_id": "crn-10hz-seg",
+      "selected_sensor_families": [
+        "camera",
+        "radar"
+      ],
+      "scheduler_slots": 10,
+      "detector_inference_executed": false
+    },
+    {
+      "profile_id": "crn-20hz",
+      "selected_sensor_families": [
+        "camera",
+        "radar"
+      ],
+      "scheduler_slots": 20,
+      "detector_inference_executed": false
+    },
+    {
+      "profile_id": "crn-20hz-seg",
+      "selected_sensor_families": [
+        "camera",
+        "radar"
+      ],
+      "scheduler_slots": 20,
+      "detector_inference_executed": false
+    },
+    {
+      "profile_id": "fused-5hz",
+      "selected_sensor_families": [
+        "camera",
+        "lidar",
+        "radar"
+      ],
+      "scheduler_slots": 5,
+      "detector_inference_executed": false
+    },
+    {
+      "profile_id": "fused-5hz-seg",
+      "selected_sensor_families": [
+        "camera",
+        "lidar",
+        "radar"
+      ],
+      "scheduler_slots": 5,
+      "detector_inference_executed": false
+    },
+    {
+      "profile_id": "fused-10hz",
+      "selected_sensor_families": [
+        "camera",
+        "lidar",
+        "radar"
+      ],
+      "scheduler_slots": 10,
+      "detector_inference_executed": false
+    },
+    {
+      "profile_id": "fused-10hz-seg",
+      "selected_sensor_families": [
+        "camera",
+        "lidar",
+        "radar"
+      ],
+      "scheduler_slots": 10,
+      "detector_inference_executed": false
+    },
+    {
+      "profile_id": "fused-20hz",
+      "selected_sensor_families": [
+        "camera",
+        "lidar",
+        "radar"
+      ],
+      "scheduler_slots": 20,
+      "detector_inference_executed": false
+    },
+    {
+      "profile_id": "fused-20hz-seg",
+      "selected_sensor_families": [
+        "camera",
+        "lidar",
+        "radar"
+      ],
+      "scheduler_slots": 20,
+      "detector_inference_executed": false
+    }
+  ],
+  "label_policy": "CARLA engine GT; no detector prediction",
+  "tests": "163 passed in 12.02s",
+  "gpu_perception_timing": null,
+  "trained_policy": false
+}

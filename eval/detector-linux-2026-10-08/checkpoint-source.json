@@ -1,0 +1,11 @@
+{
+  "model": "lidar",
+  "path": "bevfusion_lidar_voxel0075_second_secfpn_8xb4-cyclic-20e_nus-3d-2628f933.pth",
+  "sha256": "2628f933277774e194932815ea1a5d66a0bd9f69ebc8d9040e8c92760bb6652e",
+  "bytes": 46332893,
+  "source": "https://github.com/open-mmlab/mmdetection3d/blob/v1.4.0/projects/BEVFusion/README.md",
+  "download_url": "https://download.openmmlab.com/mmdetection3d/v1.1.0_models/bevfusion/bevfusion_lidar_voxel0075_second_secfpn_8xb4-cyclic-20e_nus-3d-2628f933.pth",
+  "upstream_filename_fingerprint": "2628f933",
+  "loaded": false,
+  "note": "OpenMMLab implementation weights, not restored team/MIT weights; old metrics do not apply"
+}

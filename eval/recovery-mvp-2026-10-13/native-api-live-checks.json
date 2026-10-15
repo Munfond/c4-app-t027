@@ -1,0 +1,44 @@
+[
+  {
+    "case": "backend health",
+    "path": "/health",
+    "status": 200,
+    "bytes": 35,
+    "response_sha256": "6059f378eaae926e616dbfc376fa350a989fa4845cf349f33e19c0e300209233"
+  },
+  {
+    "case": "registry exposes sealed optional adapter",
+    "path": "/api/v1/experiments/registry",
+    "status": 200,
+    "bytes": 2726,
+    "response_sha256": "6ce5d95b9c502f3cb36f5e384baf4d6d688015e8bdf7c55428cfc28164a3d6d2"
+  },
+  {
+    "case": "native reference mask/grid",
+    "path": "/api/v1/experiments/f88247cc15194080968db68a8205ce81/reference/0",
+    "status": 200,
+    "bytes": 315706,
+    "response_sha256": "1bb4012ec48e6df365a1797a565ffe3cf2c3e3de09b692d620cfe72adbf9be90"
+  },
+  {
+    "case": "aligned prediction",
+    "path": "/api/v1/experiments/e56ada8662ac459984170b27d240cec2/predictions/occupancy_lidar/0",
+    "status": 200,
+    "bytes": 80253,
+    "response_sha256": "6be80d44bac067795f336c6439bde47135c933f981ea8d3368f493dc914d2046"
+  },
+  {
+    "case": "same-capture camera",
+    "path": "/api/v1/experiments/e56ada8662ac459984170b27d240cec2/camera?index=0",
+    "status": 200,
+    "bytes": 344758,
+    "response_sha256": "9ffe0911a24b24501c8d31462d91fbaab4a0bd9410992326e985333eac85fcb3"
+  },
+  {
+    "case": "aligned job seals input",
+    "path": "/api/v1/experiments/e56ada8662ac459984170b27d240cec2",
+    "status": 200,
+    "bytes": 6677,
+    "response_sha256": "ee440ac1d386fb63460a679a882cfda03d42d809cb0b58dbd7bbe983a6909f54"
+  }
+]

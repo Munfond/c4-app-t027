@@ -1,0 +1,250 @@
+{
+  "kind": "same_capture_detector_pilot",
+  "status": "completed_diagnostic_only",
+  "variants": [
+    {
+      "variant": "lidar-full-fp32",
+      "configuration": {
+        "model": "lidar",
+        "keep_fraction": 1.0,
+        "amp": false
+      },
+      "capture_manifest_sha256": "c72255c929c32d55c07fa1ec48ba0dc4504cf4142b2316714eabbc8ee7f581b3",
+      "checkpoint_sha256": "2628f933277774e194932815ea1a5d66a0bd9f69ebc8d9040e8c92760bb6652e",
+      "resolved_config_sha256": "42ed3fbb419ef179b3aabe6faa315ecf8b35466f36a388c893644b4e82feffaf",
+      "report_sha256": "9721ef3bc9ad9487a88dbcea2f018c59ebb4cb189f674266bb80d9b89ea0cb5a",
+      "geometry_sha256": "4303c367dd6e490c97e62fb3c5c402335d1829850c988da8610f550f6684e0c8",
+      "frames": 20,
+      "cli_wall_s": 24.277449754999907,
+      "wall_mean_ms": 118.46101949990953,
+      "wall_p95_ms": 119.65463025053396,
+      "cuda_activity_mean_ms": 100.5115,
+      "period_exceedance_fraction": {
+        "5": 0.0,
+        "10": 1.0,
+        "20": 1.0
+      },
+      "positive_target_geometry_recall": 0.47368421052631576,
+      "matched_target_frame_instances": 72,
+      "target_frame_instances": 152,
+      "peak_allocated_bytes": 634292224,
+      "peak_reserved_bytes": 924844032,
+      "evidence_directory": "lidar-full-fp32"
+    },
+    {
+      "variant": "lidar-half-fp32",
+      "configuration": {
+        "model": "lidar",
+        "keep_fraction": 0.5,
+        "amp": false
+      },
+      "capture_manifest_sha256": "c72255c929c32d55c07fa1ec48ba0dc4504cf4142b2316714eabbc8ee7f581b3",
+      "checkpoint_sha256": "2628f933277774e194932815ea1a5d66a0bd9f69ebc8d9040e8c92760bb6652e",
+      "resolved_config_sha256": "42ed3fbb419ef179b3aabe6faa315ecf8b35466f36a388c893644b4e82feffaf",
+      "report_sha256": "1cb7c0bfdf418ff4b5011406998fcf2865dd8d9f1b87aef03e2f6323079bb85b",
+      "geometry_sha256": "814aa2496634e9649406e6ee3ec8162488a32b0aab96b6b4ca2498d8e7a95c20",
+      "frames": 20,
+      "cli_wall_s": 22.167319572999986,
+      "wall_mean_ms": 111.2114240500432,
+      "wall_p95_ms": 113.74541005002357,
+      "cuda_activity_mean_ms": 92.67275000000001,
+      "period_exceedance_fraction": {
+        "5": 0.0,
+        "10": 1.0,
+        "20": 1.0
+      },
+      "positive_target_geometry_recall": 0.19736842105263158,
+      "matched_target_frame_instances": 30,
+      "target_frame_instances": 152,
+      "peak_allocated_bytes": 634155008,
+      "peak_reserved_bytes": 924844032,
+      "evidence_directory": "lidar-half-fp32"
+    },
+    {
+      "variant": "lidar-full-amp",
+      "configuration": {
+        "model": "lidar",
+        "keep_fraction": 1.0,
+        "amp": true
+      },
+      "capture_manifest_sha256": "c72255c929c32d55c07fa1ec48ba0dc4504cf4142b2316714eabbc8ee7f581b3",
+      "checkpoint_sha256": "2628f933277774e194932815ea1a5d66a0bd9f69ebc8d9040e8c92760bb6652e",
+      "resolved_config_sha256": "42ed3fbb419ef179b3aabe6faa315ecf8b35466f36a388c893644b4e82feffaf",
+      "report_sha256": "dcf620d644bc1b2bab1627be4e84b739721f41e48b88b1acfe8dff9bfdf40aa1",
+      "geometry_sha256": "5a1fa9d1c0a699c747e8830338d859a6af93fc64bdbcb7467fbd4188299b594b",
+      "frames": 20,
+      "cli_wall_s": 22.717853430000105,
+      "wall_mean_ms": 100.44146185009595,
+      "wall_p95_ms": 102.24401854998177,
+      "cuda_activity_mean_ms": 82.75785,
+      "period_exceedance_fraction": {
+        "5": 0.0,
+        "10": 0.65,
+        "20": 1.0
+      },
+      "positive_target_geometry_recall": 0.47368421052631576,
+      "matched_target_frame_instances": 72,
+      "target_frame_instances": 152,
+      "peak_allocated_bytes": 457726464,
+      "peak_reserved_bytes": 549453824,
+      "evidence_directory": "lidar-full-amp"
+    },
+    {
+      "variant": "cl-full-fp32",
+      "configuration": {
+        "model": "camera_lidar",
+        "keep_fraction": 1.0,
+        "amp": false
+      },
+      "capture_manifest_sha256": "c72255c929c32d55c07fa1ec48ba0dc4504cf4142b2316714eabbc8ee7f581b3",
+      "checkpoint_sha256": "e68c6c084d8971f4f879751b0ed3981f575c24ee3cf385a1e39197c26a9bb3ab",
+      "resolved_config_sha256": "c9c073495becd7297c68c7e2be3d9ed99d5c413c6a1840c5deb84c95c9c731e7",
+      "report_sha256": "aa7efeea34dac575263f0dc5086822b04a891fe0748c11597dd6607e244ed80a",
+      "geometry_sha256": "6cd54116c6019bc50c1b7420a9b6f686b65808a490c7956e835c57f43485b832",
+      "frames": 20,
+      "cli_wall_s": 47.92156535199956,
+      "wall_mean_ms": 545.0920640000277,
+      "wall_p95_ms": 549.5839269497083,
+      "cuda_activity_mean_ms": 441.7358499999999,
+      "period_exceedance_fraction": {
+        "5": 1.0,
+        "10": 1.0,
+        "20": 1.0
+      },
+      "positive_target_geometry_recall": 0.5855263157894737,
+      "matched_target_frame_instances": 89,
+      "target_frame_instances": 152,
+      "peak_allocated_bytes": 2146257920,
+      "peak_reserved_bytes": 2644508672,
+      "evidence_directory": "cl-full-fp32"
+    },
+    {
+      "variant": "cl-full-amp",
+      "configuration": {
+        "model": "camera_lidar",
+        "keep_fraction": 1.0,
+        "amp": true
+      },
+      "capture_manifest_sha256": "c72255c929c32d55c07fa1ec48ba0dc4504cf4142b2316714eabbc8ee7f581b3",
+      "checkpoint_sha256": "e68c6c084d8971f4f879751b0ed3981f575c24ee3cf385a1e39197c26a9bb3ab",
+      "resolved_config_sha256": "c9c073495becd7297c68c7e2be3d9ed99d5c413c6a1840c5deb84c95c9c731e7",
+      "report_sha256": "80848c13d59497a090ed6aeefcb8ba5bd0435f5797785c04d11a5005467fef6e",
+      "geometry_sha256": "1e79c1244f832c4421e32342cefd2ab671d181a779ae86680ce6938de55e3f8b",
+      "frames": 20,
+      "cli_wall_s": 46.3736311040002,
+      "wall_mean_ms": 449.64356690002205,
+      "wall_p95_ms": 458.9215845999661,
+      "cuda_activity_mean_ms": 345.68935,
+      "period_exceedance_fraction": {
+        "5": 1.0,
+        "10": 1.0,
+        "20": 1.0
+      },
+      "positive_target_geometry_recall": 0.5855263157894737,
+      "matched_target_frame_instances": 89,
+      "target_frame_instances": 152,
+      "peak_allocated_bytes": 2204063744,
+      "peak_reserved_bytes": 2531262464,
+      "evidence_directory": "cl-full-amp"
+    },
+    {
+      "variant": "pp-full-fp32",
+      "configuration": {
+        "model": "pointpillars",
+        "keep_fraction": 1.0,
+        "amp": false
+      },
+      "capture_manifest_sha256": "c72255c929c32d55c07fa1ec48ba0dc4504cf4142b2316714eabbc8ee7f581b3",
+      "checkpoint_sha256": "f19d00a38e6b775f38a45a9a3ca3ecaec20a5585a3caf44622423e2d5f75d5d0",
+      "resolved_config_sha256": "2bee9d77f6c3f65224a355d4c46362c2d9e1eedf8551fdf988c23dded6db8292",
+      "report_sha256": "e849f1841d28f0feb815d449969f445a5367492f09d82b14517fae4c2843f879",
+      "geometry_sha256": "dc01899580518c62194263ea71ab3c172d1f1f51d7a7fcfc29f00fa87d4bf476",
+      "frames": 20,
+      "cli_wall_s": 24.287946407999698,
+      "wall_mean_ms": 82.27306189996852,
+      "wall_p95_ms": 83.2956452495182,
+      "cuda_activity_mean_ms": 67.36344999999999,
+      "period_exceedance_fraction": {
+        "5": 0.0,
+        "10": 0.0,
+        "20": 1.0
+      },
+      "positive_target_geometry_recall": 0.5986842105263158,
+      "matched_target_frame_instances": 91,
+      "target_frame_instances": 152,
+      "peak_allocated_bytes": 519348736,
+      "peak_reserved_bytes": 1658847232,
+      "evidence_directory": "pp-full-fp32"
+    },
+    {
+      "variant": "pp-half-fp32",
+      "configuration": {
+        "model": "pointpillars",
+        "keep_fraction": 0.5,
+        "amp": false
+      },
+      "capture_manifest_sha256": "c72255c929c32d55c07fa1ec48ba0dc4504cf4142b2316714eabbc8ee7f581b3",
+      "checkpoint_sha256": "f19d00a38e6b775f38a45a9a3ca3ecaec20a5585a3caf44622423e2d5f75d5d0",
+      "resolved_config_sha256": "2bee9d77f6c3f65224a355d4c46362c2d9e1eedf8551fdf988c23dded6db8292",
+      "report_sha256": "757fb9a1e54e428ec2623702cbac09a995b8d348e51e0e73c29cd5619f7e1d88",
+      "geometry_sha256": "76b64a4ac3f39dbf9794a52bb383083b0c0dfc64950f04510f2c8a82b4dc77c7",
+      "frames": 20,
+      "cli_wall_s": 21.921309645000292,
+      "wall_mean_ms": 71.18774985005984,
+      "wall_p95_ms": 73.36270879977747,
+      "cuda_activity_mean_ms": 56.7134,
+      "period_exceedance_fraction": {
+        "5": 0.0,
+        "10": 0.0,
+        "20": 1.0
+      },
+      "positive_target_geometry_recall": 0.375,
+      "matched_target_frame_instances": 57,
+      "target_frame_instances": 152,
+      "peak_allocated_bytes": 371725312,
+      "peak_reserved_bytes": 740294656,
+      "evidence_directory": "pp-half-fp32"
+    },
+    {
+      "variant": "pp-full-amp",
+      "configuration": {
+        "model": "pointpillars",
+        "keep_fraction": 1.0,
+        "amp": true
+      },
+      "capture_manifest_sha256": "c72255c929c32d55c07fa1ec48ba0dc4504cf4142b2316714eabbc8ee7f581b3",
+      "checkpoint_sha256": "f19d00a38e6b775f38a45a9a3ca3ecaec20a5585a3caf44622423e2d5f75d5d0",
+      "resolved_config_sha256": "2bee9d77f6c3f65224a355d4c46362c2d9e1eedf8551fdf988c23dded6db8292",
+      "report_sha256": "48b8e1393c386d082cc9e71bd578af9b11025ee6744ae1f596cd8c738eaf8563",
+      "geometry_sha256": "eac16af5334e6eefd5e1ed9bf9b34ffde97d8c90c4c899e4ef1dfcd856b61641",
+      "frames": 20,
+      "cli_wall_s": 21.713585688999956,
+      "wall_mean_ms": 57.45168319995173,
+      "wall_p95_ms": 59.66364264954791,
+      "cuda_activity_mean_ms": 42.45184999999999,
+      "period_exceedance_fraction": {
+        "5": 0.0,
+        "10": 0.0,
+        "20": 1.0
+      },
+      "positive_target_geometry_recall": 0.5986842105263158,
+      "matched_target_frame_instances": 91,
+      "target_frame_instances": 152,
+      "peak_allocated_bytes": 288657920,
+      "peak_reserved_bytes": 610271232,
+      "evidence_directory": "pp-full-amp"
+    }
+  ],
+  "selection": null,
+  "measured_perception_replay_ready": false,
+  "cost_scope": "detector invocation CUDA activity only, profiled pass separate from wall pass",
+  "limitations": [
+    "No monitoring/switching/segmentation GPU work per decision window",
+    "Positive-target class-agnostic diagnostic uses partial spawned-actor GT",
+    "One short correlated scene, no validation/test split or weather robustness",
+    "Period exceedance is inference-only arithmetic, not online scheduling measurement",
+    "CLI time includes initialization/verification/profiling, not online latency",
+    "CARLA is stopped during inference; not full simulator + model throughput",
+    "PointPillars and BEVFusion measured in sequential separate sessions; no randomized repeated latency benchmark"
+  ]
+}

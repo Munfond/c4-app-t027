@@ -1,6 +1,20 @@
-# Frontend BEV Lab
+# Frontend Perception Lab
 
 Frontend dùng Next.js, React và Three.js để hiển thị detection thật từ API lab.
+
+Mục **04 / Agent Occupancy** tại `/experiments` thử cấu hình giảm dữ liệu
+LiDAR/radar, chạy ba checkpoint occupancy trong worker riêng và đối chiếu
+điểm/occupancy/ảnh trước–sau. Camera được đánh giá riêng về ảnh/dung lượng.
+Agent chưa tối ưu detection, flow hoặc risk; Lab/Compare giữ kết quả tính sẵn.
+
+Xem [runbook agent](../docs/REPLAY_SENSOR_AGENT.vi.md) và
+[prompt QA](../docs/AGENT_TEST_PROMPTS.vi.md) để cài PyTorch/raw dataset,
+khởi động API/worker và cấu hình key backend. Không đặt API key trên frontend.
+Viewer Lab không cần key; nút agent cần LLM thật. Chạy agent không bổ sung cache Lab.
+
+Lịch sử agent thuộc phiên tab: refresh giữ, đóng tab/Kết thúc phiên dọn theo lease.
+Tải báo cáo nếu muốn giữ. Đổi model/frame/cấu hình xem trước không gọi LLM.
+Hình point cloud lấy mẫu; ô occupancy khác baseline không mặc nhiên là ô sai.
 
 ## Yêu cầu
 

@@ -61,7 +61,7 @@ Mũi tên về browser là response data flow. Request routing: [sequence diagra
 
 | Code | Trách nhiệm |
 |---|---|
-| `frontend/src/components/shell/app-shell.tsx` | Navigation Lab/Compare/Benchmarks, layout. |
+| `frontend/src/components/shell/app-shell.tsx` | Navigation Lab/Compare/Benchmarks/Agent Occupancy, layout. |
 | `components/lab/perception-workspace.tsx`, `scene-timeline.tsx` | Shared scene/frame, modes, playback chờ dữ liệu và dừng khi đổi mode/tab ẩn. |
 | `sensor-workspace.tsx`, `viewer/PointCloudCanvas.tsx` | Camera 360 và point clouds; tick sensor chỉ ẩn lớp. |
 | `viewer/SpatialViewer.tsx`, `BevViewer.tsx`, `PerceptionGrid.tsx` | Detection proxy 3D, BEV, occupancy/flow/semantic points. Seg3D cần artifact thật. |
@@ -90,4 +90,74 @@ Mũi tên về browser là response data flow. Request routing: [sequence diagra
 
 Raw ảnh không mount public/static. Camera chỉ trả processed cache hoặc anonymizer result; không xử lý được thì 503. `X-Anonymized` biểu thị đường phục vụ processed, không chứng minh 100% khuôn mặt/biển số được phát hiện. Review cache trước khi chia sẻ.
 
-Environment cache miss có thể đọc raw LiDAR khi request; camera miss có thể inference khi được bật. Precompute environment và 81×6 camera để tránh tải frame chậm. Dataset/checkpoint giữ ngoài Git. CI không tự deploy; pull/build/restart riêng. [Actual evaluation](eval/results/report.md) chỉ xác nhận môi trường local.
+Environment cache miss có thể đọc raw LiDAR khi request; camera miss có thể inference khi được bật. Precompute environment và 81×6 camera để tránh tải frame chậm. Raw dataset/cache giữ ngoài Git; bảy checkpoint occupancy/flow được track trong repo. CI không tự deploy; pull/build/restart riêng. [Actual evaluation](eval/results/report.md) chỉ xác nhận môi trường local.
+
+## Nhánh AI Agent Occupancy (mục 04)
+
+Lab/Compare giữ mô hình phục vụ precomputed ở trên. `/experiments` là nhánh riêng:
+
+```mermaid
+flowchart LR
+  REQUEST[Yêu cầu và session tab] --> APIREPLAY[API replay + kiểm tra scene]
+  APIREPLAY --> LLM[LLM create_replay_study]
+  LLM --> VALIDATE[Validate raw files / schema / checkpoint]
+  VALIDATE --> QUEUE[SQLite queue trong scope phiên]
+  QUEUE --> WORKER[Worker CPU / baseline và ứng viên]
+  RAWREPLAY[Raw LiDAR / radar / camera] --> WORKER
+  CKPTREPLAY[Ba checkpoint occupancy] --> WORKER
+  WORKER --> RESULTS[Predictions + metrics + captured points / ảnh]
+  RESULTS --> COMPARE[Python so IoU và payload]
+  COMPARE --> FE[FE đề xuất + visualization trước/sau]
+  COMPARE --> SUMMARY[LLM giải thích theo yêu cầu]
+```
+
+`src/agents/replay_agent.py` giới hạn tool/schema và scene; `dataset_replay.py`
+biến đổi sensor trước tạo features, giữ nhãn từ raw sweeps; `replay_comparison.py`
+chọn cặp model/profile bằng số đo. `experiment_sessions.py` cách ly và dọn phiên;
+worker/API dùng ContextVar scoped root. Không LLM polling, không automatic retry.
+Camera không vào checkpoint occupancy; ONNX detector là plugin local tùy chọn.
+Flow checkpoints và CARLA adapters vẫn có trong repo nhưng không chạy qua FE này.
+Chi tiết vận hành: [AI Agent runbook](docs/REPLAY_SENSOR_AGENT.vi.md).
+
+## Tích hợp CARLA và nền RL
+
+`/agent` giữ agent lập study CARLA; `/carla` giữ form capture/inference; `/experiments` giữ replay theo phiên.
+Worker advance cả hai nguồn trong scoped store. Capture download cũng dùng scoped root.
+`src/active_sensing` là core policy/shield/replay riêng, **chưa nối vào capture, API hoặc UI online**.
+Xem [bản đối chiếu](docs/AGENT_BRANCH_AUDIT.vi.md) để phân biệt agent thí nghiệm và policy RL.
+
+
+## Active Sensing MVP — cập nhật14/10/2026
+
+```mermaid
+flowchart LR
+  U[User / bot cạnh Lab] --> API[FastAPI / bounded experiment API]
+  API --> OR[OpenRouter hoặc OpenAI / prompt + schema]
+  OR --> V[Pydantic / catalog validation]
+  V --> Q[(Durable local job queue)]
+  Q --> W[Worker / một tick owner]
+  W --> C[CARLA / camera + LiDAR + reference]
+  C --> P[CPU occupancy / checkpoint và adapter sealed]
+  P --> E[Evaluator / reference hash / valid mask]
+  E --> J[(Metrics / trace / artifacts)]
+  J --> UI[Read-only preview / Model vs Reference]
+  J --> EX[Bounded explanation / evaluator quyết định]
+  EX --> OR
+  UI --> U
+  U --> R[Engineer review / evidence hash]
+  R --> J
+```
+
+Worker không chạy trong requestLLM và không cho LLM thực thi shell/path tùy ý. Provider được chọn tường minh; key của mỗi provider chỉ gửi tới host tương ứng. Prompt, schema và metadata cần thiết có thể gửi tới LLM; camera, rawpointcloud và weights không gửi trong luồng này. Lời giải thích không thay đổi metric hoặc lựa chọn Python.
+
+NativePPO đã train offline12action trên48capture/960outcome. Policy frozen gọi trong livecapture: chỉ rawsensor đang chọn + CPUlatency → action cho frame kế tiếp. Reference/actorGT không vào policy. Cả12sensor prespawn vẫn chạy; chỉ chọn input cho model, không chứng minh tiết kiệm điện. Cặp20frame có referenceSHA giống nhau và chất lượng bằng baseline; không retune theo test.
+
+Webcloud có thể phát lại artifact đã chuyển đúng; Renderfree không tự trở thành CARLAGPUworker. Keylocal và các asset ngoàiGit không tự xuất hiện khi auto-deploy. Xem `docs/MVP_USER_GUIDE.vi.md` và `docs/MVP_ACCEPTANCE_20261014.vi.md`.
+
+
+Production adds a separate read-only `/api/v1/evidence/*` surface for the sealed
+baseline/PPO recordings. It delegates to the same integrity-checked readers;
+no job creation, review write, arbitrary file path or LLM call is exposed there.
+Docker installs fixed artifact bundles before switching to the non-root user.
+Interactive experiment routes retain the production opt-in. A GitHub runner
+is CI infrastructure, not a simulator or an inference worker.

@@ -1,0 +1,24 @@
+{
+  "checked_utc": "2026-10-14T00:52:16.656731+00:00",
+  "deployment": "local production mode; not Render",
+  "production_mutations_enabled": false,
+  "llm_called": false,
+  "ppo20_play_reached": "20/20 at 9.5 simulated seconds",
+  "reference_toggle": true,
+  "camera_frame20_decoded": true,
+  "desktop": {
+    "width": 1280,
+    "document_scroll_width": 1265
+  },
+  "mobile": {
+    "width": 390,
+    "document_scroll_width": 375
+  },
+  "screenshots": [
+    "production-desktop.png",
+    "production-mobile.png"
+  ],
+  "viewport_restored": true,
+  "final_development_header": "FRAME 01 / 40",
+  "dataset_index_preserved_in_tooltip": 41
+}

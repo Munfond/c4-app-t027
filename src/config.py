@@ -36,9 +36,53 @@ class Settings(BaseSettings):
         return self.camera_cache_dir or (self.lab_data_root / "cache/cameras")
 
     # LLM
+    llm_provider: Literal["openai", "openrouter"] = "openai"
     openai_api_key: str = ""
+    openrouter_api_key: str = ""
     model_name: str = "gpt-4o-mini"
     llm_temperature: float = Field(default=0.7, ge=0.0, le=2.0)
+
+    @property
+    def llm_api_key(self) -> str:
+        # Explicit provider selection prevents sending a key to the wrong host.
+        return self.openrouter_api_key if self.llm_provider == "openrouter" else self.openai_api_key
+
+    @property
+    def llm_base_url(self) -> str:
+        return "https://openrouter.ai/api/v1" if self.llm_provider == "openrouter" else "https://api.openai.com/v1"
+
+    experiment_root: Path = PROJECT_ROOT / "data/experiments"
+    native_input_adapter_manifest: Path = PROJECT_ROOT / "eval/recovery-mvp-2026-10-13/native-input-adapter.json"
+    native_profile_pilot_report: Path = PROJECT_ROOT / "eval/recovery-mvp-2026-10-13/native-12-profile-audit.json"
+    occupancy_rl_root: Path = PROJECT_ROOT / "data/rl-occupancy-ppo-20261013"
+    native_rl_matrix_root: Path = PROJECT_ROOT / "data/native-rl-matrix-v1-20261013"
+    native_rl_replay_root: Path = PROJECT_ROOT / "data/native-rl-measured-v1-20261013"
+    native_rl_root: Path = PROJECT_ROOT / "data/native-rl-ppo-v1-20261013"
+    native_online_root: Path = PROJECT_ROOT / "data"
+    experiment_device: Literal["cpu", "cuda"] = "cpu"
+    experiment_cpu_threads: int = Field(default=2, ge=1, le=32)
+    experiment_lease_seconds: int = Field(default=600, ge=60)
+    carla_host: str = "127.0.0.1"
+    carla_port: int = Field(default=2000, ge=1, le=65535)
+    carla_tm_port: int = Field(default=8001, ge=1, le=65535)
+    carla_min_available_memory_gib: float = Field(default=10, ge=2, le=128)
+    carla_timeout_seconds: float = Field(default=30, ge=1, le=120)
+    # Optional trusted local binary: a fresh simulator per capture, owned by worker.
+    carla_server_executable: Path | None = None
+    # Optional isolated client (e.g. Python 3.7 + CARLA 0.9.11); backend stays on Python >=3.11.
+    carla_python_executable: Path | None = None
+    carla_client_path: Path | None = None
+    carla_bridge_timeout_seconds: float = Field(default=600, ge=60, le=7200)
+    carla_follow_ego: bool = False
+    carla_realtime_capture: bool = False
+    experiment_agent_enabled: bool = False
+    experiment_agent_model: str = "gpt-4o-mini"
+    experiment_api_enabled_in_production: bool = False
+    experiment_max_pending: int = Field(default=5, ge=1, le=50)
+    # Optional local post-NMS camera detector; never supplied by API/LLM.
+    replay_camera_onnx: Path | None = None
+    replay_camera_input_size: int = Field(default=640, ge=64, le=2048)
+    replay_camera_score_threshold: float = Field(default=0.25, ge=0, le=1)
 
     # Database
     database_url: str = "sqlite:///./data/app.db"

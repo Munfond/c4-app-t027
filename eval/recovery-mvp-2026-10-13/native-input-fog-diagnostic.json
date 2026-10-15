@@ -1,0 +1,121 @@
+{
+  "kind": "paired_native_input_adapter_diagnostic",
+  "scenario": {
+    "map": "Town01",
+    "weather": "fog",
+    "vehicles": 2,
+    "pedestrians": 0,
+    "seed": 42,
+    "frames": 2,
+    "capture_interval": 0.5,
+    "timestep": 0.05,
+    "traffic_placement": "nearest_spawn",
+    "route_spawn_index": 0,
+    "route_kind": "spawn",
+    "lane_change_interval_seconds": null,
+    "lidar": {
+      "channels": 32,
+      "points_per_second": 600000,
+      "range_m": 100.0,
+      "upper_fov": 10.0,
+      "lower_fov": -30.0,
+      "mount_z": 2.0,
+      "pitch": 0.0
+    },
+    "camera": {
+      "fov": 90
+    }
+  },
+  "adapter": {
+    "id": "intensity_mean_experimental",
+    "manifest_sha256": "e0338b8b1bd7963bedbbb499128f734e25c5dc1725c17f17eaca0440a520379a",
+    "gain": 0.06486433468844091,
+    "checkpoint_sha256": "8d6c7155534906a50ca2f52b039696700072ff200768f0d91ead33c828e9f878",
+    "notice": "Experimental input alignment; validated only on limited Town01 captures, not real-world safety"
+  },
+  "raw_npz_sha256": {
+    "frame_0000.npz": "9c96c705b2a9a837bbef9ce9f083adba3327cb4205c7e1fddb8db5f19c65efe4",
+    "frame_0001.npz": "3fab494c5b5e28e2324b7842a96e7537693dbbcedee8a6f10ce09f076f81de34"
+  },
+  "results": {
+    "raw": {
+      "frame_count": 2,
+      "evaluated_cells": 8878,
+      "confusion": [
+        [
+          3070,
+          3176,
+          0
+        ],
+        [
+          406,
+          2169,
+          3
+        ],
+        [
+          7,
+          47,
+          0
+        ]
+      ],
+      "class_iou": {
+        "free": 0.4610301847124193,
+        "static": 0.3739010515428374,
+        "object": 0.0
+      },
+      "miou_supported_classes": 0.2783104120850856,
+      "occupied_iou": 0.38205922865013775,
+      "object_recall": 0.0,
+      "flow_epe_m_s": null,
+      "flow_valid_cells": 0,
+      "latency_model_only_ms": {
+        "p50": 72.41650200012373,
+        "p95": 73.27525229738967
+      },
+      "timed_frames": 2
+    },
+    "intensity_mean_experimental": {
+      "frame_count": 2,
+      "evaluated_cells": 8878,
+      "confusion": [
+        [
+          6168,
+          65,
+          13
+        ],
+        [
+          392,
+          2143,
+          43
+        ],
+        [
+          4,
+          0,
+          50
+        ]
+      ],
+      "class_iou": {
+        "free": 0.928635953026197,
+        "static": 0.8108210367007189,
+        "object": 0.45454545454545453
+      },
+      "miou_supported_classes": 0.7313341480907901,
+      "occupied_iou": 0.8250922509225093,
+      "object_recall": 0.9259259259259259,
+      "flow_epe_m_s": null,
+      "flow_valid_cells": 0,
+      "latency_model_only_ms": {
+        "p50": 73.50191749901569,
+        "p95": 74.25634024966712
+      },
+      "timed_frames": 2
+    }
+  },
+  "native_rl_admitted": false,
+  "limitations": [
+    "Small same-map diagnostic only; no real-world safety claim",
+    "RGB weather changes are not calibrated LiDAR weather corruption",
+    "Reference uses observed semantic LiDAR and actor-footprint proxies",
+    "No adapter fitting or parameter search on this evaluation"
+  ]
+}

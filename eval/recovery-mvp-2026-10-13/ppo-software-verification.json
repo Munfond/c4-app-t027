@@ -1,0 +1,62 @@
+{
+  "status": "software_only_not_measured_training",
+  "training": {
+    "provenance": {
+      "kind": "synthetic_contract_fixture",
+      "history_mode": "stateless_independent_windows",
+      "notice": "ALL predictions, labels and timing are invented for software tests; NOT CARLA evidence."
+    },
+    "seed": 27,
+    "objective": "quality_latency",
+    "observation_abi": "quality-latency-v1",
+    "algorithm": "MaskablePPO",
+    "bc_steps": 0,
+    "ppo_epoch_updates": 20,
+    "before_ppo_sha256": "fb24f54fbf120312c4e5824d66cb8522a7727a74504b6769736d955ebba8e059",
+    "after_ppo_sha256": "0e67fe94a89517d3b53792969009507ed2b51250e3494c9b0a4eaf1e709dd6eb",
+    "actual_steps": 512,
+    "profiles": [
+      "official_lidar-5hz",
+      "official_lidar-5hz-seg",
+      "official_lidar-10hz",
+      "official_lidar-10hz-seg",
+      "official_lidar-20hz",
+      "official_lidar-20hz-seg",
+      "official_cl-5hz",
+      "official_cl-5hz-seg",
+      "official_cl-10hz",
+      "official_cl-10hz-seg",
+      "official_cl-20hz",
+      "official_cl-20hz-seg",
+      "crn-5hz",
+      "crn-5hz-seg",
+      "crn-10hz",
+      "crn-10hz-seg",
+      "crn-20hz",
+      "crn-20hz-seg",
+      "fused-5hz",
+      "fused-5hz-seg",
+      "fused-10hz",
+      "fused-10hz-seg",
+      "fused-20hz",
+      "fused-20hz-seg"
+    ],
+    "final_multiplier": 0.9998,
+    "dual_updates": [
+      {
+        "steps": 256,
+        "cost_rate": 0.0,
+        "next_beta": 0.9999
+      },
+      {
+        "steps": 512,
+        "cost_rate": 0.0,
+        "next_beta": 0.9998
+      }
+    ],
+    "validated_on_test": false,
+    "notice": "Training completion does not establish reliability or GPU savings."
+  },
+  "usable_for_benchmark": false,
+  "notice": "Synthetic fixture; confirms actual PPO epochs and changed policy digest only."
+}

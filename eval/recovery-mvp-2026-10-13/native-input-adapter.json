@@ -1,0 +1,17 @@
+{
+  "kind": "native_input_mean_alignment_experimental_v1",
+  "gain": 0.06486433468844091,
+  "fitted_without_labels": true,
+  "checkpoint_sha256": "8d6c7155534906a50ca2f52b039696700072ff200768f0d91ead33c828e9f878",
+  "preregistered_plan_sha256": "d25faf91ca674d464ca4a6590e1f6db71dcb1056d44b572c477ad3caf8e91188",
+  "heldout_evaluation_sha256": "adec2d405ccae649899679d91e30ce0ef71213306b09b362efd5327e67053c47",
+  "limitations": [
+    "Pixel intensity gain is only a diagnostic approximation; CARLA distance attenuation is not measured material reflectance",
+    "No hyperparameter search on heldout outputs",
+    "Same map only; no claim of real-world or other-map generalization",
+    "Only8frames, two routes of sameTown01",
+    "No runtime promotion or native PPO training from this diagnostic",
+    "Model p95 excludes preprocessing/simulator/IO"
+  ],
+  "native_rl_admitted": false
+}

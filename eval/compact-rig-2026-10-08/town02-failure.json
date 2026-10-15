@@ -1,0 +1,14 @@
+{
+  "scenario": {
+    "map": "Town02",
+    "vehicles": 4,
+    "pedestrians": 2,
+    "seed": 27
+  },
+  "status": "failed_native_carla_signal11",
+  "captured_frames": 0,
+  "usable": false,
+  "root_cause_established": false,
+  "server_log_sha256": "6bd025e34699dfb9951ce7ded885bb83d54bdeafe4408822a935be4d92129bf5",
+  "note": "Town01/seed7/no-pedestrians later succeeded; this does not isolate the cause. No failure was replaced with successful evidence."
+}

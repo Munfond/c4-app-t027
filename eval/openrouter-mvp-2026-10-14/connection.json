@@ -1,0 +1,10 @@
+{
+  "model": "openai/gpt-4o-mini",
+  "usage": {
+    "prompt_tokens": 25,
+    "completion_tokens": 9,
+    "total_tokens": 34
+  },
+  "content": "Kết nối OpenRouter đã thành công.",
+  "provider": "openrouter"
+}

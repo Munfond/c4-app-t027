@@ -1,0 +1,554 @@
+{
+  "kind": "native_observed_replay_audit_v1",
+  "status": "passed_research_audit",
+  "dataset_sha256": "a2cc487aeb83fcde63f20b8a4d1cd92afe4eaf2f26cec6e97998c6689460cd6b",
+  "capture_plan_sha256": "1fa59d9fa7fb1a3cd6bb6ba57d16fcd0a53ed7d65e9761cb5c646eca1844d13a",
+  "profiles": 12,
+  "frames": 80,
+  "outcomes": 960,
+  "research_training_admitted": true,
+  "deployment_ready": false,
+  "limits": [
+    "Small four-route Town01 research demonstration; no real-world or other-map claim",
+    "Only2 training episodes; no claim of broad generalization",
+    "WeatherRGB is not physical LiDAR weather corruption",
+    "No change to frozen nuScenes PPO report/policy; no training before independent matrix audit",
+    "Native reference covers observed semantic LiDAR cells only; no full 3D semantic GT",
+    "Offline recorded action matrix, no online switching dynamics or sensor power measurement",
+    "500ms research cadence is not an ADAS safety deadline",
+    "CPU timing includes features/model, excludes file IO, simulator and agent decision"
+  ],
+  "audit_sha256": "9f027b5424a7c5fe49c121403fe13a2c36434c8d68715e53b9c6802f63c2f813",
+  "captured_jobs": [
+    {
+      "job_id": "d81107a2f2b04e188362cee065d892f5",
+      "episode": "train-route05-seed105",
+      "split": "train",
+      "action": 0,
+      "profile": {
+        "channels": 16,
+        "points_per_second": 150000
+      },
+      "reference_sha256": "e443a28da20ba98607f20b34d9a8e262fa64f564158a55a668f37db946969207"
+    },
+    {
+      "job_id": "6e6a17cd648241ef849bbaaf9d0441d1",
+      "episode": "train-route05-seed105",
+      "split": "train",
+      "action": 1,
+      "profile": {
+        "channels": 16,
+        "points_per_second": 300000
+      },
+      "reference_sha256": "e443a28da20ba98607f20b34d9a8e262fa64f564158a55a668f37db946969207"
+    },
+    {
+      "job_id": "0210741c22e4436592c9040d517bb77f",
+      "episode": "train-route05-seed105",
+      "split": "train",
+      "action": 2,
+      "profile": {
+        "channels": 16,
+        "points_per_second": 450000
+      },
+      "reference_sha256": "e443a28da20ba98607f20b34d9a8e262fa64f564158a55a668f37db946969207"
+    },
+    {
+      "job_id": "a73f8346870e4ae897d410a09f21eef8",
+      "episode": "train-route05-seed105",
+      "split": "train",
+      "action": 3,
+      "profile": {
+        "channels": 16,
+        "points_per_second": 600000
+      },
+      "reference_sha256": "e443a28da20ba98607f20b34d9a8e262fa64f564158a55a668f37db946969207"
+    },
+    {
+      "job_id": "6bfb5e8de4c74048b813e22fccafa9f5",
+      "episode": "train-route05-seed105",
+      "split": "train",
+      "action": 4,
+      "profile": {
+        "channels": 32,
+        "points_per_second": 150000
+      },
+      "reference_sha256": "e443a28da20ba98607f20b34d9a8e262fa64f564158a55a668f37db946969207"
+    },
+    {
+      "job_id": "500c1fd608f44cd1a769366b07c37142",
+      "episode": "train-route05-seed105",
+      "split": "train",
+      "action": 5,
+      "profile": {
+        "channels": 32,
+        "points_per_second": 300000
+      },
+      "reference_sha256": "e443a28da20ba98607f20b34d9a8e262fa64f564158a55a668f37db946969207"
+    },
+    {
+      "job_id": "11d965056e7d453cb16b1226900d8655",
+      "episode": "train-route05-seed105",
+      "split": "train",
+      "action": 6,
+      "profile": {
+        "channels": 32,
+        "points_per_second": 450000
+      },
+      "reference_sha256": "e443a28da20ba98607f20b34d9a8e262fa64f564158a55a668f37db946969207"
+    },
+    {
+      "job_id": "6192776f02d74beeacec88171358ab58",
+      "episode": "train-route05-seed105",
+      "split": "train",
+      "action": 7,
+      "profile": {
+        "channels": 32,
+        "points_per_second": 600000
+      },
+      "reference_sha256": "e443a28da20ba98607f20b34d9a8e262fa64f564158a55a668f37db946969207"
+    },
+    {
+      "job_id": "09cb83c9e14a449fb84ff1486698fcd1",
+      "episode": "train-route05-seed105",
+      "split": "train",
+      "action": 8,
+      "profile": {
+        "channels": 64,
+        "points_per_second": 150000
+      },
+      "reference_sha256": "e443a28da20ba98607f20b34d9a8e262fa64f564158a55a668f37db946969207"
+    },
+    {
+      "job_id": "701e5e4dc42f4136b028f27de94dde6e",
+      "episode": "train-route05-seed105",
+      "split": "train",
+      "action": 9,
+      "profile": {
+        "channels": 64,
+        "points_per_second": 300000
+      },
+      "reference_sha256": "e443a28da20ba98607f20b34d9a8e262fa64f564158a55a668f37db946969207"
+    },
+    {
+      "job_id": "c15bba0266364a81b1361482535c02b3",
+      "episode": "train-route05-seed105",
+      "split": "train",
+      "action": 10,
+      "profile": {
+        "channels": 64,
+        "points_per_second": 450000
+      },
+      "reference_sha256": "e443a28da20ba98607f20b34d9a8e262fa64f564158a55a668f37db946969207"
+    },
+    {
+      "job_id": "669802bf300f439caca1f640f8630218",
+      "episode": "train-route05-seed105",
+      "split": "train",
+      "action": 11,
+      "profile": {
+        "channels": 64,
+        "points_per_second": 600000
+      },
+      "reference_sha256": "e443a28da20ba98607f20b34d9a8e262fa64f564158a55a668f37db946969207"
+    },
+    {
+      "job_id": "f596e59cb83d42fcbe03c5507f5c1fc7",
+      "episode": "train-route22-seed122",
+      "split": "train",
+      "action": 0,
+      "profile": {
+        "channels": 16,
+        "points_per_second": 150000
+      },
+      "reference_sha256": "e6f23d7c04c4df680f261728300d651535714cd97ef2d93544d0d446adb49d04"
+    },
+    {
+      "job_id": "0483157b4bec42d999e7c692b75ed84c",
+      "episode": "train-route22-seed122",
+      "split": "train",
+      "action": 1,
+      "profile": {
+        "channels": 16,
+        "points_per_second": 300000
+      },
+      "reference_sha256": "e6f23d7c04c4df680f261728300d651535714cd97ef2d93544d0d446adb49d04"
+    },
+    {
+      "job_id": "c68df17f0683479e85e6d08214f37ef4",
+      "episode": "train-route22-seed122",
+      "split": "train",
+      "action": 2,
+      "profile": {
+        "channels": 16,
+        "points_per_second": 450000
+      },
+      "reference_sha256": "e6f23d7c04c4df680f261728300d651535714cd97ef2d93544d0d446adb49d04"
+    },
+    {
+      "job_id": "d4b6f0ff589e4bbba67aa3c4d271221e",
+      "episode": "train-route22-seed122",
+      "split": "train",
+      "action": 3,
+      "profile": {
+        "channels": 16,
+        "points_per_second": 600000
+      },
+      "reference_sha256": "e6f23d7c04c4df680f261728300d651535714cd97ef2d93544d0d446adb49d04"
+    },
+    {
+      "job_id": "b2df49ca448746a1b2d84099ff3d02d5",
+      "episode": "train-route22-seed122",
+      "split": "train",
+      "action": 4,
+      "profile": {
+        "channels": 32,
+        "points_per_second": 150000
+      },
+      "reference_sha256": "e6f23d7c04c4df680f261728300d651535714cd97ef2d93544d0d446adb49d04"
+    },
+    {
+      "job_id": "a2c6c53496704072a63cd44b607d627f",
+      "episode": "train-route22-seed122",
+      "split": "train",
+      "action": 5,
+      "profile": {
+        "channels": 32,
+        "points_per_second": 300000
+      },
+      "reference_sha256": "e6f23d7c04c4df680f261728300d651535714cd97ef2d93544d0d446adb49d04"
+    },
+    {
+      "job_id": "b8c17afb31f748ac986f6cec2b4742a9",
+      "episode": "train-route22-seed122",
+      "split": "train",
+      "action": 6,
+      "profile": {
+        "channels": 32,
+        "points_per_second": 450000
+      },
+      "reference_sha256": "e6f23d7c04c4df680f261728300d651535714cd97ef2d93544d0d446adb49d04"
+    },
+    {
+      "job_id": "891c58f69366438ebf8071180220beaf",
+      "episode": "train-route22-seed122",
+      "split": "train",
+      "action": 7,
+      "profile": {
+        "channels": 32,
+        "points_per_second": 600000
+      },
+      "reference_sha256": "e6f23d7c04c4df680f261728300d651535714cd97ef2d93544d0d446adb49d04"
+    },
+    {
+      "job_id": "20d2463ea9be4801802916d90c5d37b2",
+      "episode": "train-route22-seed122",
+      "split": "train",
+      "action": 8,
+      "profile": {
+        "channels": 64,
+        "points_per_second": 150000
+      },
+      "reference_sha256": "e6f23d7c04c4df680f261728300d651535714cd97ef2d93544d0d446adb49d04"
+    },
+    {
+      "job_id": "365a87c2e67c4d89b788805a16b628af",
+      "episode": "train-route22-seed122",
+      "split": "train",
+      "action": 9,
+      "profile": {
+        "channels": 64,
+        "points_per_second": 300000
+      },
+      "reference_sha256": "e6f23d7c04c4df680f261728300d651535714cd97ef2d93544d0d446adb49d04"
+    },
+    {
+      "job_id": "4fdabfd8d06349738c66cb9428e826ee",
+      "episode": "train-route22-seed122",
+      "split": "train",
+      "action": 10,
+      "profile": {
+        "channels": 64,
+        "points_per_second": 450000
+      },
+      "reference_sha256": "e6f23d7c04c4df680f261728300d651535714cd97ef2d93544d0d446adb49d04"
+    },
+    {
+      "job_id": "dac8ed693b164a2a926d53f4548b4958",
+      "episode": "train-route22-seed122",
+      "split": "train",
+      "action": 11,
+      "profile": {
+        "channels": 64,
+        "points_per_second": 600000
+      },
+      "reference_sha256": "e6f23d7c04c4df680f261728300d651535714cd97ef2d93544d0d446adb49d04"
+    },
+    {
+      "job_id": "b101c03ee13b4f45a0cd7bc07e72866b",
+      "episode": "validation-route48-seed148",
+      "split": "validation",
+      "action": 0,
+      "profile": {
+        "channels": 16,
+        "points_per_second": 150000
+      },
+      "reference_sha256": "1b9f9a8418704f118a2d686cea096a77c0f5ef1ba8eeca221623b1242f572ca2"
+    },
+    {
+      "job_id": "e8b6cb3a9a7543cc9db328e757715308",
+      "episode": "validation-route48-seed148",
+      "split": "validation",
+      "action": 1,
+      "profile": {
+        "channels": 16,
+        "points_per_second": 300000
+      },
+      "reference_sha256": "1b9f9a8418704f118a2d686cea096a77c0f5ef1ba8eeca221623b1242f572ca2"
+    },
+    {
+      "job_id": "32248b2ac3ac4968831db15ce70d9fd8",
+      "episode": "validation-route48-seed148",
+      "split": "validation",
+      "action": 2,
+      "profile": {
+        "channels": 16,
+        "points_per_second": 450000
+      },
+      "reference_sha256": "1b9f9a8418704f118a2d686cea096a77c0f5ef1ba8eeca221623b1242f572ca2"
+    },
+    {
+      "job_id": "a0eaf8c610e449b6a4ec458354421ab7",
+      "episode": "validation-route48-seed148",
+      "split": "validation",
+      "action": 3,
+      "profile": {
+        "channels": 16,
+        "points_per_second": 600000
+      },
+      "reference_sha256": "1b9f9a8418704f118a2d686cea096a77c0f5ef1ba8eeca221623b1242f572ca2"
+    },
+    {
+      "job_id": "a62e3a5f78bd4d8f8c369ad18d5ba88c",
+      "episode": "validation-route48-seed148",
+      "split": "validation",
+      "action": 4,
+      "profile": {
+        "channels": 32,
+        "points_per_second": 150000
+      },
+      "reference_sha256": "1b9f9a8418704f118a2d686cea096a77c0f5ef1ba8eeca221623b1242f572ca2"
+    },
+    {
+      "job_id": "2ca153f6d6ed496ebdc87887387a5306",
+      "episode": "validation-route48-seed148",
+      "split": "validation",
+      "action": 5,
+      "profile": {
+        "channels": 32,
+        "points_per_second": 300000
+      },
+      "reference_sha256": "1b9f9a8418704f118a2d686cea096a77c0f5ef1ba8eeca221623b1242f572ca2"
+    },
+    {
+      "job_id": "3da75ff3042f4778bf8fd4486f51a220",
+      "episode": "validation-route48-seed148",
+      "split": "validation",
+      "action": 6,
+      "profile": {
+        "channels": 32,
+        "points_per_second": 450000
+      },
+      "reference_sha256": "1b9f9a8418704f118a2d686cea096a77c0f5ef1ba8eeca221623b1242f572ca2"
+    },
+    {
+      "job_id": "78829e8aa96d4551adc3d659eca1a5c6",
+      "episode": "validation-route48-seed148",
+      "split": "validation",
+      "action": 7,
+      "profile": {
+        "channels": 32,
+        "points_per_second": 600000
+      },
+      "reference_sha256": "1b9f9a8418704f118a2d686cea096a77c0f5ef1ba8eeca221623b1242f572ca2"
+    },
+    {
+      "job_id": "853259defc1047c68d65f995e7077f0e",
+      "episode": "validation-route48-seed148",
+      "split": "validation",
+      "action": 8,
+      "profile": {
+        "channels": 64,
+        "points_per_second": 150000
+      },
+      "reference_sha256": "1b9f9a8418704f118a2d686cea096a77c0f5ef1ba8eeca221623b1242f572ca2"
+    },
+    {
+      "job_id": "cab5a1443b59496e89f2722373043c3e",
+      "episode": "validation-route48-seed148",
+      "split": "validation",
+      "action": 9,
+      "profile": {
+        "channels": 64,
+        "points_per_second": 300000
+      },
+      "reference_sha256": "1b9f9a8418704f118a2d686cea096a77c0f5ef1ba8eeca221623b1242f572ca2"
+    },
+    {
+      "job_id": "b145e7692c2144dea6752d2a1dc2b40c",
+      "episode": "validation-route48-seed148",
+      "split": "validation",
+      "action": 10,
+      "profile": {
+        "channels": 64,
+        "points_per_second": 450000
+      },
+      "reference_sha256": "1b9f9a8418704f118a2d686cea096a77c0f5ef1ba8eeca221623b1242f572ca2"
+    },
+    {
+      "job_id": "38bfce0463e144eea8cb1b9200732490",
+      "episode": "validation-route48-seed148",
+      "split": "validation",
+      "action": 11,
+      "profile": {
+        "channels": 64,
+        "points_per_second": 600000
+      },
+      "reference_sha256": "1b9f9a8418704f118a2d686cea096a77c0f5ef1ba8eeca221623b1242f572ca2"
+    },
+    {
+      "job_id": "07e91cfec8ff46a19bafba64a4847385",
+      "episode": "test-route72-seed172",
+      "split": "test",
+      "action": 0,
+      "profile": {
+        "channels": 16,
+        "points_per_second": 150000
+      },
+      "reference_sha256": "8ee6b24073766d148c099d0697144ee1d713d31b11e5e51ca742487c57e67039"
+    },
+    {
+      "job_id": "cc9b86c6c7064b71bf8171daeef04ce4",
+      "episode": "test-route72-seed172",
+      "split": "test",
+      "action": 1,
+      "profile": {
+        "channels": 16,
+        "points_per_second": 300000
+      },
+      "reference_sha256": "8ee6b24073766d148c099d0697144ee1d713d31b11e5e51ca742487c57e67039"
+    },
+    {
+      "job_id": "a88a6e650ddd46f2a48f534d45a723f6",
+      "episode": "test-route72-seed172",
+      "split": "test",
+      "action": 2,
+      "profile": {
+        "channels": 16,
+        "points_per_second": 450000
+      },
+      "reference_sha256": "8ee6b24073766d148c099d0697144ee1d713d31b11e5e51ca742487c57e67039"
+    },
+    {
+      "job_id": "728ab2b269394c938e1de2e1c62e540a",
+      "episode": "test-route72-seed172",
+      "split": "test",
+      "action": 3,
+      "profile": {
+        "channels": 16,
+        "points_per_second": 600000
+      },
+      "reference_sha256": "8ee6b24073766d148c099d0697144ee1d713d31b11e5e51ca742487c57e67039"
+    },
+    {
+      "job_id": "61f8c68a51214497abeb4002441d90fd",
+      "episode": "test-route72-seed172",
+      "split": "test",
+      "action": 4,
+      "profile": {
+        "channels": 32,
+        "points_per_second": 150000
+      },
+      "reference_sha256": "8ee6b24073766d148c099d0697144ee1d713d31b11e5e51ca742487c57e67039"
+    },
+    {
+      "job_id": "89417cd433ef496f8e7679474ae1c302",
+      "episode": "test-route72-seed172",
+      "split": "test",
+      "action": 5,
+      "profile": {
+        "channels": 32,
+        "points_per_second": 300000
+      },
+      "reference_sha256": "8ee6b24073766d148c099d0697144ee1d713d31b11e5e51ca742487c57e67039"
+    },
+    {
+      "job_id": "96e84c3df0924c8ca763897256aa9d78",
+      "episode": "test-route72-seed172",
+      "split": "test",
+      "action": 6,
+      "profile": {
+        "channels": 32,
+        "points_per_second": 450000
+      },
+      "reference_sha256": "8ee6b24073766d148c099d0697144ee1d713d31b11e5e51ca742487c57e67039"
+    },
+    {
+      "job_id": "bc3ff6b1b0c047dba472ed86b770092e",
+      "episode": "test-route72-seed172",
+      "split": "test",
+      "action": 7,
+      "profile": {
+        "channels": 32,
+        "points_per_second": 600000
+      },
+      "reference_sha256": "8ee6b24073766d148c099d0697144ee1d713d31b11e5e51ca742487c57e67039"
+    },
+    {
+      "job_id": "2545d262dbec424999fafbc973a8d406",
+      "episode": "test-route72-seed172",
+      "split": "test",
+      "action": 8,
+      "profile": {
+        "channels": 64,
+        "points_per_second": 150000
+      },
+      "reference_sha256": "8ee6b24073766d148c099d0697144ee1d713d31b11e5e51ca742487c57e67039"
+    },
+    {
+      "job_id": "5cf73f0530d04c71b2a013de5cb164c7",
+      "episode": "test-route72-seed172",
+      "split": "test",
+      "action": 9,
+      "profile": {
+        "channels": 64,
+        "points_per_second": 300000
+      },
+      "reference_sha256": "8ee6b24073766d148c099d0697144ee1d713d31b11e5e51ca742487c57e67039"
+    },
+    {
+      "job_id": "0022fa3594254fba8d53bceb1661da58",
+      "episode": "test-route72-seed172",
+      "split": "test",
+      "action": 10,
+      "profile": {
+        "channels": 64,
+        "points_per_second": 450000
+      },
+      "reference_sha256": "8ee6b24073766d148c099d0697144ee1d713d31b11e5e51ca742487c57e67039"
+    },
+    {
+      "job_id": "3bb2432d546c458bbe2e7a0b6fd2e31c",
+      "episode": "test-route72-seed172",
+      "split": "test",
+      "action": 11,
+      "profile": {
+        "channels": 64,
+        "points_per_second": 600000
+      },
+      "reference_sha256": "8ee6b24073766d148c099d0697144ee1d713d31b11e5e51ca742487c57e67039"
+    }
+  ],
+  "retained_failed_capture": "724dbd7839944c7ca6c9852eb7e5346e",
+  "failed_retry_count": 1
+}

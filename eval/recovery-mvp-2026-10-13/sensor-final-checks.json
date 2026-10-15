@@ -1,0 +1,104 @@
+[
+  {
+    "path": "/api/v1/lab/scenes/scene-0103/frames",
+    "status": 200,
+    "bytes": 5604
+  },
+  {
+    "path": "/api/v1/lab/frames/3e8750f331d7499e9b5123e9eb70f2e2/environment",
+    "status": 200,
+    "bytes": 125474
+  },
+  {
+    "path": "/api/v1/lab/frames/3e8750f331d7499e9b5123e9eb70f2e2/cameras/CAM_FRONT",
+    "status": 200,
+    "bytes": 245538,
+    "size": [
+      1600,
+      900
+    ]
+  },
+  {
+    "path": "/api/v1/lab/frames/3e8750f331d7499e9b5123e9eb70f2e2/cameras/CAM_BACK",
+    "status": 200,
+    "bytes": 188526,
+    "size": [
+      1600,
+      900
+    ]
+  },
+  {
+    "path": "/api/v1/lab/frames/281b92269fd648d4b52d06ac06ca6d65/environment",
+    "status": 200,
+    "bytes": 175009
+  },
+  {
+    "path": "/api/v1/lab/frames/281b92269fd648d4b52d06ac06ca6d65/cameras/CAM_FRONT",
+    "status": 200,
+    "bytes": 220921,
+    "size": [
+      1600,
+      900
+    ]
+  },
+  {
+    "path": "/api/v1/lab/frames/281b92269fd648d4b52d06ac06ca6d65/cameras/CAM_BACK",
+    "status": 200,
+    "bytes": 207870,
+    "size": [
+      1600,
+      900
+    ]
+  },
+  {
+    "path": "/api/v1/lab/scenes/scene-0916/frames",
+    "status": 200,
+    "bytes": 5736
+  },
+  {
+    "path": "/api/v1/lab/frames/b5989651183643369174912bc5641d3b/environment",
+    "status": 200,
+    "bytes": 215816
+  },
+  {
+    "path": "/api/v1/lab/frames/b5989651183643369174912bc5641d3b/cameras/CAM_FRONT",
+    "status": 200,
+    "bytes": 207112,
+    "size": [
+      1600,
+      900
+    ]
+  },
+  {
+    "path": "/api/v1/lab/frames/b5989651183643369174912bc5641d3b/cameras/CAM_BACK",
+    "status": 200,
+    "bytes": 244877,
+    "size": [
+      1600,
+      900
+    ]
+  },
+  {
+    "path": "/api/v1/lab/frames/b4ff30109dd14c89b24789dc5713cf8c/environment",
+    "status": 200,
+    "bytes": 206404
+  },
+  {
+    "path": "/api/v1/lab/frames/b4ff30109dd14c89b24789dc5713cf8c/cameras/CAM_FRONT",
+    "status": 200,
+    "bytes": 251667,
+    "size": [
+      1600,
+      900
+    ]
+  },
+  {
+    "path": "/api/v1/lab/frames/b4ff30109dd14c89b24789dc5713cf8c/cameras/CAM_BACK",
+    "status": 200,
+    "bytes": 235828,
+    "size": [
+      1600,
+      900
+    ]
+  }
+]

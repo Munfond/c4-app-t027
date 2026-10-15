@@ -1,0 +1,46 @@
+{
+  "kind": "verified_full_rig_baseline_capture",
+  "capture_manifest_sha256": "599e7e41d05bc119e28cf764a4690f683ed0ac93133f7a07601218bda8d0e645",
+  "scenario": {
+    "map": "Town01",
+    "weather": "clear",
+    "vehicles": 8,
+    "pedestrians": 0,
+    "seed": 7,
+    "frames": 1200,
+    "capture_interval": 0.05,
+    "timestep": 0.05,
+    "route_spawn_index": 0,
+    "route_kind": "spawn",
+    "lane_change_interval_seconds": null,
+    "lidar": {
+      "channels": 32,
+      "points_per_second": 600000,
+      "range_m": 100,
+      "upper_fov": 10,
+      "lower_fov": -30,
+      "mount_z": 2,
+      "pitch": 0
+    }
+  },
+  "frames": 1200,
+  "streams": 20,
+  "artifact_bytes": 4100773169,
+  "storage_encoding": "raw-only-lossless-v2",
+  "actor_annotation_scope": "world_vehicle_walker_actors",
+  "environment_inventory_reference": {
+    "path": "ground_truth/environment-inventory.json",
+    "bytes": 3052891,
+    "sha256": "5e1450871878d59538518bcfcded47e9281f64f19ce55c7bdaa52fb09a87c95e"
+  },
+  "raw_path": "data/active-sensing/rig-town01-60s-retry-20261008",
+  "raw_kept_outside_git": true,
+  "perception_ready": false,
+  "validated_profile_catalog": false,
+  "usable_for_rl_reward": false,
+  "limitations": [
+    "One clear-weather Town01/seed7 baseline; no pedestrians or held-out split",
+    "Full raw capture verification is not a perception-quality or online GPU-window validation",
+    "Engine mesh ID mapping and complete static/parked ontology still need verification"
+  ]
+}

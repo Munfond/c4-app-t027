@@ -1,0 +1,378 @@
+{
+  "kind": "CARLA_single_sweep_detector_smoke",
+  "status": "succeeded",
+  "source_sha": "fe25f7a51d36e3702f961e198894580d83c4387b",
+  "model_variant": "lidar",
+  "checkpoint_sha256": "2628f933277774e194932815ea1a5d66a0bd9f69ebc8d9040e8c92760bb6652e",
+  "upstream_filename_fingerprint_matches": true,
+  "source_config_sha256": "a08b4a124f1b71bf63f81199f7f5c4f0478c9e2b3eed4bca618495dda887873f",
+  "resolved_config_sha256": "42ed3fbb419ef179b3aabe6faa315ecf8b35466f36a388c893644b4e82feffaf",
+  "capture_manifest_sha256": "c72255c929c32d55c07fa1ec48ba0dc4504cf4142b2316714eabbc8ee7f581b3",
+  "torch": "2.1.0+cu121",
+  "cuda": "12.1",
+  "gpu": "NVIDIA GeForce RTX 2050",
+  "amp": false,
+  "intensity_policy": "raw",
+  "sweeps": 1,
+  "image_policy": null,
+  "adapter_sha256": "9ea3ce8c9973b1f9b18b89c1d7918612d4dbe5cc4a09259b194011750a0a10a4",
+  "strict_checkpoint_loading": true,
+  "keep_fraction": 1.0,
+  "sampling_seed": 7,
+  "sampling_algorithm": "numpy.default_rng(seed+frame_id), sorted subset indices",
+  "cuda_activity_measurement": true,
+  "score_threshold": 0.3,
+  "frames": [
+    {
+      "index": 0,
+      "frame_id": 64,
+      "timestamp": 6.339498344808817,
+      "input_points": 15358,
+      "input_sha256": "d3646911b2d584985bc6e4449f1472717221824683073b13bd9be58e0db07d06",
+      "cuda_work": {
+        "cuda_activity_sum_ms": 100.124,
+        "cuda_activity_count": 1027,
+        "scope": "detector forward pipeline kernels/copies only; separate profiled pass"
+      },
+      "gpu_event_elapsed_ms": 115.90383911132812,
+      "camera_artifacts": {},
+      "wall_inference_ms": 117.80695899960847,
+      "warmup_excluded": true,
+      "boxes_above_threshold": 3
+    },
+    {
+      "index": 1,
+      "frame_id": 65,
+      "timestamp": 6.389498345553875,
+      "input_points": 15478,
+      "input_sha256": "123b7e458438c400000964e5e17abef3a55af35b97470d6ac91c9094dc3b4da5",
+      "cuda_work": {
+        "cuda_activity_sum_ms": 100.17,
+        "cuda_activity_count": 1027,
+        "scope": "detector forward pipeline kernels/copies only; separate profiled pass"
+      },
+      "gpu_event_elapsed_ms": 119.18780517578125,
+      "camera_artifacts": {},
+      "wall_inference_ms": 119.26094399950671,
+      "warmup_excluded": true,
+      "boxes_above_threshold": 3
+    },
+    {
+      "index": 2,
+      "frame_id": 66,
+      "timestamp": 6.439498346298933,
+      "input_points": 15231,
+      "input_sha256": "ddfb9bc4e7e44def788c655f9fb8e092726391065c8e79df6da5f6f219c04509",
+      "cuda_work": {
+        "cuda_activity_sum_ms": 99.913,
+        "cuda_activity_count": 1027,
+        "scope": "detector forward pipeline kernels/copies only; separate profiled pass"
+      },
+      "gpu_event_elapsed_ms": 116.41693115234375,
+      "camera_artifacts": {},
+      "wall_inference_ms": 116.47237499983021,
+      "warmup_excluded": true,
+      "boxes_above_threshold": 3
+    },
+    {
+      "index": 3,
+      "frame_id": 67,
+      "timestamp": 6.489498347043991,
+      "input_points": 15175,
+      "input_sha256": "72bad7d63929100ff632f69cf1cdb55a64d7e3d9a6c4c8595ac9c022ce4bc2c5",
+      "cuda_work": {
+        "cuda_activity_sum_ms": 99.998,
+        "cuda_activity_count": 1027,
+        "scope": "detector forward pipeline kernels/copies only; separate profiled pass"
+      },
+      "gpu_event_elapsed_ms": 117.59852600097656,
+      "camera_artifacts": {},
+      "wall_inference_ms": 117.66443799933768,
+      "warmup_excluded": true,
+      "boxes_above_threshold": 4
+    },
+    {
+      "index": 4,
+      "frame_id": 68,
+      "timestamp": 6.539498347789049,
+      "input_points": 15244,
+      "input_sha256": "1d6e3d62c9877bcd22162d53ab9ac0ef102307da0cdd4ed2a03195da819aa914",
+      "cuda_work": {
+        "cuda_activity_sum_ms": 100.064,
+        "cuda_activity_count": 1027,
+        "scope": "detector forward pipeline kernels/copies only; separate profiled pass"
+      },
+      "gpu_event_elapsed_ms": 117.65577697753906,
+      "camera_artifacts": {},
+      "wall_inference_ms": 117.71109599976626,
+      "warmup_excluded": true,
+      "boxes_above_threshold": 4
+    },
+    {
+      "index": 5,
+      "frame_id": 69,
+      "timestamp": 6.589498348534107,
+      "input_points": 15205,
+      "input_sha256": "c1416c7efba0fab7afaf0b279abff900521f166d09b3b0eecccdf1f13722be70",
+      "cuda_work": {
+        "cuda_activity_sum_ms": 100.035,
+        "cuda_activity_count": 1027,
+        "scope": "detector forward pipeline kernels/copies only; separate profiled pass"
+      },
+      "gpu_event_elapsed_ms": 119.05782318115234,
+      "camera_artifacts": {},
+      "wall_inference_ms": 119.17396799981361,
+      "warmup_excluded": true,
+      "boxes_above_threshold": 5
+    },
+    {
+      "index": 6,
+      "frame_id": 70,
+      "timestamp": 6.639498349279165,
+      "input_points": 15230,
+      "input_sha256": "455454e8f74bd70c08d6bda23afa7f55ab54cd38b1c6815289716ee702baa449",
+      "cuda_work": {
+        "cuda_activity_sum_ms": 100.502,
+        "cuda_activity_count": 1027,
+        "scope": "detector forward pipeline kernels/copies only; separate profiled pass"
+      },
+      "gpu_event_elapsed_ms": 118.00335693359375,
+      "camera_artifacts": {},
+      "wall_inference_ms": 118.06043500018859,
+      "warmup_excluded": true,
+      "boxes_above_threshold": 5
+    },
+    {
+      "index": 7,
+      "frame_id": 71,
+      "timestamp": 6.689498350024223,
+      "input_points": 15344,
+      "input_sha256": "a44848fa7ebc74db9f1cbcf8d43212f804042de7cf0973c5e1f6e069e04251c6",
+      "cuda_work": {
+        "cuda_activity_sum_ms": 100.631,
+        "cuda_activity_count": 1027,
+        "scope": "detector forward pipeline kernels/copies only; separate profiled pass"
+      },
+      "gpu_event_elapsed_ms": 119.2570571899414,
+      "camera_artifacts": {},
+      "wall_inference_ms": 119.31693899987295,
+      "warmup_excluded": true,
+      "boxes_above_threshold": 6
+    },
+    {
+      "index": 8,
+      "frame_id": 72,
+      "timestamp": 6.739498350769281,
+      "input_points": 15391,
+      "input_sha256": "f37e3756fe47d219cdf6806fe700b6fab74f69ea2bae4a3194472a762d4e8a3d",
+      "cuda_work": {
+        "cuda_activity_sum_ms": 100.566,
+        "cuda_activity_count": 1027,
+        "scope": "detector forward pipeline kernels/copies only; separate profiled pass"
+      },
+      "gpu_event_elapsed_ms": 117.88829040527344,
+      "camera_artifacts": {},
+      "wall_inference_ms": 117.991670000265,
+      "warmup_excluded": true,
+      "boxes_above_threshold": 5
+    },
+    {
+      "index": 9,
+      "frame_id": 73,
+      "timestamp": 6.7894983515143394,
+      "input_points": 15190,
+      "input_sha256": "8a284a3d54319ef30746ece365cd1a2d7aee63b8b42fdd455cb5a205565d711e",
+      "cuda_work": {
+        "cuda_activity_sum_ms": 100.387,
+        "cuda_activity_count": 1027,
+        "scope": "detector forward pipeline kernels/copies only; separate profiled pass"
+      },
+      "gpu_event_elapsed_ms": 118.54342651367188,
+      "camera_artifacts": {},
+      "wall_inference_ms": 118.60739900021144,
+      "warmup_excluded": true,
+      "boxes_above_threshold": 5
+    },
+    {
+      "index": 10,
+      "frame_id": 74,
+      "timestamp": 6.8394983522593975,
+      "input_points": 15291,
+      "input_sha256": "cb9239bdb4494108e8728e279bb50dddc67efa894895a09ea30f13b3278d5e50",
+      "cuda_work": {
+        "cuda_activity_sum_ms": 100.662,
+        "cuda_activity_count": 1027,
+        "scope": "detector forward pipeline kernels/copies only; separate profiled pass"
+      },
+      "gpu_event_elapsed_ms": 117.93939208984375,
+      "camera_artifacts": {},
+      "wall_inference_ms": 117.99146300018037,
+      "warmup_excluded": true,
+      "boxes_above_threshold": 4
+    },
+    {
+      "index": 11,
+      "frame_id": 75,
+      "timestamp": 6.889498353004456,
+      "input_points": 15260,
+      "input_sha256": "5eedcbe01c8ac986df21d0211f293a54bafa77d18596b25a28c418a41d9a2493",
+      "cuda_work": {
+        "cuda_activity_sum_ms": 100.754,
+        "cuda_activity_count": 1027,
+        "scope": "detector forward pipeline kernels/copies only; separate profiled pass"
+      },
+      "gpu_event_elapsed_ms": 118.35504150390625,
+      "camera_artifacts": {},
+      "wall_inference_ms": 118.42942800012679,
+      "warmup_excluded": true,
+      "boxes_above_threshold": 6
+    },
+    {
+      "index": 12,
+      "frame_id": 76,
+      "timestamp": 6.939498353749514,
+      "input_points": 15391,
+      "input_sha256": "e7824040a9bc65a238885cd7fedddf60e95317b824ba93a0f02429e3b83c08e0",
+      "cuda_work": {
+        "cuda_activity_sum_ms": 100.831,
+        "cuda_activity_count": 1027,
+        "scope": "detector forward pipeline kernels/copies only; separate profiled pass"
+      },
+      "gpu_event_elapsed_ms": 119.57366180419922,
+      "camera_artifacts": {},
+      "wall_inference_ms": 119.64948200056824,
+      "warmup_excluded": true,
+      "boxes_above_threshold": 6
+    },
+    {
+      "index": 13,
+      "frame_id": 77,
+      "timestamp": 6.989498354494572,
+      "input_points": 15260,
+      "input_sha256": "c1ad3927c086fbf28b2496258f2cfd03808e23cdd271c451289e88e99a9b977e",
+      "cuda_work": {
+        "cuda_activity_sum_ms": 100.823,
+        "cuda_activity_count": 1027,
+        "scope": "detector forward pipeline kernels/copies only; separate profiled pass"
+      },
+      "gpu_event_elapsed_ms": 119.68895721435547,
+      "camera_artifacts": {},
+      "wall_inference_ms": 119.75244699988252,
+      "warmup_excluded": true,
+      "boxes_above_threshold": 4
+    },
+    {
+      "index": 14,
+      "frame_id": 78,
+      "timestamp": 7.03949835523963,
+      "input_points": 15146,
+      "input_sha256": "f1fa0f30bc2a552e77e8984da094a50c9189ac747186012693b3613092fd2f9c",
+      "cuda_work": {
+        "cuda_activity_sum_ms": 100.918,
+        "cuda_activity_count": 1027,
+        "scope": "detector forward pipeline kernels/copies only; separate profiled pass"
+      },
+      "gpu_event_elapsed_ms": 119.22383880615234,
+      "camera_artifacts": {},
+      "wall_inference_ms": 119.2848500004402,
+      "warmup_excluded": true,
+      "boxes_above_threshold": 5
+    },
+    {
+      "index": 15,
+      "frame_id": 79,
+      "timestamp": 7.089498355984688,
+      "input_points": 15181,
+      "input_sha256": "bd9bdc271666e2564979815b1ba6fb8982ae0eca7e84d98bd58fc5b362dd9f69",
+      "cuda_work": {
+        "cuda_activity_sum_ms": 100.716,
+        "cuda_activity_count": 1027,
+        "scope": "detector forward pipeline kernels/copies only; separate profiled pass"
+      },
+      "gpu_event_elapsed_ms": 118.36109161376953,
+      "camera_artifacts": {},
+      "wall_inference_ms": 118.42637699919578,
+      "warmup_excluded": true,
+      "boxes_above_threshold": 5
+    },
+    {
+      "index": 16,
+      "frame_id": 80,
+      "timestamp": 7.139498356729746,
+      "input_points": 15192,
+      "input_sha256": "9347670f94990902304e897aa9bc7ac350184d9bd2167e03bcf9918230c74814",
+      "cuda_work": {
+        "cuda_activity_sum_ms": 101.082,
+        "cuda_activity_count": 1027,
+        "scope": "detector forward pipeline kernels/copies only; separate profiled pass"
+      },
+      "gpu_event_elapsed_ms": 119.2642593383789,
+      "camera_artifacts": {},
+      "wall_inference_ms": 119.33814399981202,
+      "warmup_excluded": true,
+      "boxes_above_threshold": 5
+    },
+    {
+      "index": 17,
+      "frame_id": 81,
+      "timestamp": 7.189498357474804,
+      "input_points": 15129,
+      "input_sha256": "ddd8891e33afe62b783492755b11cccb2300b60edcce1382580e48ce0874e8bd",
+      "cuda_work": {
+        "cuda_activity_sum_ms": 100.563,
+        "cuda_activity_count": 1027,
+        "scope": "detector forward pipeline kernels/copies only; separate profiled pass"
+      },
+      "gpu_event_elapsed_ms": 117.20806121826172,
+      "camera_artifacts": {},
+      "wall_inference_ms": 117.26037999960681,
+      "warmup_excluded": true,
+      "boxes_above_threshold": 4
+    },
+    {
+      "index": 18,
+      "frame_id": 82,
+      "timestamp": 7.239498358219862,
+      "input_points": 15261,
+      "input_sha256": "54c468ab5f160bca8f7ceb818075ca92f1e1f52b3d3e0ab22e097e46c0515ff4",
+      "cuda_work": {
+        "cuda_activity_sum_ms": 100.657,
+        "cuda_activity_count": 1027,
+        "scope": "detector forward pipeline kernels/copies only; separate profiled pass"
+      },
+      "gpu_event_elapsed_ms": 118.63581085205078,
+      "camera_artifacts": {},
+      "wall_inference_ms": 118.70238299979974,
+      "warmup_excluded": true,
+      "boxes_above_threshold": 4
+    },
+    {
+      "index": 19,
+      "frame_id": 83,
+      "timestamp": 7.28949835896492,
+      "input_points": 15136,
+      "input_sha256": "d801272b617cd3e3ba34484569c9663853994a29bdaa59abfdc97b17792a5b1e",
+      "cuda_work": {
+        "cuda_activity_sum_ms": 100.834,
+        "cuda_activity_count": 1027,
+        "scope": "detector forward pipeline kernels/copies only; separate profiled pass"
+      },
+      "gpu_event_elapsed_ms": 118.26351928710938,
+      "camera_artifacts": {},
+      "wall_inference_ms": 118.31921300017711,
+      "warmup_excluded": true,
+      "boxes_above_threshold": 5
+    }
+  ],
+  "peak_allocated_bytes": 634292224,
+  "peak_reserved_bytes": 924844032,
+  "measured_perception_replay_ready": false,
+  "limitations": [
+    "No detection quality score: GT coverage/class mapping not validated",
+    "Single-sweep distribution differs from training; no fake padded history",
+    "CARLA intensity is not calibrated to nuScenes",
+    "CUDA event elapsed includes stream idle gaps/CPU dispatch; not total GPU work/window",
+    "Monitoring/profile switching/other tasks not timed; cannot claim agent GPU savings",
+    "Simulator stopped before inference to release VRAM; not closed-loop real-time performance"
+  ]
+}

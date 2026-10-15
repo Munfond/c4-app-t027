@@ -1,0 +1,17 @@
+[
+  {
+    "path": "/lab",
+    "status": 200,
+    "bytes": 16760
+  },
+  {
+    "path": "/api/v1/experiments/registry",
+    "status": 200,
+    "bytes": 2726
+  },
+  {
+    "path": "/api/v1/experiments/e56ada8662ac459984170b27d240cec2/reference/0",
+    "status": 200,
+    "bytes": 315706
+  }
+]

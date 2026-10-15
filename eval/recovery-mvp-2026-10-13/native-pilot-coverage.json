@@ -1,0 +1,139 @@
+{
+  "published_id": "f88247cc15194080968db68a8205ce81",
+  "visible_actor_counts": [
+    2,
+    2,
+    2,
+    2
+  ],
+  "metrics": {
+    "frame_count": 4,
+    "evaluated_cells": 17665,
+    "confusion": [
+      [
+        6006,
+        6454,
+        0
+      ],
+      [
+        799,
+        4295,
+        5
+      ],
+      [
+        19,
+        87,
+        0
+      ]
+    ],
+    "class_iou": {
+      "free": 0.45232715770447357,
+      "static": 0.36898625429553267,
+      "object": 0.0
+    },
+    "miou_supported_classes": 0.2737711373333354,
+    "occupied_iou": 0.37627583840809675,
+    "object_recall": 0.0,
+    "flow_epe_m_s": null,
+    "flow_valid_cells": 0,
+    "latency_model_only_ms": {
+      "p50": 71.53510949865449,
+      "p95": 74.49257540047256
+    },
+    "timed_frames": 4
+  },
+  "native_rl_admitted": false,
+  "failure_cases": [
+    {
+      "id": "e05f131279ae4300bf9a60f95c4747c5",
+      "scenario": {
+        "map": "Town03",
+        "weather": "clear",
+        "vehicles": 8,
+        "pedestrians": 8,
+        "seed": 42,
+        "frames": 8,
+        "capture_interval": 0.5,
+        "timestep": 0.05,
+        "route_spawn_index": 0,
+        "route_kind": "spawn",
+        "lane_change_interval_seconds": null,
+        "lidar": {
+          "channels": 32,
+          "points_per_second": 600000,
+          "range_m": 100,
+          "upper_fov": 10,
+          "lower_fov": -30,
+          "mount_z": 2,
+          "pitch": 0
+        },
+        "camera": {
+          "fov": 90
+        }
+      },
+      "status": "failed",
+      "error": "RuntimeError: Owned CARLA server exited during capture (-11); inspect server.log"
+    },
+    {
+      "id": "f0a66350d55449e3b54154ef62b2c2b3",
+      "scenario": {
+        "map": "Town03",
+        "weather": "clear",
+        "vehicles": 8,
+        "pedestrians": 8,
+        "seed": 42,
+        "frames": 8,
+        "capture_interval": 0.5,
+        "timestep": 0.05,
+        "route_spawn_index": 0,
+        "route_kind": "spawn",
+        "lane_change_interval_seconds": null,
+        "lidar": {
+          "channels": 32,
+          "points_per_second": 600000,
+          "range_m": 100,
+          "upper_fov": 10,
+          "lower_fov": -30,
+          "mount_z": 2,
+          "pitch": 0
+        },
+        "camera": {
+          "fov": 90
+        }
+      },
+      "status": "failed",
+      "error": "RuntimeError: Owned CARLA server exited during capture (-11); inspect server.log"
+    },
+    {
+      "id": "047e76adb08240c7b8ccffd116137d73",
+      "scenario": {
+        "map": "Town01",
+        "weather": "clear",
+        "vehicles": 8,
+        "pedestrians": 8,
+        "seed": 42,
+        "frames": 8,
+        "capture_interval": 0.5,
+        "timestep": 0.05,
+        "route_spawn_index": 0,
+        "route_kind": "spawn",
+        "lane_change_interval_seconds": null,
+        "lidar": {
+          "channels": 32,
+          "points_per_second": 600000,
+          "range_m": 100,
+          "upper_fov": 10,
+          "lower_fov": -30,
+          "mount_z": 2,
+          "pitch": 0
+        },
+        "camera": {
+          "fov": 90
+        }
+      },
+      "status": "failed",
+      "error": "RuntimeError: Owned CARLA server exited during capture (-11); inspect server.log"
+    }
+  ],
+  "notice": "Failures retained; root cause not established, do not infer weather robustness"
+}
