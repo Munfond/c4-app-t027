@@ -12,6 +12,23 @@ from scripts.remote_worker import Api, ProtocolError
 from src.services import remote_storage
 
 
+@pytest.mark.parametrize("scheme,driver", [
+    ("postgres", "psycopg2"), ("postgresql", "psycopg2"),
+    ("postgresql+psycopg2", "psycopg2"), ("postgresql+psycopg", "psycopg"),
+])
+def test_remote_postgres_driver_available(scheme, driver):
+    from src.services.remote_database import engine
+
+    # Engine creation imports the DBAPI without contacting a server. Explicit
+    # Psycopg 3 URLs must work in the web image as well as legacy Psycopg 2 URLs.
+    target = engine(f"{scheme}://test:test@127.0.0.1:1/test")
+    try:
+        assert target.dialect.driver == driver
+        assert target.dialect.dbapi.__name__ == driver
+    finally:
+        target.dispose()
+
+
 def test_api_credential_scope_and_redacted_errors():
     for url in ("http://example.com", "https://user:password@example.com", "https://example.com?secret=x"):
         with pytest.raises(ValueError):

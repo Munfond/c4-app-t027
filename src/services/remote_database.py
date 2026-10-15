@@ -50,7 +50,11 @@ def engine(url):
     if get_settings().app_env == "production" and not url.startswith(("postgres://", "postgresql://", "postgresql+")):
         raise RuntimeError("Production remote queues require PostgreSQL, not an ephemeral local database")
     if url.startswith("postgres://"):
-        url = "postgresql://" + url[len("postgres://"):]
+        url = "postgresql+psycopg2://" + url[len("postgres://"):]
+    elif url.startswith("postgresql://"):
+        # Keep the default driver stable across SQLAlchemy releases, matching
+        # the Lab database. Explicit +psycopg URLs still select Psycopg 3.
+        url = "postgresql+psycopg2://" + url[len("postgresql://"):]
     return create_engine(url, pool_pre_ping=True,
                          connect_args={"check_same_thread": False} if url.startswith("sqlite") else {})
 
