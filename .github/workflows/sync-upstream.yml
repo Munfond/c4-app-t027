@@ -5,10 +5,14 @@ on:
     - cron: '*/15 * * * *'
   workflow_dispatch:
 
+concurrency:
+  group: sync-upstream-main
+  cancel-in-progress: false
+
 jobs:
   sync:
     name: Sync code from organization repo
-    if: github.repository == 'Munfond/p027-deploy'
+    if: github.repository == 'Munfond/c4-app-t027'
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -24,8 +28,9 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git remote add upstream https://${{ secrets.SYNC_PAT }}@github.com/AI20K-Build-Phase-Cohort-4/P-027.git
+          git remote add upstream https://github.com/AI20K-Build-Phase-Cohort-4/P-027.git
           git fetch upstream main
           git checkout main
-          git reset --hard upstream/main
-          git push origin main --force
+          # Preserve mirror deployment fixes; stop on conflicts instead of overwriting.
+          git merge --no-edit upstream/main
+          git push origin main
