@@ -22,7 +22,8 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          token: ${{ secrets.SYNC_PAT }}
+          # Public upstream; the repository-scoped token avoids an expiring PAT.
+          token: ${{ github.token }}
 
       - name: Fetch and Merge from Upstream
         run: |
